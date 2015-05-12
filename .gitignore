@@ -203,3 +203,14 @@ FakesAssemblies/
 
 # Visual Studio 6 workspace options file
 *.opt
+
+# Leadwerks Directory structure
+Fonts/
+Maps/
+Materials/
+Models/
+Prefabs/
+Screenshots/
+Scripts/
+Shaders/
+Sound/
