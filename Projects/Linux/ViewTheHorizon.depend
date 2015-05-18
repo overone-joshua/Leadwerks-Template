@@ -1,0 +1,1386 @@
+# depslib dependency file v1.0
+1383031163 source:C:\EdenSoftworks\Projects\ViewTheHorizon/Source/App.cpp
+	"App.h"
+
+1381173566 C:\EdenSoftworks\Projects\ViewTheHorizon/Source/App.h
+	"Leadwerks.h"
+
+1381173566 .h"
+
+1383091276 $(LeadwerksPath)/Include/Leadwerks.h
+	"OpenGL.h"
+	"../Source/Libraries/zlib-1.2.5/contrib/minizip/zip.h"
+	"../Source/Libraries/zlib-1.2.5/contrib/minizip/unzip.h"
+	"../Source/Libraries/zlib-1.2.5/zlib.h"
+	"../Source/Libraries/lua-5.1.4/lua.h"
+	"../Source/Libraries/lua-5.1.4/lauxlib.h"
+	"../Source/Libraries/lua-5.1.4/lualib.h"
+	"../Source/Libraries/LuaJIT/src/lua.h"
+	"../Source/Libraries/LuaJIT/src/lauxlib.h"
+	"../Source/Libraries/LuaJIT/src/lualib.h"
+	"../Source/Libraries/lua-5.1.4/lua.h"
+	"../Source/Libraries/lua-5.1.4/lauxlib.h"
+	"../Source/Libraries/lua-5.1.4/lualib.h"
+	"../Source/Libraries/tolua++-1.0.93/include/tolua++.h"
+	"../Source/Libraries/enet-1.3.1/include/enet/enet.h"
+	"../Source/Libraries/OpenAL/include/alc.h"
+	"../Source/Libraries/OpenAL/include/al.h"
+	"alc.h"
+	"al.h"
+	<AL/al.h>
+	<AL/alc.h>
+	<OpenAL/al.h>
+	<OpenAL/alc.h>
+	"../Source/Libraries/freetype-2.4.7/include/ft2build.h"
+	"../Source/Libraries/freetype-2.4.7/include/freetype/freetype.h"
+	"../Source/Libraries/freetype-2.4.7/include/freetype/ftlcdfil.h"
+	"../Source/Libraries/NewtonDynamics/coreLibrary_300/source/newton/Newton.h"
+	"../Source/Libraries/NewtonDynamics/Packages/dCustomJoints/CustomBallAndSocket.h"
+	"../Source/Libraries/NewtonDynamics/Packages/dCustomJoints/CustomControllerManager.h"
+	"../Source/Libraries/NewtonDynamics/Packages/dCustomJoints/CustomCorkScrew.h"
+	"../Source/Libraries/NewtonDynamics/Packages/dCustomJoints/CustomDryRollingFriction.h"
+	"../Source/Libraries/NewtonDynamics/Packages/dCustomJoints/CustomGear.h"
+	"../Source/Libraries/NewtonDynamics/Packages/dCustomJoints/CustomHinge.h"
+	"../Source/Libraries/NewtonDynamics/Packages/dCustomJoints/CustomJoint.h"
+	"../Source/Libraries/NewtonDynamics/Packages/dCustomJoints/CustomJointLibraryStdAfx.h"
+	"../Source/Libraries/NewtonDynamics/Packages/dCustomJoints/CustomKinematicController.h"
+	"../Source/Libraries/NewtonDynamics/Packages/dCustomJoints/CustomPathFollow.h"
+	"../Source/Libraries/NewtonDynamics/Packages/dCustomJoints/CustomPlayerControllerManager.h"
+	"../Source/Libraries/NewtonDynamics/Packages/dCustomJoints/CustomPulley.h"
+	"../Source/Libraries/NewtonDynamics/Packages/dCustomJoints/CustomRagDoll.h"
+	"../Source/Libraries/NewtonDynamics/Packages/dCustomJoints/CustomSlider.h"
+	"../Source/Libraries/NewtonDynamics/Packages/dCustomJoints/CustomSlidingContact.h"
+	"../Source/Libraries/NewtonDynamics/Packages/dCustomJoints/CustomTriggerManager.h"
+	"../Source/Libraries/NewtonDynamics/Packages/dCustomJoints/CustomUniversal.h"
+	"../Source/Libraries/NewtonDynamics/Packages/dCustomJoints/CustomUpVector.h"
+	"../Source/Libraries/NewtonDynamics/Packages/dCustomJoints/CustomUserBlank.h"
+	"../Source/Libraries/NewtonDynamics/Packages/dCustomJoints/CustomUniversal.h"
+	"../Source/Libraries/NewtonDynamics/Packages/dCustomJoints/CustomVehicleControllerManager.h"
+	"../Source/Libraries/NewtonDynamics/Packages/dCustomJoints/CustomWormGear.h"
+	"../Source/Libraries/NewtonDynamics/packages/dCustomJoints/CustomBallAndSocket.h"
+	"../Source/Libraries/NewtonDynamics/packages/dCustomJoints/CustomHinge.h"
+	"../Source/Libraries/NewtonDynamics/packages/dCustomJoints/CustomJoint.h"
+	"../Source/Libraries/NewtonDynamics/packages/dCustomJoints/CustomSlider.h"
+	"../Source/Libraries/NewtonDynamics/packages/dCustomJoints/CustomSliderActuator.h"
+	"../Source/Libraries/NewtonDynamics/packages/dCustomJoints/CustomHingeActuator.h"
+	"../Source/Libraries/NewtonDynamics/packages/dCustomJoints/CustomJointLibraryStdAfx.h"
+	"../Source/Libraries/RecastNavigation/Recast/Include/Recast.h"
+	"../Source/Libraries/RecastNavigation/Recast/Include/RecastAlloc.h"
+	"../Source/Libraries/RecastNavigation/Recast/Include/RecastAssert.h"
+	"../Source/Libraries/RecastNavigation/DebugUtils/Include/DebugDraw.h"
+	"../Source/Libraries/RecastNavigation/DebugUtils/Include/DetourDebugDraw.h"
+	"../Source/Libraries/RecastNavigation/DebugUtils/Include/RecastDebugDraw.h"
+	"../Source/Libraries/RecastNavigation/DebugUtils/Include/RecastDump.h"
+	"../Source/Libraries/RecastNavigation/Detour/Include/DetourAlloc.h"
+	"../Source/Libraries/RecastNavigation/Detour/Include/DetourAssert.h"
+	"../Source/Libraries/RecastNavigation/Detour/Include/DetourCommon.h"
+	"../Source/Libraries/RecastNavigation/Detour/Include/DetourNavMesh.h"
+	"../Source/Libraries/RecastNavigation/Detour/Include/DetourNavMeshBuilder.h"
+	"../Source/Libraries/RecastNavigation/Detour/Include/DetourNavMeshQuery.h"
+	"../Source/Libraries/RecastNavigation/Detour/Include/DetourNode.h"
+	"../Source/Libraries/RecastNavigation/Detour/Include/DetourStatus.h"
+	"../Source/Libraries/RecastNavigation/DetourCrowd/Include/DetourCrowd.h"
+	"../Source/Libraries/RecastNavigation/DetourCrowd/Include/DetourLocalBoundary.h"
+	"../Source/Libraries/RecastNavigation/DetourCrowd/Include/DetourObstacleAvoidance.h"
+	"../Source/Libraries/RecastNavigation/DetourCrowd/Include/DetourPathCorridor.h"
+	"../Source/Libraries/RecastNavigation/DetourCrowd/Include/DetourPathQueue.h"
+	"../Source/Libraries/RecastNavigation/DetourCrowd/Include/DetourProximityGrid.h"
+	"../Source/Libraries/RecastNavigation/DetourTileCache/Include/DetourTileCache.h"
+	"../Source/Libraries/RecastNavigation/DetourTileCache/Include/DetourTileCacheBuilder.h"
+	<direct.h>
+	<io.h>
+	<Psapi.h>
+	<sys/types.h>
+	<sys/stat.h>
+	<cctype>
+	<functional>
+	<stdlib.h>
+	<crtdbg.h>
+	<stdlib.h>
+	<stdlib.h>
+	<list>
+	"dirent.win32.h"
+	<dirent.h>
+	<algorithm>
+	<map>
+	<string>
+	<string.h>
+	<stdio.h>
+	<math.h>
+	<ctype.h>
+	<vector>
+	<iostream>
+	<sstream>
+	<time.h>
+	"Classes/Math/Math3D.h"
+	"String_.h"
+	"Classes/Directory.h"
+	"FileSystem.h"
+	"Timing.h"
+	"Debug.h"
+	"System.h"
+	"Classes/Key.h"
+	"Classes/Initializer.h"
+	"Classes/Uniform.h"
+	"Classes/Blend.h"
+	"Classes/Color.h"
+	"Classes/SortedObject.h"
+	"Classes/Transform.h"
+	"Classes/Particle.h"
+	"Classes/Edge.h"
+	"Classes/Face.h"
+	"Classes/ConvexHull.h"
+	"Classes/Driver.h"
+	"Classes/Thread.h"
+	"Classes/Mutex.h"
+	"Classes/LuaHookContainer.h"
+	"Classes/Object.h"
+	"Classes/Heightfield.h"
+	"Classes/Event.h"
+	"Classes/Vertex.h"
+	"Classes/Character.h"
+	"Classes/PickInfo.h"
+	"Classes/Argument.h"
+	"Classes/Collision.h"
+	"Classes/OctreeNode.h"
+	"Classes/VertexArray.h"
+	"Classes/IndiceArray.h"
+	"Classes/Asset.h"
+	"Classes/Device.h"
+	"Classes/Font.h"
+	"Classes/ComponentBase.h"
+	"Classes/Component.h"
+	"Classes/Object.h"
+	"Classes/Shader.h"
+	"Classes/Bank.h"
+	"Classes/Stream.h"
+	"Classes/Map.h"
+	"Classes/Prefab.h"
+	"Classes/PrefabBase.h"
+	"Classes/Texture.h"
+	"Classes/Shape.h"
+	"Classes/Entity.h"
+	"Classes/Body.h"
+	"Classes/World.h"
+	"Classes/Batch.h"
+	"Classes/Surface.h"
+	"Classes/OcclusionQuery.h"
+	"Classes/BankStream.h"
+	"Classes/Package.h"
+	"Classes/PackageFile.h"
+	"Classes/Simulation.h"
+	"Classes/Buffer.h"
+	"Classes/Context.h"
+	"Classes/CustomContext.h"
+	"Classes/Connection.h"
+	"Classes/MaterialValue.h"
+	"Classes/Material.h"
+	"Classes/Chunk.h"
+	"Classes/Message.h"
+	"Classes/Address.h"
+	"Classes/Peer.h"
+	"Classes/Client.h"
+	"Classes/Server.h"
+	"Classes/Interpreter.h"
+	"Classes/NavGeom.h"
+	"Classes/NavPath.h"
+	"Classes/NavMesh.h"
+	"Classes/NavTile.h"
+	"Classes/NavMeshDebugger.h"
+	"Classes/Agent.h"
+	"Classes/Sound.h"
+	"Classes/Source.h"
+	"Classes/Channel.h"
+	"Classes/ModelFactory.h"
+	"Classes/Factories/File/FileFactory.h"
+	"Classes/Factories/File/PackageFactory.h"
+	"Classes/Entities/Bone.h"
+	"Classes/Entities/Brush.h"
+	"Classes/Entities/Pivot.h"
+	"Classes/Entities/Camera.h"
+	"Classes/Entities/Model.h"
+	"Classes/Entities/Joint.h"
+	"Classes/Entities/Light.h"
+	"Classes/Entities/Attractor.h"
+	"Classes/Entities/Listener.h"
+	"Classes/Entities/LensFlare.h"
+	"Classes/Entities/Emitter.h"
+	"Classes/Entities/CharacterController.h"
+	"Classes/Entities/Sprite.h"
+	"Classes/Entities/Terrain.h"
+	"Classes/Entities/BuildTerrainPatches.h"
+	"Classes/Entities/Light/SpotLight.h"
+	"Classes/Entities/Light/PointLight.h"
+	"Classes/Entities/Light/DirectionalLight.h"
+	"Classes/Win32.Window.h"
+	"Classes/MacOS.Window.h"
+	"Classes/iOS.Window.h"
+	"Classes/Android.Window.h"
+	"Classes/Linux.Window.h"
+	"Classes/Drivers/Graphics/GraphicsDriver.h"
+	"Classes/Drivers/Physics/PhysicsDriver.h"
+	"Classes/Drivers/Network/NetworkDriver.h"
+	"Classes/Drivers/Sound/SoundDriver.h"
+	"Classes/Drivers/Graphics/OpenGL2/OpenGL2GraphicsDriver.h"
+	"Classes/Drivers/Graphics/OpenGL2/OpenGL2OcclusionQuery.h"
+	"Classes/Drivers/Graphics/OpenGL2/OpenGL2VertexArray.h"
+	"Classes/Drivers/Graphics/OpenGL2/OpenGL2IndiceArray.h"
+	"Classes/Drivers/Graphics/OpenGL2/OpenGL2Texture.h"
+	"Classes/Drivers/Graphics/OpenGL2/OpenGL2Context.h"
+	"Classes/Drivers/Graphics/OpenGL2/OpenGL2Surface.h"
+	"Classes/Drivers/Graphics/OpenGL2/OpenGL2Uniform.h"
+	"Classes/Drivers/Graphics/OpenGL2/OpenGL2Shader.h"
+	"Classes/Drivers/Graphics/OpenGL2/OpenGL2Camera.h"
+	"Classes/Drivers/Graphics/OpenGL2/OpenGL2Buffer.h"
+	"Classes/Drivers/Graphics/OpenGL2/OpenGL2Model.h"
+	"Classes/Drivers/Graphics/OpenGL2/OpenGL2Batch.h"
+	"Classes/Drivers/Graphics/OpenGL2/OpenGL2Material.h"
+	"Classes/Drivers/Graphics/OpenGL4/OpenGL4GraphicsDriver.h"
+	"Classes/Drivers/Graphics/OpenGL4/Classes/OpenGL4Context.h"
+	"Classes/Drivers/Graphics/OpenGL4/Classes/OpenGL4OcclusionQuery.h"
+	"Classes/Drivers/Graphics/OpenGL4/Classes/OpenGL4VertexArray.h"
+	"Classes/Drivers/Graphics/OpenGL4/Classes/OpenGL4IndiceArray.h"
+	"Classes/Drivers/Graphics/OpenGL4/Classes/OpenGL4Texture.h"
+	"Classes/Drivers/Graphics/OpenGL4/Classes/OpenGL4Surface.h"
+	"Classes/Drivers/Graphics/OpenGL4/Classes/OpenGL4Uniform.h"
+	"Classes/Drivers/Graphics/OpenGL4/Classes/OpenGL4Shader.h"
+	"Classes/Drivers/Graphics/OpenGL4/Classes/OpenGL4Camera.h"
+	"Classes/Drivers/Graphics/OpenGL4/Classes/OpenGL4Buffer.h"
+	"Classes/Drivers/Graphics/OpenGL4/Classes/OpenGL4Model.h"
+	"Classes/Drivers/Graphics/OpenGL4/Classes/OpenGL4Batch.h"
+	"Classes/Drivers/Graphics/OpenGL4/Classes/OpenGL4Material.h"
+	"Classes/Drivers/Graphics/OpenGLES2/OpenGLES2GraphicsDriver.h"
+	"Classes/Drivers/Physics/NewtonDynamics/NewtonDynamicsPhysicsDriver.h"
+	"Classes/Drivers/Network/ENet/ENetNetworkDriver.h"
+	"Classes/Drivers/Sound/OpenAL/OpenALSoundDriver.h"
+
+1383091276 rivers/Sound/OpenAL/OpenALSoundDriver.h"
+
+1383091330 $(LeadwerksPath)/Include/OpenGL.h
+	<string>
+	<string.h>
+	<sstream>
+	"Win32.OpenGL.h"
+	"MacOS.OpenGL.h"
+	<GL/glew.h>
+	<GL/glx.h>
+	<GL/gl.h>
+	"Leadwerks.h"
+
+1383091330 $(LeadwerksPath)/Include/Win32.OpenGL.h
+	"OpenGL.h"
+	"Libraries/glew-1.6.0/include/GL/glew.h"
+	"Libraries/glew-1.6.0/include/GL/wglew.h"
+
+1383091330 /glew-1.6.0/include/GL/wglew.h"
+
+1383091332 $(LeadwerksPath)/Include/Libraries/glew-1.6.0/include/GL/glew.h
+	<stddef.h>
+	<inttypes.h>
+	<stdint.h>
+	<inttypes.h>
+	<OpenGL/glu.h>
+	<GL/glu.h>
+
+1383091276 
+
+1383091332 $(LeadwerksPath)/Include/Libraries/glew-1.6.0/include/GL/wglew.h
+	<windows.h>
+
+1383091276 >
+
+1383091330 $(LeadwerksPath)/Include/MacOS.OpenGL.h
+	<OpenGl/OpenGL.h>
+	<OpenGL/gl.h>
+
+1383091330 .h>
+
+1381173566 $(LeadwerksPath)/Source/Libraries/zlib-1.2.5/contrib/minizip/zip.h
+	"zlib.h"
+	"ioapi.h"
+	"bzlib.h"
+
+1383091274 
+
+1383091378 $(LeadwerksPath)/Include/Libraries/zlib-1.2.5/zlib.h
+	"zconf.h"
+
+1383091378 $(LeadwerksPath)/Include/Libraries/zlib-1.2.5/zconf.h
+	<windows.h>
+	<sys/types.h>
+	<unistd.h>
+	<unixio.h>
+
+1381173566 $(LeadwerksPath)/Source/Libraries/zlib-1.2.5/contrib/minizip/ioapi.h
+	<stdio.h>
+	<stdlib.h>
+	"zlib.h"
+	<stdint.h>
+	"mz64conf.h"
+	"stdint.h"
+
+1381173566 $(LeadwerksPath)/Source/Libraries/zlib-1.2.5/contrib/minizip/unzip.h
+	"zlib.h"
+	"ioapi.h"
+	"bzlib.h"
+
+1381173566 $(LeadwerksPath)/Source/Libraries/zlib-1.2.5/zlib.h
+	"zconf.h"
+
+1381173566 $(LeadwerksPath)/Source/Libraries/zlib-1.2.5/zconf.h
+	<windows.h>
+	<sys/types.h>
+	<unistd.h>
+	<unixio.h>
+
+1381173566 $(LeadwerksPath)/Source/Libraries/lua-5.1.4/lua.h
+	<stdarg.h>
+	<stddef.h>
+	"luaconf.h"
+
+1383091338 "
+
+1381173566 $(LeadwerksPath)/Source/Libraries/lua-5.1.4/luaconf.h
+	<limits.h>
+	<stddef.h>
+	<unistd.h>
+	<io.h>
+	<stdio.h>
+	<stdio.h>
+	<readline/readline.h>
+	<readline/history.h>
+	<assert.h>
+	<math.h>
+	<unistd.h>
+
+1381173566 $(LeadwerksPath)/Source/Libraries/lua-5.1.4/lauxlib.h
+	<stddef.h>
+	<stdio.h>
+	"lua.h"
+
+1381173566 $(LeadwerksPath)/Source/Libraries/lua-5.1.4/lualib.h
+	"lua.h"
+
+1381173566 $(LeadwerksPath)/Source/Libraries/LuaJIT/src/lua.h
+	<stdarg.h>
+	<stddef.h>
+	"luaconf.h"
+
+1381173566 $(LeadwerksPath)/Source/Libraries/LuaJIT/src/luaconf.h
+	<limits.h>
+	<stddef.h>
+	<unistd.h>
+	<io.h>
+	<stdio.h>
+	<stdio.h>
+	<readline/readline.h>
+	<readline/history.h>
+	<assert.h>
+	<math.h>
+	<unistd.h>
+
+1381173566 $(LeadwerksPath)/Source/Libraries/LuaJIT/src/lauxlib.h
+	<stddef.h>
+	<stdio.h>
+	"lua.h"
+
+1381173566 $(LeadwerksPath)/Source/Libraries/LuaJIT/src/lualib.h
+	"lua.h"
+
+1381173566 $(LeadwerksPath)/Source/Libraries/tolua++-1.0.93/include/tolua++.h
+	"lua.h"
+	"lauxlib.h"
+	"../../../Libraries/lua-5.1.4/lua.h"
+	"../../../Libraries/lua-5.1.4/lauxlib.h"
+
+1381173566 Libraries/lua-5.1.4/lauxlib.h"
+
+1383091332 $(LeadwerksPath)/Include/Libraries/lua-5.1.4/lua.h
+	<stdarg.h>
+	<stddef.h>
+	"luaconf.h"
+
+1383091332 $(LeadwerksPath)/Include/Libraries/lua-5.1.4/luaconf.h
+	<limits.h>
+	<stddef.h>
+	<unistd.h>
+	<io.h>
+	<stdio.h>
+	<stdio.h>
+	<readline/readline.h>
+	<readline/history.h>
+	<assert.h>
+	<math.h>
+	<unistd.h>
+
+1383091332 $(LeadwerksPath)/Include/Libraries/lua-5.1.4/lauxlib.h
+	<stddef.h>
+	<stdio.h>
+	"lua.h"
+
+1381173566 $(LeadwerksPath)/Source/Libraries/enet-1.3.1/include/enet/enet.h
+	<stdlib.h>
+	"enet/win32.h"
+	"enet/unix.h"
+	"enet/types.h"
+	"enet/protocol.h"
+	"enet/list.h"
+	"enet/callbacks.h"
+
+1381173566 backs.h"
+
+1383091330 $(LeadwerksPath)/Include/Libraries/enet-1.3.1/include/enet/win32.h
+	<stdlib.h>
+	<winsock2.h>
+
+1381173566 h>
+
+1383091330 $(LeadwerksPath)/Include/Libraries/enet-1.3.1/include/enet/unix.h
+	<stdlib.h>
+	<sys/time.h>
+	<sys/types.h>
+	<netinet/in.h>
+	<unistd.h>
+
+1383091330 $(LeadwerksPath)/Include/Libraries/enet-1.3.1/include/enet/types.h
+
+1383091330 $(LeadwerksPath)/Include/Libraries/enet-1.3.1/include/enet/protocol.h
+	"enet/types.h"
+
+1383091330 s.h"
+
+1383091330 $(LeadwerksPath)/Include/Libraries/enet-1.3.1/include/enet/list.h
+	<stdlib.h>
+
+1383091330 $(LeadwerksPath)/Include/Libraries/enet-1.3.1/include/enet/callbacks.h
+	<stdlib.h>
+
+1381173566 $(LeadwerksPath)/Source/Libraries/OpenAL/include/alc.h
+
+1381173566 $(LeadwerksPath)/Source/Libraries/OpenAL/include/al.h
+
+1381173566 $(LeadwerksPath)/Source/Libraries/freetype-2.4.7/include/ft2build.h
+	<freetype/config/ftheader.h>
+
+1383091332 config/ftheader.h>
+
+1383091330 $(LeadwerksPath)/Include/Libraries/freetype-2.4.7/include/freetype/config/ftheader.h
+
+1381173566 $(LeadwerksPath)/Source/Libraries/freetype-2.4.7/include/freetype/freetype.h
+	<ft2build.h>
+
+1383091332 $(LeadwerksPath)/Include/Libraries/freetype-2.4.7/include/ft2build.h
+	<freetype/config/ftheader.h>
+
+1381173566 $(LeadwerksPath)/Source/Libraries/freetype-2.4.7/include/freetype/ftlcdfil.h
+	<ft2build.h>
+
+1381173566 $(LeadwerksPath)/Source/Libraries/NewtonDynamics/coreLibrary_300/source/newton/Newton.h
+
+1381173566 $(LeadwerksPath)/Source/Libraries/NewtonDynamics/packages/dCustomJoints/CustomBallAndSocket.h
+	"CustomJoint.h"
+
+1381173566 nt.h"
+
+1381173566 $(LeadwerksPath)/Source/Libraries/NewtonDynamics/packages/dCustomJoints/CustomJoint.h
+	"CustomJointLibraryStdAfx.h"
+	"dMathDefines.h"
+	"dVector.h"
+	"dMatrix.h"
+	"dQuaternion.h"
+	"CustomAlloc.h"
+
+1381173566 oc.h"
+
+1381173566 $(LeadwerksPath)/Source/Libraries/NewtonDynamics/packages/dCustomJoints/CustomJointLibraryStdAfx.h
+	<windows.h>
+	<crtdbg.h>
+	<new>
+	<stdio.h>
+	<stdlib.h>
+	<Newton.h>
+	<CustomJoint.h>
+
+1383091338 nt.h>
+
+1383091338 $(LeadwerksPath)/Include/Libraries/NewtonDynamics/coreLibrary_300/source/newton/Newton.h
+
+1383091338 $(LeadwerksPath)/Include/Libraries/NewtonDynamics/packages/dCustomJoints/CustomJoint.h
+	"CustomJointLibraryStdAfx.h"
+	"dMathDefines.h"
+	"dVector.h"
+	"dMatrix.h"
+	"dQuaternion.h"
+	"CustomAlloc.h"
+
+1383091338 $(LeadwerksPath)/Include/Libraries/NewtonDynamics/packages/dCustomJoints/CustomJointLibraryStdAfx.h
+	<windows.h>
+	<crtdbg.h>
+	<new>
+	<stdio.h>
+	<stdlib.h>
+	<Newton.h>
+	<CustomJoint.h>
+
+1383091338 $(LeadwerksPath)/Include/Libraries/NewtonDynamics/packages/dMath/dMathDefines.h
+	<math.h>
+	<float.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<assert.h>
+	<windows.h>
+	<stdarg.h>
+
+1383091338 $(LeadwerksPath)/Include/Libraries/NewtonDynamics/packages/dMath/dVector.h
+	"dMathDefines.h"
+
+1383091338 nes.h"
+
+1383091338 $(LeadwerksPath)/Include/Libraries/NewtonDynamics/packages/dMath/dMatrix.h
+	"dVector.h"
+
+1383091338 $(LeadwerksPath)/Include/Libraries/NewtonDynamics/packages/dMath/dQuaternion.h
+	"dVector.h"
+
+1383091338 $(LeadwerksPath)/Include/Libraries/NewtonDynamics/packages/dCustomJoints/CustomAlloc.h
+	"CustomJointLibraryStdAfx.h"
+
+1381173566 ntLibraryStdAfx.h"
+
+1381173566 $(LeadwerksPath)/Source/Libraries/NewtonDynamics/packages/dCustomJoints/CustomAlloc.h
+	"CustomJointLibraryStdAfx.h"
+
+1381173566 $(LeadwerksPath)/Source/Libraries/NewtonDynamics/packages/dCustomJoints/CustomHinge.h
+	"CustomJoint.h"
+
+1381173566 $(LeadwerksPath)/Source/Libraries/NewtonDynamics/packages/dCustomJoints/CustomSlider.h
+	"CustomJoint.h"
+
+1381173566 $(LeadwerksPath)/Source/Libraries/NewtonDynamics/packages/dCustomJoints/CustomSliderActuator.h
+	"CustomJoint.h"
+	"CustomSlider.h"
+
+1381173566 der.h"
+
+1381173566 $(LeadwerksPath)/Source/Libraries/NewtonDynamics/packages/dCustomJoints/CustomHingeActuator.h
+	"CustomJoint.h"
+	"CustomHinge.h"
+
+1381173566 ge.h"
+
+1381173566 $(LeadwerksPath)/Source/Libraries/RecastNavigation/Recast/Include/Recast.h
+
+1381173566 $(LeadwerksPath)/Source/Libraries/RecastNavigation/Recast/Include/RecastAlloc.h
+
+1381173566 $(LeadwerksPath)/Source/Libraries/RecastNavigation/Recast/Include/RecastAssert.h
+	<assert.h>
+
+1381173566 $(LeadwerksPath)/Source/Libraries/RecastNavigation/DebugUtils/Include/DebugDraw.h
+
+1381173566 $(LeadwerksPath)/Source/Libraries/RecastNavigation/DebugUtils/Include/DetourDebugDraw.h
+	"DetourNavMesh.h"
+	"DetourNavMeshQuery.h"
+	"DetourTileCacheBuilder.h"
+
+1381173566 eCacheBuilder.h"
+
+1383091368 $(LeadwerksPath)/Include/Libraries/RecastNavigation/Detour/Include/DetourNavMesh.h
+	"DetourAlloc.h"
+	"DetourStatus.h"
+
+1381173566 tus.h"
+
+1383091368 $(LeadwerksPath)/Include/Libraries/RecastNavigation/Detour/Include/DetourAlloc.h
+
+1383091368 $(LeadwerksPath)/Include/Libraries/RecastNavigation/Detour/Include/DetourStatus.h
+
+1383091368 $(LeadwerksPath)/Include/Libraries/RecastNavigation/Detour/Include/DetourNavMeshQuery.h
+	"DetourNavMesh.h"
+	"DetourStatus.h"
+
+1383091368 $(LeadwerksPath)/Include/Libraries/RecastNavigation/DetourTileCache/Include/DetourTileCacheBuilder.h
+	"DetourAlloc.h"
+	"DetourStatus.h"
+
+1381173566 $(LeadwerksPath)/Source/Libraries/RecastNavigation/DebugUtils/Include/RecastDebugDraw.h
+
+1381173566 $(LeadwerksPath)/Source/Libraries/RecastNavigation/DebugUtils/Include/RecastDump.h
+
+1381173566 $(LeadwerksPath)/Source/Libraries/RecastNavigation/Detour/Include/DetourAlloc.h
+
+1381173566 $(LeadwerksPath)/Source/Libraries/RecastNavigation/Detour/Include/DetourAssert.h
+	<assert.h>
+
+1381173566 $(LeadwerksPath)/Source/Libraries/RecastNavigation/Detour/Include/DetourCommon.h
+
+1381173566 $(LeadwerksPath)/Source/Libraries/RecastNavigation/Detour/Include/DetourNavMesh.h
+	"DetourAlloc.h"
+	"DetourStatus.h"
+
+1381173566 $(LeadwerksPath)/Source/Libraries/RecastNavigation/Detour/Include/DetourStatus.h
+
+1381173566 $(LeadwerksPath)/Source/Libraries/RecastNavigation/Detour/Include/DetourNavMeshBuilder.h
+	"DetourAlloc.h"
+
+1381173566 $(LeadwerksPath)/Source/Libraries/RecastNavigation/Detour/Include/DetourNavMeshQuery.h
+	"DetourNavMesh.h"
+	"DetourStatus.h"
+
+1381173566 $(LeadwerksPath)/Source/Libraries/RecastNavigation/Detour/Include/DetourNode.h
+	"DetourNavMesh.h"
+
+1381173566 Mesh.h"
+
+1381173566 $(LeadwerksPath)/Source/Libraries/RecastNavigation/DetourCrowd/Include/DetourCrowd.h
+	"DetourNavMeshQuery.h"
+	"DetourObstacleAvoidance.h"
+	"DetourLocalBoundary.h"
+	"DetourPathCorridor.h"
+	"DetourProximityGrid.h"
+	"DetourPathQueue.h"
+
+1381173566 hQueue.h"
+
+1381173566 $(LeadwerksPath)/Source/Libraries/RecastNavigation/DetourCrowd/Include/DetourObstacleAvoidance.h
+
+1381173566 $(LeadwerksPath)/Source/Libraries/RecastNavigation/DetourCrowd/Include/DetourLocalBoundary.h
+	"DetourNavMeshQuery.h"
+
+1381173566 MeshQuery.h"
+
+1381173566 $(LeadwerksPath)/Source/Libraries/RecastNavigation/DetourCrowd/Include/DetourPathCorridor.h
+	"DetourNavMeshQuery.h"
+
+1381173566 $(LeadwerksPath)/Source/Libraries/RecastNavigation/DetourCrowd/Include/DetourProximityGrid.h
+
+1381173566 $(LeadwerksPath)/Source/Libraries/RecastNavigation/DetourCrowd/Include/DetourPathQueue.h
+	"DetourNavMesh.h"
+	"DetourNavMeshQuery.h"
+
+1381173566 $(LeadwerksPath)/Source/Libraries/RecastNavigation/DetourTileCache/Include/DetourTileCache.h
+	"DetourStatus.h"
+
+1381173566 $(LeadwerksPath)/Source/Libraries/RecastNavigation/DetourTileCache/Include/DetourTileCacheBuilder.h
+	"DetourAlloc.h"
+	"DetourStatus.h"
+
+1383091276 $(LeadwerksPath)/Include/dirent.win32.h
+	<windows.h>
+	<string.h>
+	<stdlib.h>
+	<sys/types.h>
+	<sys/stat.h>
+	<errno.h>
+
+1383091276 $(LeadwerksPath)/Include/Classes/Math/Math3D.h
+	"../Object.h"
+	"Math_.h"
+	"Vec2.h"
+	"Vec3.h"
+	"Vec4.h"
+	"iVec2.h"
+	"iVec3.h"
+	"iVec4.h"
+	"dVec3.h"
+	"AABB.h"
+	"Plane.h"
+	"Quat.h"
+	"Mat3.h"
+	"Mat4.h"
+	"Ray.h"
+	"Transform.h"
+	"Triangle.h"
+	"FastMath.h"
+
+1383091276 h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Object.h
+	"../Leadwerks.h"
+
+1381173566 rks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Math/Math_.h
+	"Math3D.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Math/Vec2.h
+	"Math3D.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Math/Vec3.h
+	"Math3D.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Math/Vec4.h
+	"Math3D.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Math/iVec2.h
+	"Math3D.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Math/iVec3.h
+	"Math3D.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Math/iVec4.h
+	"Math3D.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Math/dVec3.h
+	"Math3D.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Math/AABB.h
+	"Math3D.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Math/Plane.h
+	"Math3D.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Math/Quat.h
+	"Math3D.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Math/Mat3.h
+	"Math3D.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Math/Mat4.h
+	"Math3D.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Math/Ray.h
+	"Math3D.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Math/Transform.h
+	"Math3D.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Math/Triangle.h
+	"Math3D.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Math/FastMath.h
+	"Math3D.h"
+
+1383091330 $(LeadwerksPath)/Include/String_.h
+	"Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Directory.h
+	"../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/FileSystem.h
+	"Leadwerks.h"
+	<Shlobj.h>
+	"FileSystem.MacOS.h"
+
+1383091276 m.MacOS.h"
+
+1383091330 $(LeadwerksPath)/Include/Timing.h
+	"Leadwerks.h"
+	<windows.h>
+	<mmsystem.h>
+	<time.h>
+
+1383091276 $(LeadwerksPath)/Include/Debug.h
+	"Leadwerks.h"
+
+1383091330 $(LeadwerksPath)/Include/System.h
+	"Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Key.h
+	"../../Leadwerks.h"
+
+1383091276 dwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Initializer.h
+	"../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Uniform.h
+	"../Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Blend.h
+	"../Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Color.h
+	"../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/SortedObject.h
+	"../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Transform.h
+	"../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Particle.h
+	"../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Edge.h
+	"../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Face.h
+	"../Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/ConvexHull.h
+	"../Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Driver.h
+	"../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Thread.h
+	"../Leadwerks.h"
+	<process.h>
+	<windows.h>
+	<pthread.h>
+
+1383091276 $(LeadwerksPath)/Include/Classes/Mutex.h
+	"../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/LuaHookContainer.h
+	"../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Heightfield.h
+	"../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Event.h
+	"../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Vertex.h
+	"../Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Character.h
+	"../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/PickInfo.h
+	"../Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Argument.h
+	"../Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Collision.h
+	"../../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/OctreeNode.h
+	"../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/VertexArray.h
+	"../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/IndiceArray.h
+	"../Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Asset.h
+	"../Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Device.h
+	"../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Font.h
+	"../Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/ComponentBase.h
+	"../Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Component.h
+	"../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Shader.h
+	"../Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Bank.h
+	"../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Stream.h
+	"../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Map.h
+	"../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Prefab.h
+	"../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/PrefabBase.h
+	"../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Texture.h
+	"../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Shape.h
+	"../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Entity.h
+	"../Leadwerks.h"
+	<list>
+
+1383091274 $(LeadwerksPath)/Include/Classes/Body.h
+	"../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/World.h
+	"../Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Batch.h
+	"../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Surface.h
+	"../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/OcclusionQuery.h
+	"../Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/BankStream.h
+	"../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Package.h
+	"../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/PackageFile.h
+	"../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Simulation.h
+	"../Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Buffer.h
+	"../Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Context.h
+	"../Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/CustomContext.h
+	"../Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Connection.h
+	"../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/MaterialValue.h
+	"../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Material.h
+	"../Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Chunk.h
+	"../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Message.h
+	"../Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Address.h
+	"../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Peer.h
+	"../Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Client.h
+	"../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Server.h
+	"../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Interpreter.h
+	"../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/NavGeom.h
+	"../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/NavPath.h
+	"../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/NavMesh.h
+	"../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/NavTile.h
+	"../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/NavMeshDebugger.h
+	"../Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Agent.h
+	"../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Sound.h
+	"../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Source.h
+
+1383091274 $(LeadwerksPath)/Include/Classes/Channel.h
+	"../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/ModelFactory.h
+	"../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Factories/File/FileFactory.h
+	"../../../Leadwerks.h"
+
+1383091276 Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Factories/File/PackageFactory.h
+	"../../../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Entities/Bone.h
+	"../../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Entities/Brush.h
+	"../../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Entities/Pivot.h
+	"../../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Entities/Camera.h
+	"../../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Entities/Model.h
+	"../../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Entities/Joint.h
+	"../../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Entities/Light.h
+	"../../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Entities/Attractor.h
+	"../../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Entities/Listener.h
+	"../../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Entities/LensFlare.h
+	"../../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Entities/Emitter.h
+	"../../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Entities/CharacterController.h
+	"../../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Entities/Sprite.h
+	"../../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Entities/Terrain.h
+	"../../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Entities/BuildTerrainPatches.h
+	"../../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Entities/Light/SpotLight.h
+	"../../../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Entities/Light/PointLight.h
+	"../../../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Entities/Light/DirectionalLight.h
+	"../../../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Win32.Window.h
+	"../Leadwerks.h"
+	<windows.h>
+	<stdio.h>
+	<string>
+	<string.h>
+	<windows.h>
+	<vector>
+	<map>
+
+1383091276 $(LeadwerksPath)/Include/Classes/MacOS.Window.h
+	"../Leadwerks.h"
+	"Key.h"
+	<stdio.h>
+	<string>
+	<string.h>
+	<vector>
+	<map>
+
+1383091276 $(LeadwerksPath)/Include/Classes/iOS.Window.h
+	"../Leadwerks.h"
+	"Key.h"
+	<string>
+	<string.h>
+	<vector>
+	<map>
+
+1383091274 $(LeadwerksPath)/Include/Classes/Android.Window.h
+	"../Leadwerks.h"
+	"Key.h"
+	<stdio.h>
+	<string>
+	<string.h>
+	<vector>
+	<map>
+
+1381173566 $(LeadwerksPath)/Include/Classes/Linux.Window.h
+	<string>
+	<stdio.h>
+	<stdlib.h>
+	<GL/glx.h>
+	<GL/gl.h>
+	<X11/X.h>
+	<X11/keysym.h>
+	<X11/Xatom.h>
+	"../Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Graphics/GraphicsDriver.h
+	"../../../Leadwerks.h"
+	"../../Font.h"
+
+1383091274 t.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Drivers/Physics/PhysicsDriver.h
+	"../../../Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Network/NetworkDriver.h
+	"../../../Leadwerks.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Drivers/Sound/SoundDriver.h
+	"../../../Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Graphics/OpenGL2/OpenGL2GraphicsDriver.h
+	"../../../../Leadwerks.h"
+
+1383091274 ../Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Graphics/OpenGL2/OpenGL2OcclusionQuery.h
+	"../../../../Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Graphics/OpenGL2/OpenGL2VertexArray.h
+	"../../../../Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Graphics/OpenGL2/OpenGL2IndiceArray.h
+	"../../../../Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Graphics/OpenGL2/OpenGL2Texture.h
+	"OpenGL2GraphicsDriver.h"
+
+1383091274 aphicsDriver.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Graphics/OpenGL2/OpenGL2Context.h
+	"../../../../Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Graphics/OpenGL2/OpenGL2Surface.h
+	"OpenGL2GraphicsDriver.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Graphics/OpenGL2/OpenGL2Uniform.h
+	"../../../../Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Graphics/OpenGL2/OpenGL2Shader.h
+	"../../../../Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Graphics/OpenGL2/OpenGL2Camera.h
+	"../../../../Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Graphics/OpenGL2/OpenGL2Buffer.h
+	"../../../../Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Graphics/OpenGL2/OpenGL2Model.h
+	"OpenGL2GraphicsDriver.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Graphics/OpenGL2/OpenGL2Batch.h
+	"../../../../Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Graphics/OpenGL2/OpenGL2Material.h
+	"../../../../Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Graphics/OpenGL4/OpenGL4GraphicsDriver.h
+	"../OpenGL2/OpenGL2GraphicsDriver.h"
+	"../../../../Leadwerks.h"
+	"Classes/OpenGL4VertexArray.h"
+	"Classes/OpenGL4IndiceArray.h"
+	"Classes/OpenGL4Texture.h"
+	"Classes/OpenGL4Context.h"
+	"Classes/OpenGL4Shader.h"
+	"Classes/OpenGL4Camera.h"
+	"Classes/OpenGL4Buffer.h"
+	"Classes/OpenGL4Uniform.h"
+	"Classes/OpenGL4Batch.h"
+	"Classes/OpenGL4Material.h"
+	"Classes/OpenGL4SpotLight.h"
+	"Classes/OpenGL4PointLight.h"
+	"Classes/OpenGL4DirectionalLight.h"
+
+1383091274 penGL4DirectionalLight.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Graphics/OpenGL4/Classes/OpenGL4VertexArray.h
+	"../../../../../Leadwerks.h"
+
+1383091274 ../../Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Graphics/OpenGL4/Classes/OpenGL4IndiceArray.h
+	"../../../../../Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Graphics/OpenGL4/Classes/OpenGL4Texture.h
+	"../../../../../Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Graphics/OpenGL4/Classes/OpenGL4Context.h
+	"../../../../../Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Graphics/OpenGL4/Classes/OpenGL4Shader.h
+	"../../../../../Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Graphics/OpenGL4/Classes/OpenGL4Camera.h
+	"../../../../../Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Graphics/OpenGL4/Classes/OpenGL4Buffer.h
+	"../OpenGL4GraphicsDriver.h"
+
+1383091274 4GraphicsDriver.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Graphics/OpenGL4/Classes/OpenGL4Uniform.h
+	"../../../../../Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Graphics/OpenGL4/Classes/OpenGL4Batch.h
+	"../../../../../Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Graphics/OpenGL4/Classes/OpenGL4Material.h
+	"../../../../../Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Graphics/OpenGL4/Classes/OpenGL4SpotLight.h
+	"../../../../../Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Graphics/OpenGL4/Classes/OpenGL4PointLight.h
+	"../../../../../Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Graphics/OpenGL4/Classes/OpenGL4DirectionalLight.h
+	"../../../../../Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Graphics/OpenGL4/Classes/OpenGL4OcclusionQuery.h
+	"../../../../../Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Graphics/OpenGL4/Classes/OpenGL4Surface.h
+	"../../../../../Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Graphics/OpenGL4/Classes/OpenGL4Model.h
+	"../../../../../Leadwerks.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Graphics/OpenGLES2/OpenGLES2GraphicsDriver.h
+	"../../../../Leadwerks.h"
+	"Classes/OpenGLES2VertexArray.h"
+	"Classes/OpenGLES2IndiceArray.h"
+	"Classes/OpenGLES2Texture.h"
+	"Classes/OpenGLES2Context.h"
+	"Classes/OpenGLES2Surface.h"
+	"Classes/OpenGLES2Uniform.h"
+	"Classes/OpenGLES2Shader.h"
+	"Classes/OpenGLES2OcclusionQuery.h"
+	"Classes/OpenGLES2Camera.h"
+	"Classes/OpenGLES2Buffer.h"
+	"Classes/OpenGLES2Model.h"
+	"Classes/OpenGLES2Batch.h"
+	"Classes/OpenGLES2Material.h"
+
+1383091274 penGLES2Material.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Graphics/OpenGLES2/Classes/OpenGLES2VertexArray.h
+	"../OpenGLES2GraphicsDriver.h"
+
+1383091274 ES2GraphicsDriver.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Graphics/OpenGLES2/Classes/OpenGLES2IndiceArray.h
+	"../OpenGLES2GraphicsDriver.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Graphics/OpenGLES2/Classes/OpenGLES2Texture.h
+	"../OpenGLES2GraphicsDriver.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Graphics/OpenGLES2/Classes/OpenGLES2Context.h
+	"../OpenGLES2GraphicsDriver.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Graphics/OpenGLES2/Classes/OpenGLES2Surface.h
+	"../OpenGLES2GraphicsDriver.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Graphics/OpenGLES2/Classes/OpenGLES2Uniform.h
+	"../OpenGLES2GraphicsDriver.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Graphics/OpenGLES2/Classes/OpenGLES2Shader.h
+	"../OpenGLES2GraphicsDriver.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Graphics/OpenGLES2/Classes/OpenGLES2OcclusionQuery.h
+	"../OpenGLES2GraphicsDriver.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Graphics/OpenGLES2/Classes/OpenGLES2Camera.h
+	"../OpenGLES2GraphicsDriver.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Graphics/OpenGLES2/Classes/OpenGLES2Buffer.h
+	"../OpenGLES2GraphicsDriver.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Graphics/OpenGLES2/Classes/OpenGLES2Model.h
+	"../OpenGLES2GraphicsDriver.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Graphics/OpenGLES2/Classes/OpenGLES2Batch.h
+	"../OpenGLES2GraphicsDriver.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Graphics/OpenGLES2/Classes/OpenGLES2Material.h
+	"../OpenGLES2GraphicsDriver.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Drivers/Physics/NewtonDynamics/NewtonDynamicsPhysicsDriver.h
+	"../../Leadwerks.h"
+	"Classes/NewtonDynamicsSimulation.h"
+	"Classes/NewtonDynamicsBody.h"
+	"Classes/NewtonDynamicsShape.h"
+	"Classes/NewtonDynamicsCharacterController.h"
+	"Classes/NewtonDynamicsJoint.h"
+
+1383091276 ewtonDynamicsJoint.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Drivers/Physics/NewtonDynamics/Classes/NewtonDynamicsSimulation.h
+	"../NewtonDynamicsPhysicsDriver.h"
+
+1383091276 DynamicsPhysicsDriver.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Physics/NewtonDynamics/Classes/NewtonDynamicsBody.h
+	"../NewtonDynamicsPhysicsDriver.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Drivers/Physics/NewtonDynamics/Classes/NewtonDynamicsShape.h
+	"../NewtonDynamicsPhysicsDriver.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Drivers/Physics/NewtonDynamics/Classes/NewtonDynamicsCharacterController.h
+	"../NewtonDynamicsPhysicsDriver.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Drivers/Physics/NewtonDynamics/Classes/NewtonDynamicsJoint.h
+	"../NewtonDynamicsPhysicsDriver.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Network/ENet/ENetNetworkDriver.h
+	"../../../../Leadwerks.h"
+	"Classes/ENetClient.h"
+	"Classes/ENetServer.h"
+	"Classes/ENetPeer.h"
+
+1383091274 NetPeer.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Network/ENet/Classes/ENetClient.h
+	"../ENetNetworkDriver.h"
+
+1383091274 tworkDriver.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Network/ENet/Classes/ENetServer.h
+	"../ENetNetworkDriver.h"
+
+1383091274 $(LeadwerksPath)/Include/Classes/Drivers/Network/ENet/Classes/ENetPeer.h
+	"../ENetNetworkDriver.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Drivers/Sound/OpenAL/OpenALSoundDriver.h
+	"../../../../Leadwerks.h"
+	"Classes/OpenALListener.h"
+	"Classes/OpenALSound.h"
+	"Classes/OpenALChannel.h"
+	"Classes/OpenALSource.h"
+
+1383091276 penALSource.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Drivers/Sound/OpenAL/Classes/OpenALListener.h
+	"../OpenALSoundDriver.h"
+
+1383091276 SoundDriver.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Drivers/Sound/OpenAL/Classes/OpenALSound.h
+	"../OpenALSoundDriver.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Drivers/Sound/OpenAL/Classes/OpenALChannel.h
+	"../OpenALSoundDriver.h"
+
+1383091276 $(LeadwerksPath)/Include/Classes/Drivers/Sound/OpenAL/Classes/OpenALSource.h
+	"../OpenALSoundDriver.h"
+
+1381173566 source:../../Source/main.cpp
+	"App.h"
+
+1383957828 source:../../Source/App.cpp
+	"App.h"
+
+1381173566 ../../Source/App.h
+	"Leadwerks.h"
+
+1381173566 source:../../Source/main.cpp
+	"App.h"
+
+1383031162 source:../../Source/App.cpp
+	"App.h"
+
+1383092750 ../../Source/App.h
+	"Leadwerks.h"
+
+1381173566 source:../../Source/main.cpp
+	"App.h"
+

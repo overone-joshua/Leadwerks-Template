@@ -1,0 +1,234 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{82DF7208-C66B-4465-8EAC-D70655C97FBC}</ProjectGuid>
+    <RootNamespace>callinglua</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectName>ViewTheHorizon</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>NotSet</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>NotSet</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>NotSet</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>NotSet</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="PropertySheet.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="PropertySheet.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="PropertySheet.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="PropertySheet.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)..\..\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)..\..\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectName).debug</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectName).debug</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)..\..\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalOptions>/D "SLB_LIBRARY" %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(LeadwerksHeaderPath);$(LeadwerksHeaderPath)\Libraries\VHACD\src\VHACD_Lib\inc;$(LeadwerksHeaderPath)\Libraries\freetype-2.4.7\include;$(LeadwerksHeaderPath)\Libraries\OpenAL\include;$(LeadwerksHeaderPath)\Libraries\NewtonDynamics\packages\dMath;$(LeadwerksHeaderPath)\Libraries\NewtonDynamics\packages\thirdParty\pthreads.2;$(LeadwerksHeaderPath)\Libraries\NewtonDynamics\packages\dContainers;$(LeadwerksHeaderPath)\Libraries\NewtonDynamics\packages\dCustomJoints;$(LeadwerksHeaderPath)\Libraries\NewtonDynamics\coreLibrary_300\source\openCL;$(LeadwerksHeaderPath)\Libraries\NewtonDynamics\coreLibrary_300\source\core;$(LeadwerksHeaderPath)\Libraries\NewtonDynamics\coreLibrary_300\source\meshUtil;$(LeadwerksHeaderPath)\Libraries\NewtonDynamics\coreLibrary_300\source\physics;$(LeadwerksHeaderPath)\Libraries\RecastNavigation\RecastDemo\Include;$(LeadwerksHeaderPath)\Libraries\RecastNavigation\DetourCrowd\Include;$(LeadwerksHeaderPath)\Libraries\RecastNavigation\DetourTileCache\Include;$(LeadwerksHeaderPath)\Libraries\RecastNavigation\DebugUtils\Include;$(LeadwerksHeaderPath)\Libraries\RecastNavigation\Recast\Include;$(LeadwerksHeaderPath)\Libraries\NewtonDynamics\coreLibrary_300\source\newton;$(LeadwerksHeaderPath)\Libraries\RecastNavigation\Detour\Include;$(LeadwerksHeaderPath)\Libraries\tolua++-1.0.93\include;$(LeadwerksHeaderPath)\Libraries/lua-5.1.4;$(LeadwerksHeaderPath)\Libraries/glew-1.6.0/include/GL;$(LeadwerksHeaderPath)\Libraries\glew-1.6.0\include;$(LeadwerksHeaderPath)\Libraries\enet-1.3.1\include;$(LeadwerksHeaderPath)\Libraries\zlib-1.2.5;$(LeadwerksHeaderPath)\Libraries\freetype-2.4.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>PSAPI_VERSION=1;__STEAM__;_CUSTOM_JOINTS_STATIC_LIB;FT2_BUILD_LIBRARY;LEADWERKS_3_1;DG_DISABLE_ASSERT;WINDOWS;WIN32;OS_WINDOWS;OPENGL;PLATFORM_WINDOWS;_WIN_32_VER;_NEWTON_USE_LIB;PTW32_STATIC_LIB;PTW32_BUILD;_NEWTON_STATIC_LIB;_LIB;DG_USE_NORMAL_PRIORITY_THREAD;GLEW_STATIC;_STATICLIB;DEBUG;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalOptions>/NODEFAULTLIB:MSVCRT.lib /NODEFAULTLIB:MSVCRTD.lib %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>lua51.lib;steam_api.lib;ws2_32.lib;Glu32.lib;libovrd.lib;OpenGL32.lib;winmm.lib;Psapi.lib;OpenAL32.lib;Leadwerks.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(LeadwerksLibPath)\Windows\x86\Debug;$(LeadwerksLibPath)\Windows\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <EntryPointSymbol>
+      </EntryPointSymbol>
+      <TargetMachine>MachineX86</TargetMachine>
+      <OutputFile>$(OutDir)\$(ProjectName).debug.exe</OutputFile>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalOptions>/D "SLB_LIBRARY" %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(LeadwerksHeaderPath);$(LeadwerksHeaderPath)\Libraries\VHACD\src\VHACD_Lib\inc;$(LeadwerksHeaderPath)\Libraries\freetype-2.4.7\include;$(LeadwerksHeaderPath)\Libraries\OpenAL\include;$(LeadwerksHeaderPath)\Libraries\NewtonDynamics\packages\dMath;$(LeadwerksHeaderPath)\Libraries\NewtonDynamics\packages\thirdParty\pthreads.2;$(LeadwerksHeaderPath)\Libraries\NewtonDynamics\packages\dContainers;$(LeadwerksHeaderPath)\Libraries\NewtonDynamics\packages\dCustomJoints;$(LeadwerksHeaderPath)\Libraries\NewtonDynamics\coreLibrary_300\source\openCL;$(LeadwerksHeaderPath)\Libraries\NewtonDynamics\coreLibrary_300\source\core;$(LeadwerksHeaderPath)\Libraries\NewtonDynamics\coreLibrary_300\source\meshUtil;$(LeadwerksHeaderPath)\Libraries\NewtonDynamics\coreLibrary_300\source\physics;$(LeadwerksHeaderPath)\Libraries\RecastNavigation\RecastDemo\Include;$(LeadwerksHeaderPath)\Libraries\RecastNavigation\DetourCrowd\Include;$(LeadwerksHeaderPath)\Libraries\RecastNavigation\DetourTileCache\Include;$(LeadwerksHeaderPath)\Libraries\RecastNavigation\DebugUtils\Include;$(LeadwerksHeaderPath)\Libraries\RecastNavigation\Recast\Include;$(LeadwerksHeaderPath)\Libraries\NewtonDynamics\coreLibrary_300\source\newton;$(LeadwerksHeaderPath)\Libraries\RecastNavigation\Detour\Include;$(LeadwerksHeaderPath)\Libraries\tolua++-1.0.93\include;$(LeadwerksHeaderPath)\Libraries/lua-5.1.4;$(LeadwerksHeaderPath)\Libraries/glew-1.6.0/include/GL;$(LeadwerksHeaderPath)\Libraries\glew-1.6.0\include;$(LeadwerksHeaderPath)\Libraries\enet-1.3.1\include;$(LeadwerksHeaderPath)\Libraries\zlib-1.2.5;$(LeadwerksHeaderPath)\Libraries\freetype-2.4.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>LEADWERKS_3_1;__STEAM__;FT2_BUILD_LIBRARY;_CUSTOM_JOINTS_STATIC_LIB;DG_DISABLE_ASSERT;WINDOWS;WIN32;OS_WINDOWS;PLATFORM_WINDOWS;DEBUG;_DEBUG;OPENGL;_WIN_32_VER;_NEWTON_USE_LIB;_LIB;_NEWTON_STATIC_LIB;DG_USE_NORMAL_PRIORITY_THREAD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalOptions>/NODEFAULTLIB:MSVCRT.lib /NODEFAULTLIB:MSVCRTD.lib %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>lua51.lib;steam_api.lib;OpenAL32.lib;ws2_32.lib;OpenGL32.lib;libovrd.lib;Glu32.lib;winmm.lib;Psapi.lib;%(AdditionalDependencies);Leadwerks.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(LeadwerksLibPath)\Windows\x64\Debug;$(LeadwerksLibPath)\Windows\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <EntryPointSymbol>
+      </EntryPointSymbol>
+      <OutputFile>$(OutDir)\$(ProjectName).debug.exe</OutputFile>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalOptions>/D "SLB_LIBRARY" /MP %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <AdditionalIncludeDirectories>$(LeadwerksHeaderPath);$(LeadwerksHeaderPath)\Libraries\VHACD\src\VHACD_Lib\inc;$(LeadwerksHeaderPath)\Libraries\freetype-2.4.7\include;$(LeadwerksHeaderPath)\Libraries\OpenAL\include;$(LeadwerksHeaderPath)\Libraries\NewtonDynamics\packages\dMath;$(LeadwerksHeaderPath)\Libraries\NewtonDynamics\packages\thirdParty\pthreads.2;$(LeadwerksHeaderPath)\Libraries\NewtonDynamics\packages\dContainers;$(LeadwerksHeaderPath)\Libraries\NewtonDynamics\packages\dCustomJoints;$(LeadwerksHeaderPath)\Libraries\NewtonDynamics\coreLibrary_300\source\openCL;$(LeadwerksHeaderPath)\Libraries\NewtonDynamics\coreLibrary_300\source\core;$(LeadwerksHeaderPath)\Libraries\NewtonDynamics\coreLibrary_300\source\meshUtil;$(LeadwerksHeaderPath)\Libraries\NewtonDynamics\coreLibrary_300\source\physics;$(LeadwerksHeaderPath)\Libraries\RecastNavigation\RecastDemo\Include;$(LeadwerksHeaderPath)\Libraries\RecastNavigation\DetourCrowd\Include;$(LeadwerksHeaderPath)\Libraries\RecastNavigation\DetourTileCache\Include;$(LeadwerksHeaderPath)\Libraries\RecastNavigation\DebugUtils\Include;$(LeadwerksHeaderPath)\Libraries\RecastNavigation\Recast\Include;$(LeadwerksHeaderPath)\Libraries\NewtonDynamics\coreLibrary_300\source\newton;$(LeadwerksHeaderPath)\Libraries\RecastNavigation\Detour\Include;$(LeadwerksHeaderPath)\Libraries\tolua++-1.0.93\include;$(LeadwerksHeaderPath)\Libraries/lua-5.1.4;$(LeadwerksHeaderPath)\Libraries/LuaJIT\dynasm;$(LeadwerksHeaderPath)\Libraries/LuaJIT\src;$(LeadwerksHeaderPath)\Libraries/glew-1.6.0/include/GL;$(LeadwerksHeaderPath)\Libraries\glew-1.6.0\include;$(LeadwerksHeaderPath)\Libraries\enet-1.3.1\include;$(LeadwerksHeaderPath)\Libraries\zlib-1.2.5;$(LeadwerksHeaderPath)\Libraries\freetype-2.4.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>PSAPI_VERSION=1;__STEAM__;_CUSTOM_JOINTS_STATIC_LIB;FT2_BUILD_LIBRARY;LEADWERKS_3_1;DG_DISABLE_ASSERT;WINDOWS;WIN32;OS_WINDOWS;OPENGL;PLATFORM_WINDOWS;_WIN_32_VER;_NEWTON_USE_LIB;PTW32_STATIC_LIB;PTW32_BUILD;_NEWTON_STATIC_LIB;_LIB;DG_USE_NORMAL_PRIORITY_THREAD;GLEW_STATIC;_STATICLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <PrecompiledHeaderFile>le3.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>Leadwerks.lib;lua51.lib;steam_api.lib;OpenAL32.lib;ws2_32.lib;libovr.lib;OpenGL32.lib;Glu32.lib;winmm.lib;Psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(LeadwerksLibPath)\Windows\x86;$(LeadwerksLibPath)\Windows\x86\Release;C:/Leadwerks\Engine\Source\Libraries\OpenAL/libs/Win32/EFX-Util_MT;C:/Leadwerks\Engine\Source\Libraries\OpenAL/libs/Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalOptions>/NODEFAULTLIB:MSVCRT.lib %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalOptions>/D "SLB_LIBRARY" /MP %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <AdditionalIncludeDirectories>$(LeadwerksHeaderPath)\Libraries\VHACD\src\VHACD_Lib\inc;C:/Leadwerks\Engine\Source\Libraries\NewtonDynamics\packages\thirdParty\pthreads.2;C:/Leadwerks\Engine\Source\Libraries\freetype-2.4.7\include;C:/Leadwerks\Engine\Source\Libraries\OpenAL\include;C:/Leadwerks\Engine\Source\Libraries\NewtonDynamics\packages\dMath;C:/Leadwerks\Engine\Source\Libraries\NewtonDynamics\packages\dContainers;C:/Leadwerks\Engine\Source\Libraries\NewtonDynamics\packages\dCustomJoints;C:/Leadwerks\Engine\Source\Libraries\NewtonDynamics\coreLibrary_300\source\openCL;C:/Leadwerks\Engine\Source\Libraries\NewtonDynamics\coreLibrary_300\source\core;C:/Leadwerks\Engine\Source\Libraries\NewtonDynamics\coreLibrary_300\source\meshUtil;C:/Leadwerks\Engine\Source\Libraries\NewtonDynamics\coreLibrary_300\source\physics;C:/Leadwerks\Engine\Source\Libraries\RecastNavigation\RecastDemo\Include;C:/Leadwerks\Engine\Source\Libraries\RecastNavigation\DetourCrowd\Include;C:/Leadwerks\Engine\Source\Libraries\RecastNavigation\DetourTileCache\Include;C:/Leadwerks\Engine\Source\Libraries\RecastNavigation\DebugUtils\Include;C:/Leadwerks\Engine\Source\Libraries\RecastNavigation\Recast\Include;C:/Leadwerks\Engine\Source\Libraries\HACD\src\HACD_Lib\inc;C:/Leadwerks\Engine\Source\Libraries\NewtonDynamics\coreLibrary_300\source\newton;C:/Leadwerks\Engine\Source\Libraries\RecastNavigation\Detour\Include;C:/Leadwerks\Engine\Source\Libraries\tolua++-1.0.93\include;C:/Leadwerks\Engine\Source\Libraries/lua-5.1.4;C:/Leadwerks\Engine\Source\Libraries/glew-1.6.0/include/GL;C:/Leadwerks\Engine\Source\Libraries\glew-1.6.0\include;C:/Leadwerks\Engine\Source\Libraries\enet-1.3.1\include;C:/Leadwerks\Engine\Source\Libraries\zlib-1.2.5;C:/Leadwerks\Engine\Source;C:/Leadwerks\Engine\Source\Libraries\freetype-2.4.3\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>LEADWERKS_3_1;__STEAM__;FT2_BUILD_LIBRARY;_CUSTOM_JOINTS_STATIC_LIB;DG_DISABLE_ASSERT;WINDOWS;WIN32;OS_WINDOWS;PLATFORM_WINDOWS;OPENGL;_WIN_32_VER;_NEWTON_USE_LIB;_WIN32;_NEWTON_STATIC_LIB;_WINDOWS;_LIB;DG_USE_NORMAL_PRIORITY_THREAD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <PrecompiledHeaderFile>le3.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>lua51.lib;steam_api.lib;Leadwerks.lib;ws2_32.lib;OpenGL32.lib;libovr.lib;Glu32.lib;winmm.lib;Psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:/Leadwerks\Engine\Source\Libraries\NewtonDynamics\packages\Win32\debugDll;C:/Leadwerks\Engine\Source\Libraries\OpenAL/libs/Win32/EFX-Util_MT;C:/Leadwerks\Engine\Source\Libraries\OpenAL/libs/Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <AdditionalOptions>/NODEFAULTLIB:MSVCRT.lib %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\Source\App.cpp" />
+    <ClCompile Include="..\..\Source\main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Source\App.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuildStep Include="C:/Leadwerks\Engine\Library\StaticLib\Debug\Leadwerks.lib">
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </CustomBuildStep>
+    <CustomBuildStep Include="C:/Leadwerks\Engine\Library\StaticLib\Release\Leadwerks.lib">
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </CustomBuildStep>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
