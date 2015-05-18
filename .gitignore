@@ -214,3 +214,6 @@ Screenshots/
 Scripts/
 Shaders/
 Sound/
+
+# Visual Studio extra build files.
+*.debug.exp
