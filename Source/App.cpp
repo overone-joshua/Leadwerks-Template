@@ -2,10 +2,14 @@
 #include "App.h"
 #include "Leadwerks.h"
 
+#include "Managers\StateManager.hpp"
+#include "States\Game.hpp"
+
 #include <iostream>
 
 /* Externals From App.h */
 App* gApp;
+StateManager* gStateMgr;
 
 // -----
 
@@ -117,6 +121,7 @@ int App::Initialize() {
 
 void App::Shutdown() {
 	/* Perform any component-shutdown logic */
+	SAFE_DELETE(gStateMgr);
 
 }
 
@@ -163,10 +168,10 @@ bool App::Start()
 	this->m_pCamera->SetRotation(vZero, false);
 	this->m_pCamera->SetRotation(vZero, true);
 	this->m_pCamera->SetPosition(vZero, false);
-	this->m_pCamera->SetPosition(vZero, true);
+	this->m_pCamera->SetPosition(vZero, true);	
 
-	/* Move camera back 5.0f meters */
-	this->m_pCamera->Move(0.0f, 0.0f, -5.0f, true);
+	gStateMgr = new StateManager();
+	gStateMgr->AddState(new Game(), true);
 
 	return true;
 }
@@ -185,17 +190,23 @@ bool App::Loop()
 		return true;
 	}
 
+	gStateMgr->PreUpdate(Leadwerks::Time::GetSpeed());
+	
 	if (!this->m_bPaused) {
 		/* Perform game-loop updates here */
-		if (this->m_pWorld != nullptr) { this->m_pWorld->Update(); }
-		
+		if (gStateMgr->Update(Leadwerks::Time::GetSpeed()) == false) { return true; }
+
+		if (this->m_pWorld != nullptr) { this->m_pWorld->Update(); }		
 	}
 
 	/* Perform any 3D-rendering here */
 	if (this->m_pWorld != nullptr) { this->m_pWorld->Render(); }
+	gStateMgr->Render();
 
 	this->m_pContext->SetBlendMode(Leadwerks::Blend::Alpha);
 	/* Perform any 2D-rendering here.*/
+	gStateMgr->Draw();
+
 	this->m_pContext->SetBlendMode(Leadwerks::Blend::Solid);
 
 	this->m_pContext->Sync(false);

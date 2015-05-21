@@ -3,6 +3,7 @@
 
 #pragma once
 #include "Leadwerks.h"
+#include "Managers\StateManager.hpp"
 
 // MACROS
 #define SAFE_DELETE( p )       { if( p ) { delete ( p );     ( p ) = NULL; } }
@@ -75,6 +76,7 @@ private:
 
 /* Externals */
 extern App* gApp;
+extern StateManager* gStateMgr;
 
 // -----
 

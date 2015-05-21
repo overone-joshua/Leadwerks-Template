@@ -7,6 +7,12 @@
     <ClCompile Include="..\..\Source\main.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\States\Game.cpp">
+      <Filter>Source\States</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Managers\StateManager.cpp">
+      <Filter>Source\Managers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -15,10 +21,28 @@
     <Filter Include="Source">
       <UniqueIdentifier>{993777b6-5434-4cb9-93a3-2b1b29e6cdf1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\States">
+      <UniqueIdentifier>{38c05f01-ad6b-48bf-bfd0-7420de804e63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\States">
+      <UniqueIdentifier>{331c8994-1d69-4a98-aa5a-4d9ee1233a9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Managers">
+      <UniqueIdentifier>{cf27f3da-a196-4c83-b90f-f1c6cd0bd59f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Managers">
+      <UniqueIdentifier>{632844de-f9ae-47a5-b781-780f94e22ac6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\App.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\States\Game.hpp">
+      <Filter>Header Files\States</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Managers\StateManager.hpp">
+      <Filter>Header Files\Managers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
