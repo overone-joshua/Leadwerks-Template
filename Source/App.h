@@ -4,6 +4,8 @@
 #pragma once
 #include "Leadwerks.h"
 #include "Managers\StateManager.hpp"
+#include "Managers\InputManager.hpp"
+#include "Managers\CameraManager.hpp"
 
 // MACROS
 #define SAFE_DELETE( p )       { if( p ) { delete ( p );     ( p ) = NULL; } }
@@ -19,6 +21,8 @@
 #define CAMERA_CREATION_ERROR	16
 
 // -----
+
+class GameObject;
 
 class App
 {
@@ -75,8 +79,10 @@ private:
 }; // end class App.
 
 /* Externals */
-extern App* gApp;
-extern StateManager* gStateMgr;
+extern App*								gApp;													// The global application handle.
+extern StateManager*					gStateMgr;												// The global state manager handle.
+extern InputManager*					gInputMgr;												// The global input manager handle.
+extern CameraManager*					gCameraMgr;												// The global camera manager handle.
 
 // -----
 

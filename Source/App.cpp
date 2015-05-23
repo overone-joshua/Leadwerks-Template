@@ -3,13 +3,18 @@
 #include "Leadwerks.h"
 
 #include "Managers\StateManager.hpp"
+#include "Managers\InputManager.hpp"
+#include "Managers\CameraManager.hpp"
 #include "States\Game.hpp"
+#include "Objects\GameObject.hpp"
 
 #include <iostream>
 
 /* Externals From App.h */
 App* gApp;
 StateManager* gStateMgr;
+InputManager* gInputMgr;
+CameraManager* gCameraMgr;
 
 // -----
 
@@ -122,6 +127,8 @@ int App::Initialize() {
 void App::Shutdown() {
 	/* Perform any component-shutdown logic */
 	SAFE_DELETE(gStateMgr);
+	SAFE_DELETE(gInputMgr);
+	SAFE_DELETE(gCameraMgr);
 
 }
 
@@ -158,10 +165,9 @@ bool App::Start()
 	/* Initialize the application */
 	if (this->Initialize() != 0) { return false; }
 
-	/* Center and, or Hide Mouse */
-	//this->m_pWindow->HideMouse();
-	float mX = this->m_pWindow->GetWidth() * 0.5f; float mY = this->m_pWindow->GetHeight() * 0.5f;
-	this->m_pWindow->SetMousePosition(mX, mY);
+	/* Initialize the application input manager */
+	gInputMgr = new InputManager(this->m_pWindow, this->m_pContext);
+	gInputMgr->ToggleMouseCenter();
 
 	/* Populate the new camera with default values */
 	Leadwerks::Vec3 vZero = Leadwerks::Vec3(0.0f, 0.0f, 0.0f);
@@ -170,6 +176,11 @@ bool App::Start()
 	this->m_pCamera->SetPosition(vZero, false);
 	this->m_pCamera->SetPosition(vZero, true);	
 
+	/* Initialize the application camera manager */
+	gCameraMgr = new CameraManager(this->m_pWindow, this->m_pContext, this->m_pWorld, this->m_pCamera);
+	gCameraMgr->SetBehavior(CamBehavior::FLIGHT);
+
+	/* Initialize the application state manager */
 	gStateMgr = new StateManager();
 	gStateMgr->AddState(new Game(), true);
 
@@ -183,6 +194,8 @@ bool App::Loop()
 
 	/* Update the application's game-time, at 60fps */
 	Leadwerks::Time::Update(60);
+	gInputMgr->Update(Leadwerks::Time::GetSpeed());
+	gCameraMgr->Update(Leadwerks::Time::GetSpeed());
 
 	/* If the application's display settings changes this frame, re-initialize the application */
 	if (this->m_bSettingsChangedThisFrame) {

@@ -13,6 +13,15 @@
     <ClCompile Include="..\..\Source\Managers\StateManager.cpp">
       <Filter>Source\Managers</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Managers\CameraManager.cpp">
+      <Filter>Source\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Managers\InputManager.cpp">
+      <Filter>Source\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Objects\GameObject.cpp">
+      <Filter>Source\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -33,6 +42,12 @@
     <Filter Include="Source\Managers">
       <UniqueIdentifier>{632844de-f9ae-47a5-b781-780f94e22ac6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Objects">
+      <UniqueIdentifier>{3c75dc09-d7cd-4b66-bf2b-f604c36785e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Objects">
+      <UniqueIdentifier>{c9066abd-cc01-4043-81d5-dc839b1ce70b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\App.h">
@@ -43,6 +58,15 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Managers\StateManager.hpp">
       <Filter>Header Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Managers\CameraManager.hpp">
+      <Filter>Header Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Managers\InputManager.hpp">
+      <Filter>Header Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Objects\GameObject.hpp">
+      <Filter>Header Files\Objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

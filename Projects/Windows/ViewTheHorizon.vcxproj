@@ -220,12 +220,18 @@
   <ItemGroup>
     <ClCompile Include="..\..\Source\App.cpp" />
     <ClCompile Include="..\..\Source\main.cpp" />
+    <ClCompile Include="..\..\Source\Managers\CameraManager.cpp" />
+    <ClCompile Include="..\..\Source\Managers\InputManager.cpp" />
     <ClCompile Include="..\..\Source\Managers\StateManager.cpp" />
+    <ClCompile Include="..\..\Source\Objects\GameObject.cpp" />
     <ClCompile Include="..\..\Source\States\Game.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\App.h" />
+    <ClInclude Include="..\..\Source\Managers\CameraManager.hpp" />
+    <ClInclude Include="..\..\Source\Managers\InputManager.hpp" />
     <ClInclude Include="..\..\Source\Managers\StateManager.hpp" />
+    <ClInclude Include="..\..\Source\Objects\GameObject.hpp" />
     <ClInclude Include="..\..\Source\States\Game.hpp" />
   </ItemGroup>
   <ItemGroup>

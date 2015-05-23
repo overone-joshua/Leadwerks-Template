@@ -19,19 +19,18 @@ void DebugErrorHook(char* c)
 	//=========================================================================================
 }
 
-    #ifdef __APPLE__
-int main_(int argc,const char *argv[])
-{
-	#else
-int main(int argc,const char *argv[])
-{
-	#endif
+#ifdef __APPLE__
+	int main_(int argc,const char *argv[]) {
+#else
+	int main(int argc,const char *argv[]) {
+#endif
 
 	//Load saved settings
 	std::string settingsfile = std::string(argv[0]);
 	settingsfile = FileSystem::StripAll(settingsfile);
 	if (String::Right(settingsfile, 6) == ".debug") settingsfile = String::Left(settingsfile, settingsfile.length() - 6);
 	std::string settingsdir = FileSystem::GetAppDataPath();
+
 #ifdef __linux__
 	#ifndef __ANDROID__
 		settingsdir = settingsdir + "/." + String::Lower(settingsfile);
@@ -55,7 +54,7 @@ int main(int argc,const char *argv[])
     Leadwerks::Directory* dir = Leadwerks::FileSystem::LoadDir(".");
     if (dir)
     {
-        for (int i=0; i<dir->files.size(); i++)
+        for (unsigned i=0; i < dir->files.size(); i += 1)
         {
             std::string file = dir->files[i];
             if (Leadwerks::String::Lower(Leadwerks::FileSystem::ExtractExt(file))=="zip")
@@ -93,23 +92,24 @@ int main(int argc,const char *argv[])
     }
 #endif
 	App* app = new App;
- 	if (app->Start())
-	{
-		while (app->Loop()) {}
-	#ifdef DEBUG
+ 	if (app->Start()) {
+		while (app->Loop()) {
+		
+		}
+
+#ifdef DEBUG
 		Interpreter::Disconnect();
-	#endif
+#endif
 		//Save settings
 		delete app;
 		System::SaveSettings(settingsfile);
 		System::Shutdown();
 		return 0;
 	}
-	else
-	{	
-	#ifdef DEBUG
+	else {	
+#ifdef DEBUG
 		Interpreter::Disconnect();
-	#endif
+#endif
 		return 1;
 	}
 }
