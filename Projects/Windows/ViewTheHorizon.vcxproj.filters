@@ -22,9 +22,6 @@
     <ClCompile Include="..\..\Source\Objects\GameObject.cpp">
       <Filter>Source\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Helpers\Delegate.cpp">
-      <Filter>Source\Helpers</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -53,9 +50,6 @@
     </Filter>
     <Filter Include="Header Files\Helpers">
       <UniqueIdentifier>{d7f56f06-b2c3-4128-b624-bc0f4b127351}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Helpers">
-      <UniqueIdentifier>{7cd366e4-9e8f-4dd2-8d87-d3204f7ede88}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
