@@ -3,6 +3,7 @@
 
 #pragma once
 #include "Leadwerks.h"
+#include "Managers\EventManager.hpp"
 #include "Managers\StateManager.hpp"
 #include "Managers\InputManager.hpp"
 #include "Managers\CameraManager.hpp"
@@ -51,17 +52,22 @@ public:
 	void								ToggleFullscreen();										// Toggles full-screen mode for the application.
 	void								Pause();												// Pauses the application.
 	void								UnPause();												// Un-pauses the application.
-	
+
 protected:
 	int									Initialize();											// Initializes the application.
 	void								Shutdown();												// Shuts down the application.
 	
+	void								OnLeadwerksInitialized(BaseEventData* pData);			// Method called after Leadwerks components have been initialized
+																								// - using the event-manager.
+
 	int									CreateWindow(const int flags = 0);						// Creates the application's window, using the given flags.
 	int									CreateContext(const int flags = 0);						// Creates the application's rendering context, using the given flags.
 	int									CreateWorld();											// Creates the application's primary world.
 	int									CreateCamera(Leadwerks::Entity* pParent = nullptr);		// Create the application's primary camera, using the given parent.
 
 private:
+	bool								RegisterApplicationEvents();							// Method-place, where all application-events should be registered with the
+																								// - event factory.
 	Leadwerks::Window*					m_pWindow;												// The main window handle for the application.
 	Leadwerks::Context*					m_pContext;												// The main rendering context handle for the application.
 	Leadwerks::World*					m_pWorld;												// The main world handle for the application.
@@ -80,6 +86,7 @@ private:
 
 /* Externals */
 extern App*								gApp;													// The global application handle.
+extern EventManager*					gEventMgr;												// The global event manager handle.
 extern StateManager*					gStateMgr;												// The global state manager handle.
 extern InputManager*					gInputMgr;												// The global input manager handle.
 extern CameraManager*					gCameraMgr;												// The global camera manager handle.

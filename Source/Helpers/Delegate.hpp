@@ -5,50 +5,55 @@
 #include <cassert>
 #include <utility>
 
-template <typename R, typename T>
+template <typename T>
 class Delegate {
 	typedef void* InstancePtr;
 	typedef void(*InternalFunction)(InstancePtr, T);
 	typedef std::pair<InstancePtr, InternalFunction> Stub;
 
 	/* Turns a free function into our internal function stub */
-	template <R(*Function)(T)>
+	template <void(*Function)(T)>
 	static inline void FunctionStub(InstancePtr, T ARG0) {
-		/* We do not need the instance pointer because we are dealing with free functions */
 		return (Function)(ARG0);
 	}
 
 	/* Turns a member function into our internal function stub */
-	template <class C, R(C::*Function)(T)>
+	template <class C, void(C::*Function)(T)>
 	static inline void ClassMethodStub(InstancePtr instance, T ARG0) {
-		/* Cast the instance pointer back into the original class instance */
 		return (static_cast<C*>(instance)->*Function)(ARG0);
 	}
 
 public:
-	Delegate(void) : m_stub(nullptr, nullptr) {}
+	Delegate(void) : m_stub(nullptr, nullptr) { };
 
-	/* Binds a free function */
-	template <R(*Function)(T)>
+	/* Binds a free-function */
+	template <void(*Function)(T)>
 	void Bind(void) {
-		m_stub.first = nullptr;
-		m_stub.second = &FunctionStub < Function > ;
+		this->m_stub.first = nullptr;
+		this->m_stub.second = &FunctionStub < Function > ;
 	}
 
-	/* Binds a class method */
-	template <class C, R(C::*Function)(T)>
+	/* Binds a class-method */
+	template <class C, void(C::*Function)(T)>
 	void Bind(C* instance) {
-		m_stub.first = instance;
-		m_stub.second = &ClassMethodStub < C, Function > ;
+		this->m_stub.first = instance;
+		this->m_stub.second = &ClassMethodStub < C, Function > ;
 	}
 
-	/* Invoke the delegate */
-	R Invoke(T ARG0) const {
-		assert(m_stub.second != nullptr); // Cannot invoke unbound delegate. Call Bind() first.
-		return m_stub.second(m_stub.first, ARG0);
+	/* Invokes the delegate */
+	void Invoke(T ARG0) const {
+		assert(m_stub.second != nullptr);	 // Cannot invoke unbound delegate. Call Bind() first.
+		return this->m_stub.second(m_stub.first, ARG0);
 	}
 
-protected:
+	const bool operator == (Delegate<T> other) const {
+		if (this->m_stub.first != other.m_stub.first ||
+			this->m_stub.second != other.m_stub.second) {
+			return false;
+		}
+
+		return true;
+	}
 
 private:
 	Stub m_stub;

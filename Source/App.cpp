@@ -1,17 +1,18 @@
 #pragma once
 #include "App.h"
 #include "Leadwerks.h"
-
+#include "Helpers\Event.hpp"
+#include "Managers\EventManager.hpp"
 #include "Managers\StateManager.hpp"
 #include "Managers\InputManager.hpp"
 #include "Managers\CameraManager.hpp"
 #include "States\Game.hpp"
 #include "Objects\GameObject.hpp"
-
 #include <iostream>
 
 /* Externals From App.h */
 App* gApp;
+EventManager* gEventMgr;
 StateManager* gStateMgr;
 InputManager* gInputMgr;
 CameraManager* gCameraMgr;
@@ -120,6 +121,18 @@ int App::Initialize() {
 	/* Camera */
 	initResults |= this->CreateCamera(nullptr);
 
+	/* Create a new instance of the LeadwerksInitialized event */
+	auto pLeadwerksInitialized = gEventFactory.Create("EventData_LeadwerksInitialized");
+
+	/* Create the delegate that will be binded to the application's OnLeadwerksInitialized class method */
+	EventListenerDelegate leadwerksInitializedDelegate;
+	leadwerksInitializedDelegate.Bind<App, &App::OnLeadwerksInitialized>(this);
+
+	/* Add a new listener to the LeadwerksInitialized event, and queue the event to be fired during the 
+	   - event manager's processing loop */
+	gEventMgr->AddListener(leadwerksInitializedDelegate, pLeadwerksInitialized->ObjectType());
+	gEventMgr->QueueEvent(*pLeadwerksInitialized);
+
 	this->m_bSettingsChangedThisFrame = false;
 	return initResults;
 }
@@ -129,7 +142,7 @@ void App::Shutdown() {
 	SAFE_DELETE(gStateMgr);
 	SAFE_DELETE(gInputMgr);
 	SAFE_DELETE(gCameraMgr);
-
+	SAFE_DELETE(gEventMgr);
 }
 
 App::App()
@@ -153,8 +166,27 @@ App::~App() {
 	SAFE_DELETE(this->m_pWindow);
 }
 
+bool App::RegisterApplicationEvents() {
+	REGISTER_EVENT((new FactoryMaker < EventData_LeadwerksInitialized, BaseEventData >));
+
+	return true;
+}
+
+void App::OnLeadwerksInitialized(BaseEventData* pData) {
+	/* Simply write out notification that Leadwerks has been intitialized. 
+	   - This indicates the out event manager is actually working, when 
+	   - this method is called */
+	std::cout << "Leadwerks Initialization Complete! \n";
+}
+
 bool App::Start()
 {
+	/* Initialize the application event manager */
+	gEventMgr = new EventManager();
+
+	/* Register all application-specific events */
+	if (!this->RegisterApplicationEvents()) { return false; }
+
 	//Initialize Steamworks (optional)
 	/*if (!Steamworks::Initialize())
 	{
@@ -189,6 +221,9 @@ bool App::Start()
 
 bool App::Loop()
 {
+	/* Update the application's event-management */
+	gEventMgr->Update(20);	// Allow 20ms for event-queue processing.
+
 	/* If the window is closed, for any reason, end the application */
 	if (this->m_pWindow->Closed()) { return false; }
 

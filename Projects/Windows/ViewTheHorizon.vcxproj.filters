@@ -22,6 +22,12 @@
     <ClCompile Include="..\..\Source\Objects\GameObject.cpp">
       <Filter>Source\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Managers\EventManager.cpp">
+      <Filter>Source\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Helpers\Event.cpp">
+      <Filter>Source\Helpers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -51,6 +57,9 @@
     <Filter Include="Header Files\Helpers">
       <UniqueIdentifier>{d7f56f06-b2c3-4128-b624-bc0f4b127351}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Helpers">
+      <UniqueIdentifier>{e28d7876-5beb-401a-ac50-a93ee306722e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\App.h">
@@ -72,6 +81,15 @@
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Helpers\Delegate.hpp">
+      <Filter>Header Files\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Managers\EventManager.hpp">
+      <Filter>Header Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Helpers\Factory.hpp">
+      <Filter>Header Files\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Helpers\Event.hpp">
       <Filter>Header Files\Helpers</Filter>
     </ClInclude>
   </ItemGroup>

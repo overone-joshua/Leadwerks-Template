@@ -4,11 +4,6 @@
 #pragma once
 #include "Leadwerks.h"
 
-#define CLASS_TYPE(classname) \
-	public: \
-		virtual const char* GetObjectType() { return GetClassType(); } \
-		static const char* GetClassType() { return #classname; }
-
 class GameObject {
 public:
 												GameObject();															// Game object's constructor
