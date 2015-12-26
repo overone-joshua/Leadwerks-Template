@@ -37,13 +37,15 @@ void Game::Close() {
 void Game::Update(float deltaTime) {
 	if (gApp->GetWindow().KeyHit(Leadwerks::Key::D1)) {
 		gCameraMgr->SetBehavior(CamBehavior::FLIGHT);
-
 	} 
 	else if (gApp->GetWindow().KeyHit(Leadwerks::Key::D2)) {
 		gCameraMgr->SetBehavior(CamBehavior::FIRST_PERSON);
 	}
 	else if (gApp->GetWindow().KeyHit(Leadwerks::Key::D3)) {
 		gCameraMgr->SetBehavior(CamBehavior::THIRD_PERSON);
+	}
+	else if (gApp->GetWindow().KeyHit(Leadwerks::Key::Escape)) {
+		gStateMgr->Exit();
 	}
 }
 
