@@ -217,3 +217,6 @@ Sound/
 
 # Visual Studio extra build files.
 *.debug.exp
+
+# CLion
+*.idea
