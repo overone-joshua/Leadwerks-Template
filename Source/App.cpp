@@ -244,6 +244,9 @@ bool App::Loop()
 		/* Perform game-loop updates here */
 		if (gStateMgr->Update(Leadwerks::Time::GetSpeed()) == false) { return true; }
 
+		/* Exit the program if the user requested */
+		if (gStateMgr->IsExiting()) { return false; }
+
 		if (this->m_pWorld != nullptr) { this->m_pWorld->Update(); }		
 	}
 

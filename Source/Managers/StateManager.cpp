@@ -13,7 +13,8 @@ std::list<State*> StateManager::States() {
 }
 
 StateManager::StateManager() 
-	: m_pCurrentState(nullptr) {
+	: m_pCurrentState(nullptr)
+	, m_bIsExiting(false) {
 
 }
 
@@ -133,4 +134,12 @@ void StateManager::CloseCurrentState() {
 		this->m_pCurrentState->Close(); 
 		this->m_pCurrentState = nullptr; 
 	}
+}
+
+void StateManager::Exit() {
+	m_bIsExiting = true;
+}
+
+bool StateManager::IsExiting() {
+	return m_bIsExiting;
 }

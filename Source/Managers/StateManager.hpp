@@ -48,6 +48,8 @@ public:
 	State*								CurrentState();											// Gets the applications current state.
 	std::list<State*>					States();												// Gets a std::list object containing all states registered with the state-manager.
 	bool								StateChangedThisFrame();								// Gets whether a state change has occured this frame.
+	void								Exit();													// Called when we want to flag the program to exit.
+	bool								IsExiting();											// Get whether the user is closing the program.
 
 protected:
 	bool								Contains(State* pState);								// Indicates whether the given state already exists within the state-manager.
@@ -60,6 +62,7 @@ private:
 	std::list<State*>					m_pStates;												// A list of all states registered with the state-manager.
 
 	bool								m_bStateChangedThisFrame;								// Indicates if there was a change in state, this frame.
+	bool								m_bIsExiting;											// Indicates if the user is exiting the program.
 };
 
 #endif // _STATEMANAGER_H_
