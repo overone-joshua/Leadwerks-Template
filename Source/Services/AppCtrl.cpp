@@ -88,14 +88,18 @@ void AppCtrl::ReleaseApplication(void) {
 void AppCtrl::ReleaseWindowAndContext(void) {
     SAFE_RELEASE(m_pContext);
     SAFE_RELEASE(m_pWindow);
+    SAFE_DELETE(m_pContext);
+    SAFE_DELETE(m_pWindow);
 }
 
 void AppCtrl::ReleaseWorld(void) {
     SAFE_RELEASE(m_pWorld);
+    SAFE_DELETE(m_pWorld);
 }
 
 void AppCtrl::ReleaseCamera(void) {
     SAFE_RELEASE(m_pCamera);
+    SAFE_DELETE(m_pCamera);
 }
 
 AppCtrl::AppCtrl(App *pApp)
