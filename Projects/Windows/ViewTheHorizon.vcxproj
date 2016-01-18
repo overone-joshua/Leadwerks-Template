@@ -105,6 +105,7 @@
       <ObjectFileName>$(IntDir)</ObjectFileName>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4373</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <AdditionalOptions>/NODEFAULTLIB:MSVCRT.lib /NODEFAULTLIB:MSVCRTD.lib %(AdditionalOptions)</AdditionalOptions>
@@ -169,6 +170,7 @@
       <ObjectFileName>$(IntDir)</ObjectFileName>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4373</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <AdditionalDependencies>Leadwerks.lib;lua51.lib;steam_api.lib;OpenAL32.lib;ws2_32.lib;libovr.lib;OpenGL32.lib;Glu32.lib;winmm.lib;Psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -219,26 +221,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\App.cpp" />
-    <ClCompile Include="..\..\Source\Helpers\Event.cpp" />
     <ClCompile Include="..\..\Source\main.cpp" />
-    <ClCompile Include="..\..\Source\Managers\CameraManager.cpp" />
-    <ClCompile Include="..\..\Source\Managers\EventManager.cpp" />
-    <ClCompile Include="..\..\Source\Managers\InputManager.cpp" />
-    <ClCompile Include="..\..\Source\Managers\StateManager.cpp" />
-    <ClCompile Include="..\..\Source\Objects\GameObject.cpp" />
-    <ClCompile Include="..\..\Source\States\Game.cpp" />
+    <ClCompile Include="..\..\Source\Services\AppCtrl.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\App.h" />
-    <ClInclude Include="..\..\Source\Helpers\Delegate.hpp" />
-    <ClInclude Include="..\..\Source\Helpers\Event.hpp" />
-    <ClInclude Include="..\..\Source\Helpers\Factory.hpp" />
-    <ClInclude Include="..\..\Source\Managers\CameraManager.hpp" />
-    <ClInclude Include="..\..\Source\Managers\EventManager.hpp" />
-    <ClInclude Include="..\..\Source\Managers\InputManager.hpp" />
-    <ClInclude Include="..\..\Source\Managers\StateManager.hpp" />
-    <ClInclude Include="..\..\Source\Objects\GameObject.hpp" />
-    <ClInclude Include="..\..\Source\States\Game.hpp" />
+    <ClInclude Include="..\..\Source\Common.hpp" />
+    <ClInclude Include="..\..\Source\Services\AppCtrl.hpp" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuildStep Include="C:/Leadwerks\Engine\Library\StaticLib\Debug\Leadwerks.lib">

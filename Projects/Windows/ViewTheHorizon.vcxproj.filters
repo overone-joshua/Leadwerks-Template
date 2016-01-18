@@ -7,26 +7,8 @@
     <ClCompile Include="..\..\Source\main.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\States\Game.cpp">
-      <Filter>Source\States</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Managers\StateManager.cpp">
-      <Filter>Source\Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Managers\CameraManager.cpp">
-      <Filter>Source\Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Managers\InputManager.cpp">
-      <Filter>Source\Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Objects\GameObject.cpp">
-      <Filter>Source\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Managers\EventManager.cpp">
-      <Filter>Source\Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Helpers\Event.cpp">
-      <Filter>Source\Helpers</Filter>
+    <ClCompile Include="..\..\Source\Services\AppCtrl.cpp">
+      <Filter>Source\Services</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -36,61 +18,22 @@
     <Filter Include="Source">
       <UniqueIdentifier>{993777b6-5434-4cb9-93a3-2b1b29e6cdf1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\States">
-      <UniqueIdentifier>{38c05f01-ad6b-48bf-bfd0-7420de804e63}</UniqueIdentifier>
+    <Filter Include="Header Files\Services">
+      <UniqueIdentifier>{2869768b-8ecb-4f28-9631-094b6e917bf1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\States">
-      <UniqueIdentifier>{331c8994-1d69-4a98-aa5a-4d9ee1233a9e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Managers">
-      <UniqueIdentifier>{cf27f3da-a196-4c83-b90f-f1c6cd0bd59f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Managers">
-      <UniqueIdentifier>{632844de-f9ae-47a5-b781-780f94e22ac6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Objects">
-      <UniqueIdentifier>{3c75dc09-d7cd-4b66-bf2b-f604c36785e3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Objects">
-      <UniqueIdentifier>{c9066abd-cc01-4043-81d5-dc839b1ce70b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Helpers">
-      <UniqueIdentifier>{d7f56f06-b2c3-4128-b624-bc0f4b127351}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Helpers">
-      <UniqueIdentifier>{e28d7876-5beb-401a-ac50-a93ee306722e}</UniqueIdentifier>
+    <Filter Include="Source\Services">
+      <UniqueIdentifier>{31328dd3-08fc-4e72-a48a-95fe443ff627}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\App.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\States\Game.hpp">
-      <Filter>Header Files\States</Filter>
+    <ClInclude Include="..\..\Source\Services\AppCtrl.hpp">
+      <Filter>Header Files\Services</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Managers\StateManager.hpp">
-      <Filter>Header Files\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Managers\CameraManager.hpp">
-      <Filter>Header Files\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Managers\InputManager.hpp">
-      <Filter>Header Files\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Objects\GameObject.hpp">
-      <Filter>Header Files\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Helpers\Delegate.hpp">
-      <Filter>Header Files\Helpers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Managers\EventManager.hpp">
-      <Filter>Header Files\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Helpers\Factory.hpp">
-      <Filter>Header Files\Helpers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Helpers\Event.hpp">
-      <Filter>Header Files\Helpers</Filter>
+    <ClInclude Include="..\..\Source\Common.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
