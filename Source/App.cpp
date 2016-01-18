@@ -6,11 +6,12 @@ App::App(void) { }
 
 App::~App(void) { }
 
-bool App::Start(void) {	
+bool App::Start(void) {
 	
 	std::cout << "Application initialization completed successfully. \n";
 	
-	return true; }
+	return true;
+}
 
 void App::preUpdate(void) { }
 

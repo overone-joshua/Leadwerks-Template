@@ -6,27 +6,22 @@
 
 class App {
 public:
-	App(void);
-	virtual ~App(void);
+					App			(void);
+	virtual 		~App		(void);
 
-	bool Start(void);
+	bool 			Start		(void);
 
-	void preUpdate(void);
-	void postUpdate(void);
-	bool Update(float deltaTime);
+	void 			preUpdate	(void);
+	void 			postUpdate	(void);
+	bool 			Update		(float deltaTime);
 
-	void preRender(void);
-	void postRender(void);
-	void Render(void);
+	void 			preRender	(void);
+	void 			postRender	(void);
+	void 			Render		(void);
 
-	void preDraw(void);
-	void postDraw(void);
-	void Draw(void);
-
-protected:
-
-private:
-
+	void 			preDraw		(void);
+	void 			postDraw	(void);
+	void 			Draw		(void);
 }; // end class.
 
 #endif // _APP_H_
