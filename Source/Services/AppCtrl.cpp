@@ -168,8 +168,8 @@ bool AppCtrl::Update(float dt) {
 	return true;
 }
 
-void AppCtrl::preRender() {
-    m_pContext->SetColor(0.0f, 0.0f, 255.0f, 1.0f);
+void AppCtrl::preRender() {	
+	m_pContext->SetColor(0.45f, 0.110f, 0.105f, 1.0f);
     m_pContext->Clear();
 
     m_pApp->preRender();
