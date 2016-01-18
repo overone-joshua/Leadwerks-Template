@@ -5,7 +5,7 @@
 
 
 const bool AppCtrl::isFullScreen() const {
-    return m_bFullScreen;
+	return m_pWindow->FullScreen;
 }
 
 const std::string AppCtrl::getAppName() const {
@@ -13,11 +13,11 @@ const std::string AppCtrl::getAppName() const {
 }
 
 const Leadwerks::Vec2 AppCtrl::screen_upperLeft() const {
-    return m_vUpperLeft;
+	return Leadwerks::Vec2(m_pWindow->GetX(), m_pWindow->GetY());
 }
 
 const Leadwerks::Vec2 AppCtrl::screen_lowerRight() const {
-    return m_vLowerRight;
+	return Leadwerks::Vec2(m_pWindow->GetX() + m_pWindow->GetWidth(), m_pWindow->GetY() + m_pWindow->GetHeight());
 }
 
 const int AppCtrl::getWindowFlags (void) const {
@@ -47,12 +47,10 @@ const Leadwerks::Camera& AppCtrl::getCamera() const {
 const bool AppCtrl::CreateWindowAndContext(std::string name, unsigned nX, unsigned nY, unsigned nWidth, unsigned nHeight, int windowFlags, int contextFlags) {
     ReleaseWindowAndContext();
 
-    int x = m_vUpperLeft.x;
-    int y = m_vUpperLeft.y;
-    int width = m_vLowerRight.x - x;
-    int height = m_vLowerRight.y - y;
+	m_windowFlags = windowFlags;
+	m_renderingContextFlags = contextFlags;
 
-    m_pWindow = Leadwerks::Window::Create(m_appName, x, y, width, height, windowFlags);
+    m_pWindow = Leadwerks::Window::Create(name, nX, nY, nWidth, nHeight, windowFlags);
     if (m_pWindow == nullptr) { std::cout << "Window creation was unsuccessful. \n"; return false; }
 
     m_pContext = Leadwerks::Context::Create(m_pWindow, contextFlags);
@@ -104,9 +102,8 @@ void AppCtrl::ReleaseCamera(void) {
 }
 
 AppCtrl::AppCtrl(App *pApp)
-    : m_pWindow(nullptr), m_pContext(nullptr), m_pWorld(nullptr), m_pCamera(nullptr), m_pApp(pApp), m_bFullScreen(false)
-    , m_bExitAppThisFrame(false), m_windowFlags(0), m_renderingContextFlags(0), m_vUpperLeft(0, 0)
-    , m_vLowerRight(1024, 768) { }
+    : m_pWindow(nullptr), m_pContext(nullptr), m_pWorld(nullptr), m_pCamera(nullptr), m_pApp(pApp)
+    , m_bExitAppThisFrame(false), m_windowFlags(0), m_renderingContextFlags(0) { }
 
 AppCtrl::~AppCtrl(void) {
     SAFE_DELETE(m_pCamera);
@@ -115,8 +112,10 @@ AppCtrl::~AppCtrl(void) {
     SAFE_DELETE(m_pWindow);
 }
 
-const bool AppCtrl::Initialize(const std::string appName, unsigned int ulX, unsigned int ulY, unsigned int nWidth,
-                                           unsigned int nHeight, int windowFlags, int contextFlags) {
+const bool AppCtrl::Initialize(const std::string appName, unsigned int ulX, unsigned int ulY, unsigned int nWidth, unsigned int nHeight, int windowFlags, int contextFlags) {
+
+	m_appName = appName;	
+
     if (!CreateWindowAndContext(appName, ulX, ulY, nWidth, nHeight, windowFlags, contextFlags)) { return false; }
 
     if (!CreateWorld() || !CreateCamera()) { return false; }
@@ -138,15 +137,7 @@ void AppCtrl::Shutdown() {
 
 void AppCtrl::preUpdate() {
     if (m_pWindow->Closed()) { m_bExitAppThisFrame = true; }
-
-	int x = m_pWindow->GetX();
-	int y = m_pWindow->GetY();
-	int w = m_pWindow->GetWidth();
-	int h = m_pWindow->GetHeight();
-
-	m_vUpperLeft = Leadwerks::Vec2(x, y);
-	m_vLowerRight = Leadwerks::Vec2(x + w, y + h);
-
+	
     m_pApp->preUpdate();
 }
 

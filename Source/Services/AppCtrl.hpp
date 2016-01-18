@@ -63,13 +63,8 @@ private:
     Leadwerks::Context*     m_pContext;                                         // < Application's rendering context handle.
     Leadwerks::World*       m_pWorld;                                           // < Application's 3D-world handle.
     Leadwerks::Camera*      m_pCamera;                                          // < Application's camera handle.
-
-    bool                    m_bFullScreen;                                      // < Indicates whether the application is currently in full-screen mode.
-    bool                    m_bExitAppThisFrame;                                // < Indicates whether the application will begin closing within the current frame.
-
-    Leadwerks::Vec2         m_vUpperLeft;                                       // < Represents the upper-left screen coordinate.
-    Leadwerks::Vec2         m_vLowerRight;                                      // < Represents the lower-right screen coordinate.
-
+    
+    bool                    m_bExitAppThisFrame;                                // < Indicates whether the application will begin closing within the current frame.    
 }; // end class.
 
 #endif _APP_COONTROLLER_HPP_
