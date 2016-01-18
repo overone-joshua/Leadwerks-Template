@@ -88,6 +88,7 @@ void AppCtrl::ReleaseApplication(void) {
 void AppCtrl::ReleaseWindowAndContext(void) {
     SAFE_RELEASE(m_pContext);
     SAFE_RELEASE(m_pWindow);
+
     SAFE_DELETE(m_pContext);
     SAFE_DELETE(m_pWindow);
 }
@@ -105,9 +106,7 @@ void AppCtrl::ReleaseCamera(void) {
 AppCtrl::AppCtrl(App *pApp)
     : m_pWindow(nullptr), m_pContext(nullptr), m_pWorld(nullptr), m_pCamera(nullptr), m_pApp(pApp), m_bFullScreen(false)
     , m_bExitAppThisFrame(false), m_windowFlags(0), m_renderingContextFlags(0), m_vUpperLeft(0, 0)
-    , m_vLowerRight(1024, 768) {
-
-}
+    , m_vLowerRight(1024, 768) { }
 
 AppCtrl::~AppCtrl(void) {
     SAFE_DELETE(m_pCamera);
@@ -139,6 +138,14 @@ void AppCtrl::Shutdown() {
 
 void AppCtrl::preUpdate() {
     if (m_pWindow->Closed()) { m_bExitAppThisFrame = true; }
+
+	int x = m_pWindow->GetX();
+	int y = m_pWindow->GetY();
+	int w = m_pWindow->GetWidth();
+	int h = m_pWindow->GetHeight();
+
+	m_vUpperLeft = Leadwerks::Vec2(x, y);
+	m_vLowerRight = Leadwerks::Vec2(x + w, y + h);
 
     m_pApp->preUpdate();
 }
