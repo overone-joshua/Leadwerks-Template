@@ -30,6 +30,12 @@
     <Filter Include="Source\Utilities">
       <UniqueIdentifier>{539574f2-0b0e-4f1b-9956-affec87e1ca2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Objects">
+      <UniqueIdentifier>{cc8dca0b-17f9-4e38-892c-5d9895d7af20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Objects">
+      <UniqueIdentifier>{e3f1d86d-5a1f-46c6-8b21-062f9b474187}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\App.h">
