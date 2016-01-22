@@ -24,6 +24,12 @@
     <Filter Include="Source\Services">
       <UniqueIdentifier>{31328dd3-08fc-4e72-a48a-95fe443ff627}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Utilities">
+      <UniqueIdentifier>{f79a4744-1867-4011-bf9f-78e8f3b6bc77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Utilities">
+      <UniqueIdentifier>{539574f2-0b0e-4f1b-9956-affec87e1ca2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\App.h">
