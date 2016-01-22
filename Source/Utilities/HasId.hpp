@@ -1,6 +1,8 @@
 #ifndef _HASID_HPP_
 	#define _HASID_HPP_
 	
+#pragma once
+	
 template <typename T>
 class HasId : public virtual IHasId<T> {
 public:
