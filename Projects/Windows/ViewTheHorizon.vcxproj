@@ -228,6 +228,8 @@
     <ClInclude Include="..\..\Source\App.h" />
     <ClInclude Include="..\..\Source\Common.hpp" />
     <ClInclude Include="..\..\Source\Services\AppCtrl.hpp" />
+    <ClInclude Include="..\..\Source\Utilities\HasId.hpp" />
+    <ClInclude Include="..\..\Source\Utilities\IHasId.hpp" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuildStep Include="C:/Leadwerks\Engine\Library\StaticLib\Debug\Leadwerks.lib">
