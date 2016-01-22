@@ -227,6 +227,8 @@
   <ItemGroup>
     <ClInclude Include="..\..\Source\App.h" />
     <ClInclude Include="..\..\Source\Common.hpp" />
+    <ClInclude Include="..\..\Source\Components\Component.hpp" />
+    <ClInclude Include="..\..\Source\Components\IComponent.hpp" />
     <ClInclude Include="..\..\Source\Objects\Actor.hpp" />
     <ClInclude Include="..\..\Source\Objects\IActor.hpp" />
     <ClInclude Include="..\..\Source\Services\AppCtrl.hpp" />
