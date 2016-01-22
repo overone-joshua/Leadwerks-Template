@@ -105,7 +105,7 @@
       <ObjectFileName>$(IntDir)</ObjectFileName>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <DisableSpecificWarnings>4373</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4373; 4099</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <AdditionalOptions>/NODEFAULTLIB:MSVCRT.lib /NODEFAULTLIB:MSVCRTD.lib %(AdditionalOptions)</AdditionalOptions>
@@ -170,7 +170,7 @@
       <ObjectFileName>$(IntDir)</ObjectFileName>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <DisableSpecificWarnings>4373</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4373; 4099</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <AdditionalDependencies>Leadwerks.lib;lua51.lib;steam_api.lib;OpenAL32.lib;ws2_32.lib;libovr.lib;OpenGL32.lib;Glu32.lib;winmm.lib;Psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
