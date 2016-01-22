@@ -5,7 +5,7 @@
 
 
 const bool AppCtrl::isFullScreen() const {
-	return m_pWindow->FullScreen;
+	return (bool)(m_pWindow->FullScreen);
 }
 
 const std::string AppCtrl::getAppName() const {
