@@ -1,8 +1,9 @@
-#ifndef _ACTOR_HPP_
-	#define _ACTOR_HPP_
+#ifndef _IACTOR_HPP_
+	#define _IACTOR_HPP_
 	
  #pragma once
- 
+#include "../Utilities/HasId.hpp"
+
 class IActor : public virtual HasId<long> {
 public:	 
 
@@ -12,4 +13,4 @@ public:
 
 }; // < end class. 
 	
-#endif _ACTOR_HPP_
+#endif _IACTOR_HPP_
