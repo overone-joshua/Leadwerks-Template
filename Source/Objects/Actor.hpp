@@ -4,13 +4,11 @@
 #pragma once
 #include "IActor.hpp"
 	
-class Actor : public IActor {
+class Actor : public virtual IActor {
 public:
 
-	virtual void Update(float deltaTime) = 0;
-	virtual void Render(void) { };
-	virtual void Draw(void) { };
+	~Actor(void);
 
 }; // end class.
-	
+
 #endif _ACTOR_HPP_
