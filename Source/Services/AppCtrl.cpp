@@ -120,6 +120,8 @@ const bool AppCtrl::Initialize(const std::string appName, unsigned int ulX, unsi
 
     if (!CreateWorld() || !CreateCamera()) { return false; }
 
+	if (!gApp->Start()) { return false; }
+
     std::cout << "Application Controller initialization completed successfully. \n";
 
     return true;
