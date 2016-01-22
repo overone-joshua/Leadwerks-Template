@@ -2,7 +2,8 @@
 	#define _HASID_HPP_
 	
 #pragma once
-	
+#include "IHasId.hpp"
+
 template <typename T>
 class HasId : public virtual IHasId<T> {
 public:
