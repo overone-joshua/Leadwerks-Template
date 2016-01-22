@@ -23,7 +23,7 @@ template <typename T>
 T HasId<T>::Id(void) { return m_id; }
 	
 template <typename T>
-HasId<T>::HasId(T _id) : m_id(_id)) { }
+HasId<T>::HasId(T _id) : m_id(_id) { }
 	
 template <typename T>
 HasId<T>::~HasId(void) { }
