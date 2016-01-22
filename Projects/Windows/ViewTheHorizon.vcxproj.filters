@@ -65,5 +65,11 @@
     <ClInclude Include="..\..\Source\Objects\Actor.hpp">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Components\IComponent.hpp">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Components\Component.hpp">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
