@@ -2,9 +2,9 @@
 	#define _IACTOR_HPP_
 	
  #pragma once
-#include "../Utilities/HasId.hpp"
+#include "../Utilities/IHasId.hpp"
 
-class IActor : public virtual HasId<long> {
+class IActor : public virtual IHasId<long> {
 public:	 	
 
 }; // < end class. 
