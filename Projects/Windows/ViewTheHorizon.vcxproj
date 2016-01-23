@@ -84,12 +84,14 @@
     <OutDir>$(SolutionDir)..\..\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(IncludePath)</IncludePath>
+    <IncludePath>C:\EdenSoftworks\projects\LeadwerksTemplate\Dependencies\sqlite-v3.10.2;$(IncludePath)</IncludePath>
     <LibraryPath>$(LibraryPath)</LibraryPath>
+    <SourcePath>C:\EdenSoftworks\projects\LeadwerksTemplate\Dependencies\sqlite-v3.10.2;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(IncludePath)</IncludePath>
+    <IncludePath>C:\EdenSoftworks\projects\LeadwerksTemplate\Dependencies\sqlite-v3.10.2;$(IncludePath)</IncludePath>
     <LibraryPath>$(LibraryPath)</LibraryPath>
+    <SourcePath>C:\EdenSoftworks\projects\LeadwerksTemplate\Dependencies\sqlite-v3.10.2;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
