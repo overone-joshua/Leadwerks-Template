@@ -2,17 +2,18 @@
 	#define _COMPONENT_HPP_
 	
 #pragma once
-#include "Leadwerks.h"
 #include "IComponent.hpp"
+#include "..\Utilities\HasId.hpp"
 
-class Component : public Leadwerks::Object, public virtual IComponent {
-public:
-	
-	~Component(void);
+class Component : public HasId<long>, public virtual IComponent {
+public:	
+
+	Component(long id);
+	virtual ~Component(void);
 
 	virtual void Update(float deltaTime) = 0;
-	void Render(void);
-	void Draw(void);
+	virtual void Render(void);
+	virtual void Draw(void);
 
 }; // < end class.
 
