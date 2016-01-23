@@ -222,6 +222,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\Source\App.cpp" />
     <ClCompile Include="..\..\Source\Components\Component.cpp" />
+    <ClCompile Include="..\..\Source\Components\HealthComponent.cpp" />
     <ClCompile Include="..\..\Source\Components\RenderComponent.cpp" />
     <ClCompile Include="..\..\Source\main.cpp" />
     <ClCompile Include="..\..\Source\Services\AppCtrl.cpp" />
@@ -230,6 +231,7 @@
     <ClInclude Include="..\..\Source\App.h" />
     <ClInclude Include="..\..\Source\Common.hpp" />
     <ClInclude Include="..\..\Source\Components\Component.hpp" />
+    <ClInclude Include="..\..\Source\Components\HealthComponent.hpp" />
     <ClInclude Include="..\..\Source\Components\IComponent.hpp" />
     <ClInclude Include="..\..\Source\Components\RenderComponent.hpp" />
     <ClInclude Include="..\..\Source\Objects\Actor.hpp" />
