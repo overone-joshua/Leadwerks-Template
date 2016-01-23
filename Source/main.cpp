@@ -170,6 +170,7 @@ int main(int argc, const char *argv[])
 		// < Shutdown application controller.
 		gAppCtrl->Shutdown();
 		SAFE_DELETE(gAppCtrl);
+		SAFE_DELETE(gApp);
 
 		//Save settings
 		if (!System::SaveSettings(settingsfile)) System::Print("Error: Failed to save settings file \"" + settingsfile + "\".");

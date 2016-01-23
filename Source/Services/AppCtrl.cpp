@@ -78,7 +78,7 @@ const bool AppCtrl::CreateCamera() {
 }
 
 void AppCtrl::ReleaseApplication(void) {
-	SAFE_DELETE(m_pApp);
+	m_pApp->Shutdown();	
 
 	std::cout << "Application shutdown completed successfully. \n";
 }
