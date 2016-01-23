@@ -15,6 +15,9 @@ public:
 	void Render(void);
 	void Draw(void);	
 
+	Leadwerks::Model& getModel(void);
+	void setModel(Leadwerks::Model* pModel);
+
 protected:
 
 	Leadwerks::Model* m_pModel;
