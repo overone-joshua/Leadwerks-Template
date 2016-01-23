@@ -10,6 +10,7 @@ public:
 	virtual 		~App		(void);
 
 	bool 			Start		(void);
+	void			Shutdown	(void);
 
 	void 			preUpdate	(void);
 	void 			postUpdate	(void);

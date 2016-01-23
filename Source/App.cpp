@@ -13,6 +13,8 @@ bool App::Start(void) {
 	return true;
 }
 
+void App::Shutdown(void) {	
+}
 void App::preUpdate(void) { }
 
 bool App::Update(float dt) { return true; }
