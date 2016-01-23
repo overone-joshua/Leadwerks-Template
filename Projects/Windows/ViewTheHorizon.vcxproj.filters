@@ -19,6 +19,9 @@
     <ClCompile Include="..\..\Source\Components\HealthComponent.cpp">
       <Filter>Source\Components</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Services\ActorMgr.cpp">
+      <Filter>Source\Services</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -85,6 +88,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Components\HealthComponent.hpp">
       <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Services\ActorMgr.hpp">
+      <Filter>Header Files\Services</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
