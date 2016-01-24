@@ -3,10 +3,12 @@
 	
 #pragma once
 #include "IActor.hpp"
+#include "../Utilities/HasId.hpp"
 	
-class Actor : public virtual IActor {
+class Actor : public HasId<long>, public virtual IActor {
 public:
 
+	Actor(long _id);
 	~Actor(void);
 
 }; // end class.
