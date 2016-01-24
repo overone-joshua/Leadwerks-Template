@@ -3,6 +3,7 @@
 #ifndef BUILD_STATICLIB
 #include "App.h"
 #include "Common.hpp"
+#include "Utilities\Macros.hpp"
 #endif
 #endif
 

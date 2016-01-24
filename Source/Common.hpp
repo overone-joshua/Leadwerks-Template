@@ -11,13 +11,6 @@
 #include "App.h"
 #include "Services/AppCtrl.hpp"
 
-// < Macros
-#define SAFE_DELETE( p )       { if( p ) { delete ( p );     ( p ) = NULL; } }
-#define SAFE_DELETE_ARRAY( p ) { if( p ) { delete[] ( p );   ( p ) = NULL; } }
-#define SAFE_RELEASE( p )      { if( p ) { ( p )->Release(); ( p ) = NULL; } }
-
-// -----
-
 extern App* gApp;
 extern AppCtrl* gAppCtrl;
 

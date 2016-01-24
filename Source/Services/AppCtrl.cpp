@@ -1,8 +1,9 @@
 #pragma once
 #include "Leadwerks.h"
-#include "../Common.hpp"
 #include "AppCtrl.hpp"
 
+#include "../Common.hpp"
+#include "../Utilities/Macros.hpp"
 
 const bool AppCtrl::isFullScreen() const {
 	return (bool)(m_pWindow->FullScreen);

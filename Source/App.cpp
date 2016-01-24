@@ -2,6 +2,8 @@
 #include "Leadwerks.h"
 #include "App.h"
 
+#include "Common.hpp"
+#include "Utilities\Macros.hpp"
 App::App(void) { }
 
 App::~App(void) { }
