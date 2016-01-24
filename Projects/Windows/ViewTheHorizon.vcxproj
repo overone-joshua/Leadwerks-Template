@@ -227,6 +227,7 @@
     <ClCompile Include="..\..\Source\Components\HealthComponent.cpp" />
     <ClCompile Include="..\..\Source\Components\RenderComponent.cpp" />
     <ClCompile Include="..\..\Source\main.cpp" />
+    <ClCompile Include="..\..\Source\Objects\Actor.cpp" />
     <ClCompile Include="..\..\Source\Services\ActorMgr.cpp" />
     <ClCompile Include="..\..\Source\Services\AppCtrl.cpp" />
   </ItemGroup>
@@ -241,6 +242,7 @@
     <ClInclude Include="..\..\Source\Objects\IActor.hpp" />
     <ClInclude Include="..\..\Source\Services\ActorMgr.hpp" />
     <ClInclude Include="..\..\Source\Services\AppCtrl.hpp" />
+    <ClInclude Include="..\..\Source\Services\Manager.hpp" />
     <ClInclude Include="..\..\Source\Utilities\HasId.hpp" />
     <ClInclude Include="..\..\Source\Utilities\IHasId.hpp" />
     <ClInclude Include="..\..\Source\Utilities\Macros.hpp" />

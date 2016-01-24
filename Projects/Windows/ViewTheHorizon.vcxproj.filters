@@ -22,6 +22,9 @@
     <ClCompile Include="..\..\Source\Services\ActorMgr.cpp">
       <Filter>Source\Services</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Objects\Actor.cpp">
+      <Filter>Source\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -90,6 +93,9 @@
       <Filter>Header Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Services\ActorMgr.hpp">
+      <Filter>Header Files\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Services\Manager.hpp">
       <Filter>Header Files\Services</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Utilities\Macros.hpp">
