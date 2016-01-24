@@ -26,6 +26,6 @@ template <typename T>
 HasId<T>::HasId(T _id) : m_id(_id) { }
 	
 template <typename T>
-HasId<T>::~HasId(void) { }
+HasId<T>::~HasId(void) { m_id = -1; }
 	
 #endif _HASID_HPP_
