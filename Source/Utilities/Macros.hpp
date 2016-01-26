@@ -6,6 +6,11 @@
 #define SAFE_DELETE_ARRAY( p ) { if( p ) { delete[] ( p );   ( p ) = NULL; } }
 #define SAFE_RELEASE( p )      { if( p ) { ( p )->Release(); ( p ) = NULL; } }
 
+#define CLASS_TYPE(classname) \
+	public: \
+		virtual const char* ObjectType() { return ClassType(); } \
+		static const char* ClassType() { return #classname; }
+
 // -----
 
 #endif _MACROS_HPP_
