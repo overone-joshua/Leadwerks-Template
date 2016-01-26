@@ -3,17 +3,15 @@
 	
 #pragma once
 #include "IComponent.hpp"
-#include "..\Utilities\HasId.hpp"
+#include "../Common.hpp"
 
-class Component : public HasId<long>, public virtual IComponent {
+class Component : public HasId<uint64_t>, public virtual IComponent {
 public:	
 
-	Component(long id);
-	virtual ~Component(void);
+	virtual const char* ObjectType(void) = 0;
 
-	virtual void Update(float deltaTime) = 0;
-	virtual void Render(void);
-	virtual void Draw(void);
+	Component(void);
+	virtual ~Component(void);
 
 }; // < end class.
 
