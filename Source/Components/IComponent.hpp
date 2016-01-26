@@ -7,9 +7,7 @@
 class IComponent : public virtual IHasId<long> {
 public:	
 
-	virtual void Update(float dt) = 0;
-	virtual void Render(void) = 0;
-	virtual void Draw(void) = 0;
+	virtual const char* ObjectType(void) = 0;
 
 }; // < end class.
 
