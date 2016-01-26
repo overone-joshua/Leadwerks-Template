@@ -95,9 +95,6 @@
     <ClInclude Include="..\..\Source\Services\ActorMgr.hpp">
       <Filter>Header Files\Services</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Services\Manager.hpp">
-      <Filter>Header Files\Services</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\Utilities\Macros.hpp">
       <Filter>Header Files\Utilities</Filter>
     </ClInclude>

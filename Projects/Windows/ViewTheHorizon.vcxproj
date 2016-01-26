@@ -242,7 +242,6 @@
     <ClInclude Include="..\..\Source\Objects\IActor.hpp" />
     <ClInclude Include="..\..\Source\Services\ActorMgr.hpp" />
     <ClInclude Include="..\..\Source\Services\AppCtrl.hpp" />
-    <ClInclude Include="..\..\Source\Services\Manager.hpp" />
     <ClInclude Include="..\..\Source\Utilities\Factory.hpp" />
     <ClInclude Include="..\..\Source\Utilities\HasId.hpp" />
     <ClInclude Include="..\..\Source\Utilities\IHasId.hpp" />
