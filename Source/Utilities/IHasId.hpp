@@ -9,6 +9,10 @@ public:
 
 	virtual T Id(void) = 0;
 	
+protected:
+
+	virtual void setId(T _id) = 0;
+
 }; // end class.
 	
 #endif _IHASID_HPP_
