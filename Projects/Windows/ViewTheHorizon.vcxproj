@@ -228,7 +228,7 @@
     <ClCompile Include="..\..\Source\Components\RenderComponent.cpp" />
     <ClCompile Include="..\..\Source\main.cpp" />
     <ClCompile Include="..\..\Source\Objects\Actor.cpp" />
-    <ClCompile Include="..\..\Source\Services\ActorMgr.cpp" />
+    <ClCompile Include="..\..\Source\Services\ActorManager.cpp" />
     <ClCompile Include="..\..\Source\Services\AppCtrl.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -240,7 +240,7 @@
     <ClInclude Include="..\..\Source\Components\RenderComponent.hpp" />
     <ClInclude Include="..\..\Source\Objects\Actor.hpp" />
     <ClInclude Include="..\..\Source\Objects\IActor.hpp" />
-    <ClInclude Include="..\..\Source\Services\ActorMgr.hpp" />
+    <ClInclude Include="..\..\Source\Services\ActorManager.hpp" />
     <ClInclude Include="..\..\Source\Services\AppCtrl.hpp" />
     <ClInclude Include="..\..\Source\Utilities\Factory.hpp" />
     <ClInclude Include="..\..\Source\Utilities\HasId.hpp" />

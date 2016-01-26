@@ -19,11 +19,11 @@
     <ClCompile Include="..\..\Source\Components\HealthComponent.cpp">
       <Filter>Source\Components</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Services\ActorMgr.cpp">
-      <Filter>Source\Services</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Objects\Actor.cpp">
       <Filter>Source\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Services\ActorManager.cpp">
+      <Filter>Source\Services</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -92,14 +92,14 @@
     <ClInclude Include="..\..\Source\Components\HealthComponent.hpp">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Services\ActorMgr.hpp">
-      <Filter>Header Files\Services</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\Utilities\Macros.hpp">
       <Filter>Header Files\Utilities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Utilities\Factory.hpp">
       <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Services\ActorManager.hpp">
+      <Filter>Header Files\Services</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
