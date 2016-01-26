@@ -5,10 +5,15 @@
 #include "Leadwerks.h"
 #include "Component.hpp"
 
+#include "../Utilities/Macros.hpp"
+
 class RenderComponent : public Component {
+
+	CLASS_TYPE(RenderComponent);
+
 public:
 
-	RenderComponent(long _id);
+	RenderComponent(void);
 	~RenderComponent(void);
 
 	void Update(float deltaTime);
