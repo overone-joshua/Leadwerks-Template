@@ -3,13 +3,19 @@
 	
 #pragma once
 #include "IActor.hpp"
-#include "../Utilities/HasId.hpp"
+#include "../Common.hpp"
 	
-class Actor : public HasId<long>, public virtual IActor {
+class ActorManager;
+
+class Actor : public HasId<uint64_t>, public virtual IActor {
 public:
 
-	Actor(long _id);
+	Actor(void);
 	~Actor(void);
+
+protected:
+
+	friend class ActorManager;
 
 }; // end class.
 
