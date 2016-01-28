@@ -3,7 +3,7 @@
 	
 #pragma once
 #include "IActor.hpp"
-#include "../Common.hpp"
+#include "../Utilities/HasId.hpp"
 	
 class ActorManager;
 
@@ -11,7 +11,7 @@ class Actor : public HasId<uint64_t>, public virtual IActor {
 public:
 
 	Actor(void);
-	~Actor(void);
+	~Actor(void);	
 
 protected:
 
