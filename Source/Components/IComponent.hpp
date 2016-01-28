@@ -2,9 +2,10 @@
 	#define _ICOMPONENT_HPP_
 	
 #pragma once
+#include "../Common.hpp"
 #include "../Utilities/IHasId.hpp"
 
-class IComponent : public virtual IHasId<long> {
+class IComponent : public virtual IHasId<uint64_t> {
 public:	
 
 	virtual const char* ObjectType(void) = 0;
