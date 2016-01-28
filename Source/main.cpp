@@ -1,10 +1,10 @@
 #ifndef OS_IOS
-#ifndef _DLL
-#ifndef BUILD_STATICLIB
-#include "App.h"
-#include "Common.hpp"
-#include "Utilities\Macros.hpp"
-#endif
+	#ifndef _DLL
+	#ifndef BUILD_STATICLIB
+		#include "App.h"
+		#include "Common.hpp"
+		#include "Utilities\Macros.hpp"
+	#endif
 #endif
 
 #pragma once
@@ -13,7 +13,6 @@ using namespace Leadwerks;
 
 App* gApp;
 AppCtrl* gAppCtrl;
-
 
 void DebugErrorHook(char* c)
 {
