@@ -16,10 +16,6 @@ public:
 	RenderComponent(void);
 	~RenderComponent(void);
 
-	void Update(float deltaTime);
-	void Render(void);
-	void Draw(void);	
-
 	Leadwerks::Model& getModel(void);
 	void setModel(Leadwerks::Model* pModel);
 
