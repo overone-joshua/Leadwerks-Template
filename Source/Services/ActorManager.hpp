@@ -43,6 +43,9 @@ public:
 	template <typename T>
 	void RemoveComponent(uint64_t _id);
 
+	template <typename T>
+	const T* FetchComponent(uint64_t _id);
+
 	std::vector<const Component*> FetchAllComponentsFor(uint64_t _id);
 
 protected:
@@ -95,6 +98,21 @@ void ActorManager::RemoveComponent(uint64_t _id) {
 
 	m_actorComponents.erase(iter);
 	
+}
+
+template <typename T>
+const T* ActorManager::FetchComponent(uint64_t _id) {
+
+	auto actor = this->Fetch(_id);
+	assert(actor != nullptr);
+
+	std::string type = T::ClassType();
+	auto key = std::make_pair(_id, type);
+
+	auto iter = m_actorComponents.find(key);
+	if (iter == m_actorComponents.end()) { return nullptr; }
+
+	return (T*)((iter)->second);
 }
 
 #endif _ACTOR_MANAGER_HPP_
