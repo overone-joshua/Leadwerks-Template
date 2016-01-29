@@ -51,6 +51,9 @@ public:
 	template <typename T>
 	std::vector<const T*> FetchAllComponentsOf(void);
 
+	template <typename T>
+	const bool HasComponent(uint64_t _id);
+
 protected:
 	uint64_t GetNextId(void);
 
@@ -148,5 +151,13 @@ std::vector<const T*> ActorManager::FetchAllComponentsOf(void) {
 
 }
 
+template <typename T>
+const bool ActorManager::HasComponent(uint64_t _id) {
+
+	auto it = FetchComponentInternal<T>(_id);
+
+	return it != m_actorComponents.end();
+
+}
 
 #endif _ACTOR_MANAGER_HPP_
