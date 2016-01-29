@@ -73,7 +73,7 @@ std::vector<const Component*> ActorManager::FetchAllComponentsFor(uint64_t _id) 
 	while (iter != m_actorComponents.end()) {
 		auto it = (iter)->first.first;
 
-		if (it = _id) { components.push_back(iter->second); }
+		if (it == _id) { components.push_back(iter->second); }
 
 		iter++;
 	}
