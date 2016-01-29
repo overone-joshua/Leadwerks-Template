@@ -51,6 +51,9 @@ public:
 protected:
 	uint64_t GetNextId(void);
 
+	template <typename T>
+	ActorComponentMap::iterator FetchComponentInternal(uint64_t _id);
+
 private:	
 	Factory<Component> m_pComponentFactory;
 	uint64_t m_nRunningIndex;
@@ -84,18 +87,12 @@ void ActorManager::AddComponent(uint64_t _id) {
 template <typename T>
 void ActorManager::RemoveComponent(uint64_t _id) {
 
-	auto actor = this->Fetch(_id);
-	if (actor == nullptr) { return; }
-	
-	std::string type = T::ClassType();
-	auto key = std::make_pair(_id, type);
-
-	auto iter = m_actorComponents.find(key);
+	auto iter = FetchComponentInternal<T>(_id);
 	if (iter == m_actorComponents.end()) { return; }
-
+	
 	auto it = (iter)->second;
-	if (it != nullptr) { SAFE_DELETE(it); }
 
+	SAFE_DELETE(it);
 	m_actorComponents.erase(iter);
 	
 }
@@ -113,6 +110,19 @@ const T* ActorManager::FetchComponent(uint64_t _id) {
 	if (iter == m_actorComponents.end()) { return nullptr; }
 
 	return (T*)((iter)->second);
+}
+
+template <typename T>
+ActorManager::ActorComponentMap::iterator ActorManager::FetchComponentInternal(uint64_t _id) {
+
+	auto actor = this->Fetch(_id);
+	assert(actor != nullptr);
+
+	std::string type = T::ClassType();
+	auto key = std::make_pair(_id, type);
+
+	return m_actorComponents.find(key);
+
 }
 
 #endif _ACTOR_MANAGER_HPP_
