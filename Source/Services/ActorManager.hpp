@@ -21,7 +21,7 @@ class ActorManager {
 		bool operator () (const std::pair<T1, T2>& x, const std::pair<T1, T2>& y) {
 			return x.first < y.first && x.second < y.second;
 		}
-	};
+	};	
 
 	typedef std::pair<uint64_t, std::string> ActorComponentKey;
 	typedef std::map<ActorComponentKey, const Component*, ActorComponentKeyComparer<uint64_t, std::string>> ActorComponentMap;
@@ -42,6 +42,8 @@ public:
 
 	template <typename T>
 	void RemoveComponent(uint64_t _id);
+
+	std::vector<const Component*> FetchAllComponentsFor(uint64_t _id);
 
 protected:
 	uint64_t GetNextId(void);
@@ -68,8 +70,10 @@ void ActorManager::AddComponent(uint64_t _id) {
 	auto key = std::make_pair(_id, type);
 
 	T* newComponent = (T*)(gComponentFactory.Create(type));
-	newComponent->setId(_id);
+	assert(newComponent != nullptr);
 
+	newComponent->setId(_id);
+	
 	auto actorComponent = m_actorComponents.insert(std::make_pair(key, newComponent));
 
 }

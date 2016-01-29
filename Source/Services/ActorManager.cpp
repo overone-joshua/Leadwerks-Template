@@ -5,6 +5,7 @@
 #include "../Components/Component.hpp"
 
 #include <cassert>
+#include <vector>
 
 ActorManager::ActorManager(const Factory<Component> pComponentFactory) 
 	: m_nRunningIndex(0) , m_pComponentFactory(pComponentFactory) {	
@@ -59,4 +60,23 @@ const Actor* ActorManager::Fetch(uint64_t _id) {
 	if (it != m_actors.end()) { return it->second; }
 	
 	return nullptr;
+}
+
+std::vector<const Component*> ActorManager::FetchAllComponentsFor(uint64_t _id) {
+
+	std::vector<const Component*> components;
+
+	auto actor = this->Fetch(_id);
+	assert(actor != nullptr);
+
+	auto iter = m_actorComponents.begin();
+	while (iter != m_actorComponents.end()) {
+		auto it = (iter)->first.first;
+
+		if (it = _id) { components.push_back(iter->second); }
+
+		iter++;
+	}
+
+	return components;
 }
