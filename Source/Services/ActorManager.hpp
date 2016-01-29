@@ -48,6 +48,9 @@ public:
 
 	std::vector<const Component*> FetchAllComponentsFor(uint64_t _id);
 
+	template <typename T>
+	std::vector<const T*> FetchAllComponentsOf(void);
+
 protected:
 	uint64_t GetNextId(void);
 
@@ -124,5 +127,26 @@ ActorManager::ActorComponentMap::iterator ActorManager::FetchComponentInternal(u
 	return m_actorComponents.find(key);
 
 }
+template <typename T>
+std::vector<const T*> ActorManager::FetchAllComponentsOf(void) {
+
+	std::vector<const T*> components;
+
+	std::string type = T::ClassType();
+
+	auto iter = m_actorComponents.begin();
+	while (iter != m_actorComponents.end()) {
+
+		auto it = (iter)->first.second;
+
+		if (it == type) { components.push_back((T*)(iter->second)); }
+
+		iter++;
+	}
+
+	return components;
+
+}
+
 
 #endif _ACTOR_MANAGER_HPP_
