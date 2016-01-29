@@ -101,5 +101,8 @@
     <ClInclude Include="..\..\Source\Services\ActorManager.hpp">
       <Filter>Header Files\Services</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Utilities\Manager.hpp">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

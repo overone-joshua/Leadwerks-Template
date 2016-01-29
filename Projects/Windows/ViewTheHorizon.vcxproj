@@ -246,6 +246,7 @@
     <ClInclude Include="..\..\Source\Utilities\HasId.hpp" />
     <ClInclude Include="..\..\Source\Utilities\IHasId.hpp" />
     <ClInclude Include="..\..\Source\Utilities\Macros.hpp" />
+    <ClInclude Include="..\..\Source\Utilities\Manager.hpp" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuildStep Include="C:/Leadwerks\Engine\Library\StaticLib\Debug\Leadwerks.lib">
