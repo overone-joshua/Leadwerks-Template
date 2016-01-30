@@ -4,8 +4,6 @@
 #pragma once
 #include "Component.hpp"
 
-#include <queue>
-
 class HealthComponent : public Component {
 public:
 
@@ -15,11 +13,12 @@ public:
 protected:
 
 	double m_nTotalHealth;
-	double m_nCurrentHealth;
-
-	std::queue<double> m_damagePoints;
-	std::queue<double> m_healingPoints;
+	double m_nCurrentHealth;	
 
 }; // < end class.
 	
+HealthComponent::HealthComponent(void) { }
+
+HealthComponent::~HealthComponent(void) { }
+
 #endif _HEALTH_COMPONENT_HPP_
