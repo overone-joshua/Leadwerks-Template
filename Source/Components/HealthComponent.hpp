@@ -9,7 +9,7 @@
 class HealthComponent : public Component {
 public:
 
-	HealthComponent(long _id);
+	HealthComponent(void);
 	~HealthComponent(void);
 
 protected:

@@ -10,13 +10,7 @@
     <ClCompile Include="..\..\Source\Services\AppCtrl.cpp">
       <Filter>Source\Services</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Components\RenderComponent.cpp">
-      <Filter>Source\Components</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Components\Component.cpp">
-      <Filter>Source\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Components\HealthComponent.cpp">
       <Filter>Source\Components</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Objects\Actor.cpp">
