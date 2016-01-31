@@ -116,6 +116,9 @@
     <ClInclude Include="..\..\Source\Managers\StateManager.hpp">
       <Filter>Header Files\Managers</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\States\DefaultState.hpp">
+      <Filter>Header Files\States</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\States\State.hpp">
       <Filter>Header Files\States</Filter>
     </ClInclude>

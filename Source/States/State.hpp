@@ -7,7 +7,7 @@
 class State {
 public:
 
-	virtual const char* ObjectType(void) = 0;
+	virtual const char* ObjectType(void) = 0;	
 
 	State(void);
 
