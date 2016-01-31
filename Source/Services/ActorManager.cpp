@@ -54,6 +54,27 @@ void ActorManager::Delete(uint64_t _id) {
 
 }
 
+void ActorManager::RemoveAllComponentsFor(uint64_t _id) {
+
+	std::vector<ActorComponentMap::iterator> components;
+
+	auto actor = this->Fetch(_id);
+	assert(actor != nullptr);
+
+	auto iter = m_actorComponents.begin();
+	while (iter != m_actorComponents.end()) {
+		auto it = (iter)->first.first;
+
+		if (it == _id) { 
+			SAFE_DELETE(iter->second);
+			iter = m_actorComponents.erase(iter);
+		}
+
+		if (iter != m_actorComponents.end()) { iter++; }
+	}	
+
+}
+
 const Actor* ActorManager::Fetch(uint64_t _id) {	
 	
 	auto it = m_actors.find(_id);

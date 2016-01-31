@@ -43,6 +43,8 @@ public:
 	template <typename T>
 	void RemoveComponent(uint64_t _id);
 
+	void RemoveAllComponentsFor(uint64_t);
+
 	template <typename T>
 	const T* FetchComponent(uint64_t _id);
 
