@@ -229,6 +229,7 @@
     <ClCompile Include="..\..\Source\Objects\Actor.cpp" />
     <ClCompile Include="..\..\Source\Services\ActorManager.cpp" />
     <ClCompile Include="..\..\Source\Services\AppCtrl.cpp" />
+    <ClCompile Include="..\..\Source\States\State.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\App.h" />
