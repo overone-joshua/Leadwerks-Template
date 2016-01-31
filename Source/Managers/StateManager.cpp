@@ -4,26 +4,100 @@
 StateManager::StateManager(void) 
 	: m_bStateChangedThisFrame(false), m_pCurrentState(nullptr) { }
 
-StateManager::~StateManager(void) { }
+StateManager::~StateManager(void) { 
 
-void StateManager::preUpdate(void) { }
+	RemoveAllStates();
 
-void StateManager::Update(float dt) { }
+}
 
-void StateManager::postUpdate(void) { }
+void StateManager::preUpdate(void) { 
 
-void StateManager::preRender(void) { }
+	if (this->StateChangedThisFrame()) { CloseCurrentState(); }
 
-void StateManager::postRender(void) { }
+	if (this->m_pCurrentState != nullptr) { m_pCurrentState->preUpdate(); }
 
-void StateManager::Render(void) { }
+}
 
-void StateManager::preDraw(void) { }
+void StateManager::Update(float dt) { 	
 
-void StateManager::postDraw(void) { }
+	if (this->m_pCurrentState != nullptr) { 
+		
+		this->m_bStateChangedThisFrame = !this->m_pCurrentState->Update(dt); 
+	}
 
-void StateManager::Draw(void) { }
+}
 
-void StateManager::CloseCurrentState(void) { }
+void StateManager::postUpdate(void) {
 
-bool StateManager::StateChangedThisFrame(void) { }
+	if (this->m_pCurrentState != nullptr) { this->m_pCurrentState->postUpdate(); }
+
+}
+
+void StateManager::preRender(void) {
+
+	if (this->m_pCurrentState != nullptr) { this->m_pCurrentState->preRender(); }
+
+}
+
+void StateManager::postRender(void) { 
+
+	if (this->m_pCurrentState != nullptr) { this->m_pCurrentState->postRender(); }
+
+}
+
+void StateManager::Render(void) {
+
+	if (this->m_pCurrentState != nullptr) { this->m_pCurrentState->Render(); }
+
+}
+
+void StateManager::preDraw(void) {
+
+	if (this->m_pCurrentState != nullptr) { this->m_pCurrentState->preDraw(); }
+
+}
+
+void StateManager::postDraw(void) { 
+
+	if (this->m_pCurrentState != nullptr) { this->m_pCurrentState->postDraw(); }
+
+}
+
+void StateManager::Draw(void) {
+
+	if (this->m_pCurrentState != nullptr) { this->m_pCurrentState->Draw(); }
+
+}
+
+void StateManager::CloseCurrentState(void) { 
+
+	if (this->m_pCurrentState != nullptr) { 
+
+		m_pCurrentState->Close(); 
+		m_pCurrentState = nullptr;
+	}
+
+	m_bStateChangedThisFrame = false;
+
+}
+
+bool StateManager::StateChangedThisFrame(void) { return this->m_bStateChangedThisFrame; }
+
+void StateManager::RemoveAllStates(void) {
+
+	StateManager::StateMap states;
+
+	if (m_pCurrentState != nullptr) { CloseCurrentState(); }
+
+	auto iter = m_states.begin();
+	while (iter != m_states.end()) {
+
+		SAFE_DELETE(iter->second);
+
+		iter++;
+
+	}
+
+	m_states.empty();
+
+}
