@@ -230,6 +230,7 @@
     <ClCompile Include="..\..\Source\Services\ActorManager.cpp" />
     <ClCompile Include="..\..\Source\Services\AppCtrl.cpp" />
     <ClCompile Include="..\..\Source\States\State.cpp" />
+    <ClCompile Include="..\..\Source\Utilities\Manager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\App.h" />

@@ -25,6 +25,9 @@
     <ClCompile Include="..\..\Source\States\State.cpp">
       <Filter>Source\States</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Utilities\Manager.cpp">
+      <Filter>Source\Utilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">

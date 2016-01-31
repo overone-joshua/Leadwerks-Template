@@ -16,21 +16,8 @@ public:
 
 private:
 
-	static Manager* s_instance;
+	Manager* s_instance;
 
 }; // end class.
-
-Manager::Manager(void) {
-
-	assert(s_instance == nullptr);
-	s_instance = this;
-
-}
-
-Manager::~Manager(void) { }
-
-void Manager::Render(void) { }
-
-void Manager::Draw(void) { }
 
 #endif _MANAGER_HPP_
