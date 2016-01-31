@@ -37,6 +37,8 @@ public:
 
 	void Delete(uint64_t _id);
 
+	void DeleteAllActors(void);
+
 	template <typename T>
 	void AddComponent(uint64_t _id);
 
@@ -44,6 +46,8 @@ public:
 	void RemoveComponent(uint64_t _id);
 
 	void RemoveAllComponentsFor(uint64_t);
+
+	void RemoveAllComponents(void);
 
 	template <typename T>
 	const T* FetchComponent(uint64_t _id);

@@ -13,13 +13,9 @@ ActorManager::ActorManager(const Factory<Component> pComponentFactory)
 
 ActorManager::~ActorManager(void) {
 
-	auto iter = m_actors.begin();
-	while (iter != m_actors.end()) {
-		SAFE_DELETE(iter->second);
-		iter++;
-	}
+	RemoveAllComponents();
 
-	m_actors.empty();
+	DeleteAllActors();
 
 }
 
@@ -100,4 +96,28 @@ std::vector<const Component*> ActorManager::FetchAllComponentsFor(uint64_t _id) 
 	}
 
 	return components;
+}
+
+void ActorManager::DeleteAllActors(void) {
+
+	auto iter = m_actors.begin();
+	while (iter != m_actors.end()) {
+		SAFE_DELETE(iter->second);
+		iter++;
+	}
+
+	m_actors.empty();
+
+}
+
+void ActorManager::RemoveAllComponents(void) {
+
+	auto iter = m_actorComponents.begin();
+	while (iter != m_actorComponents.end()) {
+		SAFE_DELETE(iter->second);
+		iter++;
+	}
+
+	m_actorComponents.empty();
+
 }
