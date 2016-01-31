@@ -10,6 +10,8 @@ class DefaultState : public State {
 
 public:		
 
+	DefaultState(void);
+
 	virtual void Load(void);
 	virtual void Close(void);
 
@@ -23,6 +25,10 @@ void DefaultState::Load(void) { }
 
 void DefaultState::Close(void) { }
 
-bool DefaultState::Update(float dt) { }
+bool DefaultState::Update(float dt) { 
+
+	return true;
+
+}
 
 #endif _DEFAULT_STATE_HPP_
