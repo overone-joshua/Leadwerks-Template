@@ -60,6 +60,12 @@
     <Filter Include="Source\Managers">
       <UniqueIdentifier>{4c77abac-51a0-4e06-a619-5f65bda96cb0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\States">
+      <UniqueIdentifier>{679bebcf-cd87-43ae-b9e9-701d59e2cecc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\States">
+      <UniqueIdentifier>{c160a0c7-410e-44c2-870a-59face2d613d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\App.h">
@@ -109,6 +115,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Managers\StateManager.hpp">
       <Filter>Header Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\States\State.hpp">
+      <Filter>Header Files\States</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
