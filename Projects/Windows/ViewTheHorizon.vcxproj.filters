@@ -19,6 +19,9 @@
     <ClCompile Include="..\..\Source\Services\ActorManager.cpp">
       <Filter>Source\Services</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Managers\StateManager.cpp">
+      <Filter>Source\Managers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -50,6 +53,12 @@
     </Filter>
     <Filter Include="Source\Components">
       <UniqueIdentifier>{a5829472-399c-442b-999b-b0eb81fded19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Managers">
+      <UniqueIdentifier>{a8644d87-123e-4d2a-bf61-9d0c416dda18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Managers">
+      <UniqueIdentifier>{4c77abac-51a0-4e06-a619-5f65bda96cb0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -97,6 +106,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Utilities\Manager.hpp">
       <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Managers\StateManager.hpp">
+      <Filter>Header Files\Managers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
