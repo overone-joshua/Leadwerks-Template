@@ -128,5 +128,8 @@
     <ClInclude Include="..\..\Source\States\State.hpp">
       <Filter>Header Files\States</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Utilities\ComponentManager.hpp">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
