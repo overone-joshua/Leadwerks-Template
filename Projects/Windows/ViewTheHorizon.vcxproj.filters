@@ -31,6 +31,9 @@
     <ClCompile Include="..\..\Source\Managers\RenderComponentManager.cpp">
       <Filter>Source\Managers</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Components\PhysicsComponent.cpp">
+      <Filter>Source\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -136,6 +139,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Managers\RenderComponentManager.hpp">
       <Filter>Header Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Components\PhysicsComponent.hpp">
+      <Filter>Header Files\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -224,6 +224,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\Source\App.cpp" />
     <ClCompile Include="..\..\Source\Components\Component.cpp" />
+    <ClCompile Include="..\..\Source\Components\PhysicsComponent.cpp" />
     <ClCompile Include="..\..\Source\main.cpp" />
     <ClCompile Include="..\..\Source\Managers\RenderComponentManager.cpp" />
     <ClCompile Include="..\..\Source\Managers\StateManager.cpp" />
@@ -239,6 +240,7 @@
     <ClInclude Include="..\..\Source\Components\Component.hpp" />
     <ClInclude Include="..\..\Source\Components\HealthComponent.hpp" />
     <ClInclude Include="..\..\Source\Components\IComponent.hpp" />
+    <ClInclude Include="..\..\Source\Components\PhysicsComponent.hpp" />
     <ClInclude Include="..\..\Source\Components\RenderComponent.hpp" />
     <ClInclude Include="..\..\Source\Managers\RenderComponentManager.hpp" />
     <ClInclude Include="..\..\Source\Managers\StateManager.hpp" />
