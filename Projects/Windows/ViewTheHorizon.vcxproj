@@ -225,6 +225,7 @@
     <ClCompile Include="..\..\Source\App.cpp" />
     <ClCompile Include="..\..\Source\Components\Component.cpp" />
     <ClCompile Include="..\..\Source\main.cpp" />
+    <ClCompile Include="..\..\Source\Managers\RenderComponentManager.cpp" />
     <ClCompile Include="..\..\Source\Managers\StateManager.cpp" />
     <ClCompile Include="..\..\Source\Objects\Actor.cpp" />
     <ClCompile Include="..\..\Source\Services\ActorManager.cpp" />
@@ -239,6 +240,7 @@
     <ClInclude Include="..\..\Source\Components\HealthComponent.hpp" />
     <ClInclude Include="..\..\Source\Components\IComponent.hpp" />
     <ClInclude Include="..\..\Source\Components\RenderComponent.hpp" />
+    <ClInclude Include="..\..\Source\Managers\RenderComponentManager.hpp" />
     <ClInclude Include="..\..\Source\Managers\StateManager.hpp" />
     <ClInclude Include="..\..\Source\Objects\Actor.hpp" />
     <ClInclude Include="..\..\Source\Objects\IActor.hpp" />

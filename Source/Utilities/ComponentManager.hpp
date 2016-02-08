@@ -14,13 +14,17 @@ public:
 	ComponentManager(const ActorManager* pActorManager);
 	~ComponentManager(void);
 
-private:
+	void Update(float deltaTime);
+
+protected:
 
 	void FetchComponents(void);
 
-	const ActorManager* m_pActorManager;	
-
 	const T* m_components;
+
+private:	
+
+	const ActorManager* m_pActorManager;		
 
 }; // end class.
 
@@ -40,6 +44,13 @@ template <typename T>
 void ComponentManager<T>::FetchComponents(void) {
 
 	m_components = m_pActorManager->FetchAllComponentsOf<T>();
+
+}
+
+template <typename T>
+void ComponentManager<T>::Update(float deltaTime) {
+
+	FetchComponents();
 
 }
 

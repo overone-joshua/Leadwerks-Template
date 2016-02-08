@@ -28,6 +28,9 @@
     <ClCompile Include="..\..\Source\Utilities\Manager.cpp">
       <Filter>Source\Utilities</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Managers\RenderComponentManager.cpp">
+      <Filter>Source\Managers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -130,6 +133,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Utilities\ComponentManager.hpp">
       <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Managers\RenderComponentManager.hpp">
+      <Filter>Header Files\Managers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
