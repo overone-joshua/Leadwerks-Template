@@ -143,6 +143,9 @@
     <ClInclude Include="..\..\Source\Components\PhysicsComponent.hpp">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Utilities\Delegate.hpp">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Utilities\ParameterMap.hpp">
       <Filter>Header Files\Utilities</Filter>
     </ClInclude>

@@ -251,6 +251,7 @@
     <ClInclude Include="..\..\Source\States\DefaultState.hpp" />
     <ClInclude Include="..\..\Source\States\State.hpp" />
     <ClInclude Include="..\..\Source\Utilities\ComponentManager.hpp" />
+    <ClInclude Include="..\..\Source\Utilities\Delegate.hpp" />
     <ClInclude Include="..\..\Source\Utilities\Factory.hpp" />
     <ClInclude Include="..\..\Source\Utilities\HasId.hpp" />
     <ClInclude Include="..\..\Source\Utilities\IHasId.hpp" />
