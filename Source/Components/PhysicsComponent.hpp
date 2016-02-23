@@ -22,8 +22,7 @@ public:
 
 	void setPosition(Leadwerks::Vec3 vPosition);
 	void setRotation(Leadwerks::Vec3 vRotation);
-	void setScale(Leadwerks::Vec3 vScale);
-	
+	void setScale(Leadwerks::Vec3 vScale);	
 
 private:
 
