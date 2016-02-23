@@ -8,8 +8,6 @@ RenderComponentManager::RenderComponentManager(const ActorManager* pActorManager
 
 }
 
-void RenderComponentManager::Update(float dt) {
-
-	ComponentManager::Update(dt);
+void RenderComponentManager::Update(float dt) {	
 
 }
