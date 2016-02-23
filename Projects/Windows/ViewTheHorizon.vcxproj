@@ -228,6 +228,7 @@
     <ClCompile Include="..\..\Source\Components\RenderComponent.cpp" />
     <ClCompile Include="..\..\Source\main.cpp" />
     <ClCompile Include="..\..\Source\Managers\EventManager.cpp" />
+    <ClCompile Include="..\..\Source\Managers\InputManager.cpp" />
     <ClCompile Include="..\..\Source\Managers\RenderComponentManager.cpp" />
     <ClCompile Include="..\..\Source\Managers\StateManager.cpp" />
     <ClCompile Include="..\..\Source\Objects\Actor.cpp" />
@@ -246,6 +247,7 @@
     <ClInclude Include="..\..\Source\Components\PhysicsComponent.hpp" />
     <ClInclude Include="..\..\Source\Components\RenderComponent.hpp" />
     <ClInclude Include="..\..\Source\Managers\EventManager.hpp" />
+    <ClInclude Include="..\..\Source\Managers\InputManager.hpp" />
     <ClInclude Include="..\..\Source\Managers\RenderComponentManager.hpp" />
     <ClInclude Include="..\..\Source\Managers\StateManager.hpp" />
     <ClInclude Include="..\..\Source\Objects\Actor.hpp" />

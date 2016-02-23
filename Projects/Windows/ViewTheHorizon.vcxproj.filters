@@ -43,6 +43,9 @@
     <ClCompile Include="..\..\Source\Utilities\Event.cpp">
       <Filter>Source\Utilities</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Managers\InputManager.cpp">
+      <Filter>Source\Managers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -163,6 +166,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Utilities\Event.hpp">
       <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Managers\InputManager.hpp">
+      <Filter>Header Files\Managers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
