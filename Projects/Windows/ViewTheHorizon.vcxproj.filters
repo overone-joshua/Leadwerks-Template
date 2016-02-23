@@ -34,6 +34,12 @@
     <ClCompile Include="..\..\Source\Components\PhysicsComponent.cpp">
       <Filter>Source\Components</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Managers\EventManager.cpp">
+      <Filter>Source\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Utilities\Event.cpp">
+      <Filter>Source\Utilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -143,10 +149,16 @@
     <ClInclude Include="..\..\Source\Components\PhysicsComponent.hpp">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Managers\EventManager.hpp">
+      <Filter>Header Files\Managers</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Utilities\Delegate.hpp">
       <Filter>Header Files\Utilities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Utilities\ParameterMap.hpp">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Utilities\Event.hpp">
       <Filter>Header Files\Utilities</Filter>
     </ClInclude>
   </ItemGroup>
