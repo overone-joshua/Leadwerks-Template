@@ -225,6 +225,7 @@
     <ClCompile Include="..\..\Source\App.cpp" />
     <ClCompile Include="..\..\Source\Components\Component.cpp" />
     <ClCompile Include="..\..\Source\Components\PhysicsComponent.cpp" />
+    <ClCompile Include="..\..\Source\Components\RenderComponent.cpp" />
     <ClCompile Include="..\..\Source\main.cpp" />
     <ClCompile Include="..\..\Source\Managers\EventManager.cpp" />
     <ClCompile Include="..\..\Source\Managers\RenderComponentManager.cpp" />

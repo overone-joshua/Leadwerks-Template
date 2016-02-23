@@ -34,6 +34,9 @@
     <ClCompile Include="..\..\Source\Components\PhysicsComponent.cpp">
       <Filter>Source\Components</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Components\RenderComponent.cpp">
+      <Filter>Source\Components</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Managers\EventManager.cpp">
       <Filter>Source\Managers</Filter>
     </ClCompile>
