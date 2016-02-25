@@ -9,6 +9,8 @@ public:
 					App			(void);
 	virtual 		~App		(void);
 
+	void			Configure(Leadwerks::Window* pWindow, Leadwerks::Context* pContext, Leadwerks::World* pWorld, Leadwerks::Camera* pCamera);
+
 	bool 			Start		(void);
 	void			Shutdown	(void);
 
