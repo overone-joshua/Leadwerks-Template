@@ -3,10 +3,15 @@
 #include "AppCtrl.hpp"
 
 #include "../Common.hpp"
+#include "../Utilities/Container.hpp"
 #include "../Utilities/Macros.hpp"
+#include "../Utilities/WindowHandle.hpp"
+#include "../Utilities/ContextHandle.hpp"
+#include "../Utilities/WorldHandle.hpp"
+#include "../Utilities/CameraHandle.hpp"
 
 const bool AppCtrl::isFullScreen() const {
-	return (bool)(m_pWindow->FullScreen);
+	return (bool)(m_pWindow->getInst()->FullScreen);
 }
 
 const std::string AppCtrl::getAppName() const {
@@ -14,11 +19,11 @@ const std::string AppCtrl::getAppName() const {
 }
 
 const Leadwerks::Vec2 AppCtrl::screen_upperLeft() const {
-	return Leadwerks::Vec2(m_pWindow->GetX(), m_pWindow->GetY());
+	return Leadwerks::Vec2(m_pWindow->getInst()->GetX(), m_pWindow->getInst()->GetY());
 }
 
 const Leadwerks::Vec2 AppCtrl::screen_lowerRight() const {
-	return Leadwerks::Vec2(m_pWindow->GetX() + m_pWindow->GetWidth(), m_pWindow->GetY() + m_pWindow->GetHeight());
+	return Leadwerks::Vec2(m_pWindow->getInst()->GetX() + m_pWindow->getInst()->GetWidth(), m_pWindow->getInst()->GetY() + m_pWindow->getInst()->GetHeight());
 }
 
 const int AppCtrl::getWindowFlags (void) const {
@@ -30,19 +35,19 @@ const int AppCtrl::getRenderingContextFlags(void) const {
 }
 
 const Leadwerks::Window& AppCtrl::getWindow() const {
-    return (*m_pWindow);
+    return (*m_pWindow->getInst());
 }
 
 const Leadwerks::Context& AppCtrl::getContext() const {
-    return (*m_pContext);
+    return (*m_pContext->getInst());
 }
 
 const Leadwerks::World& AppCtrl::getWorld() const {
-    return (*m_pWorld);
+    return (*m_pWorld->getInst());
 }
 
 const Leadwerks::Camera& AppCtrl::getCamera() const {
-    return (*m_pCamera);
+    return (*m_pCamera->getInst());
 }
 
 const bool AppCtrl::CreateWindowAndContext(std::string name, unsigned nX, unsigned nY, unsigned nWidth, unsigned nHeight, int windowFlags, int contextFlags) {
@@ -51,11 +56,11 @@ const bool AppCtrl::CreateWindowAndContext(std::string name, unsigned nX, unsign
 	m_windowFlags = windowFlags;
 	m_renderingContextFlags = contextFlags;
 
-    m_pWindow = Leadwerks::Window::Create(name, nX, nY, nWidth, nHeight, windowFlags);
-    if (m_pWindow == nullptr) { std::cout << "Window creation was unsuccessful. \n"; return false; }
+    m_pWindow = new WindowHandle(Leadwerks::Window::Create(name, nX, nY, nWidth, nHeight, windowFlags));
+    if (m_pWindow->getInst()== nullptr) { std::cout << "Window creation was unsuccessful. \n"; return false; }
 
-    m_pContext = Leadwerks::Context::Create(m_pWindow, contextFlags);
-    if (m_pContext == nullptr) { std::cout << "Rendering context creation was unsuccessful. \n"; return false; }
+    m_pContext = new ContextHandle(Leadwerks::Context::Create(m_pWindow->getInst(), contextFlags));
+    if (m_pContext->getInst() == nullptr) { std::cout << "Rendering context creation was unsuccessful. \n"; return false; }
 
     return true;
 }
@@ -63,7 +68,7 @@ const bool AppCtrl::CreateWindowAndContext(std::string name, unsigned nX, unsign
 const bool AppCtrl::CreateWorld() {
     ReleaseWorld();
 
-    m_pWorld = Leadwerks::World::Create();
+    m_pWorld = new WorldHandle(Leadwerks::World::Create());
     if (m_pWorld == nullptr) { std::cout << "World creation was unsuccessful. \n"; return false; }
 
     return true;
@@ -72,7 +77,7 @@ const bool AppCtrl::CreateWorld() {
 const bool AppCtrl::CreateCamera() {
     ReleaseCamera();
 
-    m_pCamera = Leadwerks::Camera::Create();
+    m_pCamera = new CameraHandle(Leadwerks::Camera::Create());
     if (m_pCamera == nullptr) { std::cout << "Camera creation was unsuccessful. \n"; return false; }
 
     return true;
@@ -85,20 +90,15 @@ void AppCtrl::ReleaseApplication(void) {
 }
 
 void AppCtrl::ReleaseWindowAndContext(void) {
-    SAFE_RELEASE(m_pContext);
-    SAFE_RELEASE(m_pWindow);
-
     SAFE_DELETE(m_pContext);
     SAFE_DELETE(m_pWindow);
 }
 
 void AppCtrl::ReleaseWorld(void) {
-    SAFE_RELEASE(m_pWorld);
     SAFE_DELETE(m_pWorld);
 }
 
 void AppCtrl::ReleaseCamera(void) {
-    SAFE_RELEASE(m_pCamera);
     SAFE_DELETE(m_pCamera);
 }
 
@@ -106,12 +106,7 @@ AppCtrl::AppCtrl(App *pApp)
     : m_pWindow(nullptr), m_pContext(nullptr), m_pWorld(nullptr), m_pCamera(nullptr), m_pApp(pApp)
     , m_bExitAppThisFrame(false), m_windowFlags(0), m_renderingContextFlags(0) { }
 
-AppCtrl::~AppCtrl(void) {
-    SAFE_DELETE(m_pCamera);
-    SAFE_DELETE(m_pWorld);
-    SAFE_DELETE(m_pContext);
-    SAFE_DELETE(m_pWindow);
-}
+AppCtrl::~AppCtrl(void) { Shutdown(); }
 
 const bool AppCtrl::Initialize(const std::string appName, unsigned int ulX, unsigned int ulY, unsigned int nWidth, unsigned int nHeight, int windowFlags, int contextFlags) {
 
@@ -121,7 +116,16 @@ const bool AppCtrl::Initialize(const std::string appName, unsigned int ulX, unsi
 
     if (!CreateWorld() || !CreateCamera()) { return false; }
 
-	gApp->Configure(m_pWindow, m_pContext, m_pWorld, m_pCamera);
+	// < Create our DI Container.
+	m_pContainer = new Container();
+
+	// < Inject our application dependencies.
+	m_pContainer->Register<WindowHandle, WindowHandle>(m_pWindow);
+	m_pContainer->Register<ContextHandle, ContextHandle>(m_pContext);
+	m_pContainer->Register<WorldHandle, WorldHandle>(m_pWorld);
+	m_pContainer->Register<CameraHandle, CameraHandle>(m_pCamera);
+
+	gApp->Configure(m_pContainer);
 
 	if (!gApp->Start()) { return false; }
 
@@ -132,16 +136,14 @@ const bool AppCtrl::Initialize(const std::string appName, unsigned int ulX, unsi
 
 void AppCtrl::Shutdown() {
 	ReleaseApplication();
-	
-	ReleaseCamera();
-    ReleaseWorld();
-    ReleaseWindowAndContext();
+
+	SAFE_DELETE(m_pContainer);
 
     std::cout << "Application controller shutdown completed successfully. \n";    
 }
 
 void AppCtrl::preUpdate() {
-    if (m_pWindow->Closed()) { m_bExitAppThisFrame = true; }
+    if (m_pWindow->getInst()->Closed()) { m_bExitAppThisFrame = true; }
 	
     m_pApp->preUpdate();
 }
@@ -157,7 +159,7 @@ bool AppCtrl::Update(float dt) {
 
     m_bExitAppThisFrame = !m_pApp->Update(dt);
 
-    if (m_pWorld != nullptr) { m_pWorld->Update(); }
+    if (m_pWorld != nullptr) { m_pWorld->getInst()->Update(); }
 
 	postUpdate();
 
@@ -165,14 +167,14 @@ bool AppCtrl::Update(float dt) {
 }
 
 void AppCtrl::preRender() {	
-	m_pContext->SetColor(0.45f, 0.110f, 0.105f, 1.0f);
-    m_pContext->Clear();
+	m_pContext->getInst()->SetColor(0.45f, 0.110f, 0.105f, 1.0f);
+    m_pContext->getInst()->Clear();
 
     m_pApp->preRender();
 }
 
 void AppCtrl::postRender() {
-    if (m_pWorld != nullptr) { m_pWorld->Render(); }
+    if (m_pWorld != nullptr) { m_pWorld->getInst()->Render(); }
 
     m_pApp->postRender();
 }
@@ -186,7 +188,7 @@ void AppCtrl::Render() {
 }
 
 void AppCtrl::preDraw() {
-    m_pContext->SetBlendMode(Leadwerks::Blend::Alpha);
+    m_pContext->getInst()->SetBlendMode(Leadwerks::Blend::Alpha);
 
     m_pApp->preDraw();
 }
@@ -194,8 +196,8 @@ void AppCtrl::preDraw() {
 void AppCtrl::postDraw() {
     m_pApp->postDraw();
 
-    m_pContext->SetBlendMode(Leadwerks::Blend::Solid);
-    m_pContext->Sync(false);
+    m_pContext->getInst()->SetBlendMode(Leadwerks::Blend::Solid);
+    m_pContext->getInst()->Sync(false);
 }
 
 void AppCtrl::Draw() {

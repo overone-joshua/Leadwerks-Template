@@ -5,6 +5,11 @@
 #include "leadwerks.h"
 
 class App;
+class Container;
+class WindowHandle;
+class ContextHandle;
+class WorldHandle;
+class CameraHandle;
 
 class AppCtrl {
 public:
@@ -61,11 +66,13 @@ private:
     int                     		m_windowFlags;                                      // < Holds the current bitField of window flags.
     int                     		m_renderingContextFlags;                            // < Holds the current bitField of openGL rendering flags.
 
-    Leadwerks::Window*      		m_pWindow;                                          // < Application's window handle.
-    Leadwerks::Context*     		m_pContext;                                         // < Application's rendering context handle.
-    Leadwerks::World*       		m_pWorld;                                           // < Application's 3D-world handle.
-    Leadwerks::Camera*      		m_pCamera;                                          // < Application's camera handle.
+    WindowHandle*		      		m_pWindow;                                          // < Application's window handle.
+    ContextHandle*     				m_pContext;                                         // < Application's rendering context handle.
+    WorldHandle*       				m_pWorld;                                           // < Application's 3D-world handle.
+    CameraHandle*      				m_pCamera;                                          // < Application's camera handle.
     
+	Container*						m_pContainer;
+
     bool                    		m_bExitAppThisFrame;                                // < Indicates whether the application will begin closing within the current frame.
 }; // end class.
 
