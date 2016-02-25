@@ -170,5 +170,8 @@
     <ClInclude Include="..\..\Source\Managers\InputManager.hpp">
       <Filter>Header Files\Managers</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Utilities\Container.hpp">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

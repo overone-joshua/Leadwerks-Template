@@ -257,6 +257,7 @@
     <ClInclude Include="..\..\Source\States\DefaultState.hpp" />
     <ClInclude Include="..\..\Source\States\State.hpp" />
     <ClInclude Include="..\..\Source\Utilities\ComponentManager.hpp" />
+    <ClInclude Include="..\..\Source\Utilities\Container.hpp" />
     <ClInclude Include="..\..\Source\Utilities\Delegate.hpp" />
     <ClInclude Include="..\..\Source\Utilities\Event.hpp" />
     <ClInclude Include="..\..\Source\Utilities\Factory.hpp" />
