@@ -173,5 +173,17 @@
     <ClInclude Include="..\..\Source\Utilities\Container.hpp">
       <Filter>Header Files\Utilities</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Utilities\WindowHandle.hpp">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Utilities\CameraHandle.hpp">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Utilities\ContextHandle.hpp">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Utilities\WorldHandle.hpp">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

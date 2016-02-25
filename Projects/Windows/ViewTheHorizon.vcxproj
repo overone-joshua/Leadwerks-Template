@@ -256,8 +256,10 @@
     <ClInclude Include="..\..\Source\Services\AppCtrl.hpp" />
     <ClInclude Include="..\..\Source\States\DefaultState.hpp" />
     <ClInclude Include="..\..\Source\States\State.hpp" />
+    <ClInclude Include="..\..\Source\Utilities\CameraHandle.hpp" />
     <ClInclude Include="..\..\Source\Utilities\ComponentManager.hpp" />
     <ClInclude Include="..\..\Source\Utilities\Container.hpp" />
+    <ClInclude Include="..\..\Source\Utilities\ContextHandle.hpp" />
     <ClInclude Include="..\..\Source\Utilities\Delegate.hpp" />
     <ClInclude Include="..\..\Source\Utilities\Event.hpp" />
     <ClInclude Include="..\..\Source\Utilities\Factory.hpp" />
@@ -266,6 +268,8 @@
     <ClInclude Include="..\..\Source\Utilities\Macros.hpp" />
     <ClInclude Include="..\..\Source\Utilities\Manager.hpp" />
     <ClInclude Include="..\..\Source\Utilities\ParameterMap.hpp" />
+    <ClInclude Include="..\..\Source\Utilities\WindowHandle.hpp" />
+    <ClInclude Include="..\..\Source\Utilities\WorldHandle.hpp" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuildStep Include="C:/Leadwerks\Engine\Library\StaticLib\Debug\Leadwerks.lib">
