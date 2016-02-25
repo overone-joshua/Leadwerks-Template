@@ -3,12 +3,19 @@
 
 #pragma once
 #include "..\Common.hpp"
+#include "..\Utilities\Macros.hpp"
 #include "..\Utilities\ParameterMap.hpp"
 
+class EventManager;
+
 class InputManager : ParameterMap {
+
+	CLASS_TYPE(InputManager);
+
 public:
 								InputManager(Leadwerks::Window* pWindow,		// InputManager constructor.
-											 Leadwerks::Context* pContext);
+											 Leadwerks::Context* pContext,
+											 EventManager* pEventManager);
 								~InputManager();								// InputManager destructor.
 
 	void						Update(float deltaTime);						// InputManager Update.
@@ -46,6 +53,7 @@ protected:
 private:
 	Leadwerks::Window*			m_pWindow;										// The main window handle.
 	Leadwerks::Context*			m_pContext;										// The main context handle.
+	EventManager*				m_pEventManager;
 
 	bool						m_bCenterMouse;									// Indicates whether the mouse pointer will be centered every frame.	
 

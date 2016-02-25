@@ -5,6 +5,8 @@
 #include "Leadwerks.h"
 #include "..\Utilities\Delegate.hpp"
 #include "..\Utilities\Event.hpp"
+#include "..\Utilities\Macros.hpp"
+
 #include <list>
 #include <map>
 
@@ -14,6 +16,9 @@
 typedef Delegate<BaseEventData*>						EventListenerDelegate;																		// Definition fora delegate, specifically used for events.
 
 class EventManager {
+
+	CLASS_TYPE(EventManager);
+
 	enum eConstants { KINFINITE = 0xffffffff };
 	typedef std::list<EventListenerDelegate>			EventListenerList;																			// Definition for a list of event-listener delegates.
 	typedef std::map<EventType, EventListenerList>		EventMap;																					// Definition for event-listeners, seperated by event-type.

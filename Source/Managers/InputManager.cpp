@@ -2,6 +2,7 @@
 #include "..\Common.hpp"
 #include "InputManager.hpp"
 #include "..\Utilities\Event.hpp"
+#include "EventManager.hpp"
 #include "..\Utilities\ParameterMap.hpp"
 #include <cassert>
 
@@ -84,8 +85,8 @@ void InputManager::SetContext(Leadwerks::Context* pContext) {
 	this->m_pContext = pContext;
 }
 
-InputManager::InputManager(Leadwerks::Window* pWindow, Leadwerks::Context* pContext) 
-	: m_pWindow(pWindow), m_pContext(pContext), m_bCenterMouse(false) {
+InputManager::InputManager(Leadwerks::Window* pWindow, Leadwerks::Context* pContext, EventManager* pEventManager) 
+	: m_pWindow(pWindow), m_pContext(pContext), m_bCenterMouse(false), m_pEventManager(pEventManager) {
 
 	assert(this->m_pWindow != nullptr);
 	assert(this->m_pContext != nullptr);
@@ -138,7 +139,7 @@ void InputManager::CheckMouseInput(int button) {
 	Leadwerks::Vec3 vMousePosition = GetMousePosition();	
 
 	/* Snag the current and previous mouse-button's state. */
-	bool bCurrent = m_currentMouseState[button] = gWindow->mousedownstate[button];
+	bool bCurrent = m_currentMouseState[button] = m_pWindow->mousedownstate[button];
 	bool bCurrentPressedState = m_currentMousePressedState[button];
 	bool bPrevious = m_previousMouseState[button];	
 	
@@ -152,7 +153,7 @@ void InputManager::CheckMouseInput(int button) {
 		buttonHit->Set("nMouseButton", button);
 
 		/* Queue the event for execution. */
-		gEventMgr->QueueEvent(*buttonHit);
+		m_pEventManager->QueueEvent(*buttonHit);
 	}
 	/* Is the button pressed? */
 	else if (!bCurrentPressedState) {
@@ -165,7 +166,7 @@ void InputManager::CheckMouseInput(int button) {
 			buttonPressed->Set("nMouseButton", button);
 
 			/* Queue the event for execution. */
-			gEventMgr->QueueEvent(*buttonPressed);
+			m_pEventManager->QueueEvent(*buttonPressed);
 
 			m_currentMousePressedState[button] = true;
 		}
@@ -180,7 +181,7 @@ void InputManager::CheckMouseInput(int button) {
 		buttonUp->Set("nMouseButton", button);
 
 		/* Queue the event for execution. */
-		gEventMgr->QueueEvent(*buttonUp);
+		m_pEventManager->QueueEvent(*buttonUp);
 
 		m_currentMousePressedState[button] = false;
 	}
@@ -192,7 +193,7 @@ void InputManager::CheckMouseInput(int button) {
 
 void InputManager::CheckKeyboardInput(int key) {
 	/* Snag the current and previous mouse-button's state. */
-	bool bCurrent = m_currentKeyboardState[key] = gWindow->keydownstate[key];
+	bool bCurrent = m_currentKeyboardState[key] = m_pWindow->keydownstate[key];
 	bool bCurrentPressedState = m_currentKeyboardPressedState[key];
 	bool bPrevious = m_previousKeyboardState[key];
 
@@ -205,7 +206,7 @@ void InputManager::CheckKeyboardInput(int key) {
 		keyHit->Set("nKey", key);
 
 		/* Queue the event for execution. */
-		gEventMgr->QueueEvent(*keyHit);
+		m_pEventManager->QueueEvent(*keyHit);
 	}
 	/* Is the key pressed? */
 	else if (!bCurrentPressedState) {
@@ -217,7 +218,7 @@ void InputManager::CheckKeyboardInput(int key) {
 			keyPressed->Set("nKey", key);
 
 			/* Queue the event for execution. */
-			gEventMgr->QueueEvent(*keyPressed);
+			m_pEventManager->QueueEvent(*keyPressed);
 
 			m_currentKeyboardPressedState[key] = true;
 		}
@@ -231,7 +232,7 @@ void InputManager::CheckKeyboardInput(int key) {
 		keyUp->Set("nKey", key);
 
 		/* Queue the event for execution. */
-		gEventMgr->QueueEvent(*keyUp);
+		m_pEventManager->QueueEvent(*keyUp);
 
 		m_currentKeyboardPressedState[key] = false;
 	}
