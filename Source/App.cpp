@@ -3,13 +3,16 @@
 #include "App.h"
 
 #include "Common.hpp"
-#include "Utilities\Macros.hpp"
+#include "Utilities/Macros.hpp"
 App::App(void) { }
 
 App::~App(void) { }
 
+void App::Configure(Leadwerks::Window* pWindow, Leadwerks::Context* pContext, Leadwerks::World* pWorld, Leadwerks::Camera* pCamera) {
+}
+
 bool App::Start(void) {
-	
+
 	std::cout << "Application initialization completed successfully. \n";
 	
 	return true;
