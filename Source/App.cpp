@@ -4,11 +4,27 @@
 
 #include "Common.hpp"
 #include "Utilities/Macros.hpp"
-App::App(void) { }
+
+#include "Utilities/WindowHandle.hpp"
+#include "Utilities/ContextHandle.hpp"
+#include "Utilities/Container.hpp"
+#include "Managers/EventManager.hpp"
+#include "Managers/InputManager.hpp"
+
+App::App(void) 
+	: m_pEventManager(nullptr), m_pInputManager(nullptr) { }
 
 App::~App(void) { }
 
-void App::Configure(Leadwerks::Window* pWindow, Leadwerks::Context* pContext, Leadwerks::World* pWorld, Leadwerks::Camera* pCamera) {
+void App::Configure(Container* pContainer) {
+
+	m_pEventManager = pContainer->Register<EventManager, EventManager>( new EventManager());
+
+	m_pInputManager = pContainer->Register<InputManager, InputManager>( new InputManager(
+		pContainer->Resolve<WindowHandle>()->getInst(), 
+		pContainer->Resolve<ContextHandle>()->getInst(),
+		pContainer->Resolve<EventManager>()));
+
 }
 
 bool App::Start(void) {
@@ -18,8 +34,8 @@ bool App::Start(void) {
 	return true;
 }
 
-void App::Shutdown(void) {	
-}
+void App::Shutdown(void) { }
+
 void App::preUpdate(void) { }
 
 bool App::Update(float dt) { return true; }

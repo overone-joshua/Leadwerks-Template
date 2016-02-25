@@ -4,12 +4,17 @@
 #pragma once
 #include "Leadwerks.h"
 
+class Container;
+
+class EventManager;
+class InputManager;
+
 class App {
 public:
 					App			(void);
 	virtual 		~App		(void);
 
-	void			Configure(Leadwerks::Window* pWindow, Leadwerks::Context* pContext, Leadwerks::World* pWorld, Leadwerks::Camera* pCamera);
+	void			Configure(Container* pContainer);
 
 	bool 			Start		(void);
 	void			Shutdown	(void);
@@ -25,6 +30,11 @@ public:
 	void 			preDraw		(void);
 	void 			postDraw	(void);
 	void 			Draw		(void);
+
+private:
+
+	EventManager* m_pEventManager;
+	InputManager* m_pInputManager;
 }; // end class.
 
 #endif // _APP_H_
