@@ -3,7 +3,7 @@
     
 #pragma once
 #include "../Common.hpp"
-#include "Delegate.hpp"    
+#include "Macros.hpp"
 
 #include <cassert>
 #include <map>
@@ -33,7 +33,7 @@ public:
 	}
 
 	template <typename I, class C>
-	void Register(C* pInstance) {
+	I* Register(C* pInstance) {
 	
 		auto comp = this->FetchInternal<I>();
 		assert(comp == m_components.end());
@@ -45,7 +45,8 @@ public:
 		auto entry = std::make_pair(classType, (void*)(pInstance));
 
 		auto newComp = m_components.insert(std::make_pair(key, entry));
-
+		
+		return Resolve<I>();
 	}
 
 	template <typename I>
