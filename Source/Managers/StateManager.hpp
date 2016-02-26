@@ -18,7 +18,7 @@ class StateManager : public Manager {
 
 public:
 
-	StateManager(const Container* pContainer);
+	StateManager(Container* pContainer);
 	~StateManager(void);
 
 	void preUpdate(void);
@@ -61,7 +61,7 @@ protected:
 
 
 private:
-	const Container* m_pContainer;
+	Container* m_pContainer;
 	bool m_bStateChangedThisFrame;
 	
 	State* m_pCurrentState;

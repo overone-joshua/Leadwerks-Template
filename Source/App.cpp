@@ -25,8 +25,6 @@ App::~App(void) { }
 
 void App::Configure(Container* pContainer) {
 
-	m_pCamera = pContainer->Resolve<CameraHandle>()->getInst();
-
 	/* StateManager */
 	m_pStateManager = pContainer->Register<StateManager, StateManager>( new StateManager(pContainer));
 
@@ -46,9 +44,6 @@ bool App::Start(void) {
 
 	// < Add our default state and immediately make it active.
 	m_pStateManager->AddState<DefaultState>(true);
-
-	m_pCamera->Move(4.0f, 8.0f, -5.0f);
-	m_pCamera->SetDrawMode(DRAW_WIREFRAME);
 
 	std::cout << "Application initialization completed successfully. \n";
 	

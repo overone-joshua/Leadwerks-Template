@@ -3,6 +3,7 @@
 
 #pragma once
 #include "State.hpp"
+#include "../Utilities/CameraHandle.hpp"
 #include "../Utilities/Container.hpp"
 #include "../Utilities/IsoSurface.hpp"
 #include "../Utilities/Modeler.hpp"
@@ -24,7 +25,7 @@ public:
 
 	DefaultState(void);
 
-	void Configure(const Container* pContainer) const;
+	void Configure(Container* pContainer);
 	void Load(void);
 	void Close(void);
 
@@ -36,17 +37,22 @@ private:
 	Leadwerks::Model* m_pModel;
 	VoxelBuffer<float>* m_pBuffer;
 
+	Leadwerks::Camera* m_pCamera;
+
 }; // < end class.
 
 DefaultState::DefaultState(void) { }
 
-void DefaultState::Configure(const Container* pContainer) const 
+void DefaultState::Configure(Container* pContainer)
 {
-
+	m_pCamera = pContainer->Resolve<CameraHandle>()->getInst();
 }
 
 void DefaultState::Load(void) 
 { 
+	m_pCamera->Move(4.0f, 8.0f, -5.0f);
+	m_pCamera->SetDrawMode(DRAW_WIREFRAME);
+
 	m_pModel = Leadwerks::Model::Create();
 	m_pBuffer = new VoxelBuffer<float>(NUM_VOXELS, NUM_VOXELS, NUM_VOXELS);
 	m_pIsosurface = new IsoSurface<float>();

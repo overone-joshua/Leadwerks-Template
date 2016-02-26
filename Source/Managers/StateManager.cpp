@@ -4,7 +4,7 @@
 
 #include <cassert>
 
-StateManager::StateManager(const Container* pContainer) 
+StateManager::StateManager(Container* pContainer) 
 	: m_bStateChangedThisFrame(false), m_pCurrentState(nullptr) , m_pContainer(pContainer) 
 {
 	assert(this->m_pContainer != nullptr);

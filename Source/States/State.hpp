@@ -12,7 +12,7 @@ public:
 
 	State(void) { }
 
-	virtual void Configure(const Container* pContainer) const = 0;
+	virtual void Configure(Container* pContainer) = 0;
 	virtual void Load(void) { }
 	virtual void Close(void) { }
 
