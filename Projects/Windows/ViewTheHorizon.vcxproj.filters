@@ -191,5 +191,8 @@
     <ClInclude Include="..\..\Source\Utilities\IsoSurface.hpp">
       <Filter>Header Files\Utilities</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Utilities\VoxelBuffer.hpp">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
