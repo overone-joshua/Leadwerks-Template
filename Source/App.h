@@ -8,6 +8,7 @@ class Container;
 
 class EventManager;
 class InputManager;
+class StateManager;
 
 class App {
 public:
@@ -35,6 +36,8 @@ private:
 
 	EventManager* m_pEventManager;
 	InputManager* m_pInputManager;
+	StateManager* m_pStateManager;
+
 }; // end class.
 
 #endif // _APP_H_
