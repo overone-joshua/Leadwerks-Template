@@ -32,6 +32,10 @@ public:
 	void 			postDraw	(void);
 	void 			Draw		(void);
 
+protected:
+
+	void			Dispose		(void);
+
 private:
 
 	EventManager* m_pEventManager;
