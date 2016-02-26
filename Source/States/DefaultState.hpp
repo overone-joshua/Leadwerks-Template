@@ -3,6 +3,7 @@
 
 #pragma once
 #include "State.hpp"
+#include "../Utilities/Container.hpp"
 #include "../Utilities/IsoSurface.hpp"
 #include "../Utilities/Modeler.hpp"
 #include "../Utilities/VoxelBuffer.hpp"
@@ -23,6 +24,7 @@ public:
 
 	DefaultState(void);
 
+	void Configure(const Container* pContainer) const;
 	void Load(void);
 	void Close(void);
 
@@ -37,6 +39,11 @@ private:
 }; // < end class.
 
 DefaultState::DefaultState(void) { }
+
+void DefaultState::Configure(const Container* pContainer) const 
+{
+
+}
 
 void DefaultState::Load(void) 
 { 
