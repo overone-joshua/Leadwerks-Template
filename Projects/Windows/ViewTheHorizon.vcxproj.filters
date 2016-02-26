@@ -22,9 +22,6 @@
     <ClCompile Include="..\..\Source\Managers\StateManager.cpp">
       <Filter>Source\Managers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\States\State.cpp">
-      <Filter>Source\States</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Utilities\Manager.cpp">
       <Filter>Source\Utilities</Filter>
     </ClCompile>
@@ -48,6 +45,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Utilities\IsoSurface.cpp">
       <Filter>Source\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\States\State.cpp">
+      <Filter>Source\States</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
