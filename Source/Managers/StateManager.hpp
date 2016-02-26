@@ -98,8 +98,15 @@ void StateManager::RemoveState(void) {
 template <typename T>
 void StateManager::ChangeState(void) {
 
+	if (this->m_pCurrentState != nullptr) 
+	{
+		CloseCurrentState();
+	}
+
 	this->m_pCurrentState = FetchState<T>();
 	assert(this->m_pCurrentState != nullptr);
+
+	this->m_pCurrentState->Load();
 
 	this->m_bStateChangedThisFrame = true;
 }
