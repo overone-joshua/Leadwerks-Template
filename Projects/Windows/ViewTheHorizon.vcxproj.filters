@@ -46,6 +46,9 @@
     <ClCompile Include="..\..\Source\Managers\InputManager.cpp">
       <Filter>Source\Managers</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Utilities\IsoSurface.cpp">
+      <Filter>Source\Utilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -183,6 +186,9 @@
       <Filter>Header Files\Utilities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Utilities\WorldHandle.hpp">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Utilities\IsoSurface.hpp">
       <Filter>Header Files\Utilities</Filter>
     </ClInclude>
   </ItemGroup>

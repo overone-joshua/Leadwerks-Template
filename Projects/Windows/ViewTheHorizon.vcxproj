@@ -236,6 +236,7 @@
     <ClCompile Include="..\..\Source\Services\AppCtrl.cpp" />
     <ClCompile Include="..\..\Source\States\State.cpp" />
     <ClCompile Include="..\..\Source\Utilities\Event.cpp" />
+    <ClCompile Include="..\..\Source\Utilities\IsoSurface.cpp" />
     <ClCompile Include="..\..\Source\Utilities\Manager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -265,6 +266,7 @@
     <ClInclude Include="..\..\Source\Utilities\Factory.hpp" />
     <ClInclude Include="..\..\Source\Utilities\HasId.hpp" />
     <ClInclude Include="..\..\Source\Utilities\IHasId.hpp" />
+    <ClInclude Include="..\..\Source\Utilities\IsoSurface.hpp" />
     <ClInclude Include="..\..\Source\Utilities\Macros.hpp" />
     <ClInclude Include="..\..\Source\Utilities\Manager.hpp" />
     <ClInclude Include="..\..\Source\Utilities\ParameterMap.hpp" />
