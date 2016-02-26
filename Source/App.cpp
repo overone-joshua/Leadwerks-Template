@@ -9,6 +9,8 @@
 
 #include "Utilities/WindowHandle.hpp"
 #include "Utilities/ContextHandle.hpp"
+#include "Utilities/WorldHandle.hpp"
+#include "Utilities/CameraHandle.hpp"
 
 #include "Managers/EventManager.hpp"
 #include "Managers/InputManager.hpp"
@@ -22,6 +24,8 @@ App::App(void)
 App::~App(void) { }
 
 void App::Configure(Container* pContainer) {
+
+	m_pCamera = pContainer->Resolve<CameraHandle>()->getInst();
 
 	/* StateManager */
 	m_pStateManager = pContainer->Register<StateManager, StateManager>( new StateManager());
@@ -42,6 +46,9 @@ bool App::Start(void) {
 
 	// < Add our default state and immediately make it active.
 	m_pStateManager->AddState<DefaultState>(true);
+
+	m_pCamera->Move(4.0f, 8.0f, -5.0f);
+	m_pCamera->SetDrawMode(DRAW_WIREFRAME);
 
 	std::cout << "Application initialization completed successfully. \n";
 	

@@ -38,6 +38,8 @@ protected:
 
 private:
 
+	Leadwerks::Camera* m_pCamera;
+
 	EventManager* m_pEventManager;
 	InputManager* m_pInputManager;
 	StateManager* m_pStateManager;
