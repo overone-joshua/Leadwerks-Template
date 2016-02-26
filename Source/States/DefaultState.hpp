@@ -88,6 +88,8 @@ void DefaultState::Load(void)
 
 void DefaultState::Close(void) 
 { 
+	m_pCamera = nullptr;
+
 	SAFE_DELETE(m_pIsosurface);
 	SAFE_DELETE(m_pBuffer);
 
