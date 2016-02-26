@@ -10,15 +10,17 @@ StateManager::~StateManager(void) {
 
 }
 
-void StateManager::preUpdate(void) { 
-
-	if (this->StateChangedThisFrame()) { CloseCurrentState(); }
+void StateManager::preUpdate(void)
+{ 
+	if (this->StateChangedThisFrame()) { return; }
 
 	if (this->m_pCurrentState != nullptr) { m_pCurrentState->preUpdate(); }
 
 }
 
-void StateManager::Update(float dt) { 	
+void StateManager::Update(float dt) 
+{
+	if (this->StateChangedThisFrame()) { return; }
 
 	if (this->m_pCurrentState != nullptr) { 
 		
@@ -27,37 +29,49 @@ void StateManager::Update(float dt) {
 
 }
 
-void StateManager::postUpdate(void) {
+void StateManager::postUpdate(void)
+{
+	if (this->StateChangedThisFrame()) { return; }
 
 	if (this->m_pCurrentState != nullptr) { this->m_pCurrentState->postUpdate(); }
 
 }
 
-void StateManager::preRender(void) {
+void StateManager::preRender(void)
+{
+	if (this->StateChangedThisFrame()) { return; }
 
 	if (this->m_pCurrentState != nullptr) { this->m_pCurrentState->preRender(); }
 
 }
 
-void StateManager::postRender(void) { 
+void StateManager::postRender(void) 
+{ 
+	if (this->StateChangedThisFrame()) { return; }
 
 	if (this->m_pCurrentState != nullptr) { this->m_pCurrentState->postRender(); }
 
 }
 
-void StateManager::Render(void) {
+void StateManager::Render(void)
+{
+	if (this->StateChangedThisFrame()) { return; }
 
 	if (this->m_pCurrentState != nullptr) { this->m_pCurrentState->Render(); }
 
 }
 
-void StateManager::preDraw(void) {
+void StateManager::preDraw(void) 
+{
+	if (this->StateChangedThisFrame()) { return; }
 
 	if (this->m_pCurrentState != nullptr) { this->m_pCurrentState->preDraw(); }
 
 }
 
-void StateManager::postDraw(void) { 
+void StateManager::postDraw(void) 
+{ 
+	if (this->StateChangedThisFrame()) { return; }
 
 	if (this->m_pCurrentState != nullptr) { this->m_pCurrentState->postDraw(); }
 
@@ -67,17 +81,18 @@ void StateManager::Draw(void) {
 
 	if (this->m_pCurrentState != nullptr) { this->m_pCurrentState->Draw(); }
 
+	this->m_bStateChangedThisFrame = false;
 }
 
 void StateManager::CloseCurrentState(void) { 
 
 	if (this->m_pCurrentState != nullptr) { 
 
-		m_pCurrentState->Close(); 
-		m_pCurrentState = nullptr;
+		this->m_pCurrentState->Close(); 
+		this->m_pCurrentState = nullptr;
 	}
 
-	m_bStateChangedThisFrame = false;
+	this->m_bStateChangedThisFrame = false;
 
 }
 
@@ -87,10 +102,10 @@ void StateManager::RemoveAllStates(void) {
 
 	StateManager::StateMap states;
 
-	if (m_pCurrentState != nullptr) { CloseCurrentState(); }
+	if (this->m_pCurrentState != nullptr) { CloseCurrentState(); }
 
-	auto iter = m_states.begin();
-	while (iter != m_states.end()) {
+	auto iter = this->m_states.begin();
+	while (iter != this->m_states.end()) {
 
 		SAFE_DELETE(iter->second);
 
@@ -98,6 +113,6 @@ void StateManager::RemoveAllStates(void) {
 
 	}
 
-	m_states.empty();
+	this->m_states.empty();
 
 }
