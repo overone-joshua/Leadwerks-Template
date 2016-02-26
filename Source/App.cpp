@@ -37,7 +37,11 @@ void App::Configure(Container* pContainer) {
 		pContainer->Resolve<ContextHandle>()->getInst(),
 		pContainer->Resolve<EventManager>()));
 
+	// < Register any states that are going to be used by our application.
+	// * In order for a state to be added through the StateManager,
+	// * the state MUST be registered with the StateFactory first.
 	gStateFactory.Register(new FactoryMaker<DefaultState, State>);
+
 }
 
 bool App::Start(void) {
@@ -48,13 +52,22 @@ bool App::Start(void) {
 	std::cout << "Application initialization completed successfully. \n";
 	
 	return true;
+
 }
 
 void App::Shutdown(void) { Dispose(); }
 
 void App::Dispose(void) 
 {
+	m_pEventManager = nullptr;
+	m_pInputManager = nullptr;
+	m_pStateManager = nullptr;
+
+	// < Unregister any states that were registered during this
+	// * applications configure method. Order doesnt really
+	// * matter here.
 	gStateFactory.Unregister(DefaultState::ClassType());
+
 }
 
 void App::preUpdate(void) 
@@ -83,14 +96,14 @@ bool App::Update(float dt)
 void App::postUpdate(void) 
 { 
 	// < Call the InputManager's postUpdate.
-	m_pStateManager->postUpdate();
+	if (m_pStateManager != nullptr) { m_pStateManager->postUpdate(); }
 
 }
 
 void App::preRender(void) 
 {
 	// < Call the StateManager's preRender.
-	m_pStateManager->preRender();
+	if (m_pStateManager != nullptr) { m_pStateManager->preRender(); } 
 
 }
 
@@ -100,7 +113,7 @@ void App::Render(void)
 	// < ---
 
 	// < Call the StateManager's Render.
-	m_pStateManager->Render();
+	if (m_pStateManager != nullptr) { m_pStateManager->Render(); }
 
 	// < ---
 
@@ -109,14 +122,14 @@ void App::Render(void)
 void App::postRender(void) 
 {
 	// < Call the StateManager's postRender.
-	m_pStateManager->postRender();
+	if (m_pStateManager != nullptr) { m_pStateManager->postRender(); }
 
 }
 
 void App::preDraw(void) 
 {
 	// < Call the StateManager's preDraw.
-	m_pStateManager->preDraw();
+	if (m_pStateManager != nullptr) { m_pStateManager->preDraw(); }
 
 }
 
@@ -126,7 +139,7 @@ void App::Draw(void)
 	// < ---
 
 	// < Call the StateManager's Draw.
-	m_pStateManager->Draw();
+	if (m_pStateManager != nullptr) { m_pStateManager->Draw(); }
 
 	// < ---
 
@@ -135,6 +148,6 @@ void App::Draw(void)
 void App::postDraw(void) 
 {
 	// < Call the StateManager's postDraw.
-	m_pStateManager->postDraw();
+	if (m_pStateManager != nullptr) { m_pStateManager->postDraw(); }
 
 }
