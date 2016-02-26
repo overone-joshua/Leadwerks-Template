@@ -6,10 +6,7 @@
 #include <map>
 #include <string>
 
-class Container_Resolve_Exception;
-class Container;
-
-class Container_Resolve_Exception : public exception
+class Container_Resolve_Exception : public std::exception
 {
 	virtual const char* err() const throw() { return "Failed to resolve dependency."; }
 };
