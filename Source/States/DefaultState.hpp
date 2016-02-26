@@ -12,8 +12,8 @@ public:
 
 	DefaultState(void);
 
-	virtual void Load(void);
-	virtual void Close(void);
+	void Load(void);
+	void Close(void);
 
 	bool Update(float deltaTime);
 
