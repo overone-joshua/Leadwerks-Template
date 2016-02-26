@@ -2,6 +2,7 @@
 	#define _STATE_MANAGER_HPP_
 	
 #pragma once
+#include "../Utilities/Container.hpp"
 #include "../Utilities/Manager.hpp"
 #include "../Utilities/Macros.hpp"
 #include "../States/State.hpp"
@@ -17,7 +18,7 @@ class StateManager : public Manager {
 
 public:
 
-	StateManager(void);
+	StateManager(const Container* pContainer);
 	~StateManager(void);
 
 	void preUpdate(void);
@@ -60,6 +61,7 @@ protected:
 
 
 private:
+	const Container* m_pContainer;
 	bool m_bStateChangedThisFrame;
 	
 	State* m_pCurrentState;
@@ -106,6 +108,7 @@ void StateManager::ChangeState(void) {
 	this->m_pCurrentState = FetchState<T>();
 	assert(this->m_pCurrentState != nullptr);
 
+	this->m_pCurrentState->Configure(this->m_pContainer);
 	this->m_pCurrentState->Load();
 
 	this->m_bStateChangedThisFrame = true;

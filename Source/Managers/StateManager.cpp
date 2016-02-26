@@ -1,8 +1,14 @@
 #pragma once
 #include "StateManager.hpp"
+#include "../Utilities/Container.hpp"
 
-StateManager::StateManager(void) 
-	: m_bStateChangedThisFrame(false), m_pCurrentState(nullptr) { }
+#include <cassert>
+
+StateManager::StateManager(const Container* pContainer) 
+	: m_bStateChangedThisFrame(false), m_pCurrentState(nullptr) , m_pContainer(pContainer) 
+{
+	assert(this->m_pContainer != nullptr);
+}
 
 StateManager::~StateManager(void) { 
 

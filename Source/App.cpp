@@ -28,7 +28,7 @@ void App::Configure(Container* pContainer) {
 	m_pCamera = pContainer->Resolve<CameraHandle>()->getInst();
 
 	/* StateManager */
-	m_pStateManager = pContainer->Register<StateManager, StateManager>( new StateManager());
+	m_pStateManager = pContainer->Register<StateManager, StateManager>( new StateManager(pContainer));
 
 	/* EventManager */
 	m_pEventManager = pContainer->Register<EventManager, EventManager>( new EventManager());
