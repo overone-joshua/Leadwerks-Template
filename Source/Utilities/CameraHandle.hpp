@@ -7,7 +7,7 @@
 
 class CameraHandle {
 
-	CLASS_TYPE(Camera);
+	CLASS_TYPE(CameraHandle);
 
 public:
 

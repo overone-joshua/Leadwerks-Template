@@ -2,26 +2,22 @@
 	#define _COMPONENT_HPP_
 	
 #pragma once
-#include "IComponent.hpp"
-#include "../Utilities/HasId.hpp"
-#include "../Utilities/Factory.hpp"
+#include "HasId.hpp"
+#include "HasName.hpp"
 
-class ActorManager;
+#include <string>
 
-class Component : public HasId<uint64_t>, public virtual IComponent {
-public:	
+namespace Components
+{
+	typedef struct Component : public HasId, public HasName
+	{
+		using HasId::HasId;
+		using HasName::HasName;
 
-	virtual const char* ObjectType(void) = 0;
+		Component(std::string cName = "") : HasName(cName) { }
 
-	Component(void);
-	virtual ~Component(void);
+	} Component; // < end struct.
 
-protected:
-
-	friend class ActorManager;
-
-}; // < end class.
-
-extern Factory<Component> gComponentFactory;
+} // < end namespace.
 
 #endif _COMPONENT_HPP_

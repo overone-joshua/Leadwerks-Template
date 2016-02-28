@@ -10,29 +10,11 @@
     <ClCompile Include="..\..\Source\Services\AppCtrl.cpp">
       <Filter>Source\Services</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Components\Component.cpp">
-      <Filter>Source\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Objects\Actor.cpp">
-      <Filter>Source\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Services\ActorManager.cpp">
-      <Filter>Source\Services</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Managers\StateManager.cpp">
       <Filter>Source\Managers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Utilities\Manager.cpp">
       <Filter>Source\Utilities</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Managers\RenderComponentManager.cpp">
-      <Filter>Source\Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Components\PhysicsComponent.cpp">
-      <Filter>Source\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Components\RenderComponent.cpp">
-      <Filter>Source\Components</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Managers\EventManager.cpp">
       <Filter>Source\Managers</Filter>
@@ -48,6 +30,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\States\State.cpp">
       <Filter>Source\States</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Components\World.cpp">
+      <Filter>Source\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -69,12 +54,6 @@
     <Filter Include="Source\Utilities">
       <UniqueIdentifier>{539574f2-0b0e-4f1b-9956-affec87e1ca2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Objects">
-      <UniqueIdentifier>{cc8dca0b-17f9-4e38-892c-5d9895d7af20}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Objects">
-      <UniqueIdentifier>{e3f1d86d-5a1f-46c6-8b21-062f9b474187}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Components">
       <UniqueIdentifier>{93e4c47e-6baf-4b5c-9fa5-f4b4b06ea4c0}</UniqueIdentifier>
     </Filter>
@@ -93,6 +72,12 @@
     <Filter Include="Source\States">
       <UniqueIdentifier>{c160a0c7-410e-44c2-870a-59face2d613d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Entities">
+      <UniqueIdentifier>{c67eb2a2-a7fb-40ac-91e3-dc61f7247d80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Entities">
+      <UniqueIdentifier>{40aababb-b5fe-4474-80d9-c656acef6dda}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\App.h">
@@ -104,28 +89,7 @@
     <ClInclude Include="..\..\Source\Common.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Utilities\HasId.hpp">
-      <Filter>Header Files\Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Utilities\IHasId.hpp">
-      <Filter>Header Files\Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Objects\IActor.hpp">
-      <Filter>Header Files\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Objects\Actor.hpp">
-      <Filter>Header Files\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Components\IComponent.hpp">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\Components\Component.hpp">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Components\RenderComponent.hpp">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Components\HealthComponent.hpp">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Utilities\Macros.hpp">
@@ -133,9 +97,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Utilities\Factory.hpp">
       <Filter>Header Files\Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Services\ActorManager.hpp">
-      <Filter>Header Files\Services</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Utilities\Manager.hpp">
       <Filter>Header Files\Utilities</Filter>
@@ -148,15 +109,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\States\State.hpp">
       <Filter>Header Files\States</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Utilities\ComponentManager.hpp">
-      <Filter>Header Files\Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Managers\RenderComponentManager.hpp">
-      <Filter>Header Files\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Components\PhysicsComponent.hpp">
-      <Filter>Header Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Managers\EventManager.hpp">
       <Filter>Header Files\Managers</Filter>
@@ -196,6 +148,36 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Utilities\VoxelBuffer.hpp">
       <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Components\Placement.hpp">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Components\ComponentDictionary.hpp">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Components\Velocity.hpp">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Components\Appearance.hpp">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Components\World.hpp">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Utilities\EntityHandle.hpp">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Components\Camera.hpp">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Components\HasId.hpp">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Components\HasName.hpp">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Entities\Camera.hpp">
+      <Filter>Header Files\Entities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
