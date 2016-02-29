@@ -243,6 +243,8 @@
     <ClInclude Include="..\..\Source\Components\ComponentDictionary.hpp" />
     <ClInclude Include="..\..\Source\Components\HasId.hpp" />
     <ClInclude Include="..\..\Source\Components\HasName.hpp" />
+    <ClInclude Include="..\..\Source\Components\Input.hpp" />
+    <ClInclude Include="..\..\Source\Components\InputDictionary.hpp" />
     <ClInclude Include="..\..\Source\Components\Placement.hpp" />
     <ClInclude Include="..\..\Source\Components\Velocity.hpp" />
     <ClInclude Include="..\..\Source\Components\World.hpp" />
