@@ -75,7 +75,7 @@ void App::Dispose(void)
 void App::preUpdate(void) 
 { 
 	// < Call the StateManager's preUpdate.
-	m_pStateManager->preUpdate();
+	if (m_pStateManager != nullptr) { m_pStateManager->preUpdate(); }
 
 }
 
@@ -83,13 +83,13 @@ bool App::Update(float dt)
 { 
 	// < Call EventManager's update. We allow it to process events 
 	// * for 200ms a frame.
-	m_pEventManager->Update(200);
+	if (m_pEventManager != nullptr) { m_pEventManager->Update(200); }
 	
 	// < Call the InputManager's update.
-	m_pInputManager->Update(dt);
+	if (m_pInputManager != nullptr) { m_pInputManager->Update(dt); } 
 
 	// < Call the StateManager's Update.
-	m_pStateManager->Update(dt);
+	if (m_pStateManager != nullptr) { m_pStateManager->Update(dt); }
 
 	return true; 
 
