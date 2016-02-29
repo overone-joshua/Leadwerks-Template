@@ -3,6 +3,7 @@
 
 #pragma once
 #include "../Utilities/Container.hpp"
+#include "../Utilities/Event.hpp"
 #include "../Utilities/Factory.hpp"
 
 class State {
@@ -27,6 +28,14 @@ public:
 	virtual void preDraw(void) { }
 	virtual void postDraw(void) { }
 	virtual void Draw(void) { }
+
+	virtual void OnMouseHit(Event_MouseHit* pData) {}
+	virtual void OnMouseDown(Event_MouseDown* pData) {}
+	virtual void OnMouseUp(Event_MouseUp* pData) {}
+
+	virtual void OnKeyHit(Event_KeyHit* pData) {}
+	virtual void OnKeyDown(Event_KeyDown* pData) {}
+	virtual void OnKeyUp(Event_KeyUp* pData) {}
 
 }; // < end class.
 
