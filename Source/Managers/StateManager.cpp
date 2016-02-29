@@ -19,11 +19,26 @@ StateManager::~StateManager(void) {
 
 	RemoveAllStates();
 
+	m_pEventManager->Unbind<StateManager, &StateManager::OnMouseDown>(this, Event_MouseDown::ClassType());
+	m_pEventManager->Unbind<StateManager, &StateManager::OnMouseUp>(this, Event_MouseUp::ClassType());
+	m_pEventManager->Unbind<StateManager, &StateManager::OnMouseHit>(this, Event_MouseHit::ClassType());
+
+	m_pEventManager->Unbind<StateManager, &StateManager::OnKeyDown>(this, Event_KeyDown::ClassType());
+	m_pEventManager->Unbind<StateManager, &StateManager::OnKeyUp>(this, Event_KeyUp::ClassType());
+	m_pEventManager->Unbind<StateManager, &StateManager::OnKeyHit>(this, Event_KeyHit::ClassType());
+
 	this->m_pEventManager = nullptr;
 }
 
 void StateManager::Configure(Container* pContainer)
 {
+	m_pEventManager->Bind<StateManager, &StateManager::OnMouseDown>(this, Event_MouseDown::ClassType());
+	m_pEventManager->Bind<StateManager, &StateManager::OnMouseUp>(this, Event_MouseUp::ClassType());
+	m_pEventManager->Bind<StateManager, &StateManager::OnMouseHit>(this, Event_MouseHit::ClassType());
+
+	m_pEventManager->Bind<StateManager, &StateManager::OnKeyDown>(this, Event_KeyDown::ClassType());
+	m_pEventManager->Bind<StateManager, &StateManager::OnKeyUp>(this, Event_KeyUp::ClassType());
+	m_pEventManager->Bind<StateManager, &StateManager::OnKeyHit>(this, Event_KeyHit::ClassType());
 }
 
 void StateManager::preUpdate(void)
@@ -130,5 +145,59 @@ void StateManager::RemoveAllStates(void) {
 	}
 
 	this->m_states.empty();
+
+}
+
+void StateManager::OnMouseHit(BaseEventData* pData) 
+{
+	if (pData == nullptr || this->m_pCurrentState == nullptr) { return; }
+	auto event = static_cast<Event_MouseHit*>(pData);
+
+	this->m_pCurrentState->OnMouseHit(event);
+
+}
+
+void StateManager::OnMouseDown(BaseEventData* pData) 
+{
+	if (pData == nullptr || this->m_pCurrentState == nullptr) { return; }
+	auto event = static_cast<Event_MouseDown*>(pData);
+
+	this->m_pCurrentState->OnMouseDown(event);
+
+}
+
+void StateManager::OnMouseUp(BaseEventData* pData) 
+{
+	if (pData == nullptr || this->m_pCurrentState == nullptr) { return; }
+	auto event = static_cast<Event_MouseUp*>(pData);
+
+	this->m_pCurrentState->OnMouseUp(event);
+
+}
+
+void StateManager::OnKeyHit(BaseEventData* pData) 
+{
+	if (pData == nullptr || this->m_pCurrentState == nullptr) { return; }
+	auto event = static_cast<Event_KeyHit*>(pData);
+
+	this->m_pCurrentState->OnKeyHit(event);
+
+}
+
+void StateManager::OnKeyDown(BaseEventData* pData) 
+{
+	if (pData == nullptr || this->m_pCurrentState == nullptr) { return; }
+	auto event = static_cast<Event_KeyDown*>(pData);
+
+	this->m_pCurrentState->OnKeyDown(event);
+
+}
+
+void StateManager::OnKeyUp(BaseEventData* pData) 
+{
+	if (pData == nullptr || this->m_pCurrentState == nullptr) { return; }
+	auto event = static_cast<Event_KeyUp*>(pData);
+
+	this->m_pCurrentState->OnKeyUp(event);
 
 }

@@ -64,10 +64,18 @@ protected:
 	template <typename T>
 	StateMap::iterator FetchStateInternal(void);
 
+	void OnMouseHit(BaseEventData* pData);
+	void OnMouseDown(BaseEventData* pData);
+	void OnMouseUp(BaseEventData* pData);
+
+	void OnKeyHit(BaseEventData* pData);
+	void OnKeyDown(BaseEventData* pData);
+	void OnKeyUp(BaseEventData* pData);
 
 private:
 	Container* m_pContainer;
 	EventManager* m_pEventManager;
+
 	bool m_bStateChangedThisFrame;
 	
 	State* m_pCurrentState;
