@@ -5,9 +5,13 @@
 #include "State.hpp"
 #include "../Utilities/CameraHandle.hpp"
 #include "../Utilities/Container.hpp"
+#include "../Utilities/Event.hpp"
 #include "../Utilities/IsoSurface.hpp"
 #include "../Utilities/Modeler.hpp"
 #include "../Utilities/VoxelBuffer.hpp"
+
+#include "../Components/World.hpp"
+#include "../Entities/CameraDynamic.hpp"
 
 #define ISOLEVEL				0.0f
 #define VOXELS_PER_CELL			9
@@ -31,13 +35,20 @@ public:
 
 	bool Update(float deltaTime);
 
+	void OnKeyDown(Event_KeyDown* pEvent);
+	void OnKeyUp(Event_KeyUp* pEvent);
+
 private:
 
 	IsoSurface<float>* m_pIsosurface;
 	Leadwerks::Model* m_pModel;
 	VoxelBuffer<float>* m_pBuffer;
 
-	Leadwerks::Camera* m_pCamera;
+	CameraHandle* m_pCameraHndl;
+
+	Components::World* m_pWorld;
+
+	int64_t m_cameraDynamic;
 
 }; // < end class.
 
@@ -45,13 +56,15 @@ DefaultState::DefaultState(void) { }
 
 void DefaultState::Configure(Container* pContainer)
 {
-	m_pCamera = pContainer->Resolve<CameraHandle>()->getInst();
+	m_pCameraHndl = pContainer->Resolve<CameraHandle>();
 }
 
 void DefaultState::Load(void) 
 { 
-	m_pCamera->Move(4.0f, 8.0f, -5.0f);
-	m_pCamera->SetDrawMode(DRAW_WIREFRAME);
+	m_pWorld = new Components::World();
+	m_cameraDynamic = Entities::CameraDynamic::Create(m_pWorld, Leadwerks::Vec3(4.0f, 6.0f, -4.0f), Leadwerks::Vec3(0.0f, 0.0f, 0.0f), m_pCameraHndl);
+
+	m_pCameraHndl->getInst()->SetDrawMode(DRAW_WIREFRAME);
 
 	m_pModel = Leadwerks::Model::Create();
 	m_pBuffer = new VoxelBuffer<float>(NUM_VOXELS, NUM_VOXELS, NUM_VOXELS);
@@ -88,7 +101,9 @@ void DefaultState::Load(void)
 
 void DefaultState::Close(void) 
 { 
-	m_pCamera = nullptr;
+	SAFE_DELETE(m_pWorld);
+
+	m_pCameraHndl = nullptr;
 
 	SAFE_DELETE(m_pIsosurface);
 	SAFE_DELETE(m_pBuffer);
@@ -100,7 +115,43 @@ void DefaultState::Close(void)
 
 bool DefaultState::Update(float dt) { 
 
+	Entities::CameraDynamic::Update(m_pWorld, dt);
+
 	return true;
+
+}
+
+void DefaultState::OnKeyDown(Event_KeyDown* pEvent)
+{
+	Components::Input& inputComponent = m_pWorld->GetComponents<Components::Input>(m_pWorld, m_cameraDynamic)
+		->front();
+
+	if (pEvent->Key() == Leadwerks::Key::W) 
+	{
+		inputComponent.nMask |= INPUT_MOVE_FORWARD; 
+	}
+
+	if (pEvent->Key() == Leadwerks::Key::S)
+	{
+		inputComponent.nMask |= INPUT_MOVE_BACKWARD;
+	}
+
+}
+
+void DefaultState::OnKeyUp(Event_KeyUp* pEvent)
+{
+	Components::Input& inputComponent = m_pWorld->GetComponents<Components::Input>(m_pWorld, m_cameraDynamic)
+		->front();
+
+	if (pEvent->Key() == Leadwerks::Key::W)
+	{
+		inputComponent.nMask &= ~INPUT_MOVE_FORWARD;
+	}
+
+	if (pEvent->Key() == Leadwerks::Key::S)
+	{
+		inputComponent.nMask &= ~INPUT_MOVE_BACKWARD;
+	}
 
 }
 
