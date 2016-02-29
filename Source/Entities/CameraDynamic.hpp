@@ -58,9 +58,14 @@ namespace Entities
 				// < Perform any game logic here.
 				// < ---
 				uint64_t inputMask = inputComponent.nMask;
-				velocityComponent.vVel.x = ( (inputMask & INPUT_MOVE_RIGHT) - (inputMask & INPUT_MOVE_LEFT) );
-				velocityComponent.vVel.y = ( (inputMask & INPUT_MOVE_UP) - (inputMask & INPUT_MOVE_DOWN) );
-				velocityComponent.vVel.z = ( (inputMask & INPUT_MOVE_FORWARD)- (inputMask & INPUT_MOVE_BACKWARD));
+
+				float vX = ( (bool(inputMask & INPUT_MOVE_RIGHT))	- (bool(inputMask & INPUT_MOVE_LEFT)) )		* dt * 0.075f;
+				float vY = ( (bool(inputMask & INPUT_MOVE_UP))		- (bool(inputMask & INPUT_MOVE_DOWN)) )		* dt * 0.075f;
+				float vZ = ( (bool(inputMask & INPUT_MOVE_FORWARD))	- (bool(inputMask & INPUT_MOVE_BACKWARD)) ) * dt * 0.075f;
+
+				velocityComponent.vVel.x = vX;
+				velocityComponent.vVel.y = vY;
+				velocityComponent.vVel.z = vZ;
 
 
 				// < Add the velocity to the camera's placement.
