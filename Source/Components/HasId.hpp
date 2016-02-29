@@ -7,7 +7,7 @@ namespace Components
 {
 	typedef struct HasId
 	{
-		unsigned nId;
+		uint64_t nId;
 
 		HasId(void) : nId(0) { }
 
