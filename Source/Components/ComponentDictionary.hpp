@@ -12,7 +12,8 @@ typedef enum
 	COMPONENT_CAMERA = 1 << 3,
 	COMPONENT_HASID = 1 << 4,
 	COMPONENT_HASNAME = 1 << 5,
-	COMPONENT_WORLD = 1 << 6
+	COMPONENT_WORLD = 1 << 6,
+	COMPONENT_INPUT = 1 << 7
 
 } ComponentDictionary;
 
