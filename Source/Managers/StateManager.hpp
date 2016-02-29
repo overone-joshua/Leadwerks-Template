@@ -5,6 +5,9 @@
 #include "../Utilities/Container.hpp"
 #include "../Utilities/Manager.hpp"
 #include "../Utilities/Macros.hpp"
+
+#include "../Utilities/Event.hpp"
+#include "EventManager.hpp"
 #include "../States/State.hpp"
 
 #include <cassert>
@@ -18,7 +21,7 @@ class StateManager : public Manager {
 
 public:
 
-	StateManager(Container* pContainer);
+	StateManager(Container* pContainer, EventManager* pEventManager);
 	~StateManager(void);
 
 	void preUpdate(void);
@@ -56,12 +59,15 @@ public:
 
 protected:
 
+	void Configure(Container* pContainer);
+
 	template <typename T>
 	StateMap::iterator FetchStateInternal(void);
 
 
 private:
 	Container* m_pContainer;
+	EventManager* m_pEventManager;
 	bool m_bStateChangedThisFrame;
 	
 	State* m_pCurrentState;

@@ -25,11 +25,13 @@ App::~App(void) { }
 
 void App::Configure(Container* pContainer) {
 
-	/* StateManager */
-	m_pStateManager = pContainer->Register<StateManager, StateManager>( new StateManager(pContainer));
-
 	/* EventManager */
 	m_pEventManager = pContainer->Register<EventManager, EventManager>( new EventManager());
+
+	/* StateManager */
+	m_pStateManager = pContainer->Register<StateManager, StateManager>(new StateManager(
+		pContainer,
+		pContainer->Resolve<EventManager>()));
 
 	/* Input Manager */
 	m_pInputManager = pContainer->Register<InputManager, InputManager>( new InputManager(

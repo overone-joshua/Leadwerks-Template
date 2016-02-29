@@ -2,18 +2,28 @@
 #include "StateManager.hpp"
 #include "../Utilities/Container.hpp"
 
+#include "../Utilities/Event.hpp"
+#include "EventManager.hpp"
+
 #include <cassert>
 
-StateManager::StateManager(Container* pContainer) 
-	: m_bStateChangedThisFrame(false), m_pCurrentState(nullptr) , m_pContainer(pContainer) 
+StateManager::StateManager(Container* pContainer, EventManager* pEventManager) 
+	: m_bStateChangedThisFrame(false), m_pCurrentState(nullptr),
+	m_pContainer(pContainer), m_pEventManager(pEventManager)
 {
 	assert(this->m_pContainer != nullptr);
+	this->Configure(pContainer);
 }
 
 StateManager::~StateManager(void) { 
 
 	RemoveAllStates();
 
+	this->m_pEventManager = nullptr;
+}
+
+void StateManager::Configure(Container* pContainer)
+{
 }
 
 void StateManager::preUpdate(void)
