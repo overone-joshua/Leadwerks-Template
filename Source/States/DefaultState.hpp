@@ -126,16 +126,13 @@ void DefaultState::OnKeyDown(Event_KeyDown* pEvent)
 	Components::Input& inputComponent = m_pWorld->GetComponents<Components::Input>(m_pWorld, m_cameraDynamic)
 		->front();
 
-	if (pEvent->Key() == Leadwerks::Key::W) 
-	{
-		inputComponent.nMask |= INPUT_MOVE_FORWARD; 
-	}
+	if (pEvent->Key() == Leadwerks::Key::W) { inputComponent.nMask |= INPUT_MOVE_FORWARD; }
+	if (pEvent->Key() == Leadwerks::Key::A) { inputComponent.nMask |= INPUT_MOVE_LEFT; }
+	if (pEvent->Key() == Leadwerks::Key::S) { inputComponent.nMask |= INPUT_MOVE_BACKWARD; }
+	if (pEvent->Key() == Leadwerks::Key::D) { inputComponent.nMask |= INPUT_MOVE_RIGHT; }
 
-	if (pEvent->Key() == Leadwerks::Key::S)
-	{
-		inputComponent.nMask |= INPUT_MOVE_BACKWARD;
-	}
-
+	if (pEvent->Key() == Leadwerks::Key::E) { inputComponent.nMask |= INPUT_MOVE_UP; }
+	if (pEvent->Key() == Leadwerks::Key::Q) { inputComponent.nMask |= INPUT_MOVE_DOWN; }
 }
 
 void DefaultState::OnKeyUp(Event_KeyUp* pEvent)
@@ -143,16 +140,13 @@ void DefaultState::OnKeyUp(Event_KeyUp* pEvent)
 	Components::Input& inputComponent = m_pWorld->GetComponents<Components::Input>(m_pWorld, m_cameraDynamic)
 		->front();
 
-	if (pEvent->Key() == Leadwerks::Key::W)
-	{
-		inputComponent.nMask &= ~INPUT_MOVE_FORWARD;
-	}
+	if (pEvent->Key() == Leadwerks::Key::W) { inputComponent.nMask &= ~INPUT_MOVE_FORWARD; }
+	if (pEvent->Key() == Leadwerks::Key::A) { inputComponent.nMask &= ~INPUT_MOVE_LEFT; }
+	if (pEvent->Key() == Leadwerks::Key::S) { inputComponent.nMask &= ~INPUT_MOVE_BACKWARD; }
+	if (pEvent->Key() == Leadwerks::Key::D) { inputComponent.nMask &= ~INPUT_MOVE_RIGHT; }
 
-	if (pEvent->Key() == Leadwerks::Key::S)
-	{
-		inputComponent.nMask &= ~INPUT_MOVE_BACKWARD;
-	}
-
+	if (pEvent->Key() == Leadwerks::Key::E) { inputComponent.nMask &= ~INPUT_MOVE_UP; }
+	if (pEvent->Key() == Leadwerks::Key::Q) { inputComponent.nMask &= ~INPUT_MOVE_DOWN; }
 }
 
 #endif _DEFAULT_STATE_HPP_
