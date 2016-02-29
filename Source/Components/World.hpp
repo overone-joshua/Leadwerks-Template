@@ -14,38 +14,37 @@
 
 namespace Components
 {
+
 	class World : public Component
 	{
 		CLASS_TYPE(World);
 
-		template <typename T1, typename T2>
-		struct ComponentKeyComparer {
-			bool operator () (const std::pair<T1, T2>& x, const std::pair<T1, T2>& y) {
-				return x.first < y.first && x.second < y.second;
-			}
-		};
-
 		typedef void* InstPtr;
-		typedef std::pair<unsigned, std::string> CompKey;
-		typedef std::map <CompKey, InstPtr, ComponentKeyComparer<unsigned, std::string>> ComponentMap;
+		typedef std::pair<uint64_t, std::string> CompKey;
+		typedef std::map <CompKey, InstPtr> ComponentMap;
 
 	public:
 
 		World(std::string cName = "");
 		~World(void);
 
-		unsigned CreateEntity(World* pWorld);
-		void DestroyEntity(World* pWorld, unsigned entity);
+		uint64_t CreateEntity(World* pWorld);
+		void DestroyEntity(World* pWorld, uint64_t entity);
 
 		template <typename T>
-		void AddComponent(World* pWorld, unsigned entity, T val);
+		void AddComponent(World* pWorld, uint64_t entity, T val);
 
 		template <typename T>
-		unsigned RemoveComponent(World* pWorld, unsigned entity, std::string cName);
+		uint64_t RemoveComponent(World* pWorld, uint64_t entity, std::string cName);
 
-		unsigned& Get(unsigned entity);
+		uint64_t& Get(uint64_t entity);
 
-		unsigned& operator [] (int index)
+		std::vector<uint64_t> World::GetEntities(World* pWorld, uint64_t entityMask);
+
+		template <typename T>
+		std::vector<T>* GetComponents(World* pWorld, uint64_t entity);
+
+		uint64_t& operator [] (int index)
 		{
 			return m_entityMasks[index];
 		}
@@ -53,45 +52,58 @@ namespace Components
 	protected:
 
 		template <typename T>
-		World::ComponentMap::iterator FetchInternal(World* pWorld, unsigned entity);
+		CompKey MakeComponentKey(uint64_t entity);
+
+		template <typename T>
+		std::vector<T>* Fetch(World* pWorld, uint64_t entity);
+
+		template <typename T>
+		World::ComponentMap::iterator FetchInternal(World* pWorld, uint64_t entity);
+
+		void Dispose(void);
 
 	private:
 
-		std::vector<unsigned> m_entityMasks;
-		std::queue<unsigned> m_availableEntities;
+		std::vector<uint64_t> m_entityMasks;
+		std::queue<uint64_t> m_availableEntities;
 
-		unsigned m_nRunningIndex;
+		uint64_t m_nRunningIndex;
 
 		ComponentMap m_components;
 
 	}; // < end struct.
 
 	template <typename T>
-	void World::AddComponent(World* pWorld, unsigned entity, T val)
+	World::CompKey World::MakeComponentKey(uint64_t entity)
 	{
-		std::vector<T>* components = nullptr;
+		std::string type = T::ClassType();
+		auto key = std::make_pair(entity, type);
 
-		val.nId = entity;
-
-		auto iter = FetchInternal<T>(pWorld, entity);
-		if (iter == pWorld->m_components.end()) 
-		{
-			auto type = T::ClassType();
-			auto key = std::make_pair(entity, type);
-
-			pWorld->m_components.insert( std::make_pair(key, (void*)(new std::vector<T>(1, val))) );
-		}
-
-		components = static_cast<std::vector<T>*>(iter->second);
-		components->push_back(val);
-
-		components->push_back(static_cast<T>(val));
+		return key;
 	}
 
 	template <typename T>
-	unsigned World::RemoveComponent(World* pWorld, unsigned entity, std::string cName)
+	void World::AddComponent(World* pWorld, uint64_t entity, T val)
 	{
-		unsigned numRemoved = 0;
+		std::string type = T::ClassType();
+		auto key = std::make_pair(entity, type);
+
+		val.nId = entity;
+		
+		auto iter = pWorld->FetchInternal<T>(pWorld, entity);
+		if (iter == pWorld->m_components.end())
+		{
+			pWorld->m_components.insert( std::make_pair(key, (void*)(new std::vector<T>())) );
+		}
+
+		auto it = pWorld->Fetch<T>(pWorld, entity);
+		it->push_back(val);
+	}
+
+	template <typename T>
+	uint64_t World::RemoveComponent(World* pWorld, uint64_t entity, std::string cName)
+	{
+		uint64_t numRemoved = 0;
 
 		auto iter = FetchInternal<T>(pWorld);
 		if (iter == pWorld->m_components.end()) { return; }
@@ -113,14 +125,40 @@ namespace Components
 		}
 
 		return numRemoved;
+
 	}
 
 	template <typename T>
-	World::ComponentMap::iterator World::FetchInternal(World* pWorld, unsigned entity)
+	std::vector<T>* World::Fetch(World* pWorld, uint64_t entity)
 	{
-		auto type = T::ClassType();
+		std::string type = T::ClassType();
 		auto key = std::make_pair(entity, type);
+
+		auto it = pWorld->m_components.find(key);
+		if (it != pWorld->m_components.end()) { return static_cast<std::vector<T>*>(it->second); }
+
+		return nullptr;
+
+	}
+
+	template <typename T>
+	World::ComponentMap::iterator World::FetchInternal(World* pWorld, uint64_t entity)
+	{
+		std::string type = T::ClassType();
+		auto key = std::make_pair(entity, type);
+
 		return pWorld->m_components.find(key);
+
+	}
+
+	template <typename T>
+	std::vector<T>* World::GetComponents(World* pWorld, uint64_t entity)
+	{
+		std::string type = T::ClassType();
+		auto key = std::make_pair(entity, type);
+
+		return static_cast<std::vector<T>*>( pWorld->m_components.at(key) );
+		
 	}
 
 } // < end namespace.
