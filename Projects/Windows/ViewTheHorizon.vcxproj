@@ -248,7 +248,7 @@
     <ClInclude Include="..\..\Source\Components\Placement.hpp" />
     <ClInclude Include="..\..\Source\Components\Velocity.hpp" />
     <ClInclude Include="..\..\Source\Components\World.hpp" />
-    <ClInclude Include="..\..\Source\Entities\Camera.hpp" />
+    <ClInclude Include="..\..\Source\Entities\CameraDynamic.hpp" />
     <ClInclude Include="..\..\Source\Managers\EventManager.hpp" />
     <ClInclude Include="..\..\Source\Managers\InputManager.hpp" />
     <ClInclude Include="..\..\Source\Managers\StateManager.hpp" />

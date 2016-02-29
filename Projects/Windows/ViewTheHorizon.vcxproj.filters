@@ -176,7 +176,7 @@
     <ClInclude Include="..\..\Source\Components\HasName.hpp">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Entities\Camera.hpp">
+    <ClInclude Include="..\..\Source\Entities\CameraDynamic.hpp">
       <Filter>Header Files\Entities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Components\Input.hpp">
