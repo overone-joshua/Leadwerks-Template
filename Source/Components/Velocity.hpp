@@ -9,14 +9,19 @@
 
 namespace Components
 {
+	/** A Velocity component..
+	*  The Velocity component provides access to a Leadwerks::Vec3
+	*  objects representing a movement vector.
+	*/
 	typedef struct Velocity : public Component
 	{
 		using Component::Component;
 
 		CLASS_TYPE(Velocity);
 
-		Leadwerks::Vec3 vVel;
+		Leadwerks::Vec3 vVel;	/*!< A Leadwerks::Vec3 representing a movement vector in 3D space. */
 
+		/* The Velocity component constructor. */
 		Velocity(void) 
 			: vVel(0.0f, 0.0f) { }
 

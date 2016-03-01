@@ -3,6 +3,10 @@
 
 #pragma once
 
+/** An Input dictionary.
+*  An enumeration containing all bitmasks representing the finite
+*  number of inputs that can be combined together.
+*/
 typedef enum
 {
 	INPUT_NONE		= 0,

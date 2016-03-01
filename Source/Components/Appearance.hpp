@@ -11,12 +11,16 @@
 
 namespace Components 
 {
+	/** An Appearance component.
+	 *  The Appearance component provides access to a Leadwerks::Model object.
+	 */
 	typedef struct Appearance : public Component
 	{
 		CLASS_TYPE(Appearance);
 
-		Leadwerks::Model* pModel;
+		Leadwerks::Model* pModel;	/*!< A Leadwerks 3DModel. */
 
+		/** The Appearance component constructor. */
 		Appearance(Leadwerks::Model* _pModel = nullptr, std::string cName = "")
 			: pModel(_pModel), Component(cName) { }
 

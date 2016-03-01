@@ -11,12 +11,17 @@
 
 namespace Components
 {
+	/** A Camera component.
+	 *  The Camera component provides access to a CameraHandle
+	 *  object which wraps the Leadwerks::Camera object.
+	 */
 	typedef struct Camera : public Component
 	{
 		CLASS_TYPE(Camera);
 
-		CameraHandle* pCamHndl; //!<Camera Handle>//
+		CameraHandle* pCamHndl;		/*!< A CameraHandle object. */
 
+		/** The Camera component constructor. */
 		Camera(CameraHandle* _pCamHndl = nullptr, std::string cName = "")
 			: pCamHndl(_pCamHndl), Component(cName) { }
 

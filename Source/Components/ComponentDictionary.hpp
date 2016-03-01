@@ -3,6 +3,11 @@
 
 #pragma once
 
+/** A Component dictionary.
+ *  An enumeration containing all bitmasks representing the finite
+ *  number of components that can be combined together to form
+ *  entities.
+ */
 typedef enum
 {
 	COMPONENT_NONE = 0,
