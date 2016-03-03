@@ -37,58 +37,28 @@ namespace Components
 	{
 		CLASS_TYPE(World);
 
-		typedef void* InstPtr;								/*!< A defined type aliasing a void. */
-		typedef std::pair<uint64_t, std::string> CompKey;	/*!< A defined type aliasing a std::pair used as the key for the ComponentMap. */
-		typedef std::map <CompKey, InstPtr> ComponentMap;	/*!< A defined type aliasing a std::map used to store components by entity relation and their containing collection. */
+		typedef void*                                     InstPtr;			  /*!< A defined type aliasing a void. */
+		typedef std::pair<uint64_t, std::string>          CompKey;	          /*!< A defined type aliasing a std::pair used as the key for the ComponentMap. */
+		typedef std::map <CompKey, InstPtr>               ComponentMap;	      /*!< A defined type aliasing a std::map used to store components by entity relation and their containing collection. */
 
 	public:
 
-		/** The World component constructor. */
-		World(std::string cName = "");
+                                                          World(std::string cName = "");                                          /** The World component constructor. */
+                                                          ~World(void);                                                           /** The World component destructor. */
+		
+		uint64_t                                          CreateEntity(World* pWorld);                                            /** Creates a new entity contained within the given World. */
+		
+		void                                              DestroyEntity(World* pWorld, uint64_t entity);                          /** Destroys the given entity from the given World. */
+		
+		template <typename T> void                        AddComponent(World* pWorld, uint64_t entity, T val);                    /** Adds the given Component of type T to the given World and associates the component with the given entity. */
+		
+		template <typename T> uint64_t                    RemoveComponent(World* pWorld, uint64_t entity, std::string cName);     /** Attempts to remove the given Component of type T from the given World that is associated with the given entity of the given name. */
 
-		/** The World component destructor. */
-		~World(void);
-
-		/**
-		 * Creates a new entity contained within the given World.
-		 */
-		uint64_t CreateEntity(World* pWorld);
-
-		/**
-		* Destroys the given entity from the given World.
-		*/
-		void DestroyEntity(World* pWorld, uint64_t entity);
-
-		/**
-		* Adds the given Component of type T to the given World and
-		* associates the component with the given entity.
-		*/
-		template <typename T>
-		void AddComponent(World* pWorld, uint64_t entity, T val);
-
-		/**
-		* Attempts to remove the given Component of type T from the
-		* given World that is associated with the given entity of
-		* the given name.
-		*/
-		template <typename T>
-		uint64_t RemoveComponent(World* pWorld, uint64_t entity, std::string cName);
-
-		/**
-		* Returns a reference to the given entities Component bitmask.
-		*/
-		uint64_t& Get(uint64_t entity);
-
-		/**
-		* Returns a collection of entity ids that explicitely match the given entityMask.
-		*/
-		std::vector<uint64_t> World::GetEntities(World* pWorld, uint64_t entityMask);
-
-		/**
-		* Returns a Component collection of type T assocated with the given entity.
-		*/
-		template <typename T>
-		std::vector<T>* GetComponents(World* pWorld, uint64_t entity);
+		uint64_t&                                         Get(uint64_t entity);                                                   /** Returns a reference to the given entities Component bitmask. */
+		
+		std::vector<uint64_t>                             GetEntities(World* pWorld, uint64_t entityMask);                        /** Returns a collection of entity ids that explicitely match the given entityMask. */
+				
+		template <typename T> std::vector<T>*             GetComponents(World* pWorld, uint64_t entity);                          /** Returns a Component collection of type T assocated with the given entity. */
 
 		uint64_t& operator [] (int index)
 		{
@@ -96,40 +66,23 @@ namespace Components
 		}
 
 	protected:
-
-		/**
-		* Returns a component key from the given Component type T and
-		* the given entity.
-		*/
-		template <typename T>
-		CompKey MakeComponentKey(uint64_t entity);
-
-		/**
-		* Attempts to fetch all components of type T associated with the given entity.
-		*/
-		template <typename T>
-		std::vector<T>* Fetch(World* pWorld, uint64_t entity);
-
-		/**
-		* Attempts to return an iterator into the Worlds Component collection
-		* of type T associated with the given entity.
-		*/
-		template <typename T>
-		World::ComponentMap::iterator FetchInternal(World* pWorld, uint64_t entity);
-
-		/**
-		* Cleans up all resources used by the World.
-		*/
-		void Dispose(void);
+		
+		template <typename T> CompKey                         MakeComponentKey(uint64_t entity);                      /** Returns a component key from the given Component type T and the given entity. */
+				
+		template <typename T> std::vector<T>*                 Fetch(World* pWorld, uint64_t entity);                  /** Attempts to fetch all components of type T associated with the given entity. */
+				
+		template <typename T> World::ComponentMap::iterator   FetchInternal(World* pWorld, uint64_t entity);          /** Attempts to return an iterator into the Worlds Component collection of type T associated with the given entity. */
+		
+		void                                                  Dispose(void);                                          /** Cleans up all resources used by the World. */
 
 	private:
 
-		std::vector<uint64_t> m_entityMasks;		/*!< A std::vector of uint64_t Component bitmasks. */
-		std::queue<uint64_t> m_availableEntities;	/*!< A std::vector of uint64_t entity indexes that are available. */
+		std::vector<uint64_t>                                 m_entityMasks;		           /*!< A std::vector of uint64_t Component bitmasks. */
+		std::queue<uint64_t>                                  m_availableEntities;	           /*!< A std::vector of uint64_t entity indexes that are available. */
 
-		uint64_t m_nRunningIndex;	/*!< A uint64_t which is incremented by one for every new entity. */
+		uint64_t                                              m_nRunningIndex;	               /*!< A uint64_t which is incremented by one for every new entity. */
 
-		ComponentMap m_components;	/*!< A std::map of Components keyed by the associated entity and the Component's ClassType. */
+		ComponentMap                                          m_components;	                   /*!< A std::map of Components keyed by the associated entity and the Component's ClassType. */
 
 	}; // < end struct.
 

@@ -26,10 +26,10 @@ namespace Components
 	*/
 	typedef struct HasName
 	{
-		std::string cName;	/*!< std::string identifier. */
+		std::string               cName;	/*!< std::string identifier. */
 
-		/** The HasName component constructor. */
-		HasName(std::string _cName = "") : cName(_cName) { }
+		                          /** The HasName component constructor. */
+		                          HasName(std::string _cName = "") : cName(_cName) { }
 
 	} HasName; // < and struct.
 

@@ -32,8 +32,8 @@ namespace Components
 		using HasId::HasId;
 		using HasName::HasName;
 
-		/** The Components constructor. */
-		Component(std::string cName = "") : HasName(cName) { }
+		              /** The Components constructor. */
+		              Component(std::string cName = "") : HasName(cName) { }
 
 	} Component; // < end struct.
 

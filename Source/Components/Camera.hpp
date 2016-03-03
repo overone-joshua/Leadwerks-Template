@@ -34,11 +34,10 @@ namespace Components
 	{
 		CLASS_TYPE(Camera);
 
-		CameraHandle* pCamHndl;		/*!< A CameraHandle object. */
+		CameraHandle*                 pCamHndl;		/*!< A CameraHandle object. */
 
-		/** The Camera component constructor. */
-		Camera(CameraHandle* _pCamHndl = nullptr, std::string cName = "")
-			: pCamHndl(_pCamHndl), Component(cName) { }
+		                              /** The Camera component constructor. */
+		                              Camera(CameraHandle* _pCamHndl = nullptr, std::string cName = "") : pCamHndl(_pCamHndl), Component(cName) { }
 
 	} Camera; // < end struct.
 

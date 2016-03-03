@@ -32,10 +32,10 @@ namespace Components
 	{
 		CLASS_TYPE(Input);
 
-		uint64_t nMask;	/*!< A uint64_t bitmask. */
+		uint64_t                      nMask;	/*!< A uint64_t bitmask. */
 
-		/** The Input component constructor.*/
-		Input(std::string cName = "") : nMask(INPUT_NONE) { }
+		                              /** The Input component constructor.*/
+		                              Input(std::string cName = "") : nMask(INPUT_NONE) { }
 
 	} Input; // < end struct.
 

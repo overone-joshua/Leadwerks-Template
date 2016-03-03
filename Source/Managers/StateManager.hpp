@@ -61,66 +61,61 @@ class StateManager : public Manager {
 
 public:
 
-	StateManager(Container* pContainer, EventManager* pEventManager);
-	~StateManager(void);
+                                StateManager(Container* pContainer, EventManager* pEventManager);
+	                           ~StateManager(void);
 
-	void preUpdate(void);
-	void postUpdate(void);
-	void Update(float deltaTime);
+	void                       preUpdate(void);
+	void                       postUpdate(void);
+	void                       Update(float deltaTime);
 
-	void preRender(void);
-	void postRender(void);
-	void Render(void);
+	void                       preRender(void);
+	void                       postRender(void);
+	void                       Render(void);
 	
-	void preDraw(void);
-	void postDraw(void);
-	void Draw(void);
+	void                       preDraw(void);
+	void                       postDraw(void);
+	void                       Draw(void);
 
-	template <typename T>
-	void AddState(bool bChange = false);
 	
-	template <typename T>
-	void RemoveState(void);
+	template <typename T> void AddState(bool bChange = false);
+		
+	template <typename T> void RemoveState(void);
 
-	void RemoveAllStates(void);
+	void                       RemoveAllStates(void);
+		
+	template <typename T> void ChangeState(void);
+		
+	template <typename T> State* FetchState(void);
+		
+	template <typename T> bool IsStatePresent(void);
 	
-	template <typename T>
-	void ChangeState(void);
+	void                       CloseCurrentState(void);
 	
-	template <typename T>
-	State* FetchState(void);
-	
-	template <typename T>
-	bool IsStatePresent(void);
-	
-	void CloseCurrentState(void);
-	
-	bool StateChangedThisFrame(void);
+	bool                       StateChangedThisFrame(void);
 
 protected:
 
-	void Configure(Container* pContainer);
+	void                                       Configure(Container* pContainer);
+	
+	template <typename T> StateMap::iterator   FetchStateInternal(void);
 
-	template <typename T>
-	StateMap::iterator FetchStateInternal(void);
+	void                                       OnMouseHit(BaseEventData* pData);
+	void                                       OnMouseDown(BaseEventData* pData);
+	void                                       OnMouseUp(BaseEventData* pData);
 
-	void OnMouseHit(BaseEventData* pData);
-	void OnMouseDown(BaseEventData* pData);
-	void OnMouseUp(BaseEventData* pData);
-
-	void OnKeyHit(BaseEventData* pData);
-	void OnKeyDown(BaseEventData* pData);
-	void OnKeyUp(BaseEventData* pData);
+	void                                       OnKeyHit(BaseEventData* pData);
+	void                                       OnKeyDown(BaseEventData* pData);
+	void                                       OnKeyUp(BaseEventData* pData);
 
 private:
-	Container* m_pContainer;
-	EventManager* m_pEventManager;
+	Container*                                 m_pContainer;
+	EventManager*                              m_pEventManager;
 
-	bool m_bStateChangedThisFrame;
+	bool                                       m_bStateChangedThisFrame;
 	
-	State* m_pCurrentState;
+	State*                                     m_pCurrentState;
 
-	StateMap m_states;
+	StateMap                                   m_states;
 
 }; // < end class.
 	

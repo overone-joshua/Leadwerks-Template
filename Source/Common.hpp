@@ -9,13 +9,13 @@
 #include <cstdint>
 
 #include "App.h"
-#include "Services/AppCtrl.hpp"
+#include "Services/AppController.hpp"
 
 
-extern App* gApp;
-extern AppCtrl* gAppCtrl;
+extern App*             gApp;
+extern AppController*   gAppCtrl;
 
-typedef std::uint32_t uint32_t;
-typedef std::uint64_t uint64_t;
+typedef std::uint32_t   uint32_t;
+typedef std::uint64_t   uint64_t;
 
 #endif _COMMON_HPP_H

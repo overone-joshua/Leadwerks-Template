@@ -34,13 +34,13 @@ namespace Components
 	{
 		CLASS_TYPE(Placement);
 
-		Leadwerks::Vec3 vPos;	/*!< A Leadwerks::Vec3 representing a position in 3D space. */
-		Leadwerks::Vec3 vRot;	/*!< A Leadwerks::Vec3 representing a rotation in 3D space. */
-		Leadwerks::Vec3 vSca;	/*!< A Leadwerks::Vec3 representing a scaling factor in 3D space.*/
+		Leadwerks::Vec3                   vPos;	/*!< A Leadwerks::Vec3 representing a position in 3D space. */
+		Leadwerks::Vec3                   vRot;	/*!< A Leadwerks::Vec3 representing a rotation in 3D space. */
+		Leadwerks::Vec3                   vSca;	/*!< A Leadwerks::Vec3 representing a scaling factor in 3D space.*/
 
-		/** The Placement component constructor. */
-		Placement(Leadwerks::Vec3 _vPos = Leadwerks::Vec3(0.0f, 0.0f, 0.0f), Leadwerks::Vec3 _vRot = Leadwerks::Vec3(0.0f, 0.0f, 0.0f), Leadwerks::Vec3 _vSca = Leadwerks::Vec3(1.0f, 1.0f, 1.0f), std::string cName = "")
-			: vPos(_vPos), vRot(_vRot), vSca(_vSca), Component(cName) { }
+		                                  /** The Placement component constructor. */
+		                                  Placement(Leadwerks::Vec3 _vPos = Leadwerks::Vec3(0.0f, 0.0f, 0.0f), Leadwerks::Vec3 _vRot = Leadwerks::Vec3(0.0f, 0.0f, 0.0f), Leadwerks::Vec3 _vSca = Leadwerks::Vec3(1.0f, 1.0f, 1.0f), std::string cName = "")
+			                              : vPos(_vPos), vRot(_vRot), vSca(_vSca), Component(cName) { }
 
 	} Placement; // < end struct.
 

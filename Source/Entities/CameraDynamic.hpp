@@ -90,7 +90,7 @@ namespace Entities
 				// < Add the velocity to the camera's placement.
 				placementComponent.vPos += velocityComponent.vVel;
 
-				// < Set lerp the camera's position.
+				// < Set the camera's position.
 				auto cam = cameraComponent.pCamHndl->getInst();
 				cam->SetPosition(placementComponent.vPos, true);
 				cam->SetRotation(placementComponent.vRot, false);

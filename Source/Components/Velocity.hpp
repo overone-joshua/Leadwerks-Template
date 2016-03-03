@@ -34,11 +34,10 @@ namespace Components
 
 		CLASS_TYPE(Velocity);
 
-		Leadwerks::Vec3 vVel;	/*!< A Leadwerks::Vec3 representing a movement vector in 3D space. */
+		Leadwerks::Vec3                   vVel;	/*!< A Leadwerks::Vec3 representing a movement vector in 3D space. */
 
-		/* The Velocity component constructor. */
-		Velocity(void) 
-			: vVel(0.0f, 0.0f) { }
+		                                  /* The Velocity component constructor. */
+		                                  Velocity(void) : vVel(0.0f, 0.0f) { }
 
 	} Velocity; // < end struct.
 

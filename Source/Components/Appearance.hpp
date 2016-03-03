@@ -33,11 +33,10 @@ namespace Components
 	{
 		CLASS_TYPE(Appearance);
 
-		Leadwerks::Model* pModel;	/*!< A Leadwerks 3DModel. */
+		Leadwerks::Model*             pModel;	/*!< A Leadwerks 3DModel. */
 
-		/** The Appearance component constructor. */
-		Appearance(Leadwerks::Model* _pModel = nullptr, std::string cName = "")
-			: pModel(_pModel), Component(cName) { }
+		                              /** The Appearance component constructor. */
+		                              Appearance(Leadwerks::Model* _pModel = nullptr, std::string cName = "") : pModel(_pModel), Component(cName) { }
 
 	} Appearance; // < end struct.
 

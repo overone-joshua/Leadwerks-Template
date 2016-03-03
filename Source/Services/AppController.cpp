@@ -10,47 +10,47 @@
 #include "../Utilities/WorldHandle.hpp"
 #include "../Utilities/CameraHandle.hpp"
 
-const bool AppCtrl::isFullScreen() const {
+const bool AppController::isFullScreen() const {
 	return (bool)(m_pWindow->getInst()->FullScreen);
 }
 
-const std::string AppCtrl::getAppName() const {
+const std::string AppController::getAppName() const {
     return m_appName;
 }
 
-const Leadwerks::Vec2 AppCtrl::screen_upperLeft() const {
+const Leadwerks::Vec2 AppController::screen_upperLeft() const {
 	return Leadwerks::Vec2(m_pWindow->getInst()->GetX(), m_pWindow->getInst()->GetY());
 }
 
-const Leadwerks::Vec2 AppCtrl::screen_lowerRight() const {
+const Leadwerks::Vec2 AppController::screen_lowerRight() const {
 	return Leadwerks::Vec2(m_pWindow->getInst()->GetX() + m_pWindow->getInst()->GetWidth(), m_pWindow->getInst()->GetY() + m_pWindow->getInst()->GetHeight());
 }
 
-const int AppCtrl::getWindowFlags (void) const {
+const int AppController::getWindowFlags (void) const {
     return m_windowFlags;
 }
 
-const int AppCtrl::getRenderingContextFlags(void) const {
+const int AppController::getRenderingContextFlags(void) const {
     return m_renderingContextFlags;
 }
 
-const Leadwerks::Window& AppCtrl::getWindow() const {
+const Leadwerks::Window& AppController::getWindow() const {
     return (*m_pWindow->getInst());
 }
 
-const Leadwerks::Context& AppCtrl::getContext() const {
+const Leadwerks::Context& AppController::getContext() const {
     return (*m_pContext->getInst());
 }
 
-const Leadwerks::World& AppCtrl::getWorld() const {
+const Leadwerks::World& AppController::getWorld() const {
     return (*m_pWorld->getInst());
 }
 
-const Leadwerks::Camera& AppCtrl::getCamera() const {
+const Leadwerks::Camera& AppController::getCamera() const {
     return (*m_pCamera->getInst());
 }
 
-const bool AppCtrl::CreateWindowAndContext(std::string name, unsigned nX, unsigned nY, unsigned nWidth, unsigned nHeight, int windowFlags, int contextFlags) {
+const bool AppController::CreateWindowAndContext(std::string name, unsigned nX, unsigned nY, unsigned nWidth, unsigned nHeight, int windowFlags, int contextFlags) {
     ReleaseWindowAndContext();
 
 	m_windowFlags = windowFlags;
@@ -65,7 +65,7 @@ const bool AppCtrl::CreateWindowAndContext(std::string name, unsigned nX, unsign
     return true;
 }
 
-const bool AppCtrl::CreateWorld() {
+const bool AppController::CreateWorld() {
     ReleaseWorld();
 
     m_pWorld = new WorldHandle(Leadwerks::World::Create());
@@ -74,7 +74,7 @@ const bool AppCtrl::CreateWorld() {
     return true;
 }
 
-const bool AppCtrl::CreateCamera() {
+const bool AppController::CreateCamera() {
     ReleaseCamera();
 
     m_pCamera = new CameraHandle(Leadwerks::Camera::Create());
@@ -83,32 +83,32 @@ const bool AppCtrl::CreateCamera() {
     return true;
 }
 
-void AppCtrl::ReleaseApplication(void) {
+void AppController::ReleaseApplication(void) {
 	m_pApp->Shutdown();	
 
 	std::cout << "Application shutdown completed successfully. \n";
 }
 
-void AppCtrl::ReleaseWindowAndContext(void) {
+void AppController::ReleaseWindowAndContext(void) {
     SAFE_DELETE(m_pContext);
     SAFE_DELETE(m_pWindow);
 }
 
-void AppCtrl::ReleaseWorld(void) {
+void AppController::ReleaseWorld(void) {
     SAFE_DELETE(m_pWorld);
 }
 
-void AppCtrl::ReleaseCamera(void) {
+void AppController::ReleaseCamera(void) {
     SAFE_DELETE(m_pCamera);
 }
 
-AppCtrl::AppCtrl(App *pApp)
+AppController::AppController(App *pApp)
     : m_pWindow(nullptr), m_pContext(nullptr), m_pWorld(nullptr), m_pCamera(nullptr), m_pApp(pApp)
     , m_bExitAppThisFrame(false), m_windowFlags(0), m_renderingContextFlags(0) { }
 
-AppCtrl::~AppCtrl(void) { Shutdown(); }
+AppController::~AppController(void) { Shutdown(); }
 
-const bool AppCtrl::Initialize(const std::string appName, unsigned int ulX, unsigned int ulY, unsigned int nWidth, unsigned int nHeight, int windowFlags, int contextFlags) {
+const bool AppController::Initialize(const std::string appName, unsigned int ulX, unsigned int ulY, unsigned int nWidth, unsigned int nHeight, int windowFlags, int contextFlags) {
 
 	m_appName = appName;	
 
@@ -134,7 +134,7 @@ const bool AppCtrl::Initialize(const std::string appName, unsigned int ulX, unsi
     return true;
 }
 
-void AppCtrl::Shutdown() {
+void AppController::Shutdown() {
 	ReleaseApplication();
 
 	SAFE_DELETE(m_pContainer);
@@ -142,17 +142,17 @@ void AppCtrl::Shutdown() {
     std::cout << "Application controller shutdown completed successfully. \n";    
 }
 
-void AppCtrl::preUpdate() {
+void AppController::preUpdate() {
     if (m_pWindow->getInst()->Closed()) { m_bExitAppThisFrame = true; }
 	
     m_pApp->preUpdate();
 }
 
-void AppCtrl::postUpdate() {
+void AppController::postUpdate() {
     m_pApp->postUpdate();
 }
 
-bool AppCtrl::Update(float dt) {
+bool AppController::Update(float dt) {
 	preUpdate();
 
     if (m_bExitAppThisFrame) { return false; }
@@ -166,20 +166,20 @@ bool AppCtrl::Update(float dt) {
 	return true;
 }
 
-void AppCtrl::preRender() {	
+void AppController::preRender() {	
 	m_pContext->getInst()->SetColor(0.45f, 0.110f, 0.105f, 1.0f);
     m_pContext->getInst()->Clear();
 
     m_pApp->preRender();
 }
 
-void AppCtrl::postRender() {
+void AppController::postRender() {
     if (m_pWorld != nullptr) { m_pWorld->getInst()->Render(); }
 
     m_pApp->postRender();
 }
 
-void AppCtrl::Render() {
+void AppController::Render() {
 	preRender();
 
     m_pApp->Render();
@@ -187,20 +187,20 @@ void AppCtrl::Render() {
 	postRender();
 }
 
-void AppCtrl::preDraw() {
+void AppController::preDraw() {
     m_pContext->getInst()->SetBlendMode(Leadwerks::Blend::Alpha);
 
     m_pApp->preDraw();
 }
 
-void AppCtrl::postDraw() {
+void AppController::postDraw() {
     m_pApp->postDraw();
 
     m_pContext->getInst()->SetBlendMode(Leadwerks::Blend::Solid);
     m_pContext->getInst()->Sync(false);
 }
 
-void AppCtrl::Draw() {
+void AppController::Draw() {
 	preDraw();
 
     m_pApp->Draw();

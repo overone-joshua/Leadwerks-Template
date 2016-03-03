@@ -25,10 +25,10 @@ namespace Components
 	*/
 	typedef struct HasId
 	{
-		uint64_t nId;	/*!< A uint64_t identifier. */
+		uint64_t              nId;	/*!< A uint64_t identifier. */
 
-		/** The HasId component constructor. */
-		HasId(void) : nId(0) { }
+		                      /** The HasId component constructor. */
+		                      HasId(void) : nId(0) { }
 
 	} HasId; // < and struct.
 

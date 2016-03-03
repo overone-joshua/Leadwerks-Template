@@ -35,7 +35,7 @@ class ContextHandle;
 class WorldHandle;
 class CameraHandle;
 
-class AppCtrl {
+class AppController {
 public:
                             		AppCtrl                 (App* pApp);                // < Constructor.
                             		~AppCtrl                (void);                     // < Destructor.
@@ -98,6 +98,7 @@ private:
 	Container*						m_pContainer;
 
     bool                    		m_bExitAppThisFrame;                                // < Indicates whether the application will begin closing within the current frame.
+    
 }; // end class.
 
 #endif _APP_COONTROLLER_HPP_

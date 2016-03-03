@@ -47,28 +47,28 @@ class DefaultState : public State {
 
 public:		
 
-	DefaultState(void);
+	                       DefaultState(void);
 
-	void Configure(Container* pContainer);
-	void Load(void);
-	void Close(void);
+	void                   Configure(Container* pContainer);
+	void                   Load(void);
+	void                   Close(void);
 
-	bool Update(float deltaTime);
+	bool                   Update(float deltaTime);
 
-	void OnKeyDown(Event_KeyDown* pEvent);
-	void OnKeyUp(Event_KeyUp* pEvent);
+	void                   OnKeyDown(Event_KeyDown* pEvent);
+	void                   OnKeyUp(Event_KeyUp* pEvent);
 
 private:
 
-	IsoSurface<float>* m_pIsosurface;
-	Leadwerks::Model* m_pModel;
-	VoxelBuffer<float>* m_pBuffer;
+	IsoSurface<float>*     m_pIsosurface;
+	Leadwerks::Model*      m_pModel;
+	VoxelBuffer<float>*    m_pBuffer;
 
-	CameraHandle* m_pCameraHndl;
+	CameraHandle*          m_pCameraHndl;
 
-	Components::World* m_pWorld;
+	Components::World*     m_pWorld;
 
-	int64_t m_cameraDynamic;
+	int64_t                m_cameraDynamic;
 
 }; // < end class.
 
