@@ -12,7 +12,7 @@
 using namespace Leadwerks;
 
 App* gApp;
-AppCtrl* gAppCtrl;
+AppController* gAppCtrl;
 
 void DebugErrorHook(char* c)
 {
@@ -146,10 +146,11 @@ int main(int argc, const char *argv[])
 	{*/
 	//Execute mobile-style App script
 	gApp = new App();
-	gAppCtrl = new AppCtrl(gApp);
+	gAppCtrl = new AppController(gApp);
 	bool bRunning = gAppCtrl->Initialize("Leadwerks Template Project", 0, 0, 1024, 768, Leadwerks::Window::Titlebar, 0);
 
-	if (bRunning) {
+	if (bRunning && Steamworks::Initialize()) 
+    {
 		float deltaTime = 1.0f;
 		
 		do {
@@ -171,6 +172,9 @@ int main(int argc, const char *argv[])
 		gAppCtrl->Shutdown();
 		SAFE_DELETE(gAppCtrl);
 		SAFE_DELETE(gApp);
+
+        // < Shutdown the Steamworks system.
+        Steamworks::Shutdown();
 
 		//Save settings
 		if (!System::SaveSettings(settingsfile)) System::Print("Error: Failed to save settings file \"" + settingsfile + "\".");
