@@ -1,3 +1,27 @@
+/*-------------------------------------------------------
+                    <copyright>
+    
+    File: AppController.hpp
+    Language: C++
+    
+    (C) Copyright Eden Softworks
+    
+    Author: Joshua Allen
+    E-Mail: Joshua(AT)EdenSoftworks(DOT)net
+    
+    Description: Header file for AppController service.
+                 The AppController class provides a clean
+                 and efficient wrapper around the App class
+                 and its execution pipeline.
+
+    Functions: 1. const bool Initialize(const std::string appName, unsigned int ulX, unsigned int ulY
+										, unsigned int nWidth, unsigned int nHeight, int windowFlags
+										, int contextFlags);
+                                        
+                2. void Shutdown(void);
+
+---------------------------------------------------------*/
+
 #ifndef _APP_CONTROLLER_HPP_
     #define _APP_CONTROLLER_HPP_
 

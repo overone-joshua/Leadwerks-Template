@@ -1,3 +1,22 @@
+/*-------------------------------------------------------
+                    <copyright>
+    
+    File: InputManager.hpp
+    Language: C++
+    
+    (C) Copyright Eden Softworks
+    
+    Author: Joshua Allen
+    E-Mail: Joshua(AT)EdenSoftworks(DOT)net
+    
+    Description: Header file for InputManager.
+                 The InputManager provides a helper
+                 interface around the Leadwerks::Window to 
+                 simplify the input process pipeline when
+                 it comes to polling and processing input.
+
+---------------------------------------------------------*/
+
 #ifndef _INPUTMANAGER_HPP_
 	#define _INPUTMANAGER_HPP_
 

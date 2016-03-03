@@ -1,3 +1,23 @@
+/*-------------------------------------------------------
+                    <copyright>
+    
+    File: DefaultState.hpp
+    Language: C++
+    
+    (C) Copyright Eden Softworks
+    
+    Author: Joshua Allen
+    E-Mail: Joshua(AT)EdenSoftworks(DOT)net
+    
+    Description: Header file for DefaultState class.
+                 The DefaultState class exists to provide
+                 a concrete example of how other
+                 application states can implement to
+                 base state class to provide state
+                 gameplay-based logic.
+
+---------------------------------------------------------*/
+
 #ifndef _DEFAULT_STATE_HPP_
 	#define _DEFAULT_STATE_HPP_
 

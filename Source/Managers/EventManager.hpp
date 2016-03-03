@@ -1,3 +1,44 @@
+/*-------------------------------------------------------
+                    <copyright>
+    
+    File: EventManager.hpp
+    Language: C++
+    
+    (C) Copyright Eden Softworks
+    
+    Author: Joshua Allen
+    E-Mail: Joshua(AT)EdenSoftworks(DOT)net
+    
+    Description: Header file for EventManager.
+                 The EventManager class provides a clean
+                 interface for adding event processing
+                 support, driving a subscription model
+                 for event delegation.
+
+    Functions: 1. bool AddListener(const EventListenerDelegate& eventDelegate, const EventType& type);
+    
+               2. bool RemoveListener(const EventListenerDelegate& eventDelegate, const EventType& type);
+               
+               3. bool TriggerEvent(BaseEventData& pEvent);
+               
+               4. bool QueueEvent(BaseEventData& pEvent);
+               
+               5. bool AbortEvent(const EventType& type, bool bAll = false);
+               
+               6. template <void(*Function)(BaseEventData*)>
+	              bool Bind(const EventType& type);
+                   
+               7. template <class C, void(C::*Function)(BaseEventData*)>
+	              bool Bind(C* instance, const EventType& type);
+
+               8. template <void(*Function)(BaseEventData*)>
+	              bool Unbind(const EventType& type);
+                  
+               9. template <class C, void(C::*Function)(BaseEventData*)>
+	              bool Unbind(C* instance, const EventType& type);
+
+---------------------------------------------------------*/
+
 #ifndef _EVENTMANAGER_H_
 	#define _EVENTMANAGER_H_
 

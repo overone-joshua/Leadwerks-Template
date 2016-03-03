@@ -1,3 +1,21 @@
+/*-------------------------------------------------------
+                    <copyright>
+    
+    File: State.hpp
+    Language: C++
+    
+    (C) Copyright Eden Softworks
+    
+    Author: Joshua Allen
+    E-Mail: Joshua(AT)EdenSoftworks(DOT)net
+    
+    Description: Header file for base State class.
+                 The State class provides a base 
+                 implementation for all further 
+                 application states to build from.                                               
+
+---------------------------------------------------------*/
+
 #ifndef _STATE_HPP_
 	#define _STATE_HPP_
 

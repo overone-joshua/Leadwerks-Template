@@ -1,3 +1,43 @@
+/*-------------------------------------------------------
+                    <copyright>
+    
+    File: StateManager.hpp
+    Language: C++
+    
+    (C) Copyright Eden Softworks
+    
+    Author: Joshua Allen
+    E-Mail: Joshua(AT)EdenSoftworks(DOT)net
+    
+    Description: Header file for StateManager.
+                 The StateManager provides a unified
+                 interface for adding logical states to
+                 an application, allowing the second
+                 of application and game logic.
+
+    Functions: 1. template <typename T>
+	              void AddState(bool bChange = false);
+	
+	           2. template <typename T>
+	              void RemoveState(void);
+
+	           3. void RemoveAllStates(void);
+	
+	           4. template <typename T>
+	              void ChangeState(void);
+	
+	           5. template <typename T>
+	              State* FetchState(void);
+	
+	           6. template <typename T>
+	              bool IsStatePresent(void);
+	
+	           7. void CloseCurrentState(void);
+	
+	           8. bool StateChangedThisFrame(void);
+
+---------------------------------------------------------*/
+
 #ifndef _STATE_MANAGER_HPP_
 	#define _STATE_MANAGER_HPP_
 	
