@@ -1,3 +1,22 @@
+/*-------------------------------------------------------
+                    <copyright>
+    
+    File: WindowHandle.hpp
+    Language: C++
+    
+    (C) Copyright Eden Softworks
+    
+    Author: Joshua Allen
+    E-Mail: Joshua(AT)EdenSoftworks(DOT)net
+    
+    Description: Header file for WindowHandle utility.
+                 The WindowHandle is a wrapper around
+                 the Leadwerks::Window object.
+    
+    Functions: 1. Leadwerks::Window* getInst(void);                                                     
+
+---------------------------------------------------------*/
+
 #ifndef _WINDOW_HANDLE_HPP_
 	#define _WINDOW_HANDLE_HPP_
 
@@ -5,8 +24,8 @@
 #include "Leadwerks.h"
 #include "Macros.hpp"
 
-class WindowHandle {
-
+class WindowHandle
+{
 	CLASS_TYPE(Window);
 
 public:

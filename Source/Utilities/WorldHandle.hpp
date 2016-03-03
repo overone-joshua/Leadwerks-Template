@@ -1,3 +1,22 @@
+/*-------------------------------------------------------
+                    <copyright>
+    
+    File: WorldHandle.hpp
+    Language: C++
+    
+    (C) Copyright Eden Softworks
+    
+    Author: Joshua Allen
+    E-Mail: Joshua(AT)EdenSoftworks(DOT)net
+    
+    Description: Header file for WorldHandle utility.
+                 The WorldHandle is a wrapper around
+                 the Leadwerks::World object.
+    
+    Functions: 1. Leadwerks::World* getInst(void);                                                     
+
+---------------------------------------------------------*/
+
 #ifndef _WORLD_HANDLE_HPP_
 	#define _WORLD_HANDLE_HPP_
 
@@ -5,8 +24,8 @@
 #include "Leadwerks.h"
 #include "Macros.hpp"
 
-class WorldHandle {
-
+class WorldHandle
+{
 	CLASS_TYPE(World);
 
 public:

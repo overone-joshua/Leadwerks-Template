@@ -1,3 +1,28 @@
+/*-------------------------------------------------------
+                    <copyright>
+    
+    File: IsoSurface.hpp
+    Language: C++
+    
+    (C) Copyright Eden Softworks
+    
+    Author: Joshua Allen
+    E-Mail: Joshua(AT)EdenSoftworks(DOT)net
+    
+    Description: Header file for IsoSurface utility.
+                 The IsoSurface class provides a clean
+                 interface for generating an implicit
+                 model surface within a Leadwerks::Model
+                 using Marching Cubes.
+    
+    Functions: 1. int GenerateSurface(Leadwerks::Model& pModel, const T* pScalarField, T nIsoLevel, int nCellsX, int nCellsY, int nCellsZ, float nCellWidth, float nCellHeight, float nCellDepth);
+                                                         
+               2. void DeleteSurface(void);
+               
+               3. bool IsSurfaceValid(void)    
+
+---------------------------------------------------------*/
+
 #ifndef _ISOSURFACE_H_
 	#define _ISOSURFACE_H_
 
@@ -14,7 +39,8 @@ typedef std::map<unsigned, Leadwerks::Vec3> ID2VEC3;
 typedef std::vector<TRIANGLE> TRIANGLEVECTOR;
 
 template <typename T>
-class IsoSurface {
+class IsoSurface
+{
 public:
 	IsoSurface();
 	~IsoSurface();
@@ -52,6 +78,7 @@ private:
 
 	static const unsigned int EdgeTable[256];
 	static const unsigned int TriTable[256][16];
-};
+    
+}; // < end class.
 
 #endif // _ISOSURFACE_H_

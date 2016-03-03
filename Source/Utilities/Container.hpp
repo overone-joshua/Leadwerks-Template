@@ -1,3 +1,30 @@
+/*-------------------------------------------------------
+                    <copyright>
+    
+    File: Container.hpp
+    Language: C++
+    
+    (C) Copyright Eden Softworks
+    
+    Author: Joshua Allen
+    E-Mail: Joshua(AT)EdenSoftworks(DOT)net
+    
+    Description: Header file for Container utility.
+                 This file contains the source for a
+                 very simple and lightweight Dependency
+                 Injection service.
+    
+    Functions: 1. template <typename I, class C>
+                  I* Register(C* pInstance);
+                  
+               2. template <typename I>
+                  I* Resolve(void);
+                  
+               3. template <typename I>
+                  bool TryResolve(I* value);                     
+
+---------------------------------------------------------*/
+
 #ifndef _CONTAINER_HPP_
     #define _CONTAINER_HPP_
     

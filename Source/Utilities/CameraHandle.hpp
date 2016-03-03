@@ -1,3 +1,22 @@
+/*-------------------------------------------------------
+                    <copyright>
+    
+    File: CameraHandle.hpp
+    Language: C++
+    
+    (C) Copyright Eden Softworks
+    
+    Author: Joshua Allen
+    E-Mail: Joshua(AT)EdenSoftworks(DOT)net
+    
+    Description: Header file for CameraHandle utility.
+                 The CameraHandle is a wrapper around
+                 the Leadwerks::Camera object.
+    
+    Functions: 1. Leadwerks::Camera* getInst(void);                                                     
+
+---------------------------------------------------------*/
+
 #ifndef _CAMERA_HANDLE_HPP_
 	#define _CAMERA_HANDLE_HPP_
 
@@ -5,8 +24,8 @@
 #include "Leadwerks.h"
 #include "Macros.hpp"
 
-class CameraHandle {
-
+class CameraHandle
+{
 	CLASS_TYPE(CameraHandle);
 
 public:

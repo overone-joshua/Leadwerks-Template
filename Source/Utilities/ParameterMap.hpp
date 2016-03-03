@@ -1,3 +1,21 @@
+/*-------------------------------------------------------
+                    <copyright>
+    
+    File: ParameterMap.hpp
+    Language: C++
+    
+    (C) Copyright Eden Softworks
+    
+    Author: Joshua Allen
+    E-Mail: Joshua(AT)EdenSoftworks(DOT)net
+    
+    Description: Header file for ParameterMap utility.
+                 The ParameterMap provides a convenient 
+                 way to dynamically add or access
+                 different properties of different types.
+
+---------------------------------------------------------*/
+
 #ifndef _PARAMETERMAP_HPP_
 	#define _PARAMETERMAP_HPP_
 
@@ -6,7 +24,8 @@
 #include <string>
 #include <map>
 
-struct ParameterMap {
+struct ParameterMap
+{
 	typedef std::map<std::string, int>::iterator IntMapIterator;
 	typedef std::map<std::string, float>::iterator FloatMapIterator;
 	typedef std::map<std::string, Leadwerks::Vec3>::iterator Vec3MapIterator;

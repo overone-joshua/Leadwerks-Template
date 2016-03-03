@@ -1,3 +1,29 @@
+/*-------------------------------------------------------
+                    <copyright>
+    
+    File: Modeler.hpp
+    Language: C++
+    
+    (C) Copyright Eden Softworks
+    
+    Author: Joshua Allen
+    E-Mail: Joshua(AT)EdenSoftworks(DOT)net
+    
+    Description: Header file for Modeler utility.
+                 The Modeler class provides a class
+                 interface to easily inject density val
+                 into a VoxelBuffer.
+    
+    Functions: 1. void Assign(VocelBuffer<T>& pBuffer);
+    
+               2. void AssInput(ModelerInput<T> input);
+               
+               3. void Execute(void);
+               
+               4. void ClearInputs(void);
+
+---------------------------------------------------------*/
+
 #ifndef _MODELER_H_
 	#define _MODELER_H_
 
@@ -9,7 +35,8 @@
 #include <queue>
 
 template <typename T>
-struct ModelerInput{
+struct ModelerInput
+{
 public:
 	int pt[3];
 	T val;
@@ -17,17 +44,18 @@ public:
 };
 
 template <typename T>
-class Modeler {
+class Modeler
+{
 public:
-	Modeler();
-	~Modeler();
+	Modeler(void) : m_pBuffer(nullptr) { ClearInputs(); }
+	~Modeler(void) { ClearInputs(); m_pBuffer = nullptr; }
 
 	void Assign(VoxelBuffer<T>& pBuffer);
 
 	void AddInput(ModelerInput<T> input);
-	void Execute();
+	void Execute(void);
 
-	void ClearInputs();
+	void ClearInputs(void);
 
 protected:
 
@@ -37,32 +65,24 @@ private:
 
 };
 
+/* Adds the given modeler input object to the internal collection of inputs. */ 
 template <typename T>
-Modeler<T>::Modeler()
-	: m_pBuffer(nullptr) {
-
-	ClearInputs();
-
-}
-
-template <typename T>
-Modeler<T>::~Modeler() {
-	ClearInputs();
-	m_pBuffer = nullptr;
-}
-
-template <typename T>
-void Modeler<T>::AddInput(ModelerInput<T> input) {
+void Modeler<T>::AddInput(ModelerInput<T> input)
+{
 	m_inputs.push(input);
 }
 
+/* Attaches the given buffer to the modeler. */
 template <typename T>
-void Modeler<T>::Assign(VoxelBuffer<T>& pBuffer) {
+void Modeler<T>::Assign(VoxelBuffer<T>& pBuffer)
+{
 	m_pBuffer = &pBuffer;
 }
 
+/* Injects the values of each added modeler input into the attached buffer. */
 template <typename T>
-void Modeler<T>::Execute() {
+void Modeler<T>::Execute()
+{
 	while (!m_inputs.empty()) {
 		Leadwerks::Vec3 pos = Leadwerks::Vec3(m_inputs.front().pt[0], m_inputs.front().pt[1], m_inputs.front().pt[2]);
 		T val = m_inputs.front().val;
@@ -74,8 +94,10 @@ void Modeler<T>::Execute() {
 
 }
 
+/* Clears any existing modeler input from the input collection*/
 template <typename T>
-void Modeler<T>::ClearInputs() {
+void Modeler<T>::ClearInputs()
+{
 	std::queue<ModelerInput<T>> empty;
 	std::swap(m_inputs, empty);
 
