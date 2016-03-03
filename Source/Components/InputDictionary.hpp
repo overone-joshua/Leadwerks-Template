@@ -1,3 +1,18 @@
+/*-------------------------------------------------------
+                    <copyright>
+    
+    File: InputDictionary.hpp
+    Language: C++
+    
+    (C) Copyright Eden Softworks
+    
+    Author: Joshua Allen
+    E-Mail: Joshua(AT)EdenSoftworks(DOT)net
+    
+    Description: Header file for InputDictionary.
+
+---------------------------------------------------------*/
+
 #ifndef _INPUT_DICTIONARY_HPP_
 	#define _INPUT_DICTIONARY_HPP_
 

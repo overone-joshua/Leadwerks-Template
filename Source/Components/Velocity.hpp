@@ -1,3 +1,18 @@
+/*-------------------------------------------------------
+                    <copyright>
+    
+    File: Velocity.hpp
+    Language: C++
+    
+    (C) Copyright Eden Softworks
+    
+    Author: Joshua Allen
+    E-Mail: Joshua(AT)EdenSoftworks(DOT)net
+    
+    Description: Header file for Velocity component.
+
+---------------------------------------------------------*/
+
 #ifndef _VELOCITY_HPP_
 	#define _VELOCITY_HPP_
 

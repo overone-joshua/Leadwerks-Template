@@ -1,3 +1,18 @@
+/*-------------------------------------------------------
+                    <copyright>
+    
+    File: Placement.hpp
+    Language: C++
+    
+    (C) Copyright Eden Softworks
+    
+    Author: Joshua Allen
+    E-Mail: Joshua(AT)EdenSoftworks(DOT)net
+    
+    Description: Header file for Placement component.
+
+---------------------------------------------------------*/
+
 #ifndef _PLACEMENT_HPP_
 	#define _PLACEMENT_HPP_
 

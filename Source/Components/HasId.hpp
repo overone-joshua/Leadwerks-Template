@@ -1,3 +1,18 @@
+/*-------------------------------------------------------
+                    <copyright>
+    
+    File: HasId.hpp
+    Language: C++
+    
+    (C) Copyright Eden Softworks
+    
+    Author: Joshua Allen
+    E-Mail: Joshua(AT)EdenSoftworks(DOT)net
+    
+    Description: Header file for HasId component.
+
+---------------------------------------------------------*/
+
 #ifndef _HAS_ID_
 	#define _HAS_ID_
 

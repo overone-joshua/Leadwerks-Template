@@ -1,3 +1,18 @@
+/*-------------------------------------------------------
+                    <copyright>
+    
+    File: HasName.hpp
+    Language: C++
+    
+    (C) Copyright Eden Softworks
+    
+    Author: Joshua Allen
+    E-Mail: Joshua(AT)EdenSoftworks(DOT)net
+    
+    Description: Header file for HasName component.
+
+---------------------------------------------------------*/
+
 #ifndef _HAS_NAME_
 	#define _HAS_NAME_
 

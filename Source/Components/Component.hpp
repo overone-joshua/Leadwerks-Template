@@ -1,3 +1,18 @@
+/*-------------------------------------------------------
+                    <copyright>
+    
+    File: Component.hpp
+    Language: C++
+    
+    (C) Copyright Eden Softworks
+    
+    Author: Joshua Allen
+    E-Mail: Joshua(AT)EdenSoftworks(DOT)net
+    
+    Description: Header file for base Component class.
+
+---------------------------------------------------------*/
+
 #ifndef _COMPONENT_HPP_
 	#define _COMPONENT_HPP_
 	

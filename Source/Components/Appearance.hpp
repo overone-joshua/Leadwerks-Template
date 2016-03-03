@@ -1,3 +1,18 @@
+/*-------------------------------------------------------
+                    <copyright>
+    
+    File: Appearance.hpp
+    Language: C++
+    
+    (C) Copyright Eden Softworks
+    
+    Author: Joshua Allen
+    E-Mail: Joshua(AT)EdenSoftworks(DOT)net
+    
+    Description: Header file for Appearance component.
+
+---------------------------------------------------------*/
+
 #ifndef _APPEARANCE_HPP_
 	#define _APPEARANCE_HPP_
 

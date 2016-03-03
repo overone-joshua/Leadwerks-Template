@@ -1,3 +1,18 @@
+/*-------------------------------------------------------
+                    <copyright>
+    
+    File: Input.hpp
+    Language: C++
+    
+    (C) Copyright Eden Softworks
+    
+    Author: Joshua Allen
+    E-Mail: Joshua(AT)EdenSoftworks(DOT)net
+    
+    Description: Header file for Input component.
+
+---------------------------------------------------------*/
+
 #ifndef _INPUT_COMPONENT_HPP_
 	#define _INPUT_COMPONENT_HPP_
 

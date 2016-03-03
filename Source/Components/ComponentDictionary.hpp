@@ -1,3 +1,18 @@
+/*-------------------------------------------------------
+                    <copyright>
+    
+    File: ComponentDictionary.hpp
+    Language: C++
+    
+    (C) Copyright Eden Softworks
+    
+    Author: Joshua Allen
+    E-Mail: Joshua(AT)EdenSoftworks(DOT)net
+    
+    Description: Header file for ComponentDictionary.
+
+---------------------------------------------------------*/
+
 #ifndef _COMPONENT_DICTIONARY_HPP_
 	#define _COMPONENT_DICTIONARY_HPP_
 

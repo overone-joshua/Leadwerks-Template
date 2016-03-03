@@ -1,3 +1,18 @@
+/*-------------------------------------------------------
+                    <copyright>
+    
+    File: Camera.hpp
+    Language: C++
+    
+    (C) Copyright Eden Softworks
+    
+    Author: Joshua Allen
+    E-Mail: Joshua(AT)EdenSoftworks(DOT)net
+    
+    Description: Header file for Camera component.
+
+---------------------------------------------------------*/
+
 #ifndef _CAMERA_COMPONENT_HPP_
 	#define _CAMERA_COMPONENT_HPP_
 

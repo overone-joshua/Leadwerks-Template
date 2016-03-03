@@ -1,3 +1,22 @@
+/*-------------------------------------------------------
+                    <copyright>
+    
+    File: CameraDynamic.hpp
+    Language: C++
+    
+    (C) Copyright Eden Softworks
+    
+    Author: Joshua Allen
+    E-Mail: Joshua(AT)EdenSoftworks(DOT)net
+    
+    Description: Header file for CameraDynamic service.
+
+    Functions: 1. static inline unsigned Create(Components::World* pWorld, Leadwerks::Vec3 vPos, Leadwerks::Vec3 vRot, CameraHandle* pCameraHndl);
+    
+               2. static void Update(Components::World* pWorld, float dt); 
+
+---------------------------------------------------------*/
+
 #ifndef _CAMERA_ENTITY_HPP_
     #define _CAMERA_ENTITY_HPP_
     
