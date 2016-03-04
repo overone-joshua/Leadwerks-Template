@@ -149,7 +149,7 @@ int main(int argc, const char *argv[])
 	gAppCtrl = new AppController(gApp);
 	bool bRunning = gAppCtrl->Initialize("Leadwerks Template Project", 0, 0, 1024, 768, Leadwerks::Window::Titlebar, 0);
 
-	if (bRunning && Steamworks::Initialize()) 
+	if (bRunning) 
     {
 		float deltaTime = 1.0f;
 		
