@@ -1,5 +1,6 @@
 #pragma once
 #include "World.hpp"
+#include "../Common.hpp"
 
 #include "Component.hpp"
 #include "ComponentDictionary.hpp"
