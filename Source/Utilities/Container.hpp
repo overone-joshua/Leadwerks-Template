@@ -56,7 +56,7 @@ public:
     I* Resolve(void);
     
     template <typename I>
-    bool TryResolve(I* value);
+    bool TryResolve(I& value);
 
 protected:
 
@@ -86,7 +86,7 @@ protected:
 			//it = ComponentMap::reverse_iterator(m_components.erase(iter.base()) - 1);
 		}
 
-		m_components.empty();
+		m_components.clear();
 
 	} // < ---
 
@@ -134,11 +134,11 @@ I* Container::Resolve(void)
 // * and a value of true is returned else, value will else
 // * nullptr and a value of false is returned.
 template <typename I>
-bool Container::TryResolve(I* value)
+bool Container::TryResolve(I& value)
 {    
     try 
     {
-        value = Resolve<I>();
+        *value = Resolve<I>();
     }
     catch(...) 
     {
