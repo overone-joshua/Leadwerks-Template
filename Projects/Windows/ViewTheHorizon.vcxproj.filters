@@ -7,9 +7,6 @@
     <ClCompile Include="..\..\Source\main.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Services\AppCtrl.cpp">
-      <Filter>Source\Services</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Managers\StateManager.cpp">
       <Filter>Source\Managers</Filter>
     </ClCompile>
@@ -33,6 +30,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Components\World.cpp">
       <Filter>Source\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Services\AppController.cpp">
+      <Filter>Source\Services</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -82,9 +82,6 @@
   <ItemGroup>
     <ClInclude Include="..\..\Source\App.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Services\AppCtrl.hpp">
-      <Filter>Header Files\Services</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common.hpp">
       <Filter>Header Files</Filter>
@@ -184,6 +181,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Components\InputDictionary.hpp">
       <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Services\AppController.hpp">
+      <Filter>Header Files\Services</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

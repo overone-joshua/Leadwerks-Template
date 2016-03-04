@@ -37,8 +37,8 @@ class CameraHandle;
 
 class AppController {
 public:
-                            		AppCtrl                 (App* pApp);                // < Constructor.
-                            		~AppCtrl                (void);                     // < Destructor.
+                            		AppController                 (App* pApp);                // < Constructor.
+                            		~AppController                (void);                     // < Destructor.
 
     const std::string       		getAppName              (void) const;               // < Gets the describing name of this application.
 
