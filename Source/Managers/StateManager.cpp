@@ -67,7 +67,10 @@ void StateManager::Update(float dt)
 
 	if (this->m_pCurrentState != nullptr) { 
 		
-		this->m_bStateChangedThisFrame = !this->m_pCurrentState->Update(dt); 
+        if (!this->m_pCurrentState->Update(dt))
+        {
+            this->CloseCurrentState();
+        }
 	}
 
 }
