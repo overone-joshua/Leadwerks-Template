@@ -17,6 +17,7 @@
 #include "Managers/StateManager.hpp"
 
 #include "Components/Components.hpp"
+#include "Entities/Entities.hpp"
 #include "States/DefaultState.hpp"
 
 App::App(void) : m_pEventManager(nullptr), m_pInputManager(nullptr) { }
@@ -45,6 +46,7 @@ void App::Configure(Container* pContainer) {
 	gStateFactory.Register(new FactoryMaker<DefaultState, State>);	
 
 	Components::Bind();
+    Entities::Bind();
 }
 
 bool App::Start(void) {
