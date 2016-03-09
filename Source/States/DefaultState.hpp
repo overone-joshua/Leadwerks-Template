@@ -33,6 +33,9 @@
 #include "../Components/World.hpp"
 #include "../Entities/CameraDynamic.hpp"
 
+#include <Sqrat.h>
+#include <Sqrat/sqext.h>
+
 #define ISOLEVEL				0.0f
 #define VOXELS_PER_CELL			9
 #define DATACELL_SIZE			7.0f
@@ -70,9 +73,38 @@ private:
 
 	int64_t                m_cameraDynamic;
 
+	sqext::SQIClass* m_pSqDefaultState;
+	sqext::SQIClassInstance* m_pSqDefaultStateInst;
+	Sqrat::Script* m_pSqDefaultStateScript;
+
 }; // < end class.
 
-DefaultState::DefaultState(void) { }
+DefaultState::DefaultState(void) 
+{
+	using namespace Sqrat;
+
+	m_pSqDefaultStateScript = new Script();
+	m_pSqDefaultStateScript->CompileFile("./Scripts/States/SqDefaultState.nut");
+	m_pSqDefaultStateScript->Run();
+
+	m_pSqDefaultState = new sqext::SQIClass("SqDefaultState");	
+
+	m_pSqDefaultState->bind("Load");
+	m_pSqDefaultState->bind("Close");
+
+	m_pSqDefaultState->bind("Update");
+
+	m_pSqDefaultState->bind("OnKeyDown");
+	m_pSqDefaultState->bind("OnKeyUp");
+
+	RootTable().Bind("Event_KeyDown", Class<Event_KeyDown>()
+		.Func("Key", &Event_KeyDown::Key)
+	);
+
+	RootTable().Bind("Event_KeyUp", Class<Event_KeyUp>()
+		.Func("Key", &Event_KeyUp::Key)
+	);
+}
 
 void DefaultState::Configure(Container* pContainer)
 {
@@ -81,6 +113,8 @@ void DefaultState::Configure(Container* pContainer)
 
 void DefaultState::Load(void) 
 { 
+	m_pSqDefaultStateInst = new sqext::SQIClassInstance(m_pSqDefaultState->New());
+
 	m_pWorld = new Components::World();
 	m_cameraDynamic = Entities::CameraDynamic::Create(m_pWorld, Leadwerks::Vec3(4.0f, 6.0f, -4.0f), Leadwerks::Vec3(0.0f, 0.0f, 0.0f), m_pCameraHndl);
 
@@ -117,10 +151,18 @@ void DefaultState::Load(void)
 		VOXEL_SIZE,
 		VOXEL_SIZE,
 		VOXEL_SIZE);
+
+	m_pSqDefaultStateInst->call("Load");
 }
 
 void DefaultState::Close(void) 
 { 
+	m_pSqDefaultStateInst->call("Close");
+
+	SAFE_DELETE(m_pSqDefaultStateInst);
+	SAFE_DELETE(m_pSqDefaultState);
+	SAFE_DELETE(m_pSqDefaultStateScript);
+
 	SAFE_DELETE(m_pWorld);
 
 	m_pCameraHndl = nullptr;
@@ -136,6 +178,8 @@ void DefaultState::Close(void)
 bool DefaultState::Update(float dt) { 
 
 	Entities::CameraDynamic::Update(m_pWorld, dt);
+
+	if (!m_pSqDefaultStateInst->callr<bool, float>("Update", dt)) { return false; }
 
 	return true;
 
@@ -153,6 +197,8 @@ void DefaultState::OnKeyDown(Event_KeyDown* pEvent)
 
 	if (pEvent->Key() == Leadwerks::Key::E) { inputComponent.nMask |= INPUT_MOVE_UP; }
 	if (pEvent->Key() == Leadwerks::Key::Q) { inputComponent.nMask |= INPUT_MOVE_DOWN; }
+
+	m_pSqDefaultStateInst->call<Event_KeyDown>("OnKeyDown", *pEvent);
 }
 
 void DefaultState::OnKeyUp(Event_KeyUp* pEvent)
@@ -167,6 +213,8 @@ void DefaultState::OnKeyUp(Event_KeyUp* pEvent)
 
 	if (pEvent->Key() == Leadwerks::Key::E) { inputComponent.nMask &= ~INPUT_MOVE_UP; }
 	if (pEvent->Key() == Leadwerks::Key::Q) { inputComponent.nMask &= ~INPUT_MOVE_DOWN; }
+
+	m_pSqDefaultStateInst->call<Event_KeyUp>("OnKeyUp", *pEvent);
 }
 
 #endif _DEFAULT_STATE_HPP_
