@@ -22,6 +22,7 @@
     
 #pragma once
 #include "Leadwerks.h"
+#include "../Services/ScriptController.hpp"
 
 #include "../Utilities/CameraHandle.hpp"
 
@@ -33,6 +34,8 @@
 #include "../Components/Placement.hpp"
 #include "../Components/Velocity.hpp"
 #include "../Components/World.hpp"
+
+#include <sqrat.h>
 
 namespace Entities
 {
@@ -101,8 +104,19 @@ namespace Entities
 
 			}
 
-
 		}
+
+        static void Bind(void)
+        {
+            using namespace Sqrat;
+
+            auto entityTable = ScriptController::GetTable("Entities");
+
+            entityTable->Bind("CameraDynamic", Class<CameraDynamic>()
+                .StaticFunc("Create", &CameraDynamic::Create)
+                .StaticFunc("Update", &CameraDynamic::Update)
+            );
+        }
 
 	}; // < end class.
 
