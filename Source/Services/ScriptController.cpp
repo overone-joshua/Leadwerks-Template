@@ -22,7 +22,7 @@ bool ScriptController::Initialize(unsigned nStackSize)
 	// < Set our new squirrel VM as the default VM for sqrat.
 	Sqrat::DefaultVM::Set(gSquirrelVm);
 
-	Sqrat::RootTable().Func<void(*) (SQChar *)>("print", &ScriptController::SqPrint);		
+	Sqrat::RootTable().Func("print", &ScriptController::SqPrint);		 
 
 	return true;
 }
@@ -35,7 +35,7 @@ void ScriptController::Shutdown(void)
 
 void ScriptController::SqPrint(SQChar* message)
 {
-	std::wcout << message << std::endl;
+	std::cout << message << std::endl;
 }
 
 Sqrat::Table* ScriptController::GetTable(const SQChar* tablename)
