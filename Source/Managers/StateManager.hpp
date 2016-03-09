@@ -59,10 +59,11 @@ class StateManager : public Manager {
 
 	typedef std::map<std::string,  State*> StateMap;
 
-public:
-
+public:								
                                 StateManager(Container* pContainer, EventManager* pEventManager);
 	                           ~StateManager(void);
+
+							   void Initialize(Container* pContainer, EventManager* pEventManager);
 
 	void                       preUpdate(void);
 	void                       postUpdate(void);
@@ -95,6 +96,8 @@ public:
 
 protected:
 
+											   StateManager(void);
+
 	void                                       Configure(Container* pContainer);
 	
 	template <typename T> StateMap::iterator   FetchStateInternal(void);
@@ -107,7 +110,8 @@ protected:
 	void                                       OnKeyDown(BaseEventData* pData);
 	void                                       OnKeyUp(BaseEventData* pData);
 
-private:
+private:	
+
 	Container*                                 m_pContainer;
 	EventManager*                              m_pEventManager;
 
@@ -115,7 +119,7 @@ private:
 	
 	State*                                     m_pCurrentState;
 
-	StateMap                                   m_states;
+	StateMap                                   m_states;	
 
 }; // < end class.
 	

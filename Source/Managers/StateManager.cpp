@@ -7,12 +7,18 @@
 
 #include <cassert>
 
+StateManager::StateManager(void)
+	: m_bStateChangedThisFrame(false), m_pCurrentState(nullptr),
+	m_pContainer(nullptr), m_pEventManager(nullptr)
+{
+
+}
+
 StateManager::StateManager(Container* pContainer, EventManager* pEventManager) 
 	: m_bStateChangedThisFrame(false), m_pCurrentState(nullptr),
 	m_pContainer(pContainer), m_pEventManager(pEventManager)
 {
-	assert(this->m_pContainer != nullptr);
-	this->Configure(pContainer);
+	Initialize(pContainer, pEventManager);
 }
 
 StateManager::~StateManager(void) { 
@@ -39,6 +45,12 @@ void StateManager::Configure(Container* pContainer)
 	m_pEventManager->Bind<StateManager, &StateManager::OnKeyDown>(this, Event_KeyDown::ClassType());
 	m_pEventManager->Bind<StateManager, &StateManager::OnKeyUp>(this, Event_KeyUp::ClassType());
 	m_pEventManager->Bind<StateManager, &StateManager::OnKeyHit>(this, Event_KeyHit::ClassType());
+}
+
+void StateManager::Initialize(Container* pContainer, EventManager* pEventManager)
+{
+	assert(this->m_pContainer != nullptr);
+	this->Configure(pContainer);
 }
 
 void StateManager::preUpdate(void)
