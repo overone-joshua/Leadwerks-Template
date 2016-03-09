@@ -3,7 +3,8 @@
 	#ifndef BUILD_STATICLIB
 		#include "App.h"
 		#include "Common.hpp"
-		#include "Utilities\Macros.hpp"
+		#include "Utilities/Macros.hpp"		
+		#include "Services/ScriptController.hpp"
 	#endif
 #endif
 
@@ -11,8 +12,8 @@
 #include "Leadwerks.h"
 using namespace Leadwerks;
 
-App* gApp;
-AppController* gAppCtrl;
+App*			gApp;
+AppController*	gAppCtrl;
 
 void DebugErrorHook(char* c)
 {
@@ -144,10 +145,13 @@ int main(int argc, const char *argv[])
 	}
 	else
 	{*/
-	//Execute mobile-style App script
+	//Execute mobile-style App script	
+
+	ScriptController::Initialize();
+
 	gApp = new App();
 	gAppCtrl = new AppController(gApp);
-	bool bRunning = gAppCtrl->Initialize("Leadwerks Template Project", 0, 0, 1024, 768, Leadwerks::Window::Titlebar, 0);
+	bool bRunning = gAppCtrl->Initialize("Leadwerks Template Project", 0, 0, 1024, 768, Leadwerks::Window::Titlebar, 0);	
 
 	if (bRunning) 
     {
@@ -168,10 +172,11 @@ int main(int argc, const char *argv[])
 #ifdef DEBUG
 		Interpreter::Disconnect();
 #endif
-		// < Shutdown application controller.
-		gAppCtrl->Shutdown();
+		// < Shutdown application controller.		
 		SAFE_DELETE(gAppCtrl);
 		SAFE_DELETE(gApp);
+		
+		ScriptController::Shutdown();
 
         // < Shutdown the Steamworks system.
         Steamworks::Shutdown();

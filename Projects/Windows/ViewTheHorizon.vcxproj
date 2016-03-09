@@ -242,6 +242,7 @@
     <ClInclude Include="..\..\Source\Components\Camera.hpp" />
     <ClInclude Include="..\..\Source\Components\Component.hpp" />
     <ClInclude Include="..\..\Source\Components\ComponentDictionary.hpp" />
+    <ClInclude Include="..\..\Source\Components\Components.hpp" />
     <ClInclude Include="..\..\Source\Components\HasId.hpp" />
     <ClInclude Include="..\..\Source\Components\HasName.hpp" />
     <ClInclude Include="..\..\Source\Components\Input.hpp" />

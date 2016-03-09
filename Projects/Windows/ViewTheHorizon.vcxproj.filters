@@ -191,5 +191,8 @@
     <ClInclude Include="..\..\Source\Services\ScriptController.hpp">
       <Filter>Header Files\Services</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Components\Components.hpp">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
