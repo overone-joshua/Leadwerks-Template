@@ -22,7 +22,10 @@ namespace Components
 
 		auto ComponentsTable = ScriptController::GetTable("Components");
 
-		ComponentsTable->Bind("World", Class<World, sqext::ConstAlloc<World, std::string>>());
+		ComponentsTable->Bind("World", Class<World, sqext::ConstAlloc<World, std::string>>()
+            .Func("CreateEntity", &World::CreateEntity)
+            .Func("DestroyEntity", &World::DestroyEntity)
+        );
 
 	}
 
