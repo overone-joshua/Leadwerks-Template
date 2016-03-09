@@ -4,6 +4,7 @@
 #include "..\Utilities\Event.hpp"
 #include "EventManager.hpp"
 #include "..\Utilities\ParameterMap.hpp"
+
 #include <cassert>
 
 float InputManager::PosX() {
@@ -85,9 +86,27 @@ void InputManager::SetContext(Leadwerks::Context* pContext) {
 	this->m_pContext = pContext;
 }
 
+InputManager::InputManager(void)
+	: m_pWindow(nullptr), m_pContext(nullptr), m_bCenterMouse(false), m_pEventManager(nullptr)
+{
+
+}
+
 InputManager::InputManager(Leadwerks::Window* pWindow, Leadwerks::Context* pContext, EventManager* pEventManager) 
 	: m_pWindow(pWindow), m_pContext(pContext), m_bCenterMouse(false), m_pEventManager(pEventManager) {
 
+	Initialize(pWindow, pContext, pEventManager);
+}
+
+InputManager::~InputManager() {
+	UnRegisterInputEvents();
+
+	this->m_pWindow = nullptr;
+	this->m_pContext = nullptr;
+}
+
+void InputManager::Initialize(Leadwerks::Window* pWindow, Leadwerks::Context* pContext, EventManager* pEventManager)
+{
 	assert(this->m_pWindow != nullptr);
 	assert(this->m_pContext != nullptr);
 
@@ -99,20 +118,13 @@ InputManager::InputManager(Leadwerks::Window* pWindow, Leadwerks::Context* pCont
 
 	/* Register input-properties */
 	Set("currMouseX", this->GetMousePosition().x)->
-	Set("currMouseY", this->GetMousePosition().y)->
-	Set("oldMouseX", this->GetMousePosition().x)->
-	Set("oldMouseY", this->GetMousePosition().y)->
-	Set("deltaX", 0.0f)->
-	Set("deltaY", 0.0f);
+		Set("currMouseY", this->GetMousePosition().y)->
+		Set("oldMouseX", this->GetMousePosition().x)->
+		Set("oldMouseY", this->GetMousePosition().y)->
+		Set("deltaX", 0.0f)->
+		Set("deltaY", 0.0f);
 
 	this->Update(1.0f);
-}
-
-InputManager::~InputManager() {
-	UnRegisterInputEvents();
-
-	this->m_pWindow = nullptr;
-	this->m_pContext = nullptr;
 }
 
 void InputManager::Update(float deltaTime) {

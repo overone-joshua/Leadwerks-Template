@@ -31,11 +31,15 @@ class InputManager : ParameterMap {
 
 	CLASS_TYPE(InputManager);
 
-public:
+public:								
 								InputManager(Leadwerks::Window* pWindow,		// InputManager constructor.
 											 Leadwerks::Context* pContext,
 											 EventManager* pEventManager);
 								~InputManager();								// InputManager destructor.
+
+								void Initialize(Leadwerks::Window* pWindow,
+												Leadwerks::Context* pContext,
+												EventManager* pEventManager);
 
 	void						Update(float deltaTime);						// InputManager Update.
 
@@ -61,6 +65,8 @@ public:
 	Leadwerks::Vec3				GetWindowCenter();
 
 protected:
+	InputManager(void);
+
 	void RegisterInputEvents(void);
 	void UnRegisterInputEvents(void);
 
@@ -82,7 +88,7 @@ private:
 
 	bool m_currentKeyboardPressedState[256];
 	bool m_currentKeyboardState[256];
-	bool m_previousKeyboardState[256];
+	bool m_previousKeyboardState[256];	
 
 }; // end class.
 
