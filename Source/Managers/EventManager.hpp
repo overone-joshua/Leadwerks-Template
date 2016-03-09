@@ -69,7 +69,7 @@ public:
 														EventManager();																				// Event manager constructor.
 														~EventManager();																			// Event manager destructor.
 
-	bool												Update(unsigned long nMaxMillis);															// Processes any events within the event-manager's event queue
+	bool												Update(unsigned long nMaxMillis = 20);															// Processes any events within the event-manager's event queue
 																																					// for the given amount of time, per frame.
 	void												Render();																					// Performs any 3d-rendering for the event manager.
 	void												Draw();																						// Performs any 2d-rendering for the event manager.
@@ -116,7 +116,7 @@ public:
 		eventDelegate.Bind<C, Function>(instance);
 
 		return RemoveListener(eventDelegate, type);
-	}
+	}	
 
 protected:
 

@@ -1,8 +1,10 @@
 #pragma once
+#include "Leadwerks.h"
+
 #include "EventManager.hpp"
 #include "..\Utilities\Delegate.hpp"
 #include "..\Utilities\Event.hpp"
-#include "Leadwerks.h"
+
 #include <list>
 #include <map>
 
