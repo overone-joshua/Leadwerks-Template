@@ -34,6 +34,9 @@
     <ClCompile Include="..\..\Source\Services\AppController.cpp">
       <Filter>Source\Services</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Services\ScriptController.cpp">
+      <Filter>Source\Services</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -183,6 +186,9 @@
       <Filter>Header Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Services\AppController.hpp">
+      <Filter>Header Files\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Services\ScriptController.hpp">
       <Filter>Header Files\Services</Filter>
     </ClInclude>
   </ItemGroup>
