@@ -38,9 +38,9 @@ protected:
 
 private:
 
-	EventManager*  m_pEventManager;
-	InputManager*  m_pInputManager;
-	StateManager*  m_pStateManager;
+	EventManager*   m_pEventManager;
+	InputManager*   m_pInputManager;
+	StateManager*   m_pStateManager;
 
 }; // end class.
 

@@ -20,7 +20,12 @@
 #include "Leadwerks.h"
 #include "../Utilities/Macros.hpp"
 
+#include "../Services/ScriptController.hpp"
+
 #include "Component.hpp"
+
+#include <Sqrat.h>
+#include <Sqrat/sqext.h>
 
 namespace Components
 {
@@ -36,8 +41,20 @@ namespace Components
 
 		Leadwerks::Vec3                   vVel;	/*!< A Leadwerks::Vec3 representing a movement vector in 3D space. */
 
-		                                  /* The Velocity component constructor. */
-		                                  Velocity(void) : vVel(0.0f, 0.0f) { }
+		/* The Velocity component constructor. */
+		Velocity(void) : vVel(0.0f, 0.0f) { }
+
+		static void Bind(void)
+		{
+			using namespace Sqrat;
+
+			auto ComponentsTable = ScriptController::GetTable("Components");
+
+			ComponentsTable->Bind("Velocity", Class<Velocity> ()
+				.Var("vVel", &Velocity::vVel)				
+			);
+
+		}
 
 	} Velocity; // < end struct.
 

@@ -17,6 +17,10 @@
 	#define _HAS_ID_
 
 #pragma once
+#include "../Services/ScriptController.hpp"
+
+#include <Sqrat.h>
+#include <Sqrat/sqext.h>
 
 namespace Components
 {
@@ -27,8 +31,20 @@ namespace Components
 	{
 		uint64_t              nId;	/*!< A uint64_t identifier. */
 
-		                      /** The HasId component constructor. */
-		                      HasId(void) : nId(0) { }
+		/** The HasId component constructor. */
+		HasId(void) : nId(0) { }
+
+		static void Bind(void)
+		{
+			using namespace Sqrat;
+
+			auto ComponentsTable = ScriptController::GetTable("Components");
+
+			ComponentsTable->Bind("HasId", Class<HasId>()
+				.Var("nId", &HasId::nId)
+			);
+
+		}
 
 	} HasId; // < and struct.
 

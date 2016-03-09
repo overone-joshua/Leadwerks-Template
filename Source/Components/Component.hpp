@@ -17,8 +17,13 @@
 	#define _COMPONENT_HPP_
 	
 #pragma once
+#include "../Services/ScriptController.hpp"
+
 #include "HasId.hpp"
 #include "HasName.hpp"
+
+#include <Sqrat.h>
+#include <Sqrat/sqext.h>
 
 #include <string>
 
@@ -32,8 +37,18 @@ namespace Components
 		using HasId::HasId;
 		using HasName::HasName;
 
-		              /** The Components constructor. */
-		              Component(std::string cName = "") : HasName(cName) { }
+		/** The Components constructor. */
+		Component(std::string cName = "") : HasName(cName) { }
+
+		static void Bind(void)
+		{
+			using namespace Sqrat;
+
+			auto ComponentsTable = ScriptController::GetTable("Components");
+
+			ComponentsTable->Bind("Component", Class<Component, sqext::ConstAlloc<Component, std::string>>());
+
+		}
 
 	} Component; // < end struct.
 

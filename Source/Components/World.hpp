@@ -20,7 +20,12 @@
 #include "Leadwerks.h"
 #include "../Utilities/Macros.hpp"
 
+#include "../Services/ScriptController.hpp"
+
 #include "Component.hpp"
+
+#include <Sqrat.h>
+#include <Sqrat/sqext.h>
 
 #include <map>
 #include <string>
@@ -64,6 +69,8 @@ namespace Components
 		{
 			return m_entityMasks[index];
 		}
+
+		static void										   Bind(void);
 
 	protected:
 		

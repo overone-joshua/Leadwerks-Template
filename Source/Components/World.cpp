@@ -2,14 +2,29 @@
 #include "World.hpp"
 #include "../Common.hpp"
 
+#include "../Services/ScriptController.hpp"
+
 #include "Component.hpp"
 #include "ComponentDictionary.hpp"
+
+#include <Sqrat.h>
+#include <Sqrat/sqext.h>
 
 namespace Components
 {
 	World::World(std::string cName) : m_nRunningIndex(0), Component(cName) { }
 
 	World::~World(void) { Dispose(); }
+
+	void World::Bind(void)
+	{
+		using namespace Sqrat;
+
+		auto ComponentsTable = ScriptController::GetTable("Components");
+
+		ComponentsTable->Bind("World", Class<World, sqext::ConstAlloc<World, std::string>>());
+
+	}
 
 	uint64_t& World::Get(uint64_t entity)
 	{
@@ -66,7 +81,7 @@ namespace Components
 			SAFE_DELETE(iter->second);
 			iter = m_components.erase(iter);
 
-			iter++;
+			if (iter != m_components.end()) { iter++; }
 		}
 		m_components.clear();
 

@@ -20,7 +20,12 @@
 #include "Leadwerks.h"
 #include "../Utilities/Macros.hpp"
 
+#include "../Services/ScriptController.hpp"
+
 #include "Component.hpp"
+
+#include <Sqrat.h>
+#include <Sqrat/sqext.h>
 
 #include <string>
 
@@ -35,8 +40,25 @@ namespace Components
 
 		Leadwerks::Model*             pModel;	/*!< A Leadwerks 3DModel. */
 
-		                              /** The Appearance component constructor. */
-		                              Appearance(Leadwerks::Model* _pModel = nullptr, std::string cName = "") : pModel(_pModel), Component(cName) { }
+        /** The Appearance component constructor. */
+        Appearance(Leadwerks::Model* _pModel = nullptr, std::string cName = "") 
+			: pModel(_pModel), Component(cName) { }
+
+		static void Bind(void)
+		{
+			using namespace Sqrat;
+
+			// < Get access to the ComponentsTable.
+			// * NOTE: This implementation requires that the Sqrat defaultVm has been set.
+			auto ComponentsTable = ScriptController::GetTable("Components");
+
+			// < Bind Appearance component to squirrel, specifying constAlloc 
+			// * in order to define available constructor in squirrel. 
+			ComponentsTable->Bind("Appearance", Class<Appearance, sqext::ConstAlloc<Appearance, Leadwerks::Model*>>()
+				.Var("pModel", &Appearance::pModel)
+			);
+
+		}
 
 	} Appearance; // < end struct.
 

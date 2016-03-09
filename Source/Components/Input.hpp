@@ -17,10 +17,15 @@
 	#define _INPUT_COMPONENT_HPP_
 
 #pragma once
+#include "../Utilities/Macros.hpp"
+#include "../Services/ScriptController.hpp"
+
 #include "Component.hpp"
+
 #include "InputDictionary.hpp"
 
-#include "../Utilities/Macros.hpp"
+#include <Sqrat.h>
+#include <Sqrat/sqext.h>
 
 namespace Components
 {
@@ -34,8 +39,20 @@ namespace Components
 
 		uint64_t                      nMask;	/*!< A uint64_t bitmask. */
 
-		                              /** The Input component constructor.*/
-		                              Input(std::string cName = "") : nMask(INPUT_NONE) { }
+		/** The Input component constructor.*/
+		Input(std::string cName = "") : nMask(INPUT_NONE) { }
+
+		static void Bind(void)
+		{
+			using namespace Sqrat;
+
+			auto ComponentsTable = ScriptController::GetTable("Components");
+
+			ComponentsTable->Bind("Input", Class<Input, sqext::ConstAlloc<Input, std::string>>()
+				.Var("nMask", &Input::nMask)
+			);
+
+		}
 
 	} Input; // < end struct.
 

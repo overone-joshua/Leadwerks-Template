@@ -20,7 +20,12 @@
 #include "../Utilities/CameraHandle.hpp"
 #include "../Utilities/Macros.hpp"
 
+#include "../Services/ScriptController.hpp"
+
 #include "Component.hpp"
+
+#include <Sqrat.h>
+#include <Sqrat/sqext.h>
 
 #include <string>
 
@@ -36,8 +41,21 @@ namespace Components
 
 		CameraHandle*                 pCamHndl;		/*!< A CameraHandle object. */
 
-		                              /** The Camera component constructor. */
-		                              Camera(CameraHandle* _pCamHndl = nullptr, std::string cName = "") : pCamHndl(_pCamHndl), Component(cName) { }
+		/** The Camera component constructor. */
+		Camera(CameraHandle* _pCamHndl = nullptr, std::string cName = "") 
+			: pCamHndl(_pCamHndl), Component(cName) { }
+
+		static void Bind(void)
+		{
+			using namespace Sqrat;
+
+			auto ComponentsTable = ScriptController::GetTable("Components");
+
+			ComponentsTable->Bind("Camera", Class<Camera, sqext::ConstAlloc<Camera, CameraHandle*, std::string>>()
+				.Var("pCamHndl", &Camera::pCamHndl)
+			);
+
+		}
 
 	} Camera; // < end struct.
 
