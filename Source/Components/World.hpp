@@ -58,6 +58,7 @@ namespace Components
 		template <typename T> void                        AddComponent(World* pWorld, uint64_t entity, T val);                    /** Adds the given Component of type T to the given World and associates the component with the given entity. */
 		
 		template <typename T> uint64_t                    RemoveComponent(World* pWorld, uint64_t entity, std::string cName);     /** Attempts to remove the given Component of type T from the given World that is associated with the given entity of the given name. */
+        void                                              RemoveComponents(World* pWorld, uint64_t entity);
 
 		uint64_t&                                         Get(uint64_t entity);                                                   /** Returns a reference to the given entities Component bitmask. */
 		
