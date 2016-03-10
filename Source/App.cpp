@@ -24,7 +24,7 @@ App::App(void) : m_pEventManager(nullptr), m_pInputManager(nullptr) { }
 
 App::~App(void) { }
 
-void App::Configure(Container* pContainer) {
+void App::Configure(Container* pContainer) {    
 
 	/* EventManager */
 	m_pEventManager = pContainer->Register<EventManager, EventManager>( new EventManager());
@@ -45,8 +45,6 @@ void App::Configure(Container* pContainer) {
 	// * the state MUST be registered with the StateFactory first.
 	gStateFactory.Register(new FactoryMaker<DefaultState, State>);	
 
-	Components::Bind();
-    Entities::Bind();
 }
 
 bool App::Start(void) {

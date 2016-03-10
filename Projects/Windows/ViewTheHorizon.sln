@@ -5,13 +5,6 @@ VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ViewTheHorizon", "ViewTheHorizon.vcxproj", "{82DF7208-C66B-4465-8EAC-D70655C97FBC}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{0270B8A8-254D-4F0E-983F-EBF00D73C1D8}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "States", "States", "{8C9CAF0C-FB8D-49DA-B342-380173FDAE9B}"
-	ProjectSection(SolutionItems) = preProject
-		..\..\Scripts\States\SqDefaultState.nut = ..\..\Scripts\States\SqDefaultState.nut
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -31,8 +24,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{8C9CAF0C-FB8D-49DA-B342-380173FDAE9B} = {0270B8A8-254D-4F0E-983F-EBF00D73C1D8}
 	EndGlobalSection
 EndGlobal
