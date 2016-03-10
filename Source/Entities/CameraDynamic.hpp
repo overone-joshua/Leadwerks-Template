@@ -58,7 +58,7 @@ namespace Entities
 			return entity;
 		}
 
-		static void Update(Components::World* pWorld, float dt) 
+		static void Update(InputManager* pInputMgr, Components::World* pWorld, float dt) 
 		{
 			// < Get a collection of entities that are of type cameraDynamic.
 			auto entities = pWorld->GetEntities(pWorld, MASK_CAMERA_DYNAMIC);
@@ -81,6 +81,13 @@ namespace Entities
 				// < ---
 				uint64_t inputMask = inputComponent.nMask;
 
+                float dX, dY;
+                if ( (bool(inputMask & INPUT_ROTATE_LEFT | INPUT_ROTATE_RIGHT)) ) {
+                    dY = (((bool(inputMask & INPUT_ROTATE_RIGHT)) - (bool(inputMask & INPUT_ROTATE_LEFT))) + pInputMgr->DeltaX())  * dt * 0.075f;
+                }
+                if ( (bool(inputMask & INPUT_ROTATE_UP |INPUT_ROTATE_DOWN)) ) {
+                    dX = (((bool(inputMask & INPUT_ROTATE_UP)) - (bool(inputMask & INPUT_ROTATE_DOWN))) + pInputMgr->DeltaY())  * dt * 0.075f;
+                }
 				float vX = ( (bool(inputMask & INPUT_MOVE_RIGHT))	- (bool(inputMask & INPUT_MOVE_LEFT)) )		* dt * 0.075f;
 				float vY = ( (bool(inputMask & INPUT_MOVE_UP))		- (bool(inputMask & INPUT_MOVE_DOWN)) )		* dt * 0.075f;
 				float vZ = ( (bool(inputMask & INPUT_MOVE_FORWARD))	- (bool(inputMask & INPUT_MOVE_BACKWARD)) ) * dt * 0.075f;
@@ -89,9 +96,9 @@ namespace Entities
 				velocityComponent.vVel.y = vY;
 				velocityComponent.vVel.z = vZ;
 
-
 				// < Add the velocity to the camera's placement.
 				placementComponent.vPos += velocityComponent.vVel;
+                placementComponent.vRot += Leadwerks::Vec3(dX, dY, 0.0f);
 
 				// < Set the camera's position.
 				auto cam = cameraComponent.pCamHndl->getInst();
