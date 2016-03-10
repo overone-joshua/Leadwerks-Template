@@ -23,6 +23,8 @@
 
 #pragma once
 #include "State.hpp"
+#include "../Managers/InputManager.hpp"
+
 #include "../Utilities/CameraHandle.hpp"
 #include "../Utilities/Container.hpp"
 #include "../Utilities/Event.hpp"
@@ -64,6 +66,7 @@ private:
 	Leadwerks::Model*      m_pModel;
 	VoxelBuffer<float>*    m_pBuffer;
 
+    InputManager*          m_pInputMgr;
 	CameraHandle*          m_pCameraHndl;
 
 	Components::World*     m_pWorld;
@@ -77,6 +80,7 @@ DefaultState::DefaultState(void) { }
 void DefaultState::Configure(Container* pContainer)
 {
 	m_pCameraHndl = pContainer->Resolve<CameraHandle>();
+    m_pInputMgr = pContainer->Resolve<InputManager>();
 }
 
 void DefaultState::Load(void) 
@@ -85,6 +89,8 @@ void DefaultState::Load(void)
 	m_cameraDynamic = Entities::CameraDynamic::Create(m_pWorld, Leadwerks::Vec3(4.0f, 6.0f, -4.0f), Leadwerks::Vec3(0.0f, 0.0f, 0.0f), m_pCameraHndl);
 
 	m_pCameraHndl->getInst()->SetDrawMode(DRAW_WIREFRAME);
+
+    m_pInputMgr->ToggleMouseCenter();
 
 	m_pModel = Leadwerks::Model::Create();
 	m_pBuffer = new VoxelBuffer<float>(NUM_VOXELS, NUM_VOXELS, NUM_VOXELS);
@@ -122,9 +128,12 @@ void DefaultState::Load(void)
 
 void DefaultState::Close(void) 
 { 		
+    m_pInputMgr->ToggleMouseCenter();
+
 	SAFE_DELETE(m_pWorld);
 
 	m_pCameraHndl = nullptr;
+    m_pInputMgr = nullptr;
 
 	SAFE_DELETE(m_pIsosurface);
 	SAFE_DELETE(m_pBuffer);
@@ -136,7 +145,16 @@ void DefaultState::Close(void)
 
 bool DefaultState::Update(float dt) { 
 
-	Entities::CameraDynamic::Update(m_pWorld, dt);	
+    Components::Input& inputComponent = m_pWorld->GetComponents<Components::Input>(m_pWorld, m_cameraDynamic)
+        ->front();
+
+    if (m_pInputMgr->DeltaX() < 0) { inputComponent.nMask |= INPUT_ROTATE_LEFT; }
+    if (m_pInputMgr->DeltaX() > 0) { inputComponent.nMask |= INPUT_ROTATE_RIGHT; }
+
+    if (m_pInputMgr->DeltaY() < 0) { inputComponent.nMask |= INPUT_ROTATE_DOWN; }
+    if (m_pInputMgr->DeltaY() > 0) { inputComponent.nMask |= INPUT_ROTATE_UP; }
+
+	Entities::CameraDynamic::Update(m_pInputMgr, m_pWorld, dt);	
 
 	return true;
 
@@ -145,7 +163,7 @@ bool DefaultState::Update(float dt) {
 void DefaultState::OnKeyDown(Event_KeyDown* pEvent)
 {
 	Components::Input& inputComponent = m_pWorld->GetComponents<Components::Input>(m_pWorld, m_cameraDynamic)
-		->front();
+		->front();    
 
 	if (pEvent->Key() == Leadwerks::Key::W) { inputComponent.nMask |= INPUT_MOVE_FORWARD; }
 	if (pEvent->Key() == Leadwerks::Key::A) { inputComponent.nMask |= INPUT_MOVE_LEFT; }
