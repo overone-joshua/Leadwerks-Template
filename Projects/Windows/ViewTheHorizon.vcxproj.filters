@@ -37,6 +37,9 @@
     <ClCompile Include="..\..\Source\Services\ScriptController.cpp">
       <Filter>Source\Services</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Utilities\luatables\luatables.cc">
+      <Filter>Source\Utilities\luatables</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -80,6 +83,15 @@
     </Filter>
     <Filter Include="Source\Entities">
       <UniqueIdentifier>{40aababb-b5fe-4474-80d9-c656acef6dda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utilities\luatables">
+      <UniqueIdentifier>{0c3fee59-e96e-4c22-8190-aeb96c98d85d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Utilities\luatables">
+      <UniqueIdentifier>{1e3a9fd0-1473-473e-a92e-1c2d7b7a1547}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utilities\luatables\utils">
+      <UniqueIdentifier>{cc051da8-f160-4fac-84c6-60496257ccdc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -196,6 +208,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Entities\Entities.hpp">
       <Filter>Header Files\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Utilities\luatables\luatables.h">
+      <Filter>Header Files\Utilities\luatables</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Utilities\luatables\utils\serialize.lua.h">
+      <Filter>Header Files\Utilities\luatables\utils</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Utilities\ModelHandle.hpp">
       <Filter>Header Files\Utilities</Filter>
