@@ -55,6 +55,10 @@ namespace Entities
 			pWorld->AddComponent<Components::Velocity>(pWorld, entity, Components::Velocity());
 			pWorld->AddComponent<Components::Camera>(pWorld, entity, Components::Camera(pCameraHndl));
 
+			auto cam = pCameraHndl->getInst();
+			cam->SetRotation(vRot, false);
+			cam->SetPosition(vPos, true);
+
 			return entity;
 		}
 
@@ -80,30 +84,34 @@ namespace Entities
 				// < Perform any game logic here.
 				// < ---
 				uint64_t inputMask = inputComponent.nMask;
-
                 float dX, dY;
+
+				// < Are we rotating the camera left or right?
                 if ( (bool(inputMask & INPUT_ROTATE_LEFT | INPUT_ROTATE_RIGHT)) ) {
-                    dY = (((bool(inputMask & INPUT_ROTATE_RIGHT)) - (bool(inputMask & INPUT_ROTATE_LEFT))) + pInputMgr->DeltaX())  * dt * 0.075f;
+                    dY = (((bool(inputMask & INPUT_ROTATE_RIGHT)) - (bool(inputMask & INPUT_ROTATE_LEFT))) + pInputMgr->DeltaX())  * dt * 0.75f;
                 }
+
+				// < Are we tilting the camera up or down?
                 if ( (bool(inputMask & INPUT_ROTATE_UP |INPUT_ROTATE_DOWN)) ) {
-                    dX = (((bool(inputMask & INPUT_ROTATE_UP)) - (bool(inputMask & INPUT_ROTATE_DOWN))) + pInputMgr->DeltaY())  * dt * 0.075f;
+                    dX = (((bool(inputMask & INPUT_ROTATE_UP)) - (bool(inputMask & INPUT_ROTATE_DOWN))) + pInputMgr->DeltaY())  * dt * 0.75f;
                 }
+
+				// < Are we looking to move the camera?
 				float vX = ( (bool(inputMask & INPUT_MOVE_RIGHT))	- (bool(inputMask & INPUT_MOVE_LEFT)) )		* dt * 0.075f;
 				float vY = ( (bool(inputMask & INPUT_MOVE_UP))		- (bool(inputMask & INPUT_MOVE_DOWN)) )		* dt * 0.075f;
 				float vZ = ( (bool(inputMask & INPUT_MOVE_FORWARD))	- (bool(inputMask & INPUT_MOVE_BACKWARD)) ) * dt * 0.075f;
 
 				velocityComponent.vVel.x = vX;
 				velocityComponent.vVel.y = vY;
-				velocityComponent.vVel.z = vZ;
-
-				// < Add the velocity to the camera's placement.
-				placementComponent.vPos += velocityComponent.vVel;
+				velocityComponent.vVel.z = vZ;			
+								
                 placementComponent.vRot += Leadwerks::Vec3(dX, dY, 0.0f);
 
-				// < Set the camera's position.
+				// < Set the camera's rotation and position.
 				auto cam = cameraComponent.pCamHndl->getInst();
-				cam->SetPosition(placementComponent.vPos, true);
+
 				cam->SetRotation(placementComponent.vRot, false);
+				cam->Move(velocityComponent.vVel, true);
 
 				// < ---
 
