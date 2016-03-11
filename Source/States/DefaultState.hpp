@@ -34,6 +34,9 @@
 
 #include "../Components/World.hpp"
 #include "../Entities/CameraDynamic.hpp"
+#include "../Entities/Prop.hpp"
+
+#include "../Utilities/luatables/luatables.h"
 
 #define ISOLEVEL				0.0f
 #define VOXELS_PER_CELL			9
@@ -71,7 +74,8 @@ private:
 
 	Components::World*     m_pWorld;
 
-	int64_t                m_cameraDynamic;	
+	uint64_t               m_cameraDynamic;	
+    uint64_t               m_crawlerModel;
 
 }; // < end class.
 
@@ -88,8 +92,10 @@ void DefaultState::Load(void)
 	m_pWorld = new Components::World();
 	m_cameraDynamic = Entities::CameraDynamic::Create(m_pWorld, Leadwerks::Vec3(4.0f, 6.0f, -4.0f), Leadwerks::Vec3(0.0f, 0.0f, 0.0f), m_pCameraHndl);
 
-	m_pCameraHndl->getInst()->SetDrawMode(DRAW_WIREFRAME);
+    // < Create a sample Appearance component using a lua script.    
+    m_crawlerModel = Entities::Prop::Create(m_pWorld, "./Scripts/Crawler.lua");
 
+	m_pCameraHndl->getInst()->SetDrawMode(DRAW_WIREFRAME);
     m_pInputMgr->ToggleMouseCenter();
 
 	m_pModel = Leadwerks::Model::Create();
