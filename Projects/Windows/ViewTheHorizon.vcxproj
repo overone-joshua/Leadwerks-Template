@@ -270,6 +270,7 @@
     <ClInclude Include="..\..\Source\Utilities\Macros.hpp" />
     <ClInclude Include="..\..\Source\Utilities\Manager.hpp" />
     <ClInclude Include="..\..\Source\Utilities\Modeler.hpp" />
+    <ClInclude Include="..\..\Source\Utilities\ModelHandle.hpp" />
     <ClInclude Include="..\..\Source\Utilities\ParameterMap.hpp" />
     <ClInclude Include="..\..\Source\Utilities\VoxelBuffer.hpp" />
     <ClInclude Include="..\..\Source\Utilities\WindowHandle.hpp" />

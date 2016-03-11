@@ -197,5 +197,8 @@
     <ClInclude Include="..\..\Source\Entities\Entities.hpp">
       <Filter>Header Files\Entities</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Utilities\ModelHandle.hpp">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
