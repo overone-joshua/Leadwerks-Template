@@ -104,7 +104,9 @@ void DefaultState::Load(void)
 		for (unsigned y = 0; y <= 8; y += 1)
 			for (unsigned x = 0; x <= 8; x += 1) {
 				input.pt[0] = x; input.pt[1] = y; input.pt[2] = z;
-				if (y <= 4)
+				
+				// < Formula for a circle.
+				if (sqrt((x - 4) * (x - 4) + (y - 4) * (y - 4) + (z - 4) * (z - 4)) < 4)
 					input.val = -1.0f;
 				else
 					input.val = 1.0f;
