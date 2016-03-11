@@ -9,9 +9,9 @@
     Author: Joshua Allen
     E-Mail: Joshua(AT)EdenSoftworks(DOT)net
     
-    Description: Header file for CameraDynamic service.
+    Description: Header file for CameraDynamic System.
 
-    Functions: 1. static inline unsigned Create(Components::World* pWorld, Leadwerks::Vec3 vPos, Leadwerks::Vec3 vRot, CameraHandle* pCameraHndl);
+    Functions: 1. static inline uint64_t Create(Components::World* pWorld, Leadwerks::Vec3 vPos, Leadwerks::Vec3 vRot, CameraHandle* pCameraHndl);
     
                2. static void Update(Components::World* pWorld, float dt); 
 
@@ -39,12 +39,12 @@
 
 namespace Entities
 {
-	const unsigned MASK_CAMERA_DYNAMIC = COMPONENT_INPUT | COMPONENT_POSITION | COMPONENT_VELOCITY | COMPONENT_CAMERA;
+	const unsigned MASK_CAMERA_DYNAMIC = COMPONENT_INPUT | COMPONENT_PLACEMENT | COMPONENT_VELOCITY | COMPONENT_CAMERA;
 
 	class CameraDynamic
 	{
 	public:
-		static inline unsigned Create(Components::World* pWorld, Leadwerks::Vec3 vPos, Leadwerks::Vec3 vRot, CameraHandle* pCameraHndl)
+		static inline uint64_t Create(Components::World* pWorld, Leadwerks::Vec3 vPos, Leadwerks::Vec3 vRot, CameraHandle* pCameraHndl)
 		{
 			uint64_t entity = pWorld->CreateEntity(pWorld);
 
