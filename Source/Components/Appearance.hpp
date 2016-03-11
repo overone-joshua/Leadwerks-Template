@@ -19,15 +19,15 @@
 #pragma once
 #include "Leadwerks.h"
 #include "../Utilities/Macros.hpp"
-
-#include "../Services/ScriptController.hpp"
+#include "../Utilities/ModelHandle.hpp"
 
 #include "Component.hpp"
 
-#include <Sqrat.h>
-#include <Sqrat/sqext.h>
+#include "../Utilities/luatables/luatables.h"
 
 #include <string>
+
+using namespace std;
 
 namespace Components 
 {
@@ -37,31 +37,55 @@ namespace Components
 	typedef struct Appearance : public Component
 	{
 		CLASS_TYPE(Appearance);
-
-		Leadwerks::Model*             pModel;	/*!< A Leadwerks 3DModel. */
+		
+        std::string                   cModelPath;    /* The relative filepath to this components model. */
 
         /** The Appearance component constructor. */
-        Appearance(Leadwerks::Model* _pModel = nullptr, std::string cName = "") 
-			: pModel(_pModel), Component(cName) { }
-
-		static void Bind(void)
-		{
-			using namespace Sqrat;
-
-			// < Get access to the ComponentsTable.
-			// * NOTE: This implementation requires that the Sqrat defaultVm has been set.
-			auto ComponentsTable = ScriptController::GetTable("Components");
-
-			// < Bind Appearance component to squirrel, specifying constAlloc 
-			// * in order to define available constructor in squirrel. 
-			ComponentsTable->Bind("Appearance", Class<Appearance, sqext::ConstAlloc<Appearance, Leadwerks::Model*>>()
-				.Var("pModel", &Appearance::pModel)
-			);
-
-		}
+        Appearance(std::string modelPath = "", std::string cName = "") 
+			: cModelPath(modelPath), Component(cName) { }     
 
 	} Appearance; // < end struct.
 
 } // < end namespace.
+
+// < LUA-TABLES BINDING
+template <>
+Components::Appearance LuaTableNode::getDefault<Components::Appearance>(const Components::Appearance& defVal)
+{
+    using namespace Leadwerks;
+    using namespace Components;
+    Appearance result = defVal;
+
+    if (exists())
+    {
+        LuaTable custom_table = stackQueryTable();
+
+        result.cName = custom_table["name"].get<std::string>();
+        result.nId = 0;
+        result.cModelPath = custom_table["modelPath"].get<std::string>();
+    }
+    
+    // < Restore the stack.
+    stackRestore();
+
+    return result;
+}
+
+template <>
+void LuaTableNode::set<Components::Appearance>(const Components::Appearance& val)
+{
+    using namespace Leadwerks;
+    using namespace Components;    
+    LuaTable custom_table = stackCreateLuaTable();
+
+    // < Set fields.
+    custom_table["name"] = val.cName;
+    custom_table["id"] = val.nId;
+    custom_table["modelPath"] = val.cModelPath;
+
+    // < Restore the stack.
+    stackRestore();
+
+}
 
 #endif _APPEARANCE_HPP_
