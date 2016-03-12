@@ -35,7 +35,7 @@
 #include "../Components/Velocity.hpp"
 #include "../Components/World.hpp"
 
-#include <sqrat.h>
+#include "../Utilities/LeadwerksSerializers.hpp"
 
 namespace Entities
 {
@@ -44,13 +44,18 @@ namespace Entities
 	class CameraDynamic
 	{
 	public:
-		static inline uint64_t Create(Components::World* pWorld, Leadwerks::Vec3 vPos, Leadwerks::Vec3 vRot, CameraHandle* pCameraHndl)
+		static inline uint64_t Create(Components::World* pWorld, CameraHandle* pCameraHndl, std::string cScriptPath)
 		{
 			uint64_t entity = pWorld->CreateEntity(pWorld);
 
 			pWorld->Get(entity) = MASK_CAMERA_DYNAMIC;
 
-			pWorld->AddComponent<Components::Placement>(pWorld, entity, Components::Placement(vPos, vRot));
+			auto table = LuaTable::fromFile(cScriptPath.c_str());
+			auto vPos = table["pos"].get<Leadwerks::Vec3>();
+			auto vRot = table["rot"].get<Leadwerks::Vec3>();
+			auto vSca = table["sca"].get<Leadwerks::Vec3>();
+
+			pWorld->AddComponent<Components::Placement>(pWorld, entity, Components::Placement(vPos, vRot, vSca));
 			pWorld->AddComponent<Components::Input>(pWorld, entity, Components::Input());
 			pWorld->AddComponent<Components::Velocity>(pWorld, entity, Components::Velocity());
 			pWorld->AddComponent<Components::Camera>(pWorld, entity, Components::Camera(pCameraHndl));
@@ -120,18 +125,6 @@ namespace Entities
 			}
 
 		}
-
-        static void Bind(void)
-        {
-            using namespace Sqrat;
-
-            auto entityTable = ScriptController::GetTable("Entities");
-
-            entityTable->Bind("CameraDynamic", Class<CameraDynamic>()
-                .StaticFunc("Create", &CameraDynamic::Create)
-                .StaticFunc("Update", &CameraDynamic::Update)
-            );
-        }
 
 	}; // < end class.
 

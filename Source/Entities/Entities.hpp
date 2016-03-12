@@ -7,8 +7,7 @@
 namespace Entities
 {
     static void Bind()
-    {
-        CameraDynamic::Bind();
+    {        
 
     }
 
