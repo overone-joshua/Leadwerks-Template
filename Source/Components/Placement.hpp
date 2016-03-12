@@ -24,9 +24,6 @@
 
 #include "Component.hpp"
 
-#include <Sqrat.h>
-#include <Sqrat/sqext.h>
-
 #include <string>
 
 namespace Components
@@ -49,27 +46,6 @@ namespace Components
 				, Leadwerks::Vec3 _vSca = Leadwerks::Vec3(1.0f, 1.0f, 1.0f)
 				, std::string cName = "")
 		: vPos(_vPos), vRot(_vRot), vSca(_vSca), Component(cName) { }
-
-		static void Bind(void)
-		{
-			using namespace Sqrat;
-
-			auto ComponentsTable = ScriptController::GetTable("Components");
-
-			ComponentsTable->Bind("HasId"
-								, Class<Placement
-								, sqext::ConstAlloc<Placement
-									, Leadwerks::Vec3
-									, Leadwerks::Vec3
-									, Leadwerks::Vec3
-									, std::string>>()
-
-				.Var("vPos", &Placement::vPos)
-				.Var("vRot", &Placement::vRot)
-				.Var("vSca", &Placement::vSca)
-			);
-
-		}
 
 	} Placement; // < end struct.
 
