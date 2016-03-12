@@ -44,14 +44,14 @@ namespace Entities
             // < Load and read the given script.
             auto table = LuaTable::fromFile(cScriptPath.c_str());
             auto name = table["name"].get<std::string>();
-            auto vPos = Leadwerks::Vec3(table["pos"][1], table["pos"][2], table["pos"][3]);
-            auto vRot = Leadwerks::Vec3(table["rot"][1], table["rot"][2], table["rot"][3]);
-            auto vSca = Leadwerks::Vec3(table["sca"][1], table["sca"][2], table["sca"][3]);
-            auto path = table["modelPath"].get<std::string>();
-
+			auto vPos = table["pos"].get<Leadwerks::Vec3>();
+			auto vRot = table["rot"].get<Leadwerks::Vec3>();
+			auto vSca = table["sca"].get<Leadwerks::Vec3>();
+			auto path = table["modelPath"].get<std::string>();
+			
             // < Create required components.
             pWorld->AddComponent<Components::Placement>(pWorld, entity, Components::Placement(vPos, vRot, vSca, name));
-            pWorld->AddComponent<Components::Appearance>(pWorld, entity, Components::Appearance(path, name));                       
+            pWorld->AddComponent<Components::Appearance>(pWorld, entity, Components::Appearance(path, name));
             
             // < Create associated model and initialize.
             auto pModel = Leadwerks::Model::Load(path);
