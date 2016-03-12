@@ -90,7 +90,7 @@ void DefaultState::Configure(Container* pContainer)
 void DefaultState::Load(void) 
 { 	
 	m_pWorld = new Components::World();
-	m_cameraDynamic = Entities::CameraDynamic::Create(m_pWorld, Leadwerks::Vec3(4.0f, 6.0f, -4.0f), Leadwerks::Vec3(0.0f, 0.0f, 0.0f), m_pCameraHndl);
+	m_cameraDynamic = Entities::CameraDynamic::Create(m_pWorld, m_pCameraHndl, "./Scripts/Camera.lua");
 
     // < Create a sample Appearance component using a lua script.    
     m_crawlerModel = Entities::Prop::Create(m_pWorld, "./Scripts/Crawler.lua");
