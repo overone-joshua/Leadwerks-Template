@@ -40,6 +40,9 @@
     <ClCompile Include="..\..\Source\Utilities\luatables\luatables.cc">
       <Filter>Source\Utilities\luatables</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Utilities\LeadwerksSerializers.cpp">
+      <Filter>Source\Utilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -220,6 +223,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Entities\Prop.hpp">
       <Filter>Header Files\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Utilities\LeadwerksSerializers.hpp">
+      <Filter>Header Files\Utilities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

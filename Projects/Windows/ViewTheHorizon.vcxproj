@@ -233,6 +233,7 @@
     <ClCompile Include="..\..\Source\States\State.cpp" />
     <ClCompile Include="..\..\Source\Utilities\Event.cpp" />
     <ClCompile Include="..\..\Source\Utilities\IsoSurface.cpp" />
+    <ClCompile Include="..\..\Source\Utilities\LeadwerksSerializers.cpp" />
     <ClCompile Include="..\..\Source\Utilities\luatables\luatables.cc" />
     <ClCompile Include="..\..\Source\Utilities\Manager.cpp" />
   </ItemGroup>
@@ -269,6 +270,7 @@
     <ClInclude Include="..\..\Source\Utilities\Event.hpp" />
     <ClInclude Include="..\..\Source\Utilities\Factory.hpp" />
     <ClInclude Include="..\..\Source\Utilities\IsoSurface.hpp" />
+    <ClInclude Include="..\..\Source\Utilities\LeadwerksSerializers.hpp" />
     <ClInclude Include="..\..\Source\Utilities\luatables\luatables.h" />
     <ClInclude Include="..\..\Source\Utilities\luatables\utils\serialize.lua.h" />
     <ClInclude Include="..\..\Source\Utilities\Macros.hpp" />
