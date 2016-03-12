@@ -23,8 +23,6 @@
 
 #include "Component.hpp"
 
-#include "../Utilities/luatables/luatables.h"
-
 #include <string>
 
 using namespace std;
@@ -47,45 +45,5 @@ namespace Components
 	} Appearance; // < end struct.
 
 } // < end namespace.
-
-// < LUA-TABLES BINDING
-template <>
-Components::Appearance LuaTableNode::getDefault<Components::Appearance>(const Components::Appearance& defVal)
-{
-    using namespace Leadwerks;
-    using namespace Components;
-    Appearance result = defVal;
-
-    if (exists())
-    {
-        LuaTable custom_table = stackQueryTable();
-
-        result.cName = custom_table["name"].get<std::string>();
-        result.nId = 0;
-        result.cModelPath = custom_table["modelPath"].get<std::string>();
-    }
-    
-    // < Restore the stack.
-    stackRestore();
-
-    return result;
-}
-
-template <>
-void LuaTableNode::set<Components::Appearance>(const Components::Appearance& val)
-{
-    using namespace Leadwerks;
-    using namespace Components;    
-    LuaTable custom_table = stackCreateLuaTable();
-
-    // < Set fields.
-    custom_table["name"] = val.cName;
-    custom_table["id"] = val.nId;
-    custom_table["modelPath"] = val.cModelPath;
-
-    // < Restore the stack.
-    stackRestore();
-
-}
 
 #endif _APPEARANCE_HPP_
