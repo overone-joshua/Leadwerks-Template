@@ -24,9 +24,6 @@
 
 #include "Component.hpp"
 
-#include <Sqrat.h>
-#include <Sqrat/sqext.h>
-
 namespace Components
 {
 	/** A Velocity component..
@@ -34,27 +31,14 @@ namespace Components
 	*  objects representing a movement vector.
 	*/
 	typedef struct Velocity : public Component
-	{
-		using Component::Component;
-
+	{		
 		CLASS_TYPE(Velocity);
 
 		Leadwerks::Vec3                   vVel;	/*!< A Leadwerks::Vec3 representing a movement vector in 3D space. */
 
 		/* The Velocity component constructor. */
-		Velocity(void) : vVel(0.0f, 0.0f) { }
-
-		static void Bind(void)
-		{
-			using namespace Sqrat;
-
-			auto ComponentsTable = ScriptController::GetTable("Components");
-
-			ComponentsTable->Bind("Velocity", Class<Velocity> ()
-				.Var("vVel", &Velocity::vVel)				
-			);
-
-		}
+		Velocity(Leadwerks::Vec3 _vVel = Leadwerks::Vec3(0.0f, 0.0f, 0.0f), std::string cName = "") 
+			: vVel(_vVel), Component(cName) { }
 
 	} Velocity; // < end struct.
 
