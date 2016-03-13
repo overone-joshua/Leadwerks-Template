@@ -83,29 +83,36 @@ DefaultState::DefaultState(void) { }
 
 void DefaultState::Configure(Container* pContainer)
 {
+	// < Here, we resolve some dependencies from the application container.
 	m_pCameraHndl = pContainer->Resolve<CameraHandle>();
     m_pInputMgr = pContainer->Resolve<InputManager>();
 }
 
 void DefaultState::Load(void) 
 { 	
+	// < Create the world for our components and a sample camera to move
+	// * about our scene.
 	m_pWorld = new Components::World();
 	m_cameraDynamic = Entities::CameraDynamic::Create(m_pWorld, m_pCameraHndl, "./Scripts/Camera.lua");
 
-    // < Create a sample Appearance component using a lua script.    
+    // < Load the sample Crawler model as a prop in our scene. 
     m_crawlerModel = Entities::Prop::Create(m_pWorld, "./Scripts/Crawler.lua");
 
 	m_pCameraHndl->getInst()->SetDrawMode(DRAW_WIREFRAME);
-    m_pInputMgr->ToggleMouseCenter();
-
-	m_pModel = Leadwerks::Model::Create();
-	m_pBuffer = new VoxelBuffer<float>(NUM_VOXELS, NUM_VOXELS, NUM_VOXELS);
+    
+	// < Set the input manager to reset the mouse-position to the center of the
+	// * screen every frame.
+	m_pInputMgr->ToggleMouseCenter();
+	
+	// < Initialize our isosurface and the voxel buffer we will be using.
 	m_pIsosurface = new IsoSurface<float>();
+	m_pBuffer = new VoxelBuffer<float>(NUM_VOXELS, NUM_VOXELS, NUM_VOXELS);
 
 	ModelerInput<float> input;
 	Modeler<float> modeler;
 	modeler.Assign(*m_pBuffer);
 
+	// < Here, lets use the modeler to feed out voxel data into our isosurface.
 	for (unsigned z = 0; z <= 8; z += 1)
 		for (unsigned y = 0; y <= 8; y += 1)
 			for (unsigned x = 0; x <= 8; x += 1) {
@@ -122,6 +129,8 @@ void DefaultState::Load(void)
 	
 	modeler.Execute();
 
+	// < Generate our isosurface.
+	m_pModel = Leadwerks::Model::Create();
 	unsigned nTriangles = m_pIsosurface->GenerateSurface(*m_pModel,
 		*m_pBuffer,
 		0.0,
@@ -136,6 +145,8 @@ void DefaultState::Load(void)
 
 void DefaultState::Close(void) 
 { 		
+	// < Set the input manager to allow the mouse pointer to freely
+	// * move about the window.
     m_pInputMgr->ToggleMouseCenter();
 
 	SAFE_DELETE(m_pWorld);
@@ -153,9 +164,11 @@ void DefaultState::Close(void)
 
 bool DefaultState::Update(float dt) { 
 
-    Components::Input& inputComponent = m_pWorld->GetComponents<Components::Input>(m_pWorld, m_cameraDynamic)
+    auto& inputComponent = m_pWorld->GetComponents<Components::Input>(m_pWorld, m_cameraDynamic)
         ->front();
 
+	// < Check for any mouse movement. If there is any movement, we should
+	// * look to rotate the camera.
     if (m_pInputMgr->DeltaX() < 0) { inputComponent.nMask |= INPUT_ROTATE_LEFT; }
     if (m_pInputMgr->DeltaX() > 0) { inputComponent.nMask |= INPUT_ROTATE_RIGHT; }
 
@@ -170,9 +183,11 @@ bool DefaultState::Update(float dt) {
 
 void DefaultState::OnKeyDown(Event_KeyDown* pEvent)
 {
-	Components::Input& inputComponent = m_pWorld->GetComponents<Components::Input>(m_pWorld, m_cameraDynamic)
+	auto& inputComponent = m_pWorld->GetComponents<Components::Input>(m_pWorld, m_cameraDynamic)
 		->front();    
 
+	// < Check for any key presses from the keyboard. If any key is pressed
+	// * we should look to move the camera.
 	if (pEvent->Key() == Leadwerks::Key::W) { inputComponent.nMask |= INPUT_MOVE_FORWARD; }
 	if (pEvent->Key() == Leadwerks::Key::A) { inputComponent.nMask |= INPUT_MOVE_LEFT; }
 	if (pEvent->Key() == Leadwerks::Key::S) { inputComponent.nMask |= INPUT_MOVE_BACKWARD; }
@@ -185,9 +200,11 @@ void DefaultState::OnKeyDown(Event_KeyDown* pEvent)
 
 void DefaultState::OnKeyUp(Event_KeyUp* pEvent)
 {
-	Components::Input& inputComponent = m_pWorld->GetComponents<Components::Input>(m_pWorld, m_cameraDynamic)
+	auto& inputComponent = m_pWorld->GetComponents<Components::Input>(m_pWorld, m_cameraDynamic)
 		->front();
 
+	// < Just like key press however, here we pop the movement bitmask to signal 
+	// * a key release.
 	if (pEvent->Key() == Leadwerks::Key::W) { inputComponent.nMask &= ~INPUT_MOVE_FORWARD; }
 	if (pEvent->Key() == Leadwerks::Key::A) { inputComponent.nMask &= ~INPUT_MOVE_LEFT; }
 	if (pEvent->Key() == Leadwerks::Key::S) { inputComponent.nMask &= ~INPUT_MOVE_BACKWARD; }
