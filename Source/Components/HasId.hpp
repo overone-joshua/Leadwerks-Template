@@ -19,9 +19,6 @@
 #pragma once
 #include "../Services/ScriptController.hpp"
 
-#include <Sqrat.h>
-#include <Sqrat/sqext.h>
-
 namespace Components
 {
 	/** A HasId component.
@@ -33,18 +30,6 @@ namespace Components
 
 		/** The HasId component constructor. */
 		HasId(void) : nId(0) { }
-
-		static void Bind(void)
-		{
-			using namespace Sqrat;
-
-			auto ComponentsTable = ScriptController::GetTable("Components");
-
-			ComponentsTable->Bind("HasId", Class<HasId>()
-				.Var("nId", &HasId::nId)
-			);
-
-		}
 
 	} HasId; // < and struct.
 

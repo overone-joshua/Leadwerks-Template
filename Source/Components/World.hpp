@@ -24,9 +24,6 @@
 
 #include "Component.hpp"
 
-#include <Sqrat.h>
-#include <Sqrat/sqext.h>
-
 #include <map>
 #include <string>
 #include <queue>
@@ -69,9 +66,7 @@ namespace Components
 		uint64_t& operator [] (int index)
 		{
 			return m_entityMasks[index];
-		}
-
-		static void										   Bind(void);
+		}		
 
 	protected:
 		

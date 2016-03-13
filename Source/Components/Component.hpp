@@ -22,9 +22,6 @@
 #include "HasId.hpp"
 #include "HasName.hpp"
 
-#include <Sqrat.h>
-#include <Sqrat/sqext.h>
-
 #include <string>
 
 namespace Components
@@ -39,16 +36,6 @@ namespace Components
 
 		/** The Components constructor. */
 		Component(std::string cName = "") : HasName(cName) { }
-
-		static void Bind(void)
-		{
-			using namespace Sqrat;
-
-			auto ComponentsTable = ScriptController::GetTable("Components");
-
-			ComponentsTable->Bind("Component", Class<Component, sqext::ConstAlloc<Component, std::string>>());
-
-		}
 
 	} Component; // < end struct.
 

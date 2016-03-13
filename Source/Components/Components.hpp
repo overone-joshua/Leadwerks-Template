@@ -18,15 +18,6 @@ namespace Components
 {
 	static void Bind(void)
 	{
-		Appearance::Bind();
-		Camera::Bind();
-		Component::Bind();
-		HasId::Bind();
-		HasName::Bind();
-		Input::Bind();
-		Placement::Bind();
-		Velocity::Bind();
-		World::Bind();
 
 	}
 

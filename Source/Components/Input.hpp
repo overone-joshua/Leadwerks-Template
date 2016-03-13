@@ -24,9 +24,6 @@
 
 #include "InputDictionary.hpp"
 
-#include <Sqrat.h>
-#include <Sqrat/sqext.h>
-
 namespace Components
 {
 	/** An Input component.
@@ -41,18 +38,6 @@ namespace Components
 
 		/** The Input component constructor.*/
 		Input(std::string cName = "") : nMask(INPUT_NONE) { }
-
-		static void Bind(void)
-		{
-			using namespace Sqrat;
-
-			auto ComponentsTable = ScriptController::GetTable("Components");
-
-			ComponentsTable->Bind("Input", Class<Input, sqext::ConstAlloc<Input, std::string>>()
-				.Var("nMask", &Input::nMask)
-			);
-
-		}
 
 	} Input; // < end struct.
 
