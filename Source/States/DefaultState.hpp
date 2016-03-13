@@ -110,6 +110,7 @@ void DefaultState::Load(void)
     // < Load the sample Crawler model as a prop in our scene. 
     m_crawlerModel = Entities::Prop::Create(m_pWorld, "./Scripts/Crawler.lua");
 
+	// < Uncomment to enable wireframe rendering.
 	//m_pCameraHndl->getInst()->SetDrawMode(DRAW_WIREFRAME);
     
 	// < Set the input manager to reset the mouse-position to the center of the

@@ -1,0 +1,18 @@
+//Leadwerks Material File
+
+blendmode=0
+castshadows=1
+zsort=0
+cullbackfaces=1
+depthtest=1
+depthmask=1
+diffuse=1.00000000,1.00000000,1.00000000,1.00000000
+specular=1.00000000,1.00000000,1.00000000,0.000000000
+alwaysuseshader=0
+drawmode=-1
+
+shader="shaders\model\animated\diffuse+normal+specular.shader"
+shader1="shaders\model\shadow\shadow+animation.shader"
+texture0=".\crawler.tex"
+texture1=".\crawlerdot3.tex"
+texture2=".\crawler_spec.tex"
