@@ -11,7 +11,7 @@ I began using Leadwerks for c++ game development in June 2013 and have been a fa
 
 ## Versions
 
-v0.0.4 - Complete overhaul of the template framework. Introduced AppController class. Refactored GameObject system for an Entity-Component system. Introduced Dependency Injection with Container class. Added brief documentation to all source files. Removed contents section from the readme.md.
+v0.0.4 - Complete overhaul of the template framework. Introduced AppController class. Refactored GameObject system for an Entity-Component system. Introduced Dependency Injection with Container class. Added brief documentation to all source files. Removed contents section from the readme.md. Added LuaTables++ to project. Finalized a quick sample scene to demonstrate the use of the Component system with lua scripts. Also added support for Squirrel Script though not officially supported at this time.
 
 v0.0.3 - Added EventManager class with example event to project. 
 
