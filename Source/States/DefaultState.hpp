@@ -65,6 +65,9 @@ public:
 
 private:
 
+	Leadwerks::Light*	  m_pLight;
+	Leadwerks::Model*     m_pGround;
+
 	IsoSurface<float>*     m_pIsosurface;
 	Leadwerks::Model*      m_pModel;
 	VoxelBuffer<float>*    m_pBuffer;
@@ -90,6 +93,15 @@ void DefaultState::Configure(Container* pContainer)
 
 void DefaultState::Load(void) 
 { 	
+	// < Add a light to our sample scene.
+	m_pLight = Leadwerks::DirectionalLight::Create();
+	m_pLight->SetRotation(35.0f, -35.0f, 0.0f);
+
+	// < Create a base for the sample scene.
+	m_pGround = Leadwerks::Model::Box(20.0f, 0.5f, 10.0f);
+	m_pGround->SetColor(0.5f, 1.0f, 0.75f, 1.0f);
+	m_pGround->Move(0.0f, 0.0f, 4.0f);
+
 	// < Create the world for our components and a sample camera to move
 	// * about our scene.
 	m_pWorld = new Components::World();
@@ -98,7 +110,7 @@ void DefaultState::Load(void)
     // < Load the sample Crawler model as a prop in our scene. 
     m_crawlerModel = Entities::Prop::Create(m_pWorld, "./Scripts/Crawler.lua");
 
-	m_pCameraHndl->getInst()->SetDrawMode(DRAW_WIREFRAME);
+	//m_pCameraHndl->getInst()->SetDrawMode(DRAW_WIREFRAME);
     
 	// < Set the input manager to reset the mouse-position to the center of the
 	// * screen every frame.
@@ -119,7 +131,7 @@ void DefaultState::Load(void)
 				input.pt[0] = x; input.pt[1] = y; input.pt[2] = z;
 				
 				// < Formula for a circle.
-				if (sqrt((x - 4) * (x - 4) + (y - 4) * (y - 4) + (z - 4) * (z - 4)) < 4)
+				if ( (sqrt((x - 4) * (x - 4) + (y - 4) * (y - 4) + (z - 4) * (z - 4)) < 4) )
 					input.val = -1.0f;
 				else
 					input.val = 1.0f;
@@ -131,6 +143,7 @@ void DefaultState::Load(void)
 
 	// < Generate our isosurface.
 	m_pModel = Leadwerks::Model::Create();
+	m_pModel->SetColor(1.0f, 0.0f, 0.0f, 1.0f);
 	unsigned nTriangles = m_pIsosurface->GenerateSurface(*m_pModel,
 		*m_pBuffer,
 		0.0,
@@ -162,8 +175,8 @@ void DefaultState::Close(void)
 
 }
 
-bool DefaultState::Update(float dt) { 
-
+bool DefaultState::Update(float dt) 
+{ 	
     auto& inputComponent = m_pWorld->GetComponents<Components::Input>(m_pWorld, m_cameraDynamic)
         ->front();
 
