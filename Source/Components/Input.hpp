@@ -18,7 +18,6 @@
 
 #pragma once
 #include "../Utilities/Macros.hpp"
-#include "../Services/ScriptController.hpp"
 
 #include "Component.hpp"
 

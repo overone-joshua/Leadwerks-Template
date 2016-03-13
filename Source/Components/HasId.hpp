@@ -17,7 +17,6 @@
 	#define _HAS_ID_
 
 #pragma once
-#include "../Services/ScriptController.hpp"
 
 namespace Components
 {

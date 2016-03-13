@@ -229,7 +229,6 @@
     <ClCompile Include="..\..\Source\Managers\InputManager.cpp" />
     <ClCompile Include="..\..\Source\Managers\StateManager.cpp" />
     <ClCompile Include="..\..\Source\Services\AppController.cpp" />
-    <ClCompile Include="..\..\Source\Services\ScriptController.cpp" />
     <ClCompile Include="..\..\Source\States\State.cpp" />
     <ClCompile Include="..\..\Source\Utilities\Event.cpp" />
     <ClCompile Include="..\..\Source\Utilities\IsoSurface.cpp" />
@@ -259,7 +258,6 @@
     <ClInclude Include="..\..\Source\Managers\InputManager.hpp" />
     <ClInclude Include="..\..\Source\Managers\StateManager.hpp" />
     <ClInclude Include="..\..\Source\Services\AppController.hpp" />
-    <ClInclude Include="..\..\Source\Services\ScriptController.hpp" />
     <ClInclude Include="..\..\Source\States\DefaultState.hpp" />
     <ClInclude Include="..\..\Source\States\State.hpp" />
     <ClInclude Include="..\..\Source\Utilities\CameraHandle.hpp" />

@@ -17,7 +17,6 @@
 	#define _HAS_NAME_
 
 #pragma once
-#include "../Services/ScriptController.hpp"
 
 #include <string>
 

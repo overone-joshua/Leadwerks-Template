@@ -3,8 +3,7 @@
 	#ifndef BUILD_STATICLIB
 		#include "App.h"
 		#include "Common.hpp"
-		#include "Utilities/Macros.hpp"		
-		#include "Services/ScriptController.hpp"
+		#include "Utilities/Macros.hpp"				
 	#endif
 #endif
 
@@ -145,9 +144,7 @@ int main(int argc, const char *argv[])
 	}
 	else
 	{*/
-	//Execute mobile-style App script	
-
-	ScriptController::Initialize();
+	//Execute mobile-style App script		
 
 	gApp = new App();
 	gAppCtrl = new AppController(gApp);
@@ -174,9 +171,7 @@ int main(int argc, const char *argv[])
 #endif
 		// < Shutdown application controller.		
 		SAFE_DELETE(gAppCtrl);
-		SAFE_DELETE(gApp);
-		
-		ScriptController::Shutdown();
+		SAFE_DELETE(gApp);		
 
         // < Shutdown the Steamworks system.
         Steamworks::Shutdown();

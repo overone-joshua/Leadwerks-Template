@@ -22,7 +22,6 @@
     
 #pragma once
 #include "Leadwerks.h"
-#include "../Services/ScriptController.hpp"
 
 #include "../Utilities/CameraHandle.hpp"
 

@@ -17,8 +17,6 @@
 	#define _COMPONENT_HPP_
 	
 #pragma once
-#include "../Services/ScriptController.hpp"
-
 #include "HasId.hpp"
 #include "HasName.hpp"
 

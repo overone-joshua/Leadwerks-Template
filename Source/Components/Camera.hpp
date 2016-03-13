@@ -20,8 +20,6 @@
 #include "../Utilities/CameraHandle.hpp"
 #include "../Utilities/Macros.hpp"
 
-#include "../Services/ScriptController.hpp"
-
 #include "Component.hpp"
 
 #include <string>

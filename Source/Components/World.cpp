@@ -2,8 +2,6 @@
 #include "World.hpp"
 #include "../Common.hpp"
 
-#include "../Services/ScriptController.hpp"
-
 #include "Component.hpp"
 #include "ComponentDictionary.hpp"
 
