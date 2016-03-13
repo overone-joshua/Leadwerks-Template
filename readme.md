@@ -9,7 +9,7 @@ A clean c++ template project written around the Leadwerks API, providing an easy
 
 I began using Leadwerks for c++ game development in June 2013 and have been a fan ever since. Over the last few years, I have been developing a modular game architecture, providing a clean and easy to use framework for game development. The Leadwerks Template project is my aim to help streamline other c++ developers looking to enter game development with the opportunity to quickly iterate quality projects with an easy to use development pipeline.
 
-## section
+### Setup
 
 To use the template project in your own application you should first create a new project through the Leadwerks Project Manager. You can then pull or extract the template files into the root directory of your project. This will be the same directory that contains the asset directories that are created for you when you create a new Leadwerks project.
 
