@@ -1,6 +1,8 @@
 # Leadwerks Template Project
 ---
 
+![Sample scene](./Screenshots/Sample_Scene.png)
+
 ## Synopsis
 
 A clean c++ template project written around the Leadwerks API, providing an easy to use platform for interactive application development.
@@ -14,10 +16,6 @@ I began using Leadwerks for c++ game development in June 2013 and have been a fa
 To use the template project in your own application you should first create a new project through the Leadwerks Project Manager. You can then pull or extract the template files into the root directory of your project. This will be the same directory that contains the asset directories that are created for you when you create a new Leadwerks project.
 
 NOTE: Make sure that your .csproj working directory is pointed to the same directory your assets are located as well. This should be set for you when your project is initially created however, should your application crash due to missing script files, you should check your working directory.
-
-If setup goes as planned, you should see the following scene when you run the application.
-
-[Sample Scene!](./Screenshots/Sample_Scene.png)
 
 ## Versions
 
