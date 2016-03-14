@@ -77,8 +77,7 @@ private:
 
 	Components::World*     m_pWorld;
 
-	uint64_t               m_cameraDynamic;	
-    uint64_t               m_crawlerModel;
+	uint64_t               m_cameraDynamic;	    
 
 }; // < end class.
 
@@ -98,20 +97,15 @@ void DefaultState::Load(void)
 	m_pLight->SetRotation(35.0f, -35.0f, 0.0f);
 
 	// < Create a base for the sample scene.
-	m_pGround = Leadwerks::Model::Box(20.0f, 0.5f, 10.0f);
-	m_pGround->SetColor(0.5f, 1.0f, 0.75f, 1.0f);
+	m_pGround = Leadwerks::Model::Box(10.0f, 0.5f, 10.0f);	
 	m_pGround->Move(0.0f, 0.0f, 4.0f);
 
 	// < Create the world for our components and a sample camera to move
 	// * about our scene.
 	m_pWorld = new Components::World();
-	m_cameraDynamic = Entities::CameraDynamic::Create(m_pWorld, m_pCameraHndl, "./Scripts/Camera.lua");
-
-    // < Load the sample Crawler model as a prop in our scene. 
-    m_crawlerModel = Entities::Prop::Create(m_pWorld, "./Scripts/Crawler.lua");
-
-	// < Uncomment to enable wireframe rendering.
-	//m_pCameraHndl->getInst()->SetDrawMode(DRAW_WIREFRAME);
+	m_cameraDynamic = Entities::CameraDynamic::Create(m_pWorld, m_pCameraHndl, "./Scripts/Camera.lua");    
+	
+	m_pCameraHndl->getInst()->SetDrawMode(DRAW_WIREFRAME);
     
 	// < Set the input manager to reset the mouse-position to the center of the
 	// * screen every frame.
@@ -143,8 +137,8 @@ void DefaultState::Load(void)
 	modeler.Execute();
 
 	// < Generate our isosurface.
-	m_pModel = Leadwerks::Model::Create();
-	m_pModel->SetColor(1.0f, 0.0f, 0.0f, 1.0f);
+	m_pModel = Leadwerks::Model::Create();	
+	m_pModel->Move(-4.0f, 0.0f, 0.0f);
 	unsigned nTriangles = m_pIsosurface->GenerateSurface(*m_pModel,
 		*m_pBuffer,
 		0.0,
@@ -168,8 +162,14 @@ void DefaultState::Close(void)
 	m_pCameraHndl = nullptr;
     m_pInputMgr = nullptr;
 
+	SAFE_RELEASE(m_pLight);
+	SAFE_DELETE(m_pLight);
+
 	SAFE_DELETE(m_pIsosurface);
 	SAFE_DELETE(m_pBuffer);
+
+	SAFE_RELEASE(m_pGround);
+	SAFE_DELETE(m_pGround);
 
 	SAFE_RELEASE(m_pModel);
 	SAFE_DELETE(m_pModel);
