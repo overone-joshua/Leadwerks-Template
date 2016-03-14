@@ -15,6 +15,10 @@ To use the template project in your own application you should first create a ne
 
 NOTE: Make sure that your .csproj working directory is pointed to the same directory your assets are located as well. This should be set for you when your project is initially created however, should your application crash due to missing script files, you should check your working directory.
 
+If setup goes as planned, you should see the following scene when you run the application.
+
+[Sample Scene!](./Screenshots/Sample_Scene.png)
+
 ## Versions
 
 v0.0.4 - Complete overhaul of the template framework. Introduced AppController class. Refactored GameObject system for an Entity-Component system. Introduced Dependency Injection with Container class. Added brief documentation to all source files. Removed contents section from the readme.md. Added LuaTables++ to project. Finalized a quick sample scene to demonstrate the use of the Component system with lua scripts. Also added support for Squirrel Script though not officially supported at this time.
