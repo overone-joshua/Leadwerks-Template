@@ -23,7 +23,7 @@
 
 #include <string>
 
-namespace component
+namespace components
 {
     // < A health component.
     // * The health component provides access to health-related properties.
@@ -36,7 +36,7 @@ namespace component
         
         /** The Health component constructor. */
         Health(T _nHealth = 0, std::string cName = "") 
-            : nCur(nHealth), Component(cName) { }
+            : nCur(_nHealth), Component(cName) { }
         
     } Health; // < end struct.
     
