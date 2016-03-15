@@ -31,8 +31,9 @@ namespace Components
     {
         CLASS_TYPE(Trigger);
         
-        Delegate<ARGS...>           callback;
+        Delegate<ARGS...>           callback;       /* The delegate callback. */
         
+        /** The Trigger component constructor. */
         Trigger(Delegate<ARGS...> _callback, std::string cName = "")
             : callback(_callback), Component(cName) { }
 
