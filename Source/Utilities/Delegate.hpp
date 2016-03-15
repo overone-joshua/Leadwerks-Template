@@ -32,32 +32,32 @@
 #include <cassert>
 #include <utility>
 
-template <typename T>
+template <typename... ARGS>
 class Delegate
 {
 	typedef void* InstancePtr;
-	typedef void(*InternalFunction)(InstancePtr, T);
+	typedef void(*InternalFunction)(InstancePtr, ARGS...);
 	typedef std::pair<InstancePtr, InternalFunction> Stub;
 
 	/* Turns a free function into our internal function stub */
-	template <void(*Function)(T)>
-	static inline void FunctionStub(InstancePtr, T ARG0)
+	template <void(*Function)(ARGS&&...)>
+	static inline void FunctionStub(InstancePtr, ARGS... args)
     {
-		return (Function)(ARG0);
+		return (Function)(args...);
 	}
 
 	/* Turns a member function into our internal function stub */
-	template <class C, void(C::*Function)(T)>
-	static inline void ClassMethodStub(InstancePtr instance, T ARG0)
+	template <class C, void(C::*Function)(ARGS...)>
+	static inline void ClassMethodStub(InstancePtr instance, ARGS... args)
     {
-		return (static_cast<C*>(instance)->*Function)(ARG0);
+		return (static_cast<C*>(instance)->*Function)(args...);
 	}
 
 public:
 	Delegate(void) : m_stub(nullptr, nullptr) { };
 
 	/* Binds a free-function */
-	template <void(*Function)(T)>
+	template <void(*Function)(ARGS...)>
 	void Bind(void)
     {
 		this->m_stub.first = nullptr;
@@ -65,7 +65,7 @@ public:
 	}
 
 	/* Binds a class-method */
-	template <class C, void(C::*Function)(T)>
+	template <class C, void(C::*Function)(ARGS...)>
 	void Bind(C* instance)
     {
 		this->m_stub.first = instance;
@@ -73,13 +73,13 @@ public:
 	}
 
 	/* Invokes the delegate */
-	void Invoke(T ARG0) const
+	void Invoke(ARGS... args) const
     {
 		assert(m_stub.second != nullptr);	 // Cannot invoke unbound delegate. Call Bind() first.
-		return this->m_stub.second(m_stub.first, ARG0);
+		return this->m_stub.second(m_stub.first, args...);
 	}
 
-	bool operator== (const Delegate<T>& other)
+	bool operator== (const Delegate<ARGS...>& other)
     {
 		if (this->m_stub.first != other.m_stub.first ||
 			this->m_stub.second != other.m_stub.second)
