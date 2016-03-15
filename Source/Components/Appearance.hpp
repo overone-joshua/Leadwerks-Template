@@ -25,8 +25,6 @@
 
 #include <string>
 
-using namespace std;
-
 namespace Components 
 {
 	/** An Appearance component.
