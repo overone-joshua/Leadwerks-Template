@@ -34,11 +34,12 @@ namespace Components
 	{
 		CLASS_TYPE(Appearance);
 		
-        std::string                   cModelPath;    /* The relative filepath to this components model. */
+        std::string                     cModelPath;    /* The relative filepath to this components model. */
+        Leadwerks::Model*               pModel;
 
         /** The Appearance component constructor. */
         Appearance(std::string modelPath = "", std::string cName = "") 
-			: cModelPath(modelPath), Component(cName) { }     
+			: pModel(nullptr), cModelPath(modelPath), Component(cName) { }     
 
 	} Appearance; // < end struct.
 
