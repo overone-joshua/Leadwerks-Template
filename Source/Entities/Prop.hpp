@@ -29,6 +29,8 @@
 
 #include "../Utilities/luatables/luatables.h"
 
+#include <string>
+
 namespace Entities
 {
     const unsigned MASK_PROP = COMPONENT_APPEARANCE | COMPONENT_PLACEMENT;
