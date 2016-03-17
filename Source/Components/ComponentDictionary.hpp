@@ -33,7 +33,12 @@ typedef enum
 	COMPONENT_HASID = 1 << 4,
 	COMPONENT_HASNAME = 1 << 5,
 	COMPONENT_WORLD = 1 << 6,
-	COMPONENT_INPUT = 1 << 7
+	COMPONENT_INPUT = 1 << 7,
+    COMPONENT_HEALTH = 1 << 8,
+    COMPONENT_TRIGGER = 1 << 9,
+    COMPONENT_AI = 1 << 10,
+    COMPONENT_RELATIONSHIP = 1 << 11,
+    COMPONENT_COLLIDER = 1 << 12    
 
 } ComponentDictionary;
 
