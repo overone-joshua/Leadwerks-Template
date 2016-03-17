@@ -31,9 +31,7 @@ class ModelHandle
 public:
 
     ModelHandle(Leadwerks::Model* pModel)
-        :m_pModel(pModel) {
-
-    }
+        :m_pModel(pModel) { }    
 
     ~ModelHandle(void) {
 
@@ -43,6 +41,8 @@ public:
     }
 
     Leadwerks::Model* getInst(void) { return m_pModel; }
+
+    static inline Leadwerks::Model* Load(std::string cModelPath) { return Leadwerks::Model::Load(cModelPath); }
 
 private:
 
