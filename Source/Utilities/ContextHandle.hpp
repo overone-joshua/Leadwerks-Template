@@ -30,7 +30,7 @@ class ContextHandle
 
 public:
 
-	ContextHandle(Leadwerks::Context* pContext) 
+	explicit ContextHandle(Leadwerks::Context* pContext) 
 		:m_pContext(pContext){
 
 	}

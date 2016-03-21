@@ -30,7 +30,7 @@ class WorldHandle
 
 public:
 
-	WorldHandle(Leadwerks::World* pWorld) 
+	explicit WorldHandle(Leadwerks::World* pWorld) 
 		:m_pWorld(pWorld){
 
 	}

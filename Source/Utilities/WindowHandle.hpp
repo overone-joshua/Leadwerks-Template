@@ -30,7 +30,7 @@ class WindowHandle
 
 public:
 
-	WindowHandle(Leadwerks::Window* pWindow) 
+	explicit WindowHandle(Leadwerks::Window* pWindow) 
 		:m_pWindow(pWindow){
 
 	}

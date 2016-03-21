@@ -30,7 +30,7 @@ class CameraHandle
 
 public:
 
-	CameraHandle(Leadwerks::Camera* pCamera) 
+	explicit CameraHandle(Leadwerks::Camera* pCamera) 
 		:m_pCamera(pCamera){
 
 	}

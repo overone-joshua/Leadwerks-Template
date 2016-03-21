@@ -30,7 +30,7 @@ class ModelHandle
 
 public:
 
-    ModelHandle(Leadwerks::Model* pModel)
+    explicit ModelHandle(Leadwerks::Model* pModel)
         :m_pModel(pModel) { }    
 
     ~ModelHandle(void) {
