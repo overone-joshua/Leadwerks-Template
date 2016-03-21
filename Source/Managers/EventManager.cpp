@@ -18,8 +18,10 @@ EventManager::~EventManager() {
 }
 
 bool EventManager::Update(unsigned long nMaxMillis) {
-	unsigned long currMs = Leadwerks::Time::GetCurrent();
-	unsigned long maxMs = ((nMaxMillis == EventManager::KINFINITE) ? (EventManager::KINFINITE) : (currMs + maxMs));
+    unsigned long currMs = 0, maxMs = 0;
+	
+    currMs = Leadwerks::Time::GetCurrent();
+	maxMs = ((nMaxMillis == EventManager::KINFINITE) ? (EventManager::KINFINITE) : (currMs + maxMs));
 
 	/* Swap active queue, clear new queue, after swap */
 	int queueToProcess = this->m_nActiveQueue;
