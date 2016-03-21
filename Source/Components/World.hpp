@@ -62,7 +62,7 @@ namespace Components
 		template <typename T> std::vector<T>*             GetComponents(World* pWorld, uint64_t entity);                          /** Returns a Component collection of type T assocated with the given entity. */
 
 
-        template <typename T> static uint64_t Add(World& world, T& source);
+        template <typename T> static void Add(World& world, uint64_t entity, T& source);
         template <typename Out> static Out Get(World& world, uint64_t entity);
         template <typename Out> static std::vector<Out> GetAll(World& world);
 
