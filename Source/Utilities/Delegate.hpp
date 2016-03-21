@@ -40,10 +40,10 @@ class Delegate
 	typedef std::pair<InstancePtr, InternalFunction> Stub;
 
 	/* Turns a free function into our internal function stub */
-	template <void(*Function)(ARGS&&...)>
+	template <void(*Function)(ARGS...)>
 	static inline void FunctionStub(InstancePtr, ARGS... args)
     {
-		return (Function)(args...);
+		return (*Function)(args...);
 	}
 
 	/* Turns a member function into our internal function stub */
