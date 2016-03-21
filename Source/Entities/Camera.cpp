@@ -76,91 +76,13 @@ template <> Entities::Input<Entities::Camera> Components::World::Get<Entities::I
 {
 	Entities::Input<Entities::Camera> hndl;
 
-    std::vector<Components::MouseMoveTrigger<Entities::Camera>>* onMouseMoveTriggers;
-    std::vector<Components::MouseHitTrigger<Entities::Camera>>* onMouseHitTriggers;
-    std::vector<Components::MouseDownTrigger<Entities::Camera>>* onMouseDownTriggers;
-    std::vector<Components::MouseUpTrigger<Entities::Camera>>* onMouseUpTriggers;
-    std::vector<Components::KeyHitTrigger<Entities::Camera>>* onKeyHitTriggers;
-    std::vector<Components::KeyDownTrigger<Entities::Camera>>* onKeyDownTriggers;
-    std::vector<Components::KeyUpTrigger<Entities::Camera>>* onKeyUpTriggers;
-
-    // < Here we attempt to populate our object graph for camera inputs. The current
-    // * implementation forces the world to throw an exception should a component
-    // * not exist within the world's component map. Here, simply set the collection
-    // * to a nullptr because we may not always want to register events for each
-    // * possible event. 
-    // * NOTE: need to find a better way to handle object graph population.
-    try
-    {
-        onMouseMoveTriggers = world.GetComponents<Components::MouseMoveTrigger<Entities::Camera>>(&world, entity);
-    }
-    catch (std::exception& ex)
-    {
-        onMouseMoveTriggers = nullptr;
-    }
-
-    try
-    {
-        onMouseHitTriggers = world.GetComponents<Components::MouseHitTrigger<Entities::Camera>>(&world, entity);
-    }
-    catch (std::exception& ex)
-    {
-        onMouseHitTriggers = nullptr;
-    }
-
-    try 
-    {
-        onMouseDownTriggers = world.GetComponents<Components::MouseDownTrigger<Entities::Camera>>(&world, entity);
-    }
-    catch (std::exception& ex)
-    {
-        onMouseDownTriggers = nullptr;
-    }
-
-    try
-    {
-        onMouseUpTriggers = world.GetComponents<Components::MouseUpTrigger<Entities::Camera>>(&world, entity);
-    }
-    catch (std::exception& ex)
-    {
-        onMouseUpTriggers = nullptr;
-    }
-
-    try
-    {
-        onKeyHitTriggers = world.GetComponents<Components::KeyHitTrigger<Entities::Camera>>(&world, entity);
-    }
-    catch (std::exception& ex)
-    {
-        onKeyHitTriggers = nullptr;
-    }
-
-    try
-    {
-        onKeyDownTriggers = world.GetComponents<Components::KeyDownTrigger<Entities::Camera>>(&world, entity);
-    }
-    catch (std::exception& ex)
-    {
-        onKeyDownTriggers = nullptr;
-    }
-
-    try
-    {
-        onKeyUpTriggers = world.GetComponents<Components::KeyUpTrigger<Entities::Camera>>(&world, entity);
-    }
-    catch (std::exception& ex)
-    {
-        onKeyUpTriggers = nullptr;
-    }
-
-	hndl.mouseMoveTriggers = onMouseMoveTriggers;
-	hndl.mouseHitTriggers = onMouseHitTriggers;
-	hndl.mouseDownTriggers = onMouseDownTriggers;
-	hndl.mouseUpTriggers = onMouseUpTriggers;
-
-	hndl.keyHitTriggers = onKeyHitTriggers;
-	hndl.keyDownTriggers = onKeyDownTriggers;
-	hndl.keyUpTriggers = onKeyUpTriggers;
+    hndl.mouseMoveTriggers = world.Fetch<Components::MouseMoveTrigger<Entities::Camera>>(&world, entity);
+    hndl.mouseHitTriggers = world.Fetch<Components::MouseHitTrigger<Entities::Camera>>(&world, entity);
+    hndl.mouseDownTriggers = world.Fetch<Components::MouseDownTrigger<Entities::Camera>>(&world, entity);
+    hndl.mouseUpTriggers = world.Fetch<Components::MouseUpTrigger<Entities::Camera>>(&world, entity);
+    hndl.keyHitTriggers = world.Fetch<Components::KeyHitTrigger<Entities::Camera>>(&world, entity);
+    hndl.keyDownTriggers = world.Fetch<Components::KeyDownTrigger<Entities::Camera>>(&world, entity);
+    hndl.keyUpTriggers = world.Fetch<Components::KeyUpTrigger<Entities::Camera>>(&world, entity);
 
 	return hndl;
 }
