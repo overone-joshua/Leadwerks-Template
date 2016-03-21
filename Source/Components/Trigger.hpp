@@ -27,7 +27,7 @@
 namespace Components
 {
     template <typename... ARGS>
-    typedef struct Trigger : public Component
+    struct Trigger : public Component
     {
         CLASS_TYPE(Trigger);
         
@@ -37,7 +37,7 @@ namespace Components
         Trigger(Delegate<ARGS...> _callback, std::string cName = "")
             : callback(_callback), Component(cName) { }
 
-    } Trigger;
+	};
     
 } // < end namespace.
 
