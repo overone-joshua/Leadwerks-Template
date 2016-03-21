@@ -57,6 +57,7 @@ namespace Entities
         static void OnMouseMove(Components::World& world, uint64_t entity, Event_MouseMove* pEvent)
         {
             auto res = Components::World::Get<T>(world, entity);
+            if (res.mouseMoveTriggers == nullptr) { return; }
 
             auto iter = res.mouseMoveTriggers->begin();
             while (iter != res.mouseMoveTriggers->end())
@@ -69,9 +70,74 @@ namespace Entities
             }
         }
 
+        static void OnMouseHit(Components::World& world, uint64_t entity, Event_MouseHit* pEvent)
+        {
+            auto res = Components::World::Get<T>(world, entity);
+            if (res.mouseHitTriggers == nullptr) { return; }
+
+            auto iter = res.mouseHitTriggers->begin();
+            while (iter != res.mouseHitTriggers->end())
+            {
+                auto trigger = (*iter);
+
+                trigger.callback.Invoke(world, res, pEvent);
+
+                ++iter;
+            }
+        }
+
+        static void OnMouseDown(Components::World& world, uint64_t entity, Event_MouseDown* pEvent)
+        {
+            auto res = Components::World::Get<T>(world, entity);
+            if (res.mouseDownTriggers == nullptr) { return; }
+
+            auto iter = res.mouseDownTriggers->begin();
+            while (iter != res.mouseDownTriggers->end())
+            {
+                auto trigger = (*iter);
+
+                trigger.callback.Invoke(world, res, pEvent);
+
+                ++iter;
+            }
+        }
+
+        static void OnMouseUp(Components::World& world, uint64_t entity, Event_MouseUp* pEvent)
+        {
+            auto res = Components::World::Get<T>(world, entity);
+            if (res.mouseUpTriggers == nullptr) { return; }
+
+            auto iter = res.mouseUpTriggers->begin();
+            while (iter != res.mouseUpTriggers->end())
+            {
+                auto trigger = (*iter);
+
+                trigger.callback.Invoke(world, res, pEvent);
+
+                ++iter;
+            }
+        }
+
+        static void OnKeyHit(Components::World& world, uint64_t entity, Event_KeyHit* pEvent)
+        {
+            auto res = Components::World::Get<T>(world, entity);
+            if (res.keyHitTriggers == nullptr) { return; }
+
+            auto iter = res.keyHitTriggers->begin();
+            while (iter != res.keyHitTriggers->end())
+            {
+                auto trigger = (*iter);
+
+                trigger.callback.Invoke(world, res, pEvent);
+
+                ++iter;
+            }
+        }
+
         static void OnKeyDown(Components::World& world, uint64_t entity, Event_KeyDown* pEvent)
         {
             auto res = Components::World::Get<T>(world, entity);
+            if (res.keyDownTriggers == nullptr) { return; }
 
             auto iter = res.keyDownTriggers->begin();
             while (iter != res.keyDownTriggers->end())
@@ -87,6 +153,7 @@ namespace Entities
         static void OnKeyUp(Components::World& world, uint64_t entity, Event_KeyUp* pEvent)
         {
             auto res = Components::World::Get<T>(world, entity);
+            if (res.keyUpTriggers == nullptr) { return; }
 
             auto iter = res.keyUpTriggers->begin();
             while (iter != res.keyUpTriggers->end())
@@ -97,7 +164,7 @@ namespace Entities
 
                 ++iter;
             }
-        }
+        }        
 
 	}; // < end class.
 
