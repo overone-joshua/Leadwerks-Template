@@ -30,7 +30,7 @@ namespace Components
 		std::string               cName;	/*!< std::string identifier. */
 
 		/** The HasName component constructor. */
-		HasName(std::string _cName = "") : cName(_cName) { }
+		explicit HasName(std::string _cName = "") : cName(_cName) { }
 
 	} HasName; // < and struct.
 

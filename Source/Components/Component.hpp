@@ -33,7 +33,7 @@ namespace Components
 		using HasName::HasName;
 
 		/** The Components constructor. */
-		Component(std::string cName = "") : HasName(cName) { }
+		explicit Component(std::string cName = "") : HasName(cName) { }
 
 	} Component; // < end struct.
 

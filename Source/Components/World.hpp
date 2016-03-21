@@ -43,7 +43,7 @@ namespace Components
 
 	public:
 
-                                                          World(std::string cName = "");                                          /** The World component constructor. */
+                                                          explicit World(std::string cName = "");                                          /** The World component constructor. */
                                                           ~World(void);                                                           /** The World component destructor. */
 		
 		uint64_t                                          CreateEntity(World* pWorld);                                            /** Creates a new entity contained within the given World. */
