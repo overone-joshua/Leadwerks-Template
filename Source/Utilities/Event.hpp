@@ -17,7 +17,7 @@ typedef const char* EventType;
 /* Base Event */
 class BaseEventData : public ParameterMap {
 public:
-	BaseEventData(const float nTimeStamp = 0.0f)
+	explicit BaseEventData(const float nTimeStamp = 0.0f)
 		: m_nTimeStamp(nTimeStamp) { }
 	
 	virtual const char*	ObjectType() = 0;
@@ -145,6 +145,46 @@ public:
 		if (val != this->GetIntMap().end()) { return val->second; }
 		else { return -1; }
 	}
+};
+
+/* Mouse Move Event */
+class Event_MouseMove: public BaseEventData {
+    CLASS_TYPE(Event_MouseMove);
+
+public:
+    Event_MouseMove() : BaseEventData()
+    {
+        Set("vOriginal", Leadwerks::Vec3(0.0f, 0.0f, 0.0f));
+        Set("vCurrent", Leadwerks::Vec3(0.0f, 0.0f, 0.0f));
+        Set("vDelta", Leadwerks::Vec3(0.0f, 0.0f, 0.0f));        
+    }
+
+    Leadwerks::Vec3 Original()
+    {
+        auto val = this->GetVec3("vOriginal");
+        if (val != this->GetVec3Map().end()) { return val->second; }
+        else { throw; } // < Unable to access value;
+    }
+
+    Leadwerks::Vec3 Current()
+    {
+        auto val = this->GetVec3("vCurrent");
+        if (val != this->GetVec3Map().end()) { return val->second; }
+        else { throw; } // < Unable to access value;
+    }
+
+    Leadwerks::Vec3 Delta()
+    {
+        auto val = this->GetVec3("vDelta");
+        if (val != this->GetVec3Map().end()) { return val->second; }
+        else { throw; } // < Unable to access value;
+    }
+
+    int Key(void) {
+        auto val = this->GetInt("nKey");
+        if (val != this->GetIntMap().end()) { return val->second; }
+        else { return -1; }
+    }
 };
 
 /* Externals */
