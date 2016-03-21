@@ -20,7 +20,7 @@
 #include "Entities/Entities.hpp"
 #include "States/DefaultState.hpp"
 
-App::App(void) : m_pEventManager(nullptr), m_pInputManager(nullptr) { }
+App::App(void) : m_pEventManager(nullptr), m_pInputManager(nullptr), m_pStateManager(nullptr) { }
 
 App::~App(void) { }
 
@@ -85,16 +85,16 @@ void App::preUpdate(void)
 }
 
 bool App::Update(float dt) 
-{ 
-	// < Call EventManager's update. We allow it to process events 
-	// * for 200ms a frame.
-	if (m_pEventManager != nullptr) { m_pEventManager->Update(200); }
-	
+{ 		
 	// < Call the InputManager's update.
 	if (m_pInputManager != nullptr) { m_pInputManager->Update(dt); } 
 
 	// < Call the StateManager's Update.
 	if (m_pStateManager != nullptr) { m_pStateManager->Update(dt); }	
+
+    // < Call EventManager's update. We allow it to process events 
+    // * for 200ms a frame.
+    if (m_pEventManager != nullptr) { m_pEventManager->Update(200); }
 
 	return true; 
 
