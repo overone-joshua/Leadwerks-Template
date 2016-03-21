@@ -104,11 +104,11 @@ void AppController::ReleaseCamera(void) {
 
 AppController::AppController(App *pApp)
     : m_pWindow(nullptr), m_pContext(nullptr), m_pWorld(nullptr), m_pCamera(nullptr), m_pApp(pApp)
-    , m_bExitAppThisFrame(false), m_windowFlags(0), m_renderingContextFlags(0) { }
+    , m_bExitAppThisFrame(false), m_windowFlags(0), m_renderingContextFlags(0), m_pContainer(nullptr) { }
 
 AppController::~AppController(void) { Shutdown(); }
 
-const bool AppController::Initialize(const std::string appName, unsigned int ulX, unsigned int ulY, unsigned int nWidth, unsigned int nHeight, int windowFlags, int contextFlags) {
+const bool AppController::Initialize(const std::string& appName, unsigned int ulX, unsigned int ulY, unsigned int nWidth, unsigned int nHeight, int windowFlags, int contextFlags) {
 
 	m_appName = appName;	
 

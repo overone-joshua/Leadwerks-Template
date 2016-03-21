@@ -37,7 +37,7 @@ class CameraHandle;
 
 class AppController {
 public:
-                            		AppController                 (App* pApp);                // < Constructor.
+                            		explicit AppController                 (App* pApp);                // < Constructor.
                             		~AppController                (void);                     // < Destructor.
 
     const std::string       		getAppName              (void) const;               // < Gets the describing name of this application.
@@ -55,7 +55,7 @@ public:
 
     const bool              		isFullScreen            (void) const;               // < Indicates whether the application is currently in full-screen mode.
 
-	const bool              		Initialize(const std::string appName, unsigned int ulX, unsigned int ulY	// < Performs bootstrapping of application.
+	const bool              		Initialize(const std::string& appName, unsigned int ulX, unsigned int ulY	// < Performs bootstrapping of application.
 										, unsigned int nWidth, unsigned int nHeight, int windowFlags
 										, int contextFlags);
     void                    		Shutdown                (void);                     // < Performs safe shutdown of application.
