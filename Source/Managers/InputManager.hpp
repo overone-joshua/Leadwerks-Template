@@ -48,14 +48,19 @@ public:
 
 	float						PosX();											// Gets the current x-position of the mouse pointer.
 	float						PosY();											// Gets the current y-position of the mouse pointer.
-	float						OldPosX();										// Gets the x-position of the mouse pointer, last frame.
+    float                       PosZ();
+
+    float						OldPosX();										// Gets the x-position of the mouse pointer, last frame.
 	float						OldPosY();										// Gets the y-position of the mouse pointer, last frame.
+    float                       OldPosZ();
 
 	float						DeltaX();										// Gets the change in x-position between the last frame, and the current frame.
 	float						DeltaY();										// Gets the change in y-position between the last frame, and the current frame.
+    float                       DeltaZ();
 
 	float						CenterX();										// Gets the center x-position of the window.
 	float						CenterY();										// Gets the center y-position of the window.
+    float                       CenterZ();
 
 	void						ToggleMouseCenter();							// Toggles between clamping the mouse pointer to the center of the window.
 	void						CenterMouse();

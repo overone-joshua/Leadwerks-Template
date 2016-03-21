@@ -25,6 +25,8 @@ StateManager::~StateManager(void) {
 
 	RemoveAllStates();
 
+    m_pEventManager->Unbind<StateManager, &StateManager::OnMouseMove>(this, Event_MouseMove::ClassType());
+
 	m_pEventManager->Unbind<StateManager, &StateManager::OnMouseDown>(this, Event_MouseDown::ClassType());
 	m_pEventManager->Unbind<StateManager, &StateManager::OnMouseUp>(this, Event_MouseUp::ClassType());
 	m_pEventManager->Unbind<StateManager, &StateManager::OnMouseHit>(this, Event_MouseHit::ClassType());
@@ -38,6 +40,8 @@ StateManager::~StateManager(void) {
 
 void StateManager::Configure(Container* pContainer)
 {
+    m_pEventManager->Bind<StateManager, &StateManager::OnMouseMove>(this, Event_MouseMove::ClassType());
+
 	m_pEventManager->Bind<StateManager, &StateManager::OnMouseDown>(this, Event_MouseDown::ClassType());
 	m_pEventManager->Bind<StateManager, &StateManager::OnMouseUp>(this, Event_MouseUp::ClassType());
 	m_pEventManager->Bind<StateManager, &StateManager::OnMouseHit>(this, Event_MouseHit::ClassType());
@@ -144,10 +148,8 @@ void StateManager::CloseCurrentState(void) {
 
 bool StateManager::StateChangedThisFrame(void) { return this->m_bStateChangedThisFrame; }
 
-void StateManager::RemoveAllStates(void) {
-
-	StateManager::StateMap states;
-
+void StateManager::RemoveAllStates(void) 
+{	
 	if (this->m_pCurrentState != nullptr) { CloseCurrentState(); }
 
 	auto iter = this->m_states.begin();
@@ -161,6 +163,14 @@ void StateManager::RemoveAllStates(void) {
 
 	this->m_states.empty();
 
+}
+
+void StateManager::OnMouseMove(BaseEventData* pData)
+{
+    if (pData == nullptr || this->m_pCurrentState == nullptr) { return; }
+    auto event = static_cast<Event_MouseMove*>(pData);
+
+    this->m_pCurrentState->OnMouseMove(event);
 }
 
 void StateManager::OnMouseHit(BaseEventData* pData) 

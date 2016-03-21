@@ -47,6 +47,8 @@ public:
 	virtual void postDraw(void) { }
 	virtual void Draw(void) { }
 
+    virtual void OnMouseMove(Event_MouseMove* pData) {}
+
 	virtual void OnMouseHit(Event_MouseHit* pData) {}
 	virtual void OnMouseDown(Event_MouseDown* pData) {}
 	virtual void OnMouseUp(Event_MouseUp* pData) {}

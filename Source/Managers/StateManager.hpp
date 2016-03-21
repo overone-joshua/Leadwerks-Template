@@ -102,6 +102,8 @@ protected:
 	
 	template <typename T> StateMap::iterator   FetchStateInternal(void);
 
+    void                                        OnMouseMove(BaseEventData* pData);
+
 	void                                       OnMouseHit(BaseEventData* pData);
 	void                                       OnMouseDown(BaseEventData* pData);
 	void                                       OnMouseUp(BaseEventData* pData);

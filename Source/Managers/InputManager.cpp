@@ -15,6 +15,10 @@ float InputManager::PosY() {
 	return this->GetMousePosition().y;
 }
 
+float InputManager::PosZ() {
+    return this->GetMousePosition().z;
+}
+
 float InputManager::OldPosX() {
 	auto val = this->GetFloat("oldMouseX");
 	if (val != this->GetFloatMap().end()) { return val->second; }
@@ -25,6 +29,12 @@ float InputManager::OldPosY() {
 	auto val = this->GetFloat("oldMouseY");
 	if (val != this->GetFloatMap().end()) { return val->second; }
 	else { return this->GetMousePosition().y; }
+}
+
+float InputManager::OldPosZ() {
+    auto val = this->GetFloat("oldMouseZ");
+    if (val != this->GetFloatMap().end()) { return val->second; }
+    else { return this->GetMousePosition().y; }
 }
 
 float InputManager::DeltaX() {
@@ -39,6 +49,12 @@ float InputManager::DeltaY() {
 	else { return 0.0f; }
 }
 
+float InputManager::DeltaZ() {
+    auto val = this->GetFloat("deltaZ");
+    if (val != this->GetFloatMap().end()) { return val->second; }
+    else { return 0.0f; }
+}
+
 float InputManager::CenterX() {
 	auto val = this->GetFloat("centerX");
 	if (val != this->GetFloatMap().end()) { return val->second; }
@@ -49,6 +65,12 @@ float InputManager::CenterY() {
 	auto val = this->GetFloat("centerY");
 	if (val != this->GetFloatMap().end()) { return val->second; }
 	else { return this->GetWindowCenter().y; }
+}
+
+float InputManager::CenterZ() {
+    auto val = this->GetFloat("centerZ");
+    if (val != this->GetFloatMap().end()) { return val->second; }
+    else { return this->GetWindowCenter().y; }
 }
 
 void InputManager::ToggleMouseCenter() {
@@ -119,10 +141,30 @@ void InputManager::Initialize(Leadwerks::Window* pWindow, Leadwerks::Context* pC
 	/* Register input-properties */
 	Set("currMouseX", this->GetMousePosition().x)->
 		Set("currMouseY", this->GetMousePosition().y)->
+        Set("currMouseZ", this->GetMousePosition().z)->
 		Set("oldMouseX", this->GetMousePosition().x)->
 		Set("oldMouseY", this->GetMousePosition().y)->
+        Set("oldMouseZ", this->GetMousePosition().z)->
 		Set("deltaX", 0.0f)->
-		Set("deltaY", 0.0f);
+		Set("deltaY", 0.0f)->
+        Set("deltaZ", 0.0f);
+
+    unsigned index = 0;
+    while (index < 256) {
+        
+        m_currentKeyboardPressedState[index] = false;
+        m_currentKeyboardState[index] = false;
+        m_previousKeyboardState[index] = false;
+        
+        if (index < 6) 
+        {
+            m_currentMousePressedState[index] = false;
+            m_currentMouseState[index] = false;
+            m_previousMouseState[index] = false;
+        }
+
+        index += 1;
+    }
 
 	this->Update(1.0f);
 }
@@ -132,19 +174,23 @@ void InputManager::Update(float deltaTime) {
 
 	this->Set("currMouseX", this->PosX());
 	this->Set("currMouseY", this->PosY());
+    this->Set("currMouseZ", this->PosZ());
 
 	float deltaX = this->PosX() - this->OldPosX();
 	float deltaY = this->PosY() - this->OldPosY();
+    float deltaZ = this->PosZ() - this->OldPosZ();
 
 	this->Set("deltaX", deltaX);
 	this->Set("deltaY", deltaY);
-	if (this->DeltaX() == 0.0f && this->DeltaY() == 0.0f) { return; }
+    this->Set("deltaZ", deltaZ);
+	if (this->DeltaX() == 0.0f && this->DeltaY() == 0.0f && this->DeltaZ() == 0.0f) { return; }
 
 	if (this->m_bCenterMouse) { this->CenterMouse(); }
 	else { this->UpdateMousePosition(); }
 
 	this->Set("oldMouseX", PosX());
 	this->Set("oldMouseY", PosY());
+    this->Set("oldMouseZ", PosZ());
 }
 
 void InputManager::CheckMouseInput(int button) {
@@ -255,6 +301,8 @@ void InputManager::CheckKeyboardInput(int key) {
 }
 
 void InputManager::RegisterInputEvents(void) {
+    REGISTER_EVENT((new FactoryMaker<Event_MouseMove, BaseEventData>));
+
 	REGISTER_EVENT((new FactoryMaker<Event_MouseHit, BaseEventData>));
 	REGISTER_EVENT((new FactoryMaker<Event_MouseDown, BaseEventData>));
 	REGISTER_EVENT((new FactoryMaker<Event_MouseUp, BaseEventData>));
@@ -265,6 +313,8 @@ void InputManager::RegisterInputEvents(void) {
 }
 
 void InputManager::UnRegisterInputEvents(void) {	
+    gEventFactory.Unregister("Event_MouseMove");
+
 	gEventFactory.Unregister("Event_MouseHit");
 	gEventFactory.Unregister("Event_MouseDown");
 	gEventFactory.Unregister("Event_MouseUp");
@@ -275,6 +325,24 @@ void InputManager::UnRegisterInputEvents(void) {
 }
 
 void InputManager::GenerateInputEvents(void) {
+    auto dX = DeltaX();
+    auto dY = DeltaY();
+    auto dZ = DeltaZ();
+       
+    if (dX != 0 || dY != 0)
+    {
+        /* Create key-up Event. */
+        auto mouseMove = (gEventFactory.Create("Event_MouseMove"));
+
+        /* Set the required values for the event. */
+        mouseMove->Set("vOriginal", Leadwerks::Vec3(OldPosX(), OldPosY(), OldPosZ()));
+        mouseMove->Set("vCurrent", Leadwerks::Vec3(PosX(), PosY(), PosZ()));
+        mouseMove->Set("vDelta", Leadwerks::Vec3(dX, dY, dZ));
+
+        /* Queue the event for execution. */
+        m_pEventManager->QueueEvent(*mouseMove);
+    }
+
 	unsigned index = 0;
 	while (index < 256) {
 		/* Keyboard has 256 keys so for each iteration, check
@@ -287,5 +355,5 @@ void InputManager::GenerateInputEvents(void) {
 		if (index < 6) { CheckMouseInput(index); }
 
 		index += 1;
-	}	
+	}	        
 }
