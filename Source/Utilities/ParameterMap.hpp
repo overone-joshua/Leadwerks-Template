@@ -57,11 +57,11 @@ public:
 	ParameterMap* Set(std::string key, std::string val) { if (key != "") { stringMap[key] = val; } return this; }		
 	ParameterMap* Set(std::string key, void* val) { if (key != "") { dataMap[key] = val; return this; } }
 
-	void RemoveInt(std::string key) { if (key != "") { if (intMap.find(key) != intMap.end()) { intMap.erase(key); } } }
-	void RemoveFloat(std::string key) { if (key != "") { if (floatMap.find(key) != floatMap.end()) { floatMap.erase(key); } } }
-	void RemoveVec3(std::string key) { if (key != "") { if (vec3Map.find(key) != vec3Map.end()) { vec3Map.erase(key); } } }
-	void RemoveString(std::string key) { if (key != "") { if (stringMap.find(key) != stringMap.end()) { stringMap.erase(key); } } }		
-	void RemoveGameObject(std::string key) { if (key != "") { if (dataMap.find(key) != dataMap.end()) { dataMap.erase(key); } } }
+    void RemoveInt(std::string key) { if (key != "") { intMap.erase(key); } }
+	void RemoveFloat(std::string key) { if (key != "") {floatMap.erase(key); } }
+	void RemoveVec3(std::string key) { if (key != "") { vec3Map.erase(key); } }
+	void RemoveString(std::string key) { if (key != "") { stringMap.erase(key); } }		
+	void RemoveGameObject(std::string key) { if (key != "") { dataMap.erase(key); } }
 
 protected:
 	
