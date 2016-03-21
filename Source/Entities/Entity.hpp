@@ -19,12 +19,29 @@
     
 #pragma once
 #include "Leadwerks.h"
+#include "../Utilities/Delegate.hpp"
+#include "../Utilities/Event.hpp"
+
+#include "../Mapping/TypeConverter.hpp"
+
+#include "../Components/Component.hpp"
+#include "../Components/World.hpp"
 
 namespace Entities
 {
+    template <typename T>
     class Entity : public Leadwerks::Object
-    {
+    {            
+    public:		
+
+        static void Load(Components::World& world);
         
+        static void LoadAll(Components::World& world);
+        
+        static void Close(Components::World& world);
+        
+        static void CloseAll(Components::World& world);                
+
     }; // < end class.
     
 } // < end namespace.
