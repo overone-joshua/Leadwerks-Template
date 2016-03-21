@@ -479,7 +479,7 @@ void IsoSurface<T>::GenerateLeadwerksSurface(Leadwerks::Model& pModel) {
 
 		pSurface->AddTriangle(v0, v1, v2);
 
-		iter++;
+		++iter;
 	}
 
 	pSurface->Update();

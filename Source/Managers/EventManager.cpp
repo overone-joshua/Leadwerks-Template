@@ -44,7 +44,7 @@ bool EventManager::Update(unsigned long nMaxMillis) {
 				if (&it != nullptr) {
 					it->Invoke(pEvent);					
 				}
-				it++;
+				++it;
 			}
 		}
 
@@ -84,7 +84,7 @@ bool EventManager::AddListener(const EventListenerDelegate& eventDelegate, const
 		if (*it == eventDelegate) {
 			return false;
 		}
-		it++;
+		++it;
 	}
 
 	eventListenerList.push_back(eventDelegate);
@@ -104,7 +104,7 @@ bool EventManager::RemoveListener(const EventListenerDelegate& eventDelegate, co
 				success = true;
 				break;
 			}
-			it++;
+			++it;
 		}
 	}
 
@@ -123,7 +123,7 @@ bool EventManager::TriggerEvent(BaseEventData& pEvent) {
 				it->Invoke(&pEvent);
 				processed = true;
 			}
-			it++;
+			++it;
 		}
 	}
 
@@ -159,7 +159,7 @@ bool EventManager::AbortEvent(const EventType& type, bool bAll) {
 				if (!bAll) { break; }
 			}
 
-			it++;
+			++it;
 		}
 	}
 
