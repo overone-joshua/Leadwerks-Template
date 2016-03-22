@@ -19,6 +19,7 @@
     
 #pragma once
 #include "Leadwerks.h"
+#include "../Common.hpp"
 #include "../Utilities/Delegate.hpp"
 #include "../Utilities/Event.hpp"
 
@@ -34,13 +35,18 @@ namespace Entities
     {            
     public:		
 
-        static void Load(Components::World& world);
+        template <typename... ARGS> 
+        static void Create(Components::World& world, ARGS... args);
+
+        template <typename... ARGS>
+        static void Load(Components::World& world, uint64_t entity, ARGS... args);
         
         static void LoadAll(Components::World& world);
         
-        static void Close(Components::World& world);
+        template <typename... ARGS>
+        static void Close(Components::World& world, uint64_t entity, ARGS... args);
         
-        static void CloseAll(Components::World& world);                
+        static void CloseAll(Components::World& world);                                        
 
     }; // < end class.
     
