@@ -13,7 +13,7 @@ namespace Entities
         auto hndl = TypeConverter::Convert<LuaTable, Camera>(table);                
 
 		auto entity = world.CreateEntity(&world);
-		world.Get(entity) = Entities::MASK_CAMERA_FREE;
+		world.Get(entity) = Entities::MASK_CAMERA;
 
         Components::World::Add(world, entity, hndl);
         
@@ -95,18 +95,13 @@ Entities::Camera Components::World::Get<Entities::Camera>(Components::World& wor
     Entities::Camera hndl;
     
 	static_cast<Entities::Input<Entities::Camera>&>(hndl) = Components::World::Get<Entities::Input<Entities::Camera>>(world, entity);
-
-    auto cameraComponents = world.GetComponents<Components::Camera>(&world, entity);
-    auto inputComponents = world.GetComponents<Components::Input<Entities::Camera>>(&world, entity);
-    auto placementComponents = world.GetComponents<Components::Placement>(&world, entity);
-    auto velocityComponents = world.GetComponents<Components::Velocity>(&world, entity);
     
-    hndl.inputComponents = inputComponents;
-    hndl.placementComponents = placementComponents;
-    hndl.velocityComponents = velocityComponents;
-    hndl.cameraHandles = cameraComponents;	
+	hndl.inputComponents = world.GetComponents<Components::Input<Entities::Camera>>(&world, entity);
+	hndl.placementComponents = world.GetComponents<Components::Placement>(&world, entity);
+	hndl.velocityComponents = world.GetComponents<Components::Velocity>(&world, entity);
+	hndl.cameraHandles = world.GetComponents<Components::Camera>(&world, entity);
 
-    hndl.component = Components::Component(inputComponents->front().cName);
+    hndl.component = Components::Component(hndl.inputComponents->front().cName);
     hndl.component.nId = entity;
 
     return hndl;
@@ -117,7 +112,7 @@ std::vector<Entities::Camera> Components::World::GetAll<Entities::Camera>(Compon
 {    
     std::vector<Entities::Camera> results;
 
-    auto& entities = world.GetEntities(&world, Entities::MASK_CAMERA_FREE);
+    auto entities = world.GetEntities(&world, Entities::MASK_CAMERA);
 
     auto iter = entities.begin();
     while (iter != entities.end())

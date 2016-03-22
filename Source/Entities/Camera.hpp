@@ -47,7 +47,7 @@
 
 namespace Entities
 {        
-    const uint64_t MASK_CAMERA_FREE = COMPONENT_INPUT | COMPONENT_PLACEMENT | COMPONENT_VELOCITY | COMPONENT_TRIGGER;        
+    const uint64_t MASK_CAMERA = COMPONENT_INPUT | COMPONENT_PLACEMENT | COMPONENT_VELOCITY | COMPONENT_TRIGGER;        
 
     class Camera    : public Entities::Entity<Camera>, public Entities::Input<Camera>
     {
@@ -85,6 +85,7 @@ template <> Entities::Camera TypeConverter::Convert<LuaTable, Entities::Camera>(
 template <> void Components::World::Add<Entities::Camera>(Components::World& world, uint64_t entity, Entities::Camera& source);
 
 template <> Entities::Camera Components::World::Get<Entities::Camera>(Components::World& world, uint64_t);
+template <> Entities::Input<Entities::Camera> Components::World::Get<Entities::Input<Entities::Camera>>(Components::World& world, uint64_t entity);
 
 template <> std::vector<Entities::Camera> Components::World::GetAll<Entities::Camera>(Components::World& world);
 
