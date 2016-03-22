@@ -37,44 +37,37 @@
 #include "../Components/Velocity.hpp"
 
 #include "Entity.hpp"
+#include "Input.hpp"
 
 #include <string>
 #include <vector>
 
 namespace Entities
 {
-    const uint64_t MASK_ACTOR = COMPONENT_APPEARANCE | COMPONENT_PLACEMENT | COMPONENT_INPUT | COMPONENT_VELOCITY;           
+    const uint64_t MASK_ACTOR = COMPONENT_APPEARANCE | COMPONENT_INPUT | COMPONENT_PLACEMENT | COMPONENT_TRIGGER | COMPONENT_VELOCITY;
 
-    class Actor : public Entity<Actor>
+    class Actor : public Entity<Actor>, Input<Actor>
     {            
     public:
+		Actor(void);
 
-        Components::Component                      component;
-        std::vector<Components::Appearance>        appearanceComponents;
-        std::vector<Components::Input<Actor>>       inputComponents;
-        std::vector<Components::Placement>         placementComponents;
-        std::vector<Components::Velocity>          velocityComponents;
-        std::vector<Leadwerks::Model*>             models;
+        Components::Component                   component;
+        std::vector<Components::Appearance>*    appearanceComponents;
+        std::vector<Components::Input<Actor>>*  inputComponents;
+        std::vector<Components::Placement>*     placementComponents;
+        std::vector<Components::Velocity>*      velocityComponents;
+        std::vector<Leadwerks::Model*>          models;
+
+		Components::Appearance		appearance;
+		Components::Input<Actor>	input;
+		Components::Placement		placement;
+		Components::Velocity		velocity;		
 
         static uint64_t Create(Components::World& world, std::string cScriptPath = "");
         
-        static void Load(Components::World& world, uint64_t entity);
-        static void LoadAll(Components::World& world);
+        static void Load(Components::World& world, uint64_t entity);        
 
-        static void Close(Components::World& world, uint64_t entity);
-        static void CloseAll(Components::World& world);
-
-        static void Update(InputManager* pInputMgr, Components::World& world, uint64_t entity, float dt);
-        
-        static void OnKeyDown(Components::World& world, uint64_t entity, Event_KeyDown* pEvent);
-
-        static void OnKeyUp(Components::World& world, uint64_t entity, Event_KeyUp* pEvent);
-
-    protected:
-
-        void OnKeyDown(Components::World& world, Event_KeyDown* pData);        
-
-        void OnKeyUp(Components::World& world, Event_KeyUp* pData);
+        static void Close(Components::World& world, uint64_t entity);        
 
     }; // < end class.
     
@@ -85,6 +78,7 @@ template <> Entities::Actor TypeConverter::Convert<LuaTable, Entities::Actor>(Lu
 template <> void Components::World::Add<Entities::Actor>(Components::World& world, uint64_t entity, Entities::Actor& source);
 
 template <> Entities::Actor Components::World::Get<Entities::Actor>(Components::World& world, uint64_t entity);
+template <> Entities::Input<Entities::Actor> Components::World::Get<Entities::Input<Entities::Actor>>(Components::World& world, uint64_t entity);
 
 template <> std::vector<Entities::Actor> Components::World::GetAll<Entities::Actor>(Components::World& world);
 

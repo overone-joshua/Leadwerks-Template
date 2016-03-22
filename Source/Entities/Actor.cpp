@@ -3,6 +3,9 @@
 
 namespace Entities
 {
+	Actor::Actor(void)
+		: inputComponents(nullptr), placementComponents(nullptr), velocityComponents(nullptr)
+		, appearanceComponents(nullptr) { }
 
     uint64_t Actor::Create(Components::World& world, std::string cScriptPath)
     {
@@ -13,7 +16,10 @@ namespace Entities
         Actor hndl = TypeConverter::Convert<LuaTable, Actor>(table);
 
         // < Add the entity to the world.
-        auto entity = Components::World::Add(world, hndl);
+		auto entity = world.CreateEntity(&world);
+		world.Get(entity) = Entities::MASK_ACTOR;
+
+        Components::World::Add(world, entity, hndl);
 
         return entity;
     }
@@ -22,73 +28,47 @@ namespace Entities
     {
         auto res = Components::World::Get<Actor>(world, entity);
 
-        // < Create the actor's model. 
-        res.models.push_back(Leadwerks::Model::Load(res.appearanceComponents.front().cModelPath));
-        res.models.front()->SetScale(res.placementComponents.front().vSca);
-        res.models.front()->SetRotation(res.placementComponents.front().vRot, false);
-        res.models.front()->SetPosition(res.placementComponents.front().vPos, true);
-    }
+		auto iter = res.appearanceComponents->begin();
+		while (iter != res.appearanceComponents->end())
+		{
+			auto path = (*iter).cModelPath;
+			auto vPos = res.placementComponents->front().vPos;
+			auto vRot = res.placementComponents->front().vRot;
+			auto vSca = res.placementComponents->front().vSca;
 
-    void Actor::LoadAll(Components::World& world)
-    {
-        auto entities = Components::World::GetAll<Actor>(world);
-        auto iter = entities.begin();
-        while (iter != entities.end())
-        {
-            auto hndl = (*iter).models;
-            // < Perform initialization here.
-            // * ---                                        
+			// < Create the actor's model. 
+			res.models.push_back(Leadwerks::Model::Load(path));
+			res.models.back()->SetScale(vSca);
+			res.models.back()->SetRotation(vRot, false);
+			res.models.back()->SetPosition(vPos, true);
 
-            // < Create the actor's model. 
-            hndl.push_back(Leadwerks::Model::Load((*iter).appearanceComponents.front().cModelPath));
-            hndl.front()->SetScale((*iter).placementComponents.front().vSca);
-            hndl.front()->SetRotation((*iter).placementComponents.front().vRot, false);
-            hndl.front()->SetPosition((*iter).placementComponents.front().vPos, true);
-
-            // < ---
-
-            iter++;
-
-        }
-    }
+			++iter;
+		}                
+    }    
 
     void Actor::Close(Components::World& world, uint64_t entity)
     {
-        
-    }
+		auto res = Components::World::Get<Actor>(world, entity);
+		auto iter = res.appearanceComponents->begin();
+		while (iter != res.appearanceComponents->end())
+		{
 
-    void Actor::CloseAll(Components::World& world)
-    {
-        auto entities = Components::World::GetAll<Actor>(world);
-        auto iter = entities.begin();
-        while (iter != entities.end())
-        {
-            auto hndl = (*iter).models;
+			auto* model = (*iter).pModel;
 
-            auto it = hndl.begin();
-            while (it != hndl.end())
-            {
-                if ((*it) != nullptr)
-                {
-                    auto model = (*it);
-                    SAFE_RELEASE(model);
-                    SAFE_DELETE(model);
-                }
+			if (model != nullptr)
+			{
+				SAFE_RELEASE(model);
+				SAFE_DELETE(model);
+			}
 
-                it++;
-            }
-            hndl.clear();
+			if (iter != res.appearanceComponents->end()) 
+			{
+				iter = res.appearanceComponents->erase(iter);
+			}
 
-            iter++;
-
-        }
-        entities.clear();
-    }
-
-    void Actor::Update(InputManager* pInputMgr, Components::World& world, uint64_t entity, float dt)
-    {
-        auto entities = Components::World::GetAll<Actor>(world);
-    }
+			++iter;
+		}
+    }    
 
 } // < end namespace.
 
@@ -108,47 +88,50 @@ template <> Entities::Actor TypeConverter::Convert<LuaTable, Entities::Actor>(Lu
 	auto vVel = Leadwerks::Vec3(0.0f, 0.0f, 0.0f);
 
 	hndl.component = Components::Component(name);
-	hndl.appearanceComponents.push_back(Components::Appearance(path, name));
-	hndl.inputComponents.push_back(Components::Input<Entities::Actor>(vMovSpeed, vRotSpeed, name));
-	hndl.placementComponents.push_back(Components::Placement(vPos, vRot, vSca, name));
-	hndl.velocityComponents.push_back(Components::Velocity(vVel, name));
+	hndl.appearance = Components::Appearance(path, name);
+	hndl.input = Components::Input<Entities::Actor>(vMovSpeed, vRotSpeed, name);
+	hndl.placement = Components::Placement(vPos, vRot, vSca, name);
+	hndl.velocity = Components::Velocity(vVel, name);
 
 	return hndl;
 }
 
 // < Add our actor handle object to our world as its individual components.
-template <> uint64_t Components::World::Add<Entities::Actor>(Components::World& world, Entities::Actor& source)
+template <> void Components::World::Add<Entities::Actor>(Components::World& world, uint64_t entity, Entities::Actor& source)
 {    
-    // < Create a new entity of type Actor.
-    auto entity = world.CreateEntity(&world);
-    world.Get(entity) = Entities::MASK_ACTOR;
-
     // < Create the components required to form an Actor.                        
-    world.AddComponent(&world, entity, source.appearanceComponents.front());
-    world.AddComponent(&world, entity, source.inputComponents.front());
-    world.AddComponent(&world, entity, source.placementComponents.front());
-    world.AddComponent(&world, entity, source.velocityComponents.front());
-
-    return entity;
+    world.AddComponent(&world, entity, source.appearance);
+    world.AddComponent(&world, entity, source.input);
+    world.AddComponent(&world, entity, source.placement);
+    world.AddComponent(&world, entity, source.velocity);    
 }
 
-// < Get a reference to all our entities components by getting the equivilent
-// * Actor from the world.
+template <>
+Entities::Input<Entities::Actor> Components::World::Get<Entities::Input<Entities::Actor>>(Components::World& world, uint64_t entity)
+{
+	Entities::Input<Entities::Actor> hndl;
+
+	hndl.mouseMoveTriggers = world.Fetch<Components::MouseMoveTrigger<Entities::Actor>>(&world, entity);
+	hndl.mouseHitTriggers = world.Fetch<Components::MouseHitTrigger<Entities::Actor>>(&world, entity);
+	hndl.mouseDownTriggers = world.Fetch<Components::MouseDownTrigger<Entities::Actor>>(&world, entity);
+	hndl.mouseUpTriggers = world.Fetch<Components::MouseUpTrigger<Entities::Actor>>(&world, entity);
+	hndl.keyHitTriggers = world.Fetch<Components::KeyHitTrigger<Entities::Actor>>(&world, entity);
+	hndl.keyDownTriggers = world.Fetch<Components::KeyDownTrigger<Entities::Actor>>(&world, entity);
+	hndl.keyUpTriggers = world.Fetch<Components::KeyUpTrigger<Entities::Actor>>(&world, entity);
+
+	return hndl;
+}
+
 template <> Entities::Actor Components::World::Get<Entities::Actor>(Components::World& world, uint64_t entity)
 {    
     Entities::Actor hndl;
 
-    auto appearanceComponents = world.GetComponents<Components::Appearance>(&world, entity);
-    auto inputComponents = world.GetComponents<Components::Input<Entities::Actor>>(&world, entity);
-    auto placementComponents = world.GetComponents<Components::Placement>(&world, entity);
-    auto velocityComponents = world.GetComponents<Components::Velocity>(&world, entity);
-    
-    hndl.appearanceComponents = *appearanceComponents;
-    hndl.inputComponents = *inputComponents;
-    hndl.placementComponents = *placementComponents;
-    hndl.velocityComponents = *velocityComponents;
+    hndl.appearanceComponents = world.Fetch<Components::Appearance>(&world, entity);
+    hndl.inputComponents = world.Fetch<Components::Input<Entities::Actor>>(&world, entity);
+    hndl.placementComponents = world.Fetch<Components::Placement>(&world, entity);
+    hndl.velocityComponents = world.Fetch<Components::Velocity>(&world, entity);   
 
-    hndl.component = Components::Component(appearanceComponents->front().cName);
+    hndl.component = Components::Component(hndl.appearanceComponents->front().cName);
     hndl.component.nId = entity;
 
     return hndl;
@@ -165,7 +148,7 @@ template <> std::vector<Entities::Actor> Components::World::GetAll<Entities::Act
     while (iter != entities.end())
     {
         results.push_back(Components::World::Get<Entities::Actor>(world, (*iter)));
-        iter++;
+        ++iter;
     }
 
     return results;
