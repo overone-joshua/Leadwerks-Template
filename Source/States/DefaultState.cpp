@@ -26,7 +26,7 @@ void DefaultState::Load(void)
     // < Create our components.
     m_player = Entities::Actor::Create(*m_pWorld, "./Scripts/Player.lua");
     m_camera = Entities::SpectatorCamera::Create(*m_pWorld, "./Scripts/DefaultCamera.lua");
-	
+
     // < Load all components.
     Entities::Actor::Load(*m_pWorld, m_player);
     Entities::Camera::Load(*m_pWorld, m_camera, m_pCameraHndl);               
@@ -63,18 +63,18 @@ bool DefaultState::Update(float dt)
 
 void DefaultState::OnKeyDown(Event_KeyDown* pEvent)
 {    
-    // < Propogate our key-down event to our entities.    
-	Entities::Input<Entities::Camera>::OnKeyDown(*m_pWorld, m_camera, pEvent);    
+    // < Propogate our key-down event to our entities. 
+    Entities::Camera::TriggerKeyDown(*m_pWorld, m_camera, pEvent);	
 }
 
 void DefaultState::OnKeyUp(Event_KeyUp* pEvent)
 {        
     // < propogate our key-up events to our entities.     
-	Entities::Input<Entities::Camera>::OnKeyUp(*m_pWorld, m_camera, pEvent);
+    Entities::Camera::TriggerKeyUp(*m_pWorld, m_camera, pEvent);	
 }
 
 void DefaultState::OnMouseMove(Event_MouseMove* pEvent)
 {
     // < Propogate our mouse-move event to our entities.   
-	Entities::Input<Entities::Camera>::OnMouseMove(*m_pWorld, m_camera, pEvent);
+    Entities::Camera::TriggerMouseMove(*m_pWorld, m_camera, pEvent);	
 }
