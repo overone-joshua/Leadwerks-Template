@@ -40,7 +40,8 @@ namespace Entities
 
 } // < end namespace.
 
-template <> Entities::Camera TypeConverter::Convert<LuaTable, Entities::Camera>(LuaTable& source)
+template <> 
+Entities::Camera TypeConverter::Convert<LuaTable, Entities::Camera>(LuaTable& source)
 {
     Entities::Camera hndl;
 
@@ -62,9 +63,9 @@ template <> Entities::Camera TypeConverter::Convert<LuaTable, Entities::Camera>(
     return hndl;
 }
 
-template <> void Components::World::Add<Entities::Camera>(Components::World& world, uint64_t entity, Entities::Camera& source)
-{    
-    
+template <> 
+void Components::World::Add<Entities::Camera>(Components::World& world, uint64_t entity, Entities::Camera& source)
+{        
     // < Create the components required to form an Actor.       
     world.AddComponent(&world, entity, source.cameraHandle);    
     world.AddComponent(&world, entity, source.placement);
@@ -72,7 +73,8 @@ template <> void Components::World::Add<Entities::Camera>(Components::World& wor
     world.AddComponent(&world, entity, source.velocity);	
 }
 
-template <> Entities::Input<Entities::Camera> Components::World::Get<Entities::Input<Entities::Camera>>(Components::World& world, uint64_t entity)
+template <> 
+Entities::Input<Entities::Camera> Components::World::Get<Entities::Input<Entities::Camera>>(Components::World& world, uint64_t entity)
 {
 	Entities::Input<Entities::Camera> hndl;
 
@@ -87,7 +89,8 @@ template <> Entities::Input<Entities::Camera> Components::World::Get<Entities::I
 	return hndl;
 }
 
-template <> Entities::Camera Components::World::Get<Entities::Camera>(Components::World& world, uint64_t entity)
+template <> 
+Entities::Camera Components::World::Get<Entities::Camera>(Components::World& world, uint64_t entity)
 {    
     Entities::Camera hndl;
     
@@ -109,7 +112,8 @@ template <> Entities::Camera Components::World::Get<Entities::Camera>(Components
     return hndl;
 }
 
-template <> std::vector<Entities::Camera> Components::World::GetAll<Entities::Camera>(Components::World& world)
+template <> 
+std::vector<Entities::Camera> Components::World::GetAll<Entities::Camera>(Components::World& world)
 {    
     std::vector<Entities::Camera> results;
 
@@ -119,7 +123,7 @@ template <> std::vector<Entities::Camera> Components::World::GetAll<Entities::Ca
     while (iter != entities.end())
     {
         results.push_back(Components::World::Get<Entities::Camera>(world, (*iter)));
-        iter++;
+        ++iter;
     }
 
     return results;

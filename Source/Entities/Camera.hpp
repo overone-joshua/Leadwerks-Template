@@ -42,19 +42,14 @@
 #include "../Entities/Entity.hpp"
 #include "../Entities/Input.hpp"
 
-#include <exception>
 #include <string>
 #include <vector>
 
 namespace Entities
-{    
-    const uint64_t MASK_CAMERA_STATIC = COMPONENT_PLACEMENT;
-    const uint64_t MASK_CAMERA_DYNAMIC = COMPONENT_PLACEMENT | COMPONENT_VELOCITY;
-    const uint64_t MASK_CAMERA_FREE = COMPONENT_INPUT | COMPONENT_PLACEMENT | COMPONENT_VELOCITY;
+{        
+    const uint64_t MASK_CAMERA_FREE = COMPONENT_INPUT | COMPONENT_PLACEMENT | COMPONENT_VELOCITY | COMPONENT_TRIGGER;        
 
-    const uint64_t MASK_CAMERA_TOPDOWN = MASK_CAMERA_DYNAMIC | COMPONENT_RELATIONSHIP;    
-
-    class Camera : public Entities::Entity<Camera>, public Entities::Input<Camera>
+    class Camera    : public Entities::Entity<Camera>, public Entities::Input<Camera>
     {
 		CLASS_TYPE(Camera);
 
@@ -78,8 +73,6 @@ namespace Entities
         static void Load(Components::World& pWorld, uint64_t entity, CameraHandle* pCamHndl);        
 
         static void Close(Components::World& world, uint64_t entity);        
-
-        static void Update(InputManager* pInputMgr, Components::World& world, uint64_t entity, float deltaTime);        
 
     protected:        
 
