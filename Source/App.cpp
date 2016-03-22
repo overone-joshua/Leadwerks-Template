@@ -17,7 +17,6 @@
 #include "Managers/StateManager.hpp"
 
 #include "Components/Components.hpp"
-#include "Entities/Entities.hpp"
 #include "States/DefaultState.hpp"
 
 App::App(void) : m_pEventManager(nullptr), m_pInputManager(nullptr), m_pStateManager(nullptr) { }

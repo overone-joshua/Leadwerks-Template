@@ -6,6 +6,7 @@
 #include "../../Common.hpp"
 #include "../../Utilities/Event.hpp"
 
+#include "../Entity.hpp"
 #include "../Camera.hpp"
 #include "../Input.hpp"
 
@@ -17,7 +18,7 @@
 
 namespace Entities
 {
-	class SpectatorCamera
+	class SpectatorCamera : public Entities::Entity<SpectatorCamera>
 	{		
         CLASS_TYPE(SpectatorCamera);
 
@@ -30,18 +31,10 @@ namespace Entities
             auto entity = Entities::Camera::Create(world, _cScriptPath);
 
             // < Wire up our game logic events for each entity.
-            auto mouseMove = Components::MouseMoveTrigger<Entities::Camera>::MouseMoveEvent();
-            auto keyDown = Components::KeyDownTrigger<Entities::Camera>::KeyDownEvent();
-            auto keyUp = Components::KeyUpTrigger<Entities::Camera>::KeyUpEvent();
-
-            mouseMove.Bind<&Entities::SpectatorCamera::MouseMove>();
-            keyDown.Bind<&Entities::SpectatorCamera::KeyDown>();
-            keyUp.Bind<&Entities::SpectatorCamera::KeyUp>();
-
-            world.AddComponent(&world, entity, Components::MouseMoveTrigger<Entities::Camera>(mouseMove, "Camera"));
-            world.AddComponent(&world, entity, Components::KeyDownTrigger<Entities::Camera>(keyDown, "Camera"));
-            world.AddComponent(&world, entity, Components::KeyUpTrigger<Entities::Camera>(keyUp, "Camera"));
-
+			Entities::Camera::BindMouseMove<&SpectatorCamera::MouseMove>(world, entity, "Camera");
+			Entities::Camera::BindKeyDown<&SpectatorCamera::KeyDown>(world, entity, "Camera");
+			Entities::Camera::BindKeyUp<&SpectatorCamera::KeyUp>(world, entity, "Camera");
+            
             return entity;
 	    }
 
@@ -116,13 +109,13 @@ namespace Entities
 
             // < Are we rotating the camera left or right?
             if ((bool(inputMask & INPUT_ROTATE_RIGHT)) || (bool(inputMask & INPUT_ROTATE_LEFT))) {
-                dY = (bool(inputMask & INPUT_ROTATE_RIGHT)) - (bool(inputMask & INPUT_ROTATE_LEFT)) + input.vDelta.x * dt * input.vRotSpeed.y;
+                dY = ((bool(inputMask & INPUT_ROTATE_RIGHT)) - (bool(inputMask & INPUT_ROTATE_LEFT))) + input.vDelta.x * dt * input.vRotSpeed.y;
                 input.nMask &= ~(INPUT_ROTATE_RIGHT | INPUT_ROTATE_LEFT);
             }
 
             // < Are we tilting the camera up or down?
             if ((bool(inputMask & INPUT_ROTATE_UP)) || (bool(inputMask & INPUT_ROTATE_DOWN))) {
-                dX = (bool(inputMask & INPUT_ROTATE_UP)) - (bool(inputMask & INPUT_ROTATE_DOWN)) + input.vDelta.y * dt * input.vRotSpeed.x;
+                dX = ((bool(inputMask & INPUT_ROTATE_UP)) - (bool(inputMask & INPUT_ROTATE_DOWN))) + input.vDelta.y * dt * input.vRotSpeed.x;
                 input.nMask &= ~(INPUT_ROTATE_UP | INPUT_ROTATE_DOWN);
             }
 
