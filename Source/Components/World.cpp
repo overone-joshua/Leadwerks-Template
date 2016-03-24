@@ -9,7 +9,7 @@ namespace Components
 {
 	World::World(std::string cName) : m_nRunningIndex(0), Component(cName) { }
 
-	World::~World(void) { Dispose(); }	
+	World::~World(void) { Dispose(); }
 
 	uint64_t& World::Get(uint64_t entity)
 	{
@@ -65,18 +65,18 @@ namespace Components
         auto iter = m_components.begin();
         while (iter != m_components.end())
         {
-            auto index = iter->first.first == entity;
+            auto index = iter->first.first;
 
             // < Is this a component list for the given entity?
-            if (index = entity)
+            if (index == entity)
             {
                 // < We don't know what type of component we are dealing with
                 // * however, we do know that the contents of a vector are
                 // * stored within an array so we can delete the contents
                 // * through a SAFE_DELETE_ARRAY.
                 SAFE_DELETE_ARRAY(iter->second);
-                iter = m_components.erase(iter);                
-            }        
+                iter = m_components.erase(iter);
+            }
 
             if (iter != m_components.end()) { iter++; }
         }
@@ -101,7 +101,7 @@ namespace Components
 		}
 
 		m_entityMasks.clear();
-		
+
 		m_nRunningIndex = 0;
 	}
 

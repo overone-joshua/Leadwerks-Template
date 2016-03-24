@@ -1,14 +1,14 @@
 /*-------------------------------------------------------
                     <copyright>
-    
+
     File: World.hpp
     Language: C++
-    
+
     (C) Copyright Eden Softworks
-    
+
     Author: Joshua Allen
     E-Mail: Joshua(AT)EdenSoftworks(DOT)net
-    
+
     Description: Header file for World component.
 
 ---------------------------------------------------------*/
@@ -30,7 +30,7 @@
 namespace Components
 {
 	/** A World component..
-	 *  The World component is the entrypoint to component access, 
+	 *  The World component is the entrypoint to component access,
 	 *  creation and deletion.
 	*/
 	class World : public Component
@@ -45,22 +45,23 @@ namespace Components
 
                                                           explicit World(std::string cName = "");                                          /** The World component constructor. */
                                                           ~World(void);                                                           /** The World component destructor. */
-		
+
 		uint64_t                                          CreateEntity(World* pWorld);                                            /** Creates a new entity contained within the given World. */
-		
+
 		void                                              DestroyEntity(World* pWorld, uint64_t entity);                          /** Destroys the given entity from the given World. */
-		
+
 		template <typename T> void                        AddComponent(World* pWorld, uint64_t entity, T val);                    /** Adds the given Component of type T to the given World and associates the component with the given entity. */
-		
+
 		template <typename T> uint64_t                    RemoveComponent(World* pWorld, uint64_t entity, std::string cName);     /** Attempts to remove the given Component of type T from the given World that is associated with the given entity of the given name. */
         void                                              RemoveComponents(World* pWorld, uint64_t entity);
 
 		uint64_t&                                         Get(uint64_t entity);                                                   /** Returns a reference to the given entities Component bitmask. */
-		
+
 		std::vector<uint64_t>                             GetEntities(World* pWorld, uint64_t entityMask);                        /** Returns a collection of entity ids that explicitely match the given entityMask. */
-				
+
 		template <typename T> std::vector<T>*             GetComponents(World* pWorld, uint64_t entity);                          /** Returns a Component collection of type T assocated with the given entity. */
 
+        template <typename T> std::vector<T>*                 Fetch(World* pWorld, uint64_t entity);                              /** Attempts to fetch all components of type T associated with the given entity. */
 
         template <typename T> static void Add(World& world, uint64_t entity, T& source);
         template <typename Out> static Out Get(World& world, uint64_t entity);
@@ -69,16 +70,14 @@ namespace Components
 		uint64_t& operator [] (int index)
 		{
 			return m_entityMasks[index];
-		}		
+		}
 
 	protected:
-		
+
 		template <typename T> CompKey                         MakeComponentKey(uint64_t entity);                      /** Returns a component key from the given Component type T and the given entity. */
-				
-		template <typename T> std::vector<T>*                 Fetch(World* pWorld, uint64_t entity);                  /** Attempts to fetch all components of type T associated with the given entity. */
-				
+
 		template <typename T> World::ComponentMap::iterator   FetchInternal(World* pWorld, uint64_t entity);          /** Attempts to return an iterator into the Worlds Component collection of type T associated with the given entity. */
-		
+
 		void                                                  Dispose(void);                                          /** Cleans up all resources used by the World. */
 
 	private:
@@ -108,7 +107,7 @@ namespace Components
 		auto key = std::make_pair(entity, type);
 
 		val.nId = entity;
-		
+
 		auto iter = pWorld->FetchInternal<T>(pWorld, entity);
 		if (iter == pWorld->m_components.end())
 		{
@@ -133,9 +132,9 @@ namespace Components
 		{
 			if (it.nId == entity)
 			{
-				if (cName.compare(it.cName) == 0) 
+				if (cName.compare(it.cName) == 0)
 				{
-					it = components.erase(it); 
+					it = components.erase(it);
 					numRemoved += 1;
 				}
 			}
@@ -177,7 +176,7 @@ namespace Components
 		auto key = std::make_pair(entity, type);
 
 		return static_cast<std::vector<T>*>( pWorld->m_components.at(key) );
-		
+
 	}
 
 } // < end namespace.
