@@ -1,4 +1,4 @@
--- camera.lua
+-- DefaultCamera.lua
 
 Camera = 
 {
