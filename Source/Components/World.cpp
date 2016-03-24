@@ -7,7 +7,7 @@
 
 namespace Components
 {
-	World::World(std::string cName) : m_nRunningIndex(0), Component(cName) { }
+	World::World(std::string cName) : m_nRunningIndex(1), Component(cName) { }
 
 	World::~World(void) { Dispose(); }
 
