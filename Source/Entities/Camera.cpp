@@ -1,4 +1,4 @@
-#pragma once 
+#pragma once
 #include "Camera.hpp"
 
 namespace Entities
@@ -8,15 +8,15 @@ namespace Entities
         , cameraHandles(nullptr) { }
 
     uint64_t Camera::Create(Components::World& world, std::string cScriptPath)
-    {        
+    {
         auto table = LuaTable::fromFile(cScriptPath.c_str());
-        auto hndl = TypeConverter::Convert<LuaTable, Camera>(table);                
+        auto hndl = TypeConverter::Convert<LuaTable, Camera>(table);
 
 		auto entity = world.CreateEntity(&world);
 		world.Get(entity) = Entities::MASK_CAMERA;
 
         Components::World::Add(world, entity, hndl);
-        
+
 		return entity;
     }
 
@@ -25,8 +25,14 @@ namespace Entities
         auto res = Components::World::Get<Camera>(world, entity);
         auto& cameraHandles = res.cameraHandles;
         auto& camera = cameraHandles->front();
-        
+
         camera.pCamHndl = pCamHndl;
+
+        auto vPos = res.placementComponents->front().vPos;
+        auto vRot = res.placementComponents->front().vRot;
+
+        camera.pCamHndl->getInst()->SetPosition(vPos, true);
+        camera.pCamHndl->getInst()->SetRotation(vRot, false);
     }
 
     void Camera::Close(Components::World& world, uint64_t entity)
@@ -36,11 +42,11 @@ namespace Entities
         auto& camera = cameraHandles->front();
 
         camera.pCamHndl = nullptr;
-    }     
+    }
 
 } // < end namespace.
 
-template <> 
+template <>
 Entities::Camera TypeConverter::Convert<LuaTable, Entities::Camera>(LuaTable& source)
 {
     Entities::Camera hndl;
@@ -54,7 +60,7 @@ Entities::Camera TypeConverter::Convert<LuaTable, Entities::Camera>(LuaTable& so
     auto vRotSpeed = source["rotSpeed"].get<Leadwerks::Vec3>();
     auto vVel = Leadwerks::Vec3(0.0f, 0.0f, 0.0f);
 
-    hndl.component = Components::Component(name);    
+    hndl.component = Components::Component(name);
     hndl.cameraHandle = Components::Camera(nullptr, name);
     hndl.input = Components::Input<Entities::Camera>(vMovSpeed, vRotSpeed, name);
     hndl.placement = Components::Placement(vPos, vRot, vSca, name);
@@ -63,17 +69,17 @@ Entities::Camera TypeConverter::Convert<LuaTable, Entities::Camera>(LuaTable& so
     return hndl;
 }
 
-template <> 
+template <>
 void Components::World::Add<Entities::Camera>(Components::World& world, uint64_t entity, Entities::Camera& source)
-{        
-    // < Create the components required to form an Actor.       
-    world.AddComponent(&world, entity, source.cameraHandle);    
+{
+    // < Create the components required to form an Actor.
+    world.AddComponent(&world, entity, source.cameraHandle);
     world.AddComponent(&world, entity, source.placement);
     world.AddComponent(&world, entity, source.input);
-    world.AddComponent(&world, entity, source.velocity);	
+    world.AddComponent(&world, entity, source.velocity);
 }
 
-template <> 
+template <>
 Entities::Input<Entities::Camera> Components::World::Get<Entities::Input<Entities::Camera>>(Components::World& world, uint64_t entity)
 {
 	Entities::Input<Entities::Camera> hndl;
@@ -89,27 +95,27 @@ Entities::Input<Entities::Camera> Components::World::Get<Entities::Input<Entitie
 	return hndl;
 }
 
-template <> 
+template <>
 Entities::Camera Components::World::Get<Entities::Camera>(Components::World& world, uint64_t entity)
-{    
+{
     Entities::Camera hndl;
-    
-	static_cast<Entities::Input<Entities::Camera>&>(hndl) = Components::World::Get<Entities::Input<Entities::Camera>>(world, entity);
-    
-	hndl.inputComponents = world.GetComponents<Components::Input<Entities::Camera>>(&world, entity);
-	hndl.placementComponents = world.GetComponents<Components::Placement>(&world, entity);
-	hndl.velocityComponents = world.GetComponents<Components::Velocity>(&world, entity);
-	hndl.cameraHandles = world.GetComponents<Components::Camera>(&world, entity);
 
-    hndl.component = Components::Component(hndl.inputComponents->front().cName);
+	static_cast<Entities::Input<Entities::Camera>&>(hndl) = Components::World::Get<Entities::Input<Entities::Camera>>(world, entity);
+
+	hndl.inputComponents = world.Fetch<Components::Input<Entities::Camera>>(&world, entity);
+	hndl.placementComponents = world.Fetch<Components::Placement>(&world, entity);
+	hndl.velocityComponents = world.Fetch<Components::Velocity>(&world, entity);
+	hndl.cameraHandles = world.Fetch<Components::Camera>(&world, entity);
+
+    hndl.component = Components::Component("Camera");
     hndl.component.nId = entity;
 
     return hndl;
 }
 
-template <> 
+template <>
 std::vector<Entities::Camera> Components::World::GetAll<Entities::Camera>(Components::World& world)
-{    
+{
     std::vector<Entities::Camera> results;
 
     auto entities = world.GetEntities(&world, Entities::MASK_CAMERA);

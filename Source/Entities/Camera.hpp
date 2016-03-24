@@ -1,22 +1,22 @@
 /*-------------------------------------------------------
                     <copyright>
-    
+
     File: Camera.hpp
     Language: C++
-    
+
     (C) Copyright Eden Softworks
-    
+
     Author: Joshua Allen
     E-Mail: Joshua(AT)EdenSoftworks(DOT)net
-    
+
     Description: Header file for Camera System.
 
-    Functions: 
+    Functions:
 ---------------------------------------------------------*/
 
 #ifndef _CAMERA_ENTITY_HPP_
     #define _CAMERA_ENTITY_HPP_
-    
+
 #pragma once
 #include "Leadwerks.h"
 #include "../Common.hpp"
@@ -46,14 +46,14 @@
 #include <vector>
 
 namespace Entities
-{        
-    const uint64_t MASK_CAMERA = COMPONENT_INPUT | COMPONENT_PLACEMENT | COMPONENT_VELOCITY | COMPONENT_TRIGGER;        
+{
+    const uint64_t MASK_CAMERA = COMPONENT_INPUT | COMPONENT_PLACEMENT | COMPONENT_VELOCITY | COMPONENT_TRIGGER;
 
     class Camera    : public Entities::Entity<Camera>, public Entities::Input<Camera>
     {
 		CLASS_TYPE(Camera);
 
-    public:               
+    public:
 
         Camera(void);
 
@@ -61,20 +61,20 @@ namespace Entities
         std::vector<Components::Input<Camera>>*  inputComponents;
         std::vector<Components::Placement>*      placementComponents;
         std::vector<Components::Velocity>*       velocityComponents;
-        std::vector<Components::Camera>*         cameraHandles;		
+        std::vector<Components::Camera>*         cameraHandles;
 
         Components::Input<Camera>   input;
         Components::Placement       placement;
         Components::Velocity        velocity;
-        Components::Camera          cameraHandle;		
+        Components::Camera          cameraHandle;
 
-        static uint64_t Create(Components::World& world, std::string scriptPath = "");        
+        static uint64_t Create(Components::World& world, std::string scriptPath = "");
 
-        static void Load(Components::World& pWorld, uint64_t entity, CameraHandle* pCamHndl);        
+        static void Load(Components::World& pWorld, uint64_t entity, CameraHandle* pCamHndl);
 
-        static void Close(Components::World& world, uint64_t entity);        
+        static void Close(Components::World& world, uint64_t entity);
 
-    protected:        
+    protected:
 
     }; // < end class.
 
@@ -84,7 +84,7 @@ template <> Entities::Camera TypeConverter::Convert<LuaTable, Entities::Camera>(
 
 template <> void Components::World::Add<Entities::Camera>(Components::World& world, uint64_t entity, Entities::Camera& source);
 
-template <> Entities::Camera Components::World::Get<Entities::Camera>(Components::World& world, uint64_t);
+template <> Entities::Camera Components::World::Get<Entities::Camera>(Components::World& world, uint64_t entity);
 template <> Entities::Input<Entities::Camera> Components::World::Get<Entities::Input<Entities::Camera>>(Components::World& world, uint64_t entity);
 
 template <> std::vector<Entities::Camera> Components::World::GetAll<Entities::Camera>(Components::World& world);
