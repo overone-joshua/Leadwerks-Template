@@ -1,14 +1,14 @@
 /*-------------------------------------------------------
                     <copyright>
-    
+
     File: HasId.hpp
     Language: C++
-    
+
     (C) Copyright Eden Softworks
-    
+
     Author: Joshua Allen
     E-Mail: Joshua(AT)EdenSoftworks(DOT)net
-    
+
     Description: Header file for HasId component.
 
 ---------------------------------------------------------*/
@@ -17,6 +17,9 @@
 	#define _HAS_ID_
 
 #pragma once
+#include "../Common.hpp"
+
+#include <algorithm>
 
 namespace Components
 {
@@ -29,6 +32,12 @@ namespace Components
 
 		/** The HasId component constructor. */
 		HasId(void) : nId(0) { }
+
+        HasId& operator = (HasId other)
+        {
+            this->nId = other.nId;
+            return *this;
+        }
 
 	} HasId; // < and struct.
 

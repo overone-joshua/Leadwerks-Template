@@ -1,14 +1,14 @@
 /*-------------------------------------------------------
                     <copyright>
-    
+
     File: HasName.hpp
     Language: C++
-    
+
     (C) Copyright Eden Softworks
-    
+
     Author: Joshua Allen
     E-Mail: Joshua(AT)EdenSoftworks(DOT)net
-    
+
     Description: Header file for HasName component.
 
 ---------------------------------------------------------*/
@@ -18,6 +18,7 @@
 
 #pragma once
 
+#include <algorithm>
 #include <string>
 
 namespace Components
@@ -31,6 +32,12 @@ namespace Components
 
 		/** The HasName component constructor. */
 		explicit HasName(std::string _cName = "") : cName(_cName) { }
+
+        HasName& operator = (HasName other)
+        {
+            this->cName = other.cName;
+            return *this;
+        }
 
 	} HasName; // < and struct.
 
