@@ -1,14 +1,14 @@
 /*-------------------------------------------------------
                     <copyright>
-    
+
     File: InputDictionary.hpp
     Language: C++
-    
+
     (C) Copyright Eden Softworks
-    
+
     Author: Joshua Allen
     E-Mail: Joshua(AT)EdenSoftworks(DOT)net
-    
+
     Description: Header file for InputDictionary.
 
 ---------------------------------------------------------*/
@@ -26,7 +26,6 @@ typedef enum
 {
 	INPUT_NONE		= 0,
 	SYSTEM_INPUT	= 1,
-	USER_INPUT		= 2,
 
 	INPUT_MOVE_FORWARD	= SYSTEM_INPUT << 0,
 	INPUT_MOVE_BACKWARD = SYSTEM_INPUT << 1,
@@ -41,11 +40,12 @@ typedef enum
 	INPUT_ROLL_LEFT		= SYSTEM_INPUT << 10,
 	INPUT_ROLL_RIGHT	= SYSTEM_INPUT << 11,
 
-	INPUT_ACTION_CROUCH		= USER_INPUT << 0,
-	INPUT_ACTION_JUMP		= USER_INPUT << 1,
-	INPUT_ACTION_INTERACT	= USER_INPUT << 2,
-	INPUT_ACTION_PRIMARY	= USER_INPUT << 3,
-	INPUT_ACTION_SECONDARY	= USER_INPUT << 4
+    USER_INPUT              = SYSTEM_INPUT << 12,
+	INPUT_ACTION_CROUCH		= USER_INPUT << 13,
+	INPUT_ACTION_JUMP		= USER_INPUT << 14,
+	INPUT_ACTION_INTERACT	= USER_INPUT << 15,
+	INPUT_ACTION_PRIMARY	= USER_INPUT << 16,
+	INPUT_ACTION_SECONDARY	= USER_INPUT << 17
 
 } InputDictionary;
 
