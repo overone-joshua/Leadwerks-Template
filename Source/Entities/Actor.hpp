@@ -1,22 +1,22 @@
 /*-------------------------------------------------------
                     <copyright>
-    
+
     File: Actor.hpp
     Language: C++
-    
+
     (C) Copyright Eden Softworks
-    
+
     Author: Joshua Allen
     E-Mail: Joshua(AT)EdenSoftworks(DOT)net
-    
+
     Description: Header file for Actor System.
 
-    Functions: 
+    Functions:
 ---------------------------------------------------------*/
 
 #ifndef _ACTOR_ENTITY_HPP_
     #define _ACTOR_ENTITY_HPP_
-    
+
 #pragma once
 #include "Leadwerks.h"
 #include "../Managers/InputManager.hpp"
@@ -46,8 +46,8 @@ namespace Entities
 {
     const uint64_t MASK_ACTOR = COMPONENT_APPEARANCE | COMPONENT_INPUT | COMPONENT_PLACEMENT | COMPONENT_TRIGGER | COMPONENT_VELOCITY;
 
-    class Actor : public Entity<Actor>, Input<Actor>
-    {            
+    class Actor : public Entity<Actor>, public Input<Actor>
+    {
     public:
 		Actor(void);
 
@@ -56,21 +56,20 @@ namespace Entities
         std::vector<Components::Input<Actor>>*  inputComponents;
         std::vector<Components::Placement>*     placementComponents;
         std::vector<Components::Velocity>*      velocityComponents;
-        std::vector<Leadwerks::Model*>          models;
 
 		Components::Appearance		appearance;
 		Components::Input<Actor>	input;
 		Components::Placement		placement;
-		Components::Velocity		velocity;		
+		Components::Velocity		velocity;
 
         static uint64_t Create(Components::World& world, std::string cScriptPath = "");
-        
-        static void Load(Components::World& world, uint64_t entity);        
 
-        static void Close(Components::World& world, uint64_t entity);        
+        static void Load(Components::World& world, uint64_t entity);
+
+        static void Close(Components::World& world, uint64_t entity);
 
     }; // < end class.
-    
+
 } // < end namespace.
 
 template <> Entities::Actor TypeConverter::Convert<LuaTable, Entities::Actor>(LuaTable& source);
