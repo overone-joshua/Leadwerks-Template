@@ -3,7 +3,7 @@
 	#ifndef BUILD_STATICLIB
 		#include "App.h"
 		#include "Common.hpp"
-		#include "Utilities/Macros.hpp"				
+		#include "Utilities/Macros.hpp"
 	#endif
 #endif
 
@@ -144,22 +144,22 @@ int main(int argc, const char *argv[])
 	}
 	else
 	{*/
-	//Execute mobile-style App script		
+	//Execute mobile-style App script
 
 	gApp = new App();
 	gAppCtrl = new AppController(gApp);
-	bool bRunning = gAppCtrl->Initialize("Leadwerks Template Project", 0, 0, 1024, 768, Leadwerks::Window::Titlebar, 0);	
+	bool bRunning = gAppCtrl->Initialize("Leadwerks Template Project", 0, 0, 1024, 768, Leadwerks::Window::Titlebar, 0);
 
-	if (bRunning) 
+	if (bRunning)
     {
 		float deltaTime = 1.0f;
-		
+
 		do {
 			Leadwerks::Time::Update(60);
 			deltaTime = Leadwerks::Time::GetSpeed();
 
 			bRunning = gAppCtrl->Update(deltaTime);
-			
+
 			gAppCtrl->Render();
 
 			gAppCtrl->Draw();
@@ -169,9 +169,9 @@ int main(int argc, const char *argv[])
 #ifdef DEBUG
 		Interpreter::Disconnect();
 #endif
-		// < Shutdown application controller.		
+		// < Shutdown application controller.
 		SAFE_DELETE(gAppCtrl);
-		SAFE_DELETE(gApp);		
+		SAFE_DELETE(gApp);
 
         // < Shutdown the Steamworks system.
         Steamworks::Shutdown();

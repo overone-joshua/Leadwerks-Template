@@ -19,7 +19,7 @@
 namespace Entities
 {
 	class SpectatorCamera : public Entities::Entity<SpectatorCamera>
-	{		
+	{
         CLASS_TYPE(SpectatorCamera);
 
     public:
@@ -34,7 +34,7 @@ namespace Entities
 			Entities::Camera::BindMouseMove<&SpectatorCamera::MouseMove>(world, entity, "Camera");
 			Entities::Camera::BindKeyDown<&SpectatorCamera::KeyDown>(world, entity, "Camera");
 			Entities::Camera::BindKeyUp<&SpectatorCamera::KeyUp>(world, entity, "Camera");
-            
+
             return entity;
 	    }
 
@@ -78,7 +78,7 @@ namespace Entities
 
         static void KeyUp(Components::World& world, Entities::Camera entity, Event_KeyUp* pEvent)
         {
-            // < Just like key press however, here we pop the movement bitmask to signal 
+            // < Just like key press however, here we pop the movement bitmask to signal
             // * a key release.
             auto iter = entity.inputComponents->begin();
             while (iter != entity.inputComponents->end())

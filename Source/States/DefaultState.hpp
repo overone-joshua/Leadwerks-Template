@@ -1,14 +1,14 @@
 /*-------------------------------------------------------
                     <copyright>
-    
+
     File: DefaultState.hpp
     Language: C++
-    
+
     (C) Copyright Eden Softworks
-    
+
     Author: Joshua Allen
     E-Mail: Joshua(AT)EdenSoftworks(DOT)net
-    
+
     Description: Header file for DefaultState class.
                  The DefaultState class exists to provide
                  a concrete example of how other
@@ -26,6 +26,7 @@
 #include "../Managers/InputManager.hpp"
 
 #include "../Utilities/CameraHandle.hpp"
+#include "../Utilities/WorldHandle.hpp"
 #include "../Utilities/Container.hpp"
 #include "../Utilities/Delegate.hpp"
 #include "../Utilities/Event.hpp"
@@ -37,13 +38,16 @@
 #include "../Entities/Camera.hpp"
 #include "../Entities/Input.hpp"
 
+#include "../Entities/Custom/Bullet.hpp"
+#include "../Entities/Custom/Player.hpp"
 #include "../Entities/Custom/SpectatorCamera.hpp"
+#include "../Entities/Custom/ThirdPersonCamera.hpp"
 
 class DefaultState : public State {
 
 	CLASS_TYPE(DefaultState);
 
-public:		
+public:
 
 	                       DefaultState(void);
 
@@ -53,7 +57,7 @@ public:
 
 	bool                   Update(float deltaTime);
 
-    void                    OnMouseMove(Event_MouseMove* pEvent);
+    void                   OnMouseMove(Event_MouseMove* pEvent);
 
 	void                   OnKeyDown(Event_KeyDown* pEvent);
 	void                   OnKeyUp(Event_KeyUp* pEvent);
@@ -62,13 +66,14 @@ private:
 
     InputManager*          m_pInputMgr;
     CameraHandle*          m_pCameraHndl;
+    WorldHandle*           m_pWorldHndl;
 
-	Leadwerks::Light*	  m_pSceneLight;		
+	Leadwerks::Light*	  m_pSceneLight;
 
 	Components::World*     m_pWorld;
 
     uint64_t                m_player;
-    uint64_t                m_camera;	    
+    uint64_t                m_camera;
 
 }; // < end class.
 
