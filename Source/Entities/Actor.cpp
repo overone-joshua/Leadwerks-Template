@@ -93,13 +93,13 @@ template <> Entities::Actor TypeConverter::Convert<LuaTable, Entities::Actor>(Lu
     auto vMovSpeed = source["movSpeed"].get<Leadwerks::Vec3>();
     auto vRotSpeed = source["rotSpeed"].get<Leadwerks::Vec3>();
 	auto path = source["modelPath"].get<std::string>();
-	auto vVel = Leadwerks::Vec3(0.0f, 0.0f, 0.0f);
+    auto vVel = source["vel"].get<Leadwerks::Vec3>();
 
 	hndl.component = Components::Component(name);
 	hndl.appearance = Components::Appearance(path, name);
-	hndl.input = Components::Input<Entities::Actor>(vMovSpeed, vRotSpeed, name);
+	hndl.input = Components::Input(name);
 	hndl.placement = Components::Placement(vPos, vRot, vSca, name);
-	hndl.velocity = Components::Velocity(vVel, name);
+	hndl.velocity = Components::Velocity(vVel, vMovSpeed, vRotSpeed, name);
 
 	return hndl;
 }
@@ -137,7 +137,7 @@ template <> Entities::Actor Components::World::Get<Entities::Actor>(Components::
     static_cast<Entities::Input<Entities::Actor>&>(hndl) = Components::World::Get<Entities::Input<Entities::Actor>>(world, entity);
 
     hndl.appearanceComponents = world.Fetch<Components::Appearance>(&world, entity);
-    hndl.inputComponents = world.Fetch<Components::Input<Entities::Actor>>(&world, entity);
+    hndl.inputComponents = world.Fetch<Components::Input>(&world, entity);
     hndl.placementComponents = world.Fetch<Components::Placement>(&world, entity);
     hndl.velocityComponents = world.Fetch<Components::Velocity>(&world, entity);
 

@@ -53,12 +53,12 @@ namespace Entities
 
         Components::Component                   component;
         std::vector<Components::Appearance>*    appearanceComponents;
-        std::vector<Components::Input<Actor>>*  inputComponents;
+        std::vector<Components::Input>*  inputComponents;
         std::vector<Components::Placement>*     placementComponents;
         std::vector<Components::Velocity>*      velocityComponents;
 
 		Components::Appearance		appearance;
-		Components::Input<Actor>	input;
+		Components::Input	input;
 		Components::Placement		placement;
 		Components::Velocity		velocity;
 

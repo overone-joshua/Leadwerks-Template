@@ -62,9 +62,9 @@ Entities::Camera TypeConverter::Convert<LuaTable, Entities::Camera>(LuaTable& so
 
     hndl.component = Components::Component(name);
     hndl.cameraHandle = Components::Camera(nullptr, name);
-    hndl.input = Components::Input<Entities::Camera>(vMovSpeed, vRotSpeed, name);
+    hndl.input = Components::Input(name);
     hndl.placement = Components::Placement(vPos, vRot, vSca, name);
-    hndl.velocity = Components::Velocity(vVel, name);
+    hndl.velocity = Components::Velocity(vVel, vMovSpeed, vRotSpeed, name);
 
     return hndl;
 }
@@ -102,7 +102,7 @@ Entities::Camera Components::World::Get<Entities::Camera>(Components::World& wor
 
 	static_cast<Entities::Input<Entities::Camera>&>(hndl) = Components::World::Get<Entities::Input<Entities::Camera>>(world, entity);
 
-	hndl.inputComponents = world.Fetch<Components::Input<Entities::Camera>>(&world, entity);
+	hndl.inputComponents = world.Fetch<Components::Input>(&world, entity);
 	hndl.placementComponents = world.Fetch<Components::Placement>(&world, entity);
 	hndl.velocityComponents = world.Fetch<Components::Velocity>(&world, entity);
 	hndl.cameraHandles = world.Fetch<Components::Camera>(&world, entity);

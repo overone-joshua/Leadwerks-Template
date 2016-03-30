@@ -58,12 +58,12 @@ namespace Entities
         Camera(void);
 
 		Components::Component					 component;
-        std::vector<Components::Input<Camera>>*  inputComponents;
+        std::vector<Components::Input>*  inputComponents;
         std::vector<Components::Placement>*      placementComponents;
         std::vector<Components::Velocity>*       velocityComponents;
         std::vector<Components::Camera>*         cameraHandles;
 
-        Components::Input<Camera>   input;
+        Components::Input   input;
         Components::Placement       placement;
         Components::Velocity        velocity;
         Components::Camera          cameraHandle;
