@@ -3,6 +3,7 @@
 #include "App.h"
 
 #include "Common.hpp"
+#include "Services/DbConnectionFactory.hpp"
 #include "Utilities/Macros.hpp"
 
 #include "Utilities/Container.hpp"
@@ -23,7 +24,11 @@ App::App(void) : m_pEventManager(nullptr), m_pInputManager(nullptr), m_pStateMan
 
 App::~App(void) { }
 
-void App::Configure(Container* pContainer) {    
+void App::Configure(Container* pContainer) {
+
+    /* Sqlite DbConnection Factory */
+    auto connectionString = "ldwrksTmp.db";
+    pContainer->Register<IDbConnectionFactory, DbConnectionFactory>(new DbConnectionFactory(connectionString));
 
 	/* EventManager */
 	m_pEventManager = pContainer->Register<EventManager, EventManager>( new EventManager());
@@ -35,14 +40,14 @@ void App::Configure(Container* pContainer) {
 
 	/* Input Manager */
 	m_pInputManager = pContainer->Register<InputManager, InputManager>( new InputManager(
-		pContainer->Resolve<WindowHandle>()->getInst(), 
+		pContainer->Resolve<WindowHandle>()->getInst(),
 		pContainer->Resolve<ContextHandle>()->getInst(),
 		pContainer->Resolve<EventManager>()));
 
 	// < Register any states that are going to be used by our application.
 	// * In order for a state to be added through the StateManager,
 	// * the state MUST be registered with the StateFactory first.
-	gStateFactory.Register(new FactoryMaker<DefaultState, State>);	
+	gStateFactory.Register(new FactoryMaker<DefaultState, State>);
 
 }
 
@@ -52,18 +57,18 @@ bool App::Start(void) {
 	m_pStateManager->AddState<DefaultState>(true);
 
 	std::cout << "Application initialization completed successfully. \n";
-	
+
 	return true;
 
 }
 
-void App::Shutdown(void) 
+void App::Shutdown(void)
 {
-	Dispose(); 
+	Dispose();
 
 }
 
-void App::Dispose(void) 
+void App::Dispose(void)
 {
 	m_pEventManager = nullptr;
 	m_pInputManager = nullptr;
@@ -76,40 +81,40 @@ void App::Dispose(void)
 
 }
 
-void App::preUpdate(void) 
-{ 
+void App::preUpdate(void)
+{
 	// < Call the StateManager's preUpdate.
 	if (m_pStateManager != nullptr) { m_pStateManager->preUpdate(); }
 
 }
 
-bool App::Update(float dt) 
-{ 		
+bool App::Update(float dt)
+{
 	// < Call the InputManager's update.
-	if (m_pInputManager != nullptr) { m_pInputManager->Update(dt); } 
+	if (m_pInputManager != nullptr) { m_pInputManager->Update(dt); }
 
 	// < Call the StateManager's Update.
-	if (m_pStateManager != nullptr) { m_pStateManager->Update(dt); }	
+	if (m_pStateManager != nullptr) { m_pStateManager->Update(dt); }
 
-    // < Call EventManager's update. We allow it to process events 
+    // < Call EventManager's update. We allow it to process events
     // * for 200ms a frame.
     if (m_pEventManager != nullptr) { m_pEventManager->Update(200); }
 
-	return true; 
+	return true;
 
 }
 
-void App::postUpdate(void) 
-{ 
+void App::postUpdate(void)
+{
 	// < Call the InputManager's postUpdate.
-	if (m_pStateManager != nullptr) { m_pStateManager->postUpdate(); }	
+	if (m_pStateManager != nullptr) { m_pStateManager->postUpdate(); }
 
 }
 
-void App::preRender(void) 
+void App::preRender(void)
 {
 	// < Call the StateManager's preRender.
-	if (m_pStateManager != nullptr) { m_pStateManager->preRender(); } 
+	if (m_pStateManager != nullptr) { m_pStateManager->preRender(); }
 
 }
 
@@ -119,41 +124,41 @@ void App::Render(void)
 	// < ---
 
 	// < Call the StateManager's Render.
-	if (m_pStateManager != nullptr) { m_pStateManager->Render(); }	
+	if (m_pStateManager != nullptr) { m_pStateManager->Render(); }
 
 	// < ---
 
 }
 
-void App::postRender(void) 
+void App::postRender(void)
 {
 	// < Call the StateManager's postRender.
 	if (m_pStateManager != nullptr) { m_pStateManager->postRender(); }
 
 }
 
-void App::preDraw(void) 
+void App::preDraw(void)
 {
 	// < Call the StateManager's preDraw.
 	if (m_pStateManager != nullptr) { m_pStateManager->preDraw(); }
-	
+
 }
 
-void App::Draw(void) 
+void App::Draw(void)
 {
 	// < Perform all 2D-Rendering here.
 	// < ---
 
 	// < Call the StateManager's Draw.
-	if (m_pStateManager != nullptr) { m_pStateManager->Draw(); }	
+	if (m_pStateManager != nullptr) { m_pStateManager->Draw(); }
 
 	// < ---
 
 }
 
-void App::postDraw(void) 
+void App::postDraw(void)
 {
 	// < Call the StateManager's postDraw.
-	if (m_pStateManager != nullptr) { m_pStateManager->postDraw(); }	
+	if (m_pStateManager != nullptr) { m_pStateManager->postDraw(); }
 
 }
