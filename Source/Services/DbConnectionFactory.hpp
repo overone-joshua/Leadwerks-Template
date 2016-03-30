@@ -14,15 +14,18 @@
 
 class IDbConnectionFactory
 {
+    CLASS_TYPE(IDbConnectionFactory);
+
 public:
 
-    virtual const IDbConnection* OpenConnection(void) = 0;
-    virtual const IDbConnection* CreateConnection(void) = 0;
+    virtual IDbConnection* const OpenConnection(void) { return nullptr; }
+    virtual IDbConnection* const CreateConnection(void) { return nullptr; }
 
 }; // < end class interface.
 
 class DbConnectionFactory : public IDbConnectionFactory
 {
+    CLASS_TYPE(DbConnectionFactory);
 
     typedef std::map<const std::string, DbConnection* const> ConnectionPool;
 
