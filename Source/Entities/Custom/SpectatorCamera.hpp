@@ -109,26 +109,26 @@ namespace Entities
 
             // < Are we rotating the camera left or right?
             if ((bool(inputMask & INPUT_ROTATE_RIGHT)) || (bool(inputMask & INPUT_ROTATE_LEFT))) {
-                dY = ((bool(inputMask & INPUT_ROTATE_RIGHT)) - (bool(inputMask & INPUT_ROTATE_LEFT))) + input.vDelta.x * dt * input.vRotSpeed.y;
+                dY = ((bool(inputMask & INPUT_ROTATE_RIGHT)) - (bool(inputMask & INPUT_ROTATE_LEFT))) + input.vDelta.x * dt * velocity.vRotSpeed.y;
                 input.nMask &= ~(INPUT_ROTATE_RIGHT | INPUT_ROTATE_LEFT);
             }
 
             // < Are we tilting the camera up or down?
             if ((bool(inputMask & INPUT_ROTATE_UP)) || (bool(inputMask & INPUT_ROTATE_DOWN))) {
-                dX = ((bool(inputMask & INPUT_ROTATE_UP)) - (bool(inputMask & INPUT_ROTATE_DOWN))) + input.vDelta.y * dt * input.vRotSpeed.x;
+                dX = ((bool(inputMask & INPUT_ROTATE_UP)) - (bool(inputMask & INPUT_ROTATE_DOWN))) + input.vDelta.y * dt * velocity.vRotSpeed.x;
                 input.nMask &= ~(INPUT_ROTATE_UP | INPUT_ROTATE_DOWN);
             }
 
             // < Are we rolling the camera left or right?
             if ((bool(inputMask & INPUT_ROLL_RIGHT)) || (bool(inputMask & INPUT_ROLL_LEFT))) {
-                dZ = (((bool(inputMask & INPUT_ROLL_RIGHT)) - (bool(inputMask & INPUT_ROLL_LEFT))) + input.vDelta.z)  * dt * input.vRotSpeed.z;
+                dZ = (((bool(inputMask & INPUT_ROLL_RIGHT)) - (bool(inputMask & INPUT_ROLL_LEFT))) + input.vDelta.z)  * dt * velocity.vRotSpeed.z;
                 input.nMask &= ~(INPUT_ROLL_LEFT | INPUT_ROLL_RIGHT);
             }
 
             // < Are we looking to move the camera?
-            float vX = ((bool(inputMask & INPUT_MOVE_RIGHT)) - (bool(inputMask & INPUT_MOVE_LEFT)))		* dt * input.vMovSpeed.x;
-            float vY = ((bool(inputMask & INPUT_MOVE_UP)) - (bool(inputMask & INPUT_MOVE_DOWN)))		* dt * input.vMovSpeed.y;
-            float vZ = ((bool(inputMask & INPUT_MOVE_FORWARD)) - (bool(inputMask & INPUT_MOVE_BACKWARD))) * dt * input.vMovSpeed.z;
+            float vX = ((bool(inputMask & INPUT_MOVE_RIGHT)) - (bool(inputMask & INPUT_MOVE_LEFT)))		* dt * velocity.vMovSpeed.x;
+            float vY = ((bool(inputMask & INPUT_MOVE_UP)) - (bool(inputMask & INPUT_MOVE_DOWN)))		* dt * velocity.vMovSpeed.y;
+            float vZ = ((bool(inputMask & INPUT_MOVE_FORWARD)) - (bool(inputMask & INPUT_MOVE_BACKWARD))) * dt * velocity.vMovSpeed.z;
 
             velocity.vVel.x = vX;
             velocity.vVel.y = vY;

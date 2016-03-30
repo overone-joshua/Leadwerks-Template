@@ -36,7 +36,7 @@ namespace Entities
 
         placement.vPos.x += Leadwerks::Math::Random(-1, 1);
 
-        velocity.vVel = vDir.Multiply(input.vMovSpeed);
+        velocity.vVel = vDir.Multiply(velocity.vMovSpeed);
     }
 
     void Bullet::Close(Components::World& world, uint64_t entity)
@@ -53,7 +53,7 @@ namespace Entities
 
         auto& vPos = placement.vPos;
         auto& vVel = velocity.vVel;
-        auto vSpeed = input.vMovSpeed;
+        auto vSpeed = velocity.vMovSpeed;
         auto vEnd = vPos.Add(vVel);
 
         if (model != nullptr)

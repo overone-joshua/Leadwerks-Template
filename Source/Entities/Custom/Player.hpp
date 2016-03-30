@@ -90,9 +90,9 @@ namespace Entities
             uint64_t inputMask = input.nMask;
 
             // < Are we looking to move the camera?
-            float vX = ((bool(inputMask & INPUT_MOVE_RIGHT)) - (bool(inputMask & INPUT_MOVE_LEFT)))		* dt * input.vMovSpeed.x;
-            float vY = ((bool(inputMask & INPUT_MOVE_UP)) - (bool(inputMask & INPUT_MOVE_DOWN)))		* dt * input.vMovSpeed.y;
-            float vZ = ((bool(inputMask & INPUT_MOVE_FORWARD)) - (bool(inputMask & INPUT_MOVE_BACKWARD))) * dt * input.vMovSpeed.z;
+            float vX = ((bool(inputMask & INPUT_MOVE_RIGHT)) - (bool(inputMask & INPUT_MOVE_LEFT)))		* dt * velocity.vMovSpeed.x;
+            float vY = ((bool(inputMask & INPUT_MOVE_UP)) - (bool(inputMask & INPUT_MOVE_DOWN)))		* dt * velocity.vMovSpeed.y;
+            float vZ = ((bool(inputMask & INPUT_MOVE_FORWARD)) - (bool(inputMask & INPUT_MOVE_BACKWARD))) * dt * velocity.vMovSpeed.z;
 
             velocity.vVel = Leadwerks::Vec3(vX, vY, vZ);
 
