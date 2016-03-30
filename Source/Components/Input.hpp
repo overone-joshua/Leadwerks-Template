@@ -37,10 +37,11 @@ namespace Components
 		CLASS_TYPE(Input);
 
 		uint64_t                    nMask;	/*!< A uint64_t bitmask. */
+        Leadwerks::Vec3             vDelta;
 
 		/** The Input component constructor.*/
 		explicit Input(std::string cName = "")
-            : nMask(INPUT_NONE), Component(cName) { }
+            : nMask(INPUT_NONE), vDelta(0.0f, 0.0f, 0.0f), Component(cName) { }
 
 	} Input; // < end struct.
 
