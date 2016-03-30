@@ -79,8 +79,6 @@ protected:
 
 			auto it = iter->second.second;
 
-            // < DERP: calling delete on void* does not call object destructor.
-            // < TODO: FIX!!!
 			if (it) {
                 static_cast<Disposable*>(it)->Dispose();
 				delete (it);
