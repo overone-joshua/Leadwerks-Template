@@ -61,8 +61,8 @@ bool DefaultState::Update(float dt)
 {
     auto world = m_pWorldHndl->getInst();
     // < Update our entities.
-    Entities::Bullet::UpdateAll(*m_pWorld, world, dt);
     Entities::Player::Update(*m_pWorld, m_player, dt);
+    Entities::Bullet::UpdateAll(*m_pWorld, world, dt);
     Entities::ThirdPersonCamera::Update(*m_pWorld, m_camera, dt);
 
     return true;
