@@ -1,34 +1,35 @@
 /*-------------------------------------------------------
                     <copyright>
-    
+
     File: Container.hpp
     Language: C++
-    
+
     (C) Copyright Eden Softworks
-    
+
     Author: Joshua Allen
     E-Mail: Joshua(AT)EdenSoftworks(DOT)net
-    
+
     Description: Header file for Container utility.
                  This file contains the source for a
                  very simple and lightweight Dependency
                  Injection service.
-    
+
     Functions: 1. template <typename I, class C>
                   I* Register(C* pInstance);
-                  
+
                2. template <typename I>
                   I* Resolve(void);
-                  
+
                3. template <typename I>
-                  bool TryResolve(I* value);                     
+                  bool TryResolve(I* value);
 
 ---------------------------------------------------------*/
 
 #ifndef _CONTAINER_HPP_
     #define _CONTAINER_HPP_
-    
+
 #pragma once
+#include "Disposable.hpp"
 #include <exception>
 #include <map>
 #include <string>
@@ -38,8 +39,8 @@ class Container_Resolve_Exception : public std::exception
 	virtual const char* err() const throw() { return "Failed to resolve dependency."; }
 };
 
-class Container 
-{    
+class Container
+{
 	typedef void* InstPtr;
 	typedef std::string ClassType;
 	typedef std::map<ClassType, std::pair<ClassType, const InstPtr>> ComponentMap;
@@ -50,11 +51,11 @@ public:
 	~Container(void) { Dispose(); }
 
     template <typename I, class C>
-    I* Register(C* pInstance);    
+    I* Register(C* pInstance);
 
     template <typename I>
     I* Resolve(void);
-    
+
     template <typename I>
     bool TryResolve(I& value);
 
@@ -62,7 +63,7 @@ protected:
 
     template <typename I>
     ComponentMap::iterator FetchInternal(void);
-    
+
 	// < Destroys and removes all registered components from the component
 	// * collection.
 	void Container::Dispose(void)
@@ -74,16 +75,17 @@ protected:
 		// * is terminated.
 		auto iter = m_components.rend();
 		while (iter != m_components.rbegin()) {
-			iter--;
+            --iter;
 
 			auto it = iter->second.second;
 
+            // < DERP: calling delete on void* does not call object destructor.
+            // < TODO: FIX!!!
 			if (it) {
+                static_cast<Disposable*>(it)->Dispose();
 				delete (it);
 				it = NULL;
 			}
-
-			//it = ComponentMap::reverse_iterator(m_components.erase(iter.base()) - 1);
 		}
 
 		m_components.clear();
@@ -92,7 +94,7 @@ protected:
 
 private:
 
-	ComponentMap m_components;     // < The collection of registered components.    	
+	ComponentMap m_components;     // < The collection of registered components.
 
 }; // < end class.
 
@@ -103,7 +105,7 @@ private:
 // * instance will be returned.
 template <typename I, class C>
 I* Container::Register(C* pInstance)
-{    
+{
     std::string interfaceType = I::ClassType();
     std::string classType = C::ClassType();
 
@@ -111,9 +113,9 @@ I* Container::Register(C* pInstance)
     auto entry = std::make_pair(classType, (void*)(pInstance));
 
     m_components.insert(std::make_pair(key, entry));
-    
+
     return Resolve<I>();
-    
+
 } // < ---
 
 // < Attempts to fetch a registered component from the components
@@ -124,41 +126,41 @@ I* Container::Resolve(void)
 {
     auto comp = FetchInternal<I>();
     if (comp == m_components.end()) { throw Container_Resolve_Exception();}
-    
+
     return static_cast<I*>(comp->second.second);
-    
+
 } // < ---
 
-// < Attempts to fetch a registered component from the components 
+// < Attempts to fetch a registered component from the components
 // * collection. If found, the given value pointer is pointer
 // * and a value of true is returned else, value will else
 // * nullptr and a value of false is returned.
 template <typename I>
 bool Container::TryResolve(I& value)
-{    
-    try 
+{
+    try
     {
         *value = Resolve<I>();
     }
-    catch(...) 
+    catch(...)
     {
         value = nullptr;
         return false;
     }
-    
+
     return true;
-    
+
 }
 
 // < Attempts to fetch a registered component from the components
 // * collection. If found, an iterator to the component is
 // * returned else, an iterator to m_components.end() is returned.
 template <typename I>
-Container::ComponentMap::iterator Container::FetchInternal(void) 
+Container::ComponentMap::iterator Container::FetchInternal(void)
 {
     std::string key = I::ClassType();
     return m_components.find(key);
-    
+
 } // < ---
 
 #endif _CONTAINER_HPP_
