@@ -55,7 +55,7 @@ namespace Components
 		template <typename T> uint64_t                    RemoveComponent(World* pWorld, uint64_t entity, std::string cName);     /** Attempts to remove the given Component of type T from the given World that is associated with the given entity of the given name. */
         void                                              RemoveComponents(World* pWorld, uint64_t entity);
 
-		uint64_t&                                         Get(uint64_t entity);                                                   /** Returns a reference to the given entities Component bitmask. */
+		uint64_t&                                         GetEntityMask(uint64_t entity);                                                   /** Returns a reference to the given entities Component bitmask. */
 
 		std::vector<uint64_t>                             GetEntities(World* pWorld, uint64_t entityMask);                        /** Returns a collection of entity ids that explicitely match the given entityMask. */
 

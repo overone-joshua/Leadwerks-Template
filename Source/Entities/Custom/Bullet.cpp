@@ -15,7 +15,7 @@ namespace Entities
         auto hndl = TypeConverter::Convert<LuaTable, Entities::Bullet>(table);
 
         auto entity = world.CreateEntity(&world);
-        world.Get(entity) = Entities::MASK_BULLET;
+        world.GetEntityMask(entity) = Entities::MASK_BULLET;
 
         Components::World::Add(world, entity, hndl);
 

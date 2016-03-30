@@ -17,7 +17,7 @@ namespace Entities
 
         // < Add the entity to the world.
 		auto entity = world.CreateEntity(&world);
-		world.Get(entity) = Entities::MASK_ACTOR;
+		world.GetEntityMask(entity) = Entities::MASK_ACTOR;
 
         Components::World::Add(world, entity, hndl);
 

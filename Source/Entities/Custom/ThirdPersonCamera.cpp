@@ -9,7 +9,7 @@ namespace Entities
         auto hndl = TypeConverter::Convert<LuaTable, ThirdPersonCamera>(table);
 
         auto entity = world.CreateEntity(&world);
-        world.Get(entity) = Entities::MASK_CAMERA_THIRDPERSON;
+        world.GetEntityMask(entity) = Entities::MASK_CAMERA_THIRDPERSON;
 
         Components::World::Add(world, entity, hndl);
 

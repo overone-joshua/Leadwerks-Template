@@ -13,7 +13,7 @@ namespace Entities
         auto hndl = TypeConverter::Convert<LuaTable, Camera>(table);
 
 		auto entity = world.CreateEntity(&world);
-		world.Get(entity) = Entities::MASK_CAMERA;
+		world.GetEntityMask(entity) = Entities::MASK_CAMERA;
 
         Components::World::Add(world, entity, hndl);
 
