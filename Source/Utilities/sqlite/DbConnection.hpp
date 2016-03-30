@@ -70,7 +70,12 @@ public:
 
     IDbCommand* const CreateCommand(void)
     {
+        assert(m_pDatabase != nullptr);
+        assert(HasConnectionState(this, CONNECTION_OPEN) == true);
 
+        auto command = new DbCommand(*m_pDatabase);
+
+        return command;
     }
 
     static inline bool HasConnectionState(const DbConnection* connection, unsigned connectionStateMask)
