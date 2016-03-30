@@ -33,7 +33,7 @@ namespace Components
         Relationship(uint64_t _related = 0, std::string cName = "")
             : related(related), Component(cName) { }
 
-    }; // < end struct.
+    } Relationship; // < end struct.
 
 } // < end namespace.
 

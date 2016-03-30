@@ -35,7 +35,7 @@ namespace Components
         Collider(Leadwerks::AABB _collider = Leadwerks::AABB(Leadwerks::Vec3(0.0f, 0.0f, 0.0f), Leadwerks::Vec3(0.0f, 0.0f, 0.0f)), std::string cName = "")
             : collider(_collider), Component(cName) { }
 
-    }; // < end struct.
+    } Collider; // < end struct.
 
 } // < end namespace.
 
