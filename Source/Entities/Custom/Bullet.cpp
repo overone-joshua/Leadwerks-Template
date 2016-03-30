@@ -106,8 +106,6 @@ template <> Entities::Bullet TypeConverter::Convert<LuaTable, Entities::Bullet>(
 
 template <> void Components::World::Add<Entities::Bullet>(Components::World& world, uint64_t entity, Entities::Bullet& source)
 {
-    auto bullet = world.Get<Entities::Bullet>(world, entity);
-
     world.AddComponent(&world, entity, source.relationship);
 
     Components::World::Add<Entities::Actor>(world, entity, source);
