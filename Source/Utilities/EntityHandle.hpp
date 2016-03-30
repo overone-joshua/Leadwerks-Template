@@ -1,19 +1,19 @@
 /*-------------------------------------------------------
                     <copyright>
-    
+
     File: EntityHandle.hpp
     Language: C++
-    
+
     (C) Copyright Eden Softworks
-    
+
     Author: Joshua Allen
     E-Mail: Joshua(AT)EdenSoftworks(DOT)net
-    
+
     Description: Header file for EntityHandle utility.
                  The EntityHandle is a wrapper around
                  the Leadwerks::Entity object.
-    
-    Functions: 1. Leadwerks::Entity* getInst(void);                                                     
+
+    Functions: 1. Leadwerks::Entity* getInst(void);
 
 ---------------------------------------------------------*/
 
@@ -22,9 +22,10 @@
 
 #pragma once
 #include "Leadwerks.h"
+#include "Disposable.hpp"
 #include "Macros.hpp"
 
-class EntityHandle
+class EntityHandle : public Disposable
 {
 	CLASS_TYPE(EntityHandle);
 
@@ -35,12 +36,16 @@ public:
 
 	}
 
-	~EntityHandle(void) {
-
-		SAFE_RELEASE(m_pEntity);
-		SAFE_DELETE(m_pEntity);
-
+	~EntityHandle(void)
+    {
+        Dispose();
 	}
+
+    void Dispose(void)
+    {
+        SAFE_RELEASE(m_pEntity);
+        SAFE_DELETE(m_pEntity);
+    }
 
 	Leadwerks::Entity* getInst(void) { return m_pEntity; }
 

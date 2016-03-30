@@ -1,19 +1,19 @@
 /*-------------------------------------------------------
                     <copyright>
-    
+
     File: ContrextHandle.hpp
     Language: C++
-    
+
     (C) Copyright Eden Softworks
-    
+
     Author: Joshua Allen
     E-Mail: Joshua(AT)EdenSoftworks(DOT)net
-    
+
     Description: Header file for ContextHandle utility.
                  The ContextHandle is a wrapper around
                  the Leadwerks::Context object.
-    
-    Functions: 1. Leadwerks::Context* getInst(void);                                                     
+
+    Functions: 1. Leadwerks::Context* getInst(void);
 
 ---------------------------------------------------------*/
 
@@ -22,25 +22,30 @@
 
 #pragma once
 #include "Leadwerks.h"
+#include "Disposable.hpp"
 #include "Macros.hpp"
 
-class ContextHandle
+class ContextHandle : public Disposable
 {
 	CLASS_TYPE(Context);
 
 public:
 
-	explicit ContextHandle(Leadwerks::Context* pContext) 
+	explicit ContextHandle(Leadwerks::Context* pContext)
 		:m_pContext(pContext){
 
 	}
 
-	~ContextHandle(void) {
-
-		SAFE_RELEASE(m_pContext);
-		SAFE_DELETE(m_pContext);
-
+	~ContextHandle(void)
+    {
+        Dispose();
 	}
+
+    void Dispose(void)
+    {
+        SAFE_RELEASE(m_pContext);
+        SAFE_DELETE(m_pContext);
+    }
 
 	Leadwerks::Context* getInst(void) { return m_pContext; }
 

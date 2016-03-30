@@ -1,14 +1,14 @@
 /*-------------------------------------------------------
                     <copyright>
-    
+
     File: EventManager.hpp
     Language: C++
-    
+
     (C) Copyright Eden Softworks
-    
+
     Author: Joshua Allen
     E-Mail: Joshua(AT)EdenSoftworks(DOT)net
-    
+
     Description: Header file for EventManager.
                  The EventManager class provides a clean
                  interface for adding event processing
@@ -16,24 +16,24 @@
                  for event delegation.
 
     Functions: 1. bool AddListener(const EventListenerDelegate& eventDelegate, const EventType& type);
-    
+
                2. bool RemoveListener(const EventListenerDelegate& eventDelegate, const EventType& type);
-               
+
                3. bool TriggerEvent(BaseEventData& pEvent);
-               
+
                4. bool QueueEvent(BaseEventData& pEvent);
-               
+
                5. bool AbortEvent(const EventType& type, bool bAll = false);
-               
+
                6. template <void(*Function)(BaseEventData*)>
 	              bool Bind(const EventType& type);
-                   
+
                7. template <class C, void(C::*Function)(BaseEventData*)>
 	              bool Bind(C* instance, const EventType& type);
 
                8. template <void(*Function)(BaseEventData*)>
 	              bool Unbind(const EventType& type);
-                  
+
                9. template <class C, void(C::*Function)(BaseEventData*)>
 	              bool Unbind(C* instance, const EventType& type);
 
@@ -45,6 +45,7 @@
 #pragma once
 #include "Leadwerks.h"
 #include "..\Utilities\Delegate.hpp"
+#include "../Utilities/Disposable.hpp"
 #include "..\Utilities\Event.hpp"
 #include "..\Utilities\Macros.hpp"
 
@@ -56,7 +57,7 @@
 
 typedef Delegate<BaseEventData*>						EventListenerDelegate;																		// Definition fora delegate, specifically used for events.
 
-class EventManager {
+class EventManager : public Disposable {
 
 	CLASS_TYPE(EventManager);
 
@@ -68,6 +69,8 @@ class EventManager {
 public:
 														EventManager();																				// Event manager constructor.
 														~EventManager();																			// Event manager destructor.
+
+    void                                                Dispose(void);
 
 	bool												Update(unsigned long nMaxMillis = 20);															// Processes any events within the event-manager's event queue
 																																					// for the given amount of time, per frame.
@@ -84,7 +87,7 @@ public:
 	bool												QueueEvent(BaseEventData& pEvent);															// Queues the given event to processed during the event-
 																																					// - manager's processing queue.
 	bool												AbortEvent(const EventType& type, bool bAll = false);										// Aborts the execution of the given event. If bAll is true,
-																																					// - all events of the given type are removed from processing.	
+																																					// - all events of the given type are removed from processing.
 
 	template <void(*Function)(BaseEventData*)>
 	bool Bind(const EventType& type) {
@@ -93,7 +96,7 @@ public:
 
 		return AddListener(eventDelegate, type);
 	}
-	
+
 	template <class C, void(C::*Function)(BaseEventData*)>
 	bool Bind(C* instance, const EventType& type) {
 		EventListenerDelegate eventDelegate;
@@ -116,14 +119,14 @@ public:
 		eventDelegate.Bind<C, Function>(instance);
 
 		return RemoveListener(eventDelegate, type);
-	}	
+	}
 
 protected:
 
-private:	
+private:
 	EventMap											m_eventListeners;																			// Contains all event-listeners, seperated by event type.
 	EventQueue											m_queues[NUM_QUEUES];																		// Contains all events needing to be processed.
-	int													m_nActiveQueue;																				// Indicates which event-processing queue is currently being used.	
+	int													m_nActiveQueue;																				// Indicates which event-processing queue is currently being used.
 
 }; // end class EventManager.
 

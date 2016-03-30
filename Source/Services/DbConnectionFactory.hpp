@@ -3,7 +3,9 @@
 
 #pragma once
 #include "../Utilities/Macros.hpp"
+#include "../Utilities/Disposable.hpp"
 
+#include "../Utilities/sqlite/sqlite3.h"
 #include "../Utilities/sqlite/ConnectionState.hpp"
 #include "../Utilities/sqlite/DbConnection.hpp"
 #include "../Utilities/sqlite/DbConnectionOptions.hpp"
@@ -13,7 +15,7 @@
 #include <map>
 #include <string>
 
-class IDbConnectionFactory
+class IDbConnectionFactory : public IDisposable
 {
     CLASS_TYPE(IDbConnectionFactory);
 
@@ -24,7 +26,7 @@ public:
 
 }; // < end class interface.
 
-class DbConnectionFactory : public IDbConnectionFactory
+class DbConnectionFactory : public IDbConnectionFactory, public Disposable
 {
     CLASS_TYPE(DbConnectionFactory);
 
@@ -93,9 +95,9 @@ public:
         {
             auto& connection = (*iter).second;
 
-            if (DbConnection::HasConnectionState(connection, CONNECTION_OPEN))
+            if (DbConnection::HasAnyConnectionState(connection, CONNECTION_OPEN))
             {
-                connection->Close();
+                connection->Close(true);
             }
 
             connection->Dispose();

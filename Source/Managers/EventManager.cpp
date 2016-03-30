@@ -8,18 +8,24 @@
 #include <list>
 #include <map>
 
-EventManager::EventManager() 
+EventManager::EventManager()
 	: m_nActiveQueue(0) {
 
 }
 
-EventManager::~EventManager() {
+EventManager::~EventManager()
+{
+    Dispose();
+}
+
+void EventManager::Dispose(void)
+{
 
 }
 
 bool EventManager::Update(unsigned long nMaxMillis) {
     unsigned long currMs = 0, maxMs = 0;
-	
+
     currMs = Leadwerks::Time::GetCurrent();
 	maxMs = ((nMaxMillis == EventManager::KINFINITE) ? (EventManager::KINFINITE) : (currMs + maxMs));
 
@@ -42,9 +48,9 @@ bool EventManager::Update(unsigned long nMaxMillis) {
 
 			/* Call each listener */
 			EventListenerList::const_iterator it = eventListeners.begin();
-			while (it != eventListeners.end()) {	
+			while (it != eventListeners.end()) {
 				if (&it != nullptr) {
-					it->Invoke(pEvent);					
+					it->Invoke(pEvent);
 				}
 				++it;
 			}
@@ -120,7 +126,7 @@ bool EventManager::TriggerEvent(BaseEventData& pEvent) {
 	if (find != m_eventListeners.end()) {
 		EventListenerList& eventListenerList = find->second;
 		EventListenerList::const_iterator it = eventListenerList.begin();
-		while (it != eventListenerList.end()) {	
+		while (it != eventListenerList.end()) {
 			if (&it != nullptr) {
 				it->Invoke(&pEvent);
 				processed = true;

@@ -3,6 +3,7 @@
 
 #pragma once
 #include "Leadwerks.h"
+#include "Utilities/Disposable.hpp"
 
 class Container;
 
@@ -10,7 +11,8 @@ class EventManager;
 class InputManager;
 class StateManager;
 
-class App {
+class App : public Disposable
+{
 public:
 					App			(void);
 	virtual 		~App		(void);

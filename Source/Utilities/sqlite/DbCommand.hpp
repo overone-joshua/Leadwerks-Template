@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include <sqlite/sqlite3.h>
+#include "sqlite3.h"
 
 #include <cassert>
 #include <string>
@@ -27,10 +27,7 @@ public:
         assert(m_pDatabase != nullptr);
     }
 
-    ~DbCommand(void)
-    {
-        Dispose();
-    }
+    ~DbCommand(void) { }
 
     std::vector<std::vector<std::string>> Query(char* queryString)
     {
@@ -54,7 +51,12 @@ public:
                 auto index = cols;
                 while (index < cols)
                 {
-                    values.push_back((char*)sqlite3_column_text(pStatement, index));
+                    std::string val; // < Initialized to empty string.
+                    auto ptr = (char*)sqlite3_column_text(pStatement, index);
+
+                    if (ptr) { val = ptr; }
+
+                    values.push_back(val);
                     ++index;
                 }
                 results.push_back(values);
@@ -69,11 +71,6 @@ public:
         if (err != "not an error") std::cerr << queryString << " " << err << std::endl;
 
         return results;
-    }
-
-    void Dispose(void)
-    {
-
     }
 
 protected:

@@ -77,11 +77,11 @@ void InputManager::ToggleMouseCenter() {
 	this->m_bCenterMouse = !this->m_bCenterMouse;
 }
 
-void InputManager::CenterMouse(void) { 
-	this->m_pWindow->SetMousePosition(CenterX(), CenterY()); 
+void InputManager::CenterMouse(void) {
+	this->m_pWindow->SetMousePosition(CenterX(), CenterY());
 }
 
-void InputManager::UpdateMousePosition(void) { 
+void InputManager::UpdateMousePosition(void) {
 	this->m_pWindow->SetMousePosition(PosX(), PosY());
 }
 
@@ -114,17 +114,23 @@ InputManager::InputManager(void)
 
 }
 
-InputManager::InputManager(Leadwerks::Window* pWindow, Leadwerks::Context* pContext, EventManager* pEventManager) 
+InputManager::InputManager(Leadwerks::Window* pWindow, Leadwerks::Context* pContext, EventManager* pEventManager)
 	: m_pWindow(pWindow), m_pContext(pContext), m_bCenterMouse(false), m_pEventManager(pEventManager) {
 
 	Initialize(pWindow, pContext, pEventManager);
 }
 
-InputManager::~InputManager() {
-	UnRegisterInputEvents();
+InputManager::~InputManager()
+{
+    Dispose();
+}
 
-	this->m_pWindow = nullptr;
-	this->m_pContext = nullptr;
+void InputManager::Dispose(void)
+{
+    UnRegisterInputEvents();
+
+    this->m_pWindow = nullptr;
+    this->m_pContext = nullptr;
 }
 
 void InputManager::Initialize(Leadwerks::Window* pWindow, Leadwerks::Context* pContext, EventManager* pEventManager)
@@ -151,12 +157,12 @@ void InputManager::Initialize(Leadwerks::Window* pWindow, Leadwerks::Context* pC
 
     unsigned index = 0;
     while (index < 256) {
-        
+
         m_currentKeyboardPressedState[index] = false;
         m_currentKeyboardState[index] = false;
         m_previousKeyboardState[index] = false;
-        
-        if (index < 6) 
+
+        if (index < 6)
         {
             m_currentMousePressedState[index] = false;
             m_currentMouseState[index] = false;
@@ -194,13 +200,13 @@ void InputManager::Update(float deltaTime) {
 }
 
 void InputManager::CheckMouseInput(int button) {
-	Leadwerks::Vec3 vMousePosition = GetMousePosition();	
+	Leadwerks::Vec3 vMousePosition = GetMousePosition();
 
 	/* Snag the current and previous mouse-button's state. */
 	bool bCurrent = m_currentMouseState[button] = m_pWindow->mousedownstate[button];
 	bool bCurrentPressedState = m_currentMousePressedState[button];
-	bool bPrevious = m_previousMouseState[button];	
-	
+	bool bPrevious = m_previousMouseState[button];
+
 	/* Was the button hit? */
 	if (bCurrent && !bPrevious) {
 		/* Create LeftMouseButton Hit Event. */
@@ -244,9 +250,9 @@ void InputManager::CheckMouseInput(int button) {
 		m_currentMousePressedState[button] = false;
 	}
 
-	/* Store the current down state for the left mouse button so we 
+	/* Store the current down state for the left mouse button so we
 	 * - can check it next frame. */
-	m_previousMouseState[button] = bCurrent;	
+	m_previousMouseState[button] = bCurrent;
 }
 
 void InputManager::CheckKeyboardInput(int key) {
@@ -260,7 +266,7 @@ void InputManager::CheckKeyboardInput(int key) {
 		/* Create key-hit Event. */
 		auto keyHit = (gEventFactory.Create("Event_KeyHit"));
 
-		/* Set the required values for the event. */		
+		/* Set the required values for the event. */
 		keyHit->Set("nKey", key);
 
 		/* Queue the event for execution. */
@@ -272,7 +278,7 @@ void InputManager::CheckKeyboardInput(int key) {
 			/* Create key-pressed Event. */
 			auto keyPressed = (gEventFactory.Create("Event_KeyDown"));
 
-			/* Set the required values for the event. */			
+			/* Set the required values for the event. */
 			keyPressed->Set("nKey", key);
 
 			/* Queue the event for execution. */
@@ -286,7 +292,7 @@ void InputManager::CheckKeyboardInput(int key) {
 		/* Create key-up Event. */
 		auto keyUp = (gEventFactory.Create("Event_KeyUp"));
 
-		/* Set the required values for the event. */		
+		/* Set the required values for the event. */
 		keyUp->Set("nKey", key);
 
 		/* Queue the event for execution. */
@@ -312,7 +318,7 @@ void InputManager::RegisterInputEvents(void) {
 	REGISTER_EVENT((new FactoryMaker<Event_KeyUp, BaseEventData>));
 }
 
-void InputManager::UnRegisterInputEvents(void) {	
+void InputManager::UnRegisterInputEvents(void) {
     gEventFactory.Unregister("Event_MouseMove");
 
 	gEventFactory.Unregister("Event_MouseHit");
@@ -328,7 +334,7 @@ void InputManager::GenerateInputEvents(void) {
     auto dX = DeltaX();
     auto dY = DeltaY();
     auto dZ = DeltaZ();
-       
+
     if (dX != 0 || dY != 0)
     {
         /* Create key-up Event. */
@@ -349,11 +355,11 @@ void InputManager::GenerateInputEvents(void) {
 		 * - the current input for the key. */
 		CheckKeyboardInput(index);
 
-		/* Mouse only has 6 buttons so rather than have a 
+		/* Mouse only has 6 buttons so rather than have a
 		 * - seperate loop. just check button state
 		 * - where appropriate. */
 		if (index < 6) { CheckMouseInput(index); }
 
 		index += 1;
-	}	        
+	}
 }

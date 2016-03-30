@@ -1,14 +1,14 @@
 /*-------------------------------------------------------
                     <copyright>
-    
+
     File: StateManager.hpp
     Language: C++
-    
+
     (C) Copyright Eden Softworks
-    
+
     Author: Joshua Allen
     E-Mail: Joshua(AT)EdenSoftworks(DOT)net
-    
+
     Description: Header file for StateManager.
                  The StateManager provides a unified
                  interface for adding logical states to
@@ -17,32 +17,33 @@
 
     Functions: 1. template <typename T>
 	              void AddState(bool bChange = false);
-	
+
 	           2. template <typename T>
 	              void RemoveState(void);
 
 	           3. void RemoveAllStates(void);
-	
+
 	           4. template <typename T>
 	              void ChangeState(void);
-	
+
 	           5. template <typename T>
 	              State* FetchState(void);
-	
+
 	           6. template <typename T>
 	              bool IsStatePresent(void);
-	
+
 	           7. void CloseCurrentState(void);
-	
+
 	           8. bool StateChangedThisFrame(void);
 
 ---------------------------------------------------------*/
 
 #ifndef _STATE_MANAGER_HPP_
 	#define _STATE_MANAGER_HPP_
-	
+
 #pragma once
 #include "../Utilities/Container.hpp"
+#include "../Utilities/Disposable.hpp"
 #include "../Utilities/Manager.hpp"
 #include "../Utilities/Macros.hpp"
 
@@ -59,7 +60,7 @@ class StateManager : public Manager {
 
 	typedef std::map<std::string,  State*> StateMap;
 
-public:								
+public:
                                 StateManager(Container* pContainer, EventManager* pEventManager);
 	                           ~StateManager(void);
 
@@ -72,26 +73,26 @@ public:
 	void                       preRender(void);
 	void                       postRender(void);
 	void                       Render(void);
-	
+
 	void                       preDraw(void);
 	void                       postDraw(void);
 	void                       Draw(void);
 
-	
+
 	template <typename T> void AddState(bool bChange = false);
-		
+
 	template <typename T> void RemoveState(void);
 
 	void                       RemoveAllStates(void);
-		
+
 	template <typename T> void ChangeState(void);
-		
+
 	template <typename T> State* FetchState(void);
-		
+
 	template <typename T> bool IsStatePresent(void);
-	
+
 	void                       CloseCurrentState(void);
-	
+
 	bool                       StateChangedThisFrame(void);
 
 protected:
@@ -99,7 +100,7 @@ protected:
 											   StateManager(void);
 
 	void                                       Configure(Container* pContainer);
-	
+
 	template <typename T> StateMap::iterator   FetchStateInternal(void);
 
     void                                        OnMouseMove(BaseEventData* pData);
@@ -112,19 +113,19 @@ protected:
 	void                                       OnKeyDown(BaseEventData* pData);
 	void                                       OnKeyUp(BaseEventData* pData);
 
-private:	
+private:
 
 	Container*                                 m_pContainer;
 	EventManager*                              m_pEventManager;
 
 	bool                                       m_bStateChangedThisFrame;
-	
+
 	State*                                     m_pCurrentState;
 
-	StateMap                                   m_states;	
+	StateMap                                   m_states;
 
 }; // < end class.
-	
+
 template <typename T>
 void StateManager::AddState(bool bChange) {
 
@@ -145,7 +146,7 @@ void StateManager::RemoveState(void) {
 
 	auto it = FetchStateInternal<T>();
 	if (it == this->m_states.end()) { return; }
-	
+
 	SAFE_DELETE(it->second);
 
 	this->m_states.erase(it);
@@ -155,7 +156,7 @@ void StateManager::RemoveState(void) {
 template <typename T>
 void StateManager::ChangeState(void) {
 
-	if (this->m_pCurrentState != nullptr) 
+	if (this->m_pCurrentState != nullptr)
 	{
 		CloseCurrentState();
 	}
@@ -170,7 +171,7 @@ void StateManager::ChangeState(void) {
 }
 
 template <typename T>
- State* StateManager::FetchState(void) { 
+ State* StateManager::FetchState(void) {
 
 	auto iter = FetchStateInternal<T>();
 	if (iter == this->m_states.end()) { return nullptr; }
@@ -183,9 +184,9 @@ template <typename T>
 StateManager::StateMap::iterator StateManager::FetchStateInternal(void) {
 
 	std::string type = T::ClassType();
-	
+
 	auto iter = this->m_states.find(type);
-	
+
 	return iter;
 
 }

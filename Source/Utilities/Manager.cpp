@@ -8,7 +8,12 @@ Manager::Manager(void) {
 
 }
 
-Manager::~Manager(void) { }
+Manager::~Manager(void)
+{
+    Dispose();
+}
+
+void Manager::Dispose(void) { }
 
 void Manager::Render(void) { }
 

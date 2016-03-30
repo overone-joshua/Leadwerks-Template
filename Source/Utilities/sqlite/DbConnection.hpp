@@ -2,15 +2,17 @@
     #define _DBCONNECTION_HPP_
 
 #pragma once
+#include "../Disposable.hpp"
+
+#include "sqlite3.h"
+
 #include "ConnectionState.hpp"
 #include "DbCommand.hpp"
 #include "DbConnectionOptions.hpp"
 
-#include <sqlite/sqlite3.h>
-
 #include <string>
 
-class IDbConnection
+class IDbConnection : virtual IDisposable
 {
 public:
 
@@ -21,7 +23,7 @@ public:
 
 }; // < end class interface.
 
-class DbConnection : public IDbConnection
+class DbConnection : public IDbConnection, public Disposable
 {
 protected:
 

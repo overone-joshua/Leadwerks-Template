@@ -1,17 +1,17 @@
 /*-------------------------------------------------------
                     <copyright>
-    
+
     File: InputManager.hpp
     Language: C++
-    
+
     (C) Copyright Eden Softworks
-    
+
     Author: Joshua Allen
     E-Mail: Joshua(AT)EdenSoftworks(DOT)net
-    
+
     Description: Header file for InputManager.
                  The InputManager provides a helper
-                 interface around the Leadwerks::Window to 
+                 interface around the Leadwerks::Window to
                  simplify the input process pipeline when
                  it comes to polling and processing input.
 
@@ -22,20 +22,24 @@
 
 #pragma once
 #include "..\Common.hpp"
+#include "../Utilities/Disposable.hpp"
 #include "..\Utilities\Macros.hpp"
 #include "..\Utilities\ParameterMap.hpp"
 
 class EventManager;
 
-class InputManager : ParameterMap {
+class InputManager : ParameterMap, public Disposable
+{
 
 	CLASS_TYPE(InputManager);
 
-public:								
+public:
 								InputManager(Leadwerks::Window* pWindow,		// InputManager constructor.
 											 Leadwerks::Context* pContext,
 											 EventManager* pEventManager);
 								~InputManager();								// InputManager destructor.
+
+    void                        Dispose(void);
 
 								void Initialize(Leadwerks::Window* pWindow,
 												Leadwerks::Context* pContext,
@@ -85,7 +89,7 @@ private:
 	Leadwerks::Context*			m_pContext;										// The main context handle.
 	EventManager*				m_pEventManager;
 
-	bool						m_bCenterMouse;									// Indicates whether the mouse pointer will be centered every frame.	
+	bool						m_bCenterMouse;									// Indicates whether the mouse pointer will be centered every frame.
 
 	bool m_currentMousePressedState[6];
 	bool m_currentMouseState[6];
@@ -93,7 +97,7 @@ private:
 
 	bool m_currentKeyboardPressedState[256];
 	bool m_currentKeyboardState[256];
-	bool m_previousKeyboardState[256];	
+	bool m_previousKeyboardState[256];
 
 }; // end class.
 
