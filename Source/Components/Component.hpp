@@ -36,6 +36,7 @@ namespace Components
         {
             this->nId = other.nId;
             this->cName = other.cName;
+            return *this;
         }
 
 	} Component; // < end struct.
