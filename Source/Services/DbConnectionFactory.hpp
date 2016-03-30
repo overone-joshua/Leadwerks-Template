@@ -15,14 +15,14 @@
 #include <map>
 #include <string>
 
-class IDbConnectionFactory : public IDisposable
+class IDbConnectionFactory : virtual IDisposable
 {
     CLASS_TYPE(IDbConnectionFactory);
 
 public:
 
-    virtual IDbConnection* const OpenConnection(void) { return nullptr; }
-    virtual IDbConnection* const CreateConnection(void) { return nullptr; }
+    virtual IDbConnection* const OpenConnection(const std::string& key) = 0;
+    virtual IDbConnection* const CreateConnection(const std::string& key) = 0;
 
 }; // < end class interface.
 
@@ -56,7 +56,7 @@ public:
 
         assert(connection != nullptr);
 
-        if (!DbConnection::HasConnectionState(static_cast<DbConnection*>(connection), CONNECTION_OPEN))
+        if (DbConnection::HasConnectionState(static_cast<DbConnection*>(connection), CONNECTION_CLOSED))
         {
             connection->Open();
         }
