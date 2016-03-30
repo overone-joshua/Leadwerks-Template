@@ -50,7 +50,7 @@ public:
 
         AddConnectionState(this, CONNECTION_CONNECTING);
 
-        auto res = sqlite3_open(m_connectionString.c_str(), m_pDatabase);
+        auto res = sqlite3_open(m_connectionString.c_str(), &m_pDatabase);
         assert(res == SQLITE_OK);
 
         this->SetConnectionState(CONNECTION_OPEN);
@@ -66,7 +66,7 @@ public:
 
         AddConnectionState(this, CONNECTION_CLOSING);
 
-        auto res = sqlite3_close(*m_pDatabase);
+        auto res = sqlite3_close(m_pDatabase);
         assert(res == SQLITE_OK);
 
         this->SetConnectionState(CONNECTION_CLOSED);
@@ -77,7 +77,7 @@ public:
         assert(m_pDatabase != nullptr);
         assert(HasConnectionState(this, CONNECTION_OPEN) == true);
 
-        auto command = new DbCommand(*m_pDatabase);
+        auto command = new DbCommand(m_pDatabase);
 
         return command;
     }
@@ -124,7 +124,7 @@ protected:
 
 private:
 
-    sqlite3** m_pDatabase;
+    sqlite3* m_pDatabase;
 
     DbConnectionOptions m_connectionOptions;
     std::string m_connectionString;
