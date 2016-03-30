@@ -13,7 +13,7 @@ class IDbCommand
 {
 public:
 
-    virtual std::vector<std::vector<std::string>> Query(char* queryString) = 0
+    virtual std::vector<std::vector<std::string>> Query(char* queryString) = 0;
 
 }; // < end class interface.
 

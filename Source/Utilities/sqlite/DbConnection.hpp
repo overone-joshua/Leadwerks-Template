@@ -4,6 +4,7 @@
 #pragma once
 #include "ConnectionState.hpp"
 #include "DbCommand.hpp"
+#include "DbConnectionOptions.hpp"
 
 #include <sqlite/sqlite3.h>
 
@@ -26,8 +27,9 @@ protected:
 
 public:
 
-    DbConnection(const std::string& connectionString)
+    DbConnection(const std::string& connectionString, const DbConnectionOptions options)
         : m_pDatabase(nullptr), m_connectionString(connectionString), m_connectionState(CONNECTION_CLOSED)
+        , m_connectionOptions(options)
     {
 
     }
@@ -122,7 +124,7 @@ private:
 
     sqlite3** m_pDatabase;
 
-    int m_connectionTimout;
+    DbConnectionOptions m_connectionOptions;
     std::string m_connectionString;
 
     unsigned m_connectionState;

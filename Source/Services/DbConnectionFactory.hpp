@@ -6,6 +6,7 @@
 
 #include "../Utilities/sqlite/ConnectionState.hpp"
 #include "../Utilities/sqlite/DbConnection.hpp"
+#include "../Utilities/sqlite/DbConnectionOptions.hpp"
 #include "../Utilities/sqlite/DbCommand.hpp"
 
 #include <cassert>
@@ -31,9 +32,15 @@ class DbConnectionFactory : public IDbConnectionFactory
 
 public:
     DbConnectionFactory(const std::string& connectionString)
-        : m_connectionString(connectionString)
     {
-        assert(connectionString.compare("") != 0);
+        DbConnectionOptions options;
+
+        Initialize(connectionString, options);
+    }
+
+    DbConnectionFactory(const std::string& connectionString, const DbConnectionOptions options)
+    {
+        Initialize(connectionString, options);
     }
 
     ~DbConnectionFactory(void)
@@ -57,7 +64,7 @@ public:
 
     IDbConnection* const CreateConnection(const std::string& key)
     {
-        auto iter = m_connectionPool.insert(std::make_pair(key, new DbConnection(m_connectionString)));
+        auto iter = m_connectionPool.insert(std::make_pair(key, new DbConnection(m_connectionString, m_connectionOptions)));
         if (!iter.second)
         {
             // < Already exists .
@@ -106,6 +113,15 @@ public:
 
 protected:
 
+    bool Initialize(const std::string& connectionString, const DbConnectionOptions& options)
+    {
+        assert(connectionString.compare("") != 0);
+
+        m_connectionString = connectionString;
+
+        return true;
+    }
+
     ConnectionPool::iterator FetchConnectionInternal(const std::string& key)
     {
         return m_connectionPool.find(key);
@@ -116,6 +132,7 @@ private:
     std::string m_connectionString;
 
     ConnectionPool m_connectionPool;
+    DbConnectionOptions m_connectionOptions;
 
 }; // < end class.
 
