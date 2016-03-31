@@ -83,6 +83,13 @@ void DatabaseController::CreateTable(std::string tableName, const std::vector<st
     ExecuteCommand(sql);
 }
 
+void DatabaseController::Insert(std::string tableName, const std::vector<std::string>& row)
+{
+    auto sql = GenerateInsertStatement(tableName, row);
+
+    ExecuteCommand(sql);
+}
+
 std::string DatabaseController::GenerateCreateStatement(std::string tableName, const std::vector<std::tuple<std::string, std::string, std::string>>& table)
 {
     auto sqlStatement = "CREATE TABLE " + tableName + " (";
@@ -108,7 +115,29 @@ std::string DatabaseController::GenerateCreateStatement(std::string tableName, c
     }
 
     sqlStatement.append(endStatement);
+    return sqlStatement;
+}
 
+std::string DatabaseController::GenerateInsertStatement(std::string tabelName, const std::vector<std::string>& row)
+{
+    auto sqlStatement = "INSERT INTO " + tabelName + " VALUES (";
+    auto endStatement = ");";
+
+    auto iter = row.begin();
+    while (iter != row.end())
+    {
+        auto val = (*iter);
+        sqlStatement.append(val);
+
+        ++iter;
+
+        if (iter != row.end())
+        {
+            sqlStatement.append(", ");
+        }
+    }
+
+    sqlStatement.append(endStatement);
     return sqlStatement;
 }
 
