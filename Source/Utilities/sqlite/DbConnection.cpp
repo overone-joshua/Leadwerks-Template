@@ -81,9 +81,6 @@ const void DbConnection::Close(bool bForce)
 
 IDbCommand* const DbConnection::CreateCommand(void)
 {
-    assert(m_pDatabase != nullptr);
-    assert(HasConnectionState(this, CONNECTION_OPEN) == true);
-
     auto command = new DbCommand(m_pDatabase, this);
     m_commands.push_back(command);
 
