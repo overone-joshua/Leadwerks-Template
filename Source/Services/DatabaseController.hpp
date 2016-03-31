@@ -55,6 +55,8 @@ protected:
 
     bool CleanupConnection(void);
 
+    void CloseConnections(void);
+
 private:
 
     IDbConnectionFactory* const m_pDbConnectionFactory;

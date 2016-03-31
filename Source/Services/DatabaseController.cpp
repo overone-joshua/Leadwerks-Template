@@ -16,7 +16,32 @@ DatabaseController::~DatabaseController(void)
 
 void DatabaseController::Dispose(void)
 {
+    CloseConnections();
+}
 
+void DatabaseController::CloseConnections(void)
+{
+    auto iter = m_connections.begin();
+    while (iter != m_connections.end())
+    {
+        auto connection = static_cast<DbConnection*>((*iter));
+
+        if (!DbConnection::HasConnectionState(connection, CONNECTION_CLOSED))
+        {
+            connection->Close(true);
+        }
+
+        SAFE_DELETE(connection);
+        assert(connection != nullptr);
+
+        iter = m_connections.erase(iter);
+
+        if (iter != m_connections.end())
+        {
+            ++iter;
+        }
+    }
+    m_connections.clear();
 }
 
 std::vector<std::vector<std::string>> DatabaseController::ExecuteCommand(const std::string& query, bool bCloseConnection)
