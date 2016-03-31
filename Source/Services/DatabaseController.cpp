@@ -55,6 +55,10 @@ std::vector<std::vector<std::string>> DatabaseController::ExecuteCommand(const s
     auto connection = m_pDbConnectionFactory->CreateConnection(key.str());
     assert(connection != nullptr);
 
+    // < open the connection.
+    connection->Open(); // < This will create the database if it does not exist.
+    assert(DbConnection::HasConnectionState(static_cast<DbConnection*>(connection), CONNECTION_OPEN));
+
     auto it = m_connections.insert(m_connections.end(), connection);
 
     auto command = connection->CreateCommand();
@@ -92,7 +96,7 @@ std::string DatabaseController::GenerateCreateStatement(std::string tableName, c
         auto colType = std::get<1>(row);
         auto colNullable = std::get<2>(row);
 
-        auto rowStatement = colName + ", " + colType + ", " + colNullable;
+        auto rowStatement = colName + " " + colType + " " + colNullable;
         sqlStatement.append(rowStatement);
 
         ++iter;
