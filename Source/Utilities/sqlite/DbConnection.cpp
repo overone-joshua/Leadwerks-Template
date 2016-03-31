@@ -121,7 +121,7 @@ void DbConnection::Update(void)
     // < If the connection has been around for longer than its lifespan,
     // * close it so it may be cleaned up appropriately.
     auto timespan = m_connectionOptions.nTimeout;
-    if (m_nBeganExecution + timespan <= Leadwerks::Time::GetCurrent())
+    if (timespan > 0 && m_nBeganExecution + timespan <= Leadwerks::Time::GetCurrent())
     {
         this->Close(true);
     }
