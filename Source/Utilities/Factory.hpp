@@ -42,16 +42,16 @@
 		virtual const char* ObjectType() { return ClassType(); } \
 		static const char* ClassType() { return #classname; }
 
-template <typename T>
+template <typename T, typename... ARGS>
 class FactoryMakerBase
 {
 public:
-	virtual T* Create() const = 0;
+	virtual T* Create(ARGS... args) const = 0;
 	virtual const char* ObjectType() const = 0;
 }; // end class FactoryMakerBase.
 
-template <typename Type, typename Base>
-class FactoryMaker : public FactoryMakerBase < Base >
+template <typename Type, typename Base, typename... ARGS>
+class FactoryMaker : public FactoryMakerBase < Base , ARGS...>
 {
 public:
 	virtual Base* Create() const
@@ -70,7 +70,8 @@ class Factory {
 public:
 	typedef FactoryMakerBase<T> FactoryType;
 
-	T* Create(const std::string& objType);
+	template <typename... ARGS>
+	T* Create(const std::string& objType, ARGS... args);
 	void Register(FactoryType* pMaker);
 	void Unregister(const std::string& objType);
 
@@ -100,14 +101,15 @@ void Factory<T>::Unregister(const std::string& objType)
 } // end Unregister.
 
 template <typename T>
-T* Factory<T>::Create(const std::string& objType)
+template <typename... ARGS>
+T* Factory<T>::Create(const std::string& objType, ARGS... args)
 {
 	typename TypeMap::iterator it = m_makers.find(objType);
 	if (it == m_makers.end())
 		return nullptr;
 
 	FactoryType* pMaker = (*it).second;
-	return pMaker->Create();
+	return pMaker->Create(std::forward<ARGS>(args)...);
 } // end Create.
 
 #endif // _FACTORY_HPP_
