@@ -25,19 +25,21 @@ std::vector<std::vector<std::string>> DatabaseController::ExecuteCommand(const s
     auto connection = m_pDbConnectionFactory->CreateConnection(key.str());
     assert(connection != nullptr);
 
-    m_connections.push_back(connection);
+    auto it = m_connections.insert(m_connections.end(), connection);
 
     auto command = connection->CreateCommand();
     assert(command != nullptr);
 
-    auto result = command->Query(query.c_str());
+    auto results = connection->ExecuteCommand(command, query.c_str());
+
+    // < Force the connection closed.
     if (bCloseConnection)
     {
-        SAFE_DELETE(command);
-        assert(command == nullptr);
+        connection->Close(true);
+        m_connections.erase(it);
     }
 
-    return result;
+    return results;
 }
 
 void DatabaseController::Update(unsigned long nMaxMillis)
@@ -50,6 +52,13 @@ void DatabaseController::Update(unsigned long nMaxMillis)
 
     while (!m_connections.empty())
     {
+        auto iter = m_connections.begin();
+        while (iter != m_connections.end())
+        {
+            (*iter)->Update();
+            ++iter;
+        }
+
         numConnectionsClosed += CleanupConnection();
 
         /* Check to see if processing time ran out */
@@ -64,10 +73,12 @@ void DatabaseController::Update(unsigned long nMaxMillis)
 bool DatabaseController::CleanupConnection(void)
 {
     auto connection = static_cast<DbConnection*>(m_connections.front());
+    m_connections.pop_front();
 
     if (!DbConnection::HasConnectionState(connection, CONNECTION_CLOSED))
     {
         // < Connection is still busy
+        m_connections.push_back(connection);
         return false;
     }
 

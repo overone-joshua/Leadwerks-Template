@@ -12,7 +12,7 @@
 #include <cassert>
 #include <string>
 #include <sstream>
-#include <vector>
+#include <queue>
 #include <tuple>
 
 class DatabaseController
@@ -43,7 +43,7 @@ private:
 
     DbConnectionFactory* const m_pDbConnectionFactory;
 
-    std::vector<IDbConnection* const> m_connections;
+    std::deque<IDbConnection* const> m_connections;
 
 }; // < end class.
 
