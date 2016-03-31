@@ -6,11 +6,15 @@
 
 #include "sqlite3.h"
 
-#include "ConnectionState.hpp"
-#include "DbCommand.hpp"
 #include "DbConnectionOptions.hpp"
 
+#include <cassert>
 #include <string>
+#include <map>
+#include <vector>
+
+class IDbCommand;
+class DbCommand;
 
 class IDbConnection : virtual IDisposable
 {
@@ -20,6 +24,9 @@ public:
     virtual const void Close(bool bForce = true) = 0;
 
     virtual IDbCommand* const CreateCommand(void) = 0;
+    virtual std::vector<std::vector<std::string>> ExecuteCommand(IDbCommand* const command, const char* query) = 0;
+
+    virtual void Update(void) = 0;
 
 }; // < end class interface.
 
@@ -29,98 +36,34 @@ protected:
 
 public:
 
-    DbConnection(const std::string& connectionString, const DbConnectionOptions options)
-        : m_pDatabase(nullptr), m_connectionString(connectionString), m_connectionState(CONNECTION_CLOSED)
-        , m_connectionOptions(options)
-    {
+    DbConnection(const std::string& connectionString, const DbConnectionOptions options);
 
-    }
+    ~DbConnection(void);
 
-    ~DbConnection(void)
-    {
-        Dispose();
-    }
+    const void Open(void);
 
-    const void Open(void)
-    {
-        if (m_pDatabase != nullptr && HasConnectionState(this, CONNECTION_CLOSED))
-        {
-            return;
-        }
+    const void Close(bool bForce = false);
 
-        AddConnectionState(this, CONNECTION_CONNECTING);
+    IDbCommand* const CreateCommand(void);
+    std::vector<std::vector<std::string>> ExecuteCommand(IDbCommand* const command, const char* query);
 
-        auto res = sqlite3_open(m_connectionString.c_str(), &m_pDatabase);
-        assert(res == SQLITE_OK);
+    static inline bool HasConnectionState(const DbConnection* connection, unsigned connectionStateMask);
+    static inline bool HasAnyConnectionState(const DbConnection* connection, unsigned connectionStateMask);
 
-        this->SetConnectionState(CONNECTION_OPEN);
-    }
+    void Update(void);
 
-    const void Close(bool bForce = false)
-    {
-        // < We do not want to close a connection preemptively.
-        if (m_pDatabase == nullptr || bForce || !HasConnectionState(this, CONNECTION_OPEN))
-        {
-            return;
-        }
-
-        AddConnectionState(this, CONNECTION_CLOSING);
-
-        auto res = sqlite3_close(m_pDatabase);
-        assert(res == SQLITE_OK);
-
-        this->SetConnectionState(CONNECTION_CLOSED);
-    }
-
-    IDbCommand* const CreateCommand(void)
-    {
-        assert(m_pDatabase != nullptr);
-        assert(HasConnectionState(this, CONNECTION_OPEN) == true);
-
-        auto command = new DbCommand(m_pDatabase);
-
-        return command;
-    }
-
-    static inline bool HasConnectionState(const DbConnection* connection, unsigned connectionStateMask)
-    {
-        auto mask = connection->m_connectionState;
-
-        return ((mask & connectionStateMask) == connectionStateMask);
-    }
-
-    static inline bool HasAnyConnectionState(const DbConnection* connection, unsigned connectionStateMask)
-    {
-        auto mask = connection->m_connectionState;
-
-        return (bool(mask & connectionStateMask));
-    }
-
-    void Dispose(void)
-    {
-        Close(true);
-    }
+    void Dispose(void);
 
 protected:
 
-    static inline const void AddConnectionState(DbConnection* const connection,  unsigned connectionStateMask)
-    {
-        auto& mask = connection->m_connectionState;
-        mask |= connectionStateMask;
+    static inline const void AddConnectionState(DbConnection* const connection, unsigned connectionStateMask);
 
-        connection->SetConnectionState(mask);
-    }
+    static inline const void RemoveConnectionState(DbConnection* const connection, unsigned connectionStateMask);
 
-    static inline const void RemoveConnectionState(DbConnection* const connection, unsigned connectionStateMask)
-    {
-        auto& mask = connection->m_connectionState;
-        mask &= ~connectionStateMask;
+    unsigned GetConnectionState(void);
+    void SetConnectionState(unsigned connectionStateMask);
 
-        connection->SetConnectionState(mask);
-    }
-
-    unsigned GetConnectionState(void) { return m_connectionState; }
-    void SetConnectionState(unsigned connectionStateMask) { this->m_connectionState = connectionStateMask; }
+    void DestroyCommand(IDbCommand* command);
 
 private:
 
@@ -129,8 +72,25 @@ private:
     DbConnectionOptions m_connectionOptions;
     std::string m_connectionString;
 
+    unsigned long m_nBeganExecution;
     unsigned m_connectionState;
 
+    std::vector<IDbCommand* const> m_commands;
+
 }; // < end class.
+
+bool DbConnection::HasConnectionState(const DbConnection* connection, unsigned connectionStateMask)
+{
+    auto mask = connection->m_connectionState;
+
+    return ((mask & connectionStateMask) == connectionStateMask);
+}
+
+bool DbConnection::HasAnyConnectionState(const DbConnection* connection, unsigned connectionStateMask)
+{
+    auto mask = connection->m_connectionState;
+
+    return (bool(mask & connectionStateMask));
+}
 
 #endif _DBCONNECTION_HPP_
