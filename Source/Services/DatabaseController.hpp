@@ -10,10 +10,21 @@
 #include "../Utilities/sqlite/DbCommand.hpp"
 
 #include <cassert>
+#include <iostream>
 #include <string>
 #include <sstream>
 #include <queue>
 #include <tuple>
+
+class IDatabaseController
+{
+public:
+
+    virtual void CreateTable(std::string tableName, const std::vector<std::tuple<std::string, std::string, std::string>>& table) = 0;
+
+    virtual void Update(unsigned long nMaxMillis = 20) = 0;
+
+}; // < end class interface.
 
 class DatabaseController
 {
@@ -25,8 +36,7 @@ public :
     DatabaseController(DbConnectionFactory* const dbConnectionFactory);
     ~DatabaseController(void);
 
-    template <class C>
-    void CreateTable(const std::vector<std::tuple<std::string, std::string, std::string>>& table);
+    void CreateTable(std::string tableName, const std::vector<std::tuple<std::string, std::string, std::string>>& table);
 
     void Update(unsigned long nMaxMillis = 20);
 
@@ -34,8 +44,7 @@ protected:
 
     std::vector<std::vector<std::string>> ExecuteCommand(const std::string& query, bool bCloseConnection = false);
 
-    template <class C>
-    static std::string GenerateCreateStatement(const std::vector<std::tuple<std::string, std::string, std::string>>& table);
+    static std::string GenerateCreateStatement(std::string tableName, const std::vector<std::tuple<std::string, std::string, std::string>>& table);
 
     bool CleanupConnection(void);
 
@@ -46,45 +55,5 @@ private:
     std::deque<IDbConnection* const> m_connections;
 
 }; // < end class.
-
-template <class C>
-void DatabaseController::CreateTable(const std::vector<std::tuple<std::string, std::string, std::string>>& table)
-{
-    auto sql = GenerateCreateStatement<C>(table);
-
-    ExecuteCommand(sql);
-}
-
-template <class C>
-std::string DatabaseController::GenerateCreateStatement(const std::vector<std::tuple<std::string, std::string, std::string>>& table)
-{
-    std::string tableName = C::ClassType();
-
-    auto sqlStatement = "CREATE TABLE " + tableName + " (";
-    auto endStatement = ");";
-
-    auto iter = table.begin();
-    while (iter != table.end())
-    {
-        auto row = (*iter);
-        auto colName = row.first;
-        auto colType = row->second;
-        auto colNullable = row->third;
-
-        auto rowStatement = colName + ", " + colType + ", " + colNullable;
-        sqlStatement.append(rowStatement);
-
-        ++iter;
-
-        if (iter != table.end())
-        {
-            sqlStatement.append(", ");
-        }
-    }
-
-    sqlStatement.append(endStatement);
-
-    return sqlStatement;
-}
 
 #endif _DATABASE_CONTROLLER_HPP_

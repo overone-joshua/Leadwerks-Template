@@ -42,6 +42,42 @@ std::vector<std::vector<std::string>> DatabaseController::ExecuteCommand(const s
     return results;
 }
 
+void DatabaseController::CreateTable(std::string tableName, const std::vector<std::tuple<std::string, std::string, std::string>>& table)
+{
+    auto sql = GenerateCreateStatement(tableName, table);
+
+    ExecuteCommand(sql);
+}
+
+std::string DatabaseController::GenerateCreateStatement(std::string tableName, const std::vector<std::tuple<std::string, std::string, std::string>>& table)
+{
+    auto sqlStatement = "CREATE TABLE " + tableName + " (";
+    auto endStatement = ");";
+
+    auto iter = table.begin();
+    while (iter != table.end())
+    {
+        auto& row= (*iter);
+        auto colName = std::get<0>(row);
+        auto colType = std::get<1>(row);
+        auto colNullable = std::get<2>(row);
+
+        auto rowStatement = colName + ", " + colType + ", " + colNullable;
+        sqlStatement.append(rowStatement);
+
+        ++iter;
+
+        if (iter != table.end())
+        {
+            sqlStatement.append(", ");
+        }
+    }
+
+    sqlStatement.append(endStatement);
+
+    return sqlStatement;
+}
+
 void DatabaseController::Update(unsigned long nMaxMillis)
 {
     unsigned numConnectionsClosed = 0;
