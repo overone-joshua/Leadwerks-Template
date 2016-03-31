@@ -2,39 +2,48 @@
     #define _DBCOMMAND_HPP_
 
 #pragma once
+#include "DbConnection.hpp"
+#include "../Disposable.hpp"
 
 #include "sqlite3.h"
 
 #include <cassert>
+#include <iostream>
 #include <string>
 #include <vector>
 
-class IDbCommand
+class IDbCommand : virtual IDisposable
 {
 public:
 
-    virtual std::vector<std::vector<std::string>> Query(char* queryString) = 0;
+    virtual std::vector<std::vector<std::string>> Query(const char* queryString) = 0;
 
 }; // < end class interface.
 
-class DbCommand : public IDbCommand
+class DbCommand : public IDbCommand, public Disposable
 {
 public:
 
-    DbCommand(sqlite3* pDatabase)
-        : m_pDatabase(pDatabase)
+    DbCommand(sqlite3* pDatabase, IDbConnection* const connection)
+        : m_pDatabase(pDatabase), m_pDbConnection(connection)
     {
         assert(m_pDatabase != nullptr);
+        assert(m_pDbConnection != nullptr);
     }
 
-    ~DbCommand(void) { }
+    ~DbCommand(void) { Dispose(); }
 
-    std::vector<std::vector<std::string>> Query(char* queryString)
+    void Dispose(void)
+    {
+
+    }
+
+    std::vector<std::vector<std::string>> Query(const char* queryString)
     {
         assert(m_pDatabase != nullptr);
 
         sqlite3_stmt* pStatement;
-        vector<vector<string>> results;
+        std::vector<std::vector<std::string>> results;
 
         auto res = sqlite3_prepare_v2(m_pDatabase, queryString, -1, &pStatement, 0);
         assert(res == SQLITE_OK);
@@ -75,7 +84,11 @@ public:
 
 protected:
 
+private:
+
     sqlite3* const m_pDatabase;
+
+    IDbConnection* const m_pDbConnection;
 
 }; // < end class.
 
