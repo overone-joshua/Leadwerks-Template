@@ -142,10 +142,11 @@ void DatabaseController::Update(unsigned long nMaxMillis)
 
 bool DatabaseController::CleanupConnection(void)
 {
-    auto connection = static_cast<DbConnection*>(m_connections.front());
+    auto connection = m_connections.front();
     m_connections.pop_front();
 
-    if (!DbConnection::HasConnectionState(connection, CONNECTION_CLOSED))
+    auto dbConnection = static_cast<DbConnection*>(connection);
+    if (!DbConnection::HasConnectionState(dbConnection, CONNECTION_CLOSED))
     {
         // < Connection is still busy
         m_connections.push_back(connection);
