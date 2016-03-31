@@ -2,6 +2,8 @@
     #define _DATABASE_CONTROLLER_HPP_
 
 #pragma once
+#include "../Utilities/Disposable.hpp"
+#include "../Utilities/Macros.hpp"
 #include "DbConnectionFactory.hpp"
 
 #include "../Utilities/sqlite/ConnectionState.hpp"
@@ -16,8 +18,10 @@
 #include <queue>
 #include <tuple>
 
-class IDatabaseController
+class IDatabaseController : virtual IDisposable
 {
+    CLASS_TYPE(IDatabaseController);
+
 public:
 
     virtual void CreateTable(std::string tableName, const std::vector<std::tuple<std::string, std::string, std::string>>& table) = 0;
@@ -26,19 +30,22 @@ public:
 
 }; // < end class interface.
 
-class DatabaseController
+class DatabaseController : public IDatabaseController, public Disposable
 {
+    CLASS_TYPE(DatabaseController);
 
     enum eConstants { KINFINITE = 0xffffffff };
 
 public :
 
-    DatabaseController(DbConnectionFactory* const dbConnectionFactory);
+    DatabaseController(IDbConnectionFactory* const dbConnectionFactory);
     ~DatabaseController(void);
 
     void CreateTable(std::string tableName, const std::vector<std::tuple<std::string, std::string, std::string>>& table);
 
     void Update(unsigned long nMaxMillis = 20);
+
+    void Dispose(void);
 
 protected:
 
@@ -50,7 +57,7 @@ protected:
 
 private:
 
-    DbConnectionFactory* const m_pDbConnectionFactory;
+    IDbConnectionFactory* const m_pDbConnectionFactory;
 
     std::deque<IDbConnection* const> m_connections;
 

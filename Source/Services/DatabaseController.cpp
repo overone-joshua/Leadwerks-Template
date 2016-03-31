@@ -3,13 +3,18 @@
 #include "Leadwerks.h"
 #include <crossguid/guid.h>
 
-DatabaseController::DatabaseController(DbConnectionFactory* const dbConnectionFactory)
+DatabaseController::DatabaseController(IDbConnectionFactory* const dbConnectionFactory)
     : m_pDbConnectionFactory(dbConnectionFactory)
 {
     assert(m_pDbConnectionFactory != nullptr);
 }
 
 DatabaseController::~DatabaseController(void)
+{
+    Dispose();
+}
+
+void DatabaseController::Dispose(void)
 {
 
 }
