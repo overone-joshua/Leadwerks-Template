@@ -5,6 +5,7 @@
 
 typedef struct DbConnectionOptions
 {
+    unsigned long nTimeout;
 
 } DbConnectionOptions; // < end struct.
 
