@@ -5,7 +5,6 @@
 #include "../Utilities/Macros.hpp"
 #include "../Utilities/Disposable.hpp"
 
-#include "../Utilities/sqlite/sqlite3.h"
 #include "../Utilities/sqlite/ConnectionState.hpp"
 #include "../Utilities/sqlite/DbConnection.hpp"
 #include "../Utilities/sqlite/DbConnectionOptions.hpp"
