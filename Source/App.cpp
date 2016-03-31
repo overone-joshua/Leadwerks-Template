@@ -4,6 +4,7 @@
 
 #include "Common.hpp"
 #include "Services/DbConnectionFactory.hpp"
+#include "Services/DatabaseController.hpp"
 #include "Utilities/Macros.hpp"
 
 #include "Utilities/Container.hpp"
@@ -29,6 +30,10 @@ void App::Configure(Container* pContainer) {
     /* Sqlite DbConnection Factory */
     auto connectionString = "ldwrksTmp.db";
     pContainer->Register<IDbConnectionFactory, DbConnectionFactory>(new DbConnectionFactory(connectionString));
+
+    /* Database Controller */
+    m_pDatabaseCtrl = pContainer->Register<IDatabaseController, DatabaseController>(new DatabaseController(
+        pContainer->Resolve<IDbConnectionFactory>()));
 
 	/* EventManager */
 	m_pEventManager = pContainer->Register<EventManager, EventManager>( new EventManager());
@@ -95,6 +100,10 @@ bool App::Update(float dt)
 
 	// < Call the StateManager's Update.
 	if (m_pStateManager != nullptr) { m_pStateManager->Update(dt); }
+
+    // < Call DatabaseContoller's update. We allow it to process
+    // * events for 200 ms.
+    if (m_pDatabaseCtrl != nullptr) { m_pDatabaseCtrl->Update(200); }
 
     // < Call EventManager's update. We allow it to process events
     // * for 200ms a frame.

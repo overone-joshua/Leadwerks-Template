@@ -10,6 +10,7 @@ class Container;
 class EventManager;
 class InputManager;
 class StateManager;
+class IDatabaseController;
 
 class App : public Disposable
 {
@@ -40,9 +41,10 @@ protected:
 
 private:
 
-	EventManager*   m_pEventManager;
-	InputManager*   m_pInputManager;
-	StateManager*   m_pStateManager;
+	EventManager*           m_pEventManager;
+	InputManager*           m_pInputManager;
+	StateManager*           m_pStateManager;
+    IDatabaseController*    m_pDatabaseCtrl;
 
 }; // end class.
 
