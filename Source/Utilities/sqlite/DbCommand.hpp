@@ -50,9 +50,13 @@ public:
 
         auto cols = sqlite3_column_count(pStatement);
         auto result = 0;
+        auto numAffected = 0;
         while (true)
         {
             result = sqlite3_step(pStatement);
+
+            // < Fetch the number of affected rows.
+            numAffected = sqlite3_changes(m_pDatabase);
 
             if (result == SQLITE_ROW)
             {
@@ -72,6 +76,9 @@ public:
             }
             else
             {
+                // < The query executed must not have returned any records so
+                // * push back one record with the number of affected rows.
+                results.push_back(std::vector<std::string>(1, std::to_string(numAffected)));
                 break;
             }
         }
