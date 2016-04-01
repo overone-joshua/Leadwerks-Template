@@ -26,7 +26,7 @@ public:
 
     virtual void CreateTable(std::string tableName, const std::vector<std::tuple<std::string, std::string, std::string>>& table) = 0;
     virtual void InsertRecord(std::string tableName, const std::vector<std::string>& row) = 0;
-    virtual void UpdateRecord(std::string tabelName, const std::pair<std::string, std::string>& MatchKey, const std::vector<std::pair<std::string, std::string>>& values) = 0;
+    virtual void UpdateRecord(std::string tableName, const std::vector<std::pair<std::string, std::string>>& values, const std::vector<std::pair<std::string, std::string>>& WhereClauses) = 0;
 
     virtual void Update(unsigned long nMaxMillis = 20) = 0;
 
@@ -45,7 +45,7 @@ public :
 
     void CreateTable(std::string tableName, const std::vector<std::tuple<std::string, std::string, std::string>>& table);
     void InsertRecord(std::string tableName, const std::vector<std::string>& row);
-    void UpdateRecord(std::string tabelName, const std::pair<std::string, std::string>& MatchKey, const std::vector<std::pair<std::string, std::string>>& values);
+    void UpdateRecord(std::string tableName, const std::vector<std::pair<std::string, std::string>>& values, const std::vector<std::pair<std::string, std::string>>& WhereClauses);
 
     void Update(unsigned long nMaxMillis = 20);
 
@@ -57,7 +57,7 @@ protected:
 
     static std::string GenerateCreateStatement(std::string tableName, const std::vector<std::tuple<std::string, std::string, std::string>>& table);
     static std::string GenerateInsertStatement(std::string tabelName, const std::vector<std::string>& row);
-    std::string GenerateUpdateStatement(std::string tableName, const std::pair<std::string, std::string>& MatchKey, const std::vector<std::pair<std::string, std::string>>& values);
+    static std::string GenerateUpdateStatement(std::string tableName, const std::vector<std::pair<std::string, std::string>>& values, const std::vector<std::pair<std::string, std::string>>& WhereClauses);
 
     bool CleanupConnection(void);
 

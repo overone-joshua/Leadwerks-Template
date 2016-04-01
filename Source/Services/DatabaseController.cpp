@@ -90,9 +90,9 @@ void DatabaseController::InsertRecord(std::string tableName, const std::vector<s
     ExecuteCommand(sql);
 }
 
-void DatabaseController::UpdateRecord(std::string tableName, const std::pair<std::string, std::string>& MatchKey, const std::vector<std::pair<std::string, std::string>>& values)
+void DatabaseController::UpdateRecord(std::string tableName, const std::vector<std::pair<std::string, std::string>>& values, const std::vector<std::pair<std::string, std::string>>& WhereClauses)
 {
-    auto sql = GenerateUpdateStatement(tableName, MatchKey, values);
+    auto sql = GenerateUpdateStatement(tableName, values, WhereClauses);
 
     ExecuteCommand(sql);
 }
@@ -148,10 +148,10 @@ std::string DatabaseController::GenerateInsertStatement(std::string tabelName, c
     return sqlStatement;
 }
 
-std::string DatabaseController::GenerateUpdateStatement(std::string tableName, const std::pair<std::string, std::string>& MatchKey, const std::vector<std::pair<std::string, std::string>>& values)
+std::string DatabaseController::GenerateUpdateStatement(std::string tableName, const std::vector<std::pair<std::string, std::string>>& values, const std::vector<std::pair<std::string, std::string>>& WhereClauses)
 {
-    auto sqlStatement = "UPDATE " + tableName + " SET ";
-    auto endStatement = " WHERE " + MatchKey.first + " = " + MatchKey.second;
+    std::string sqlStatement = "UPDATE " + tableName + " SET ";
+    auto endStatement = ";";
 
     auto iter = values.begin();
     while (iter != values.end())
@@ -165,6 +165,26 @@ std::string DatabaseController::GenerateUpdateStatement(std::string tableName, c
         ++iter;
 
         if (iter != values.end())
+        {
+            sqlStatement.append(", ");
+        }
+    }
+
+    // < Add where clauses.
+    sqlStatement.append(" WHERE ");
+
+    auto iter2 = WhereClauses.begin();
+    while (iter2 != WhereClauses.end())
+    {
+        auto key = std::get<0>((*iter2));
+        auto val = std::get<1>((*iter2));
+
+        auto rowStatement = key + " = " + val;
+        sqlStatement.append(rowStatement);
+
+        ++iter2;
+
+        if (iter2 != WhereClauses.end())
         {
             sqlStatement.append(", ");
         }
