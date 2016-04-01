@@ -26,9 +26,9 @@ public:
 
     virtual void CreateTable(std::string tableName, const std::vector<std::tuple<std::string, std::string, std::string>>& table) = 0;
     virtual unsigned long InsertRecord(std::string tableName, const std::vector<std::string>& cols, const std::vector<std::string>& values) = 0;
-    virtual void UpdateRecord(std::string tableName, const std::vector<std::pair<std::string, std::string>>& values, const std::vector<std::pair<std::string, std::string>>& WhereClauses) = 0;
-    virtual std::vector<std::vector<std::string>> SelectRecords(std::string tableName, const std::vector<std::string>& cols, const std::vector<std::pair<std::string, std::string>>& WhereClauses) = 0;
-    virtual unsigned long DeleteRecords(std::string tableName, const std::vector<std::pair<std::string, std::string>>& WhereClauses) = 0;
+    virtual void UpdateRecord(std::string tableName, const std::vector<std::pair<std::string, std::string>>& values, const std::vector<std::tuple<std::string, std::string, std::string>>& WhereClauses) = 0;
+    virtual std::vector<std::vector<std::string>> SelectRecords(std::string tableName, const std::vector<std::string>& cols, const std::vector<std::tuple<std::string, std::string, std::string>>& WhereClauses) = 0;
+    virtual unsigned long DeleteRecords(std::string tableName, const std::vector<std::tuple<std::string, std::string, std::string>>& WhereClauses) = 0;
 
     virtual void Update(unsigned long nMaxMillis = 20) = 0;
 
@@ -42,14 +42,18 @@ class DatabaseController : public IDatabaseController, public Disposable
 
 public :
 
+    typedef std::vector<std::tuple<std::string, std::string, std::string>> WhereClause;
+    typedef std::vector<std::string> ColumnCollection;
+    typedef std::vector<std::pair<std::string, std::string>> KeyValCollection;
+
     DatabaseController(IDbConnectionFactory* const dbConnectionFactory);
     ~DatabaseController(void);
 
     void CreateTable(std::string tableName, const std::vector<std::tuple<std::string, std::string, std::string>>& table);
     unsigned long InsertRecord(std::string tableName, const std::vector<std::string>& cols, const std::vector<std::string>& values);
-    void UpdateRecord(std::string tableName, const std::vector<std::pair<std::string, std::string>>& values, const std::vector<std::pair<std::string, std::string>>& WhereClauses);
-	std::vector<std::vector<std::string>> SelectRecords(std::string tableName, const std::vector<std::string>& cols, const std::vector<std::pair<std::string, std::string>>& WhereClauses);
-	unsigned long DeleteRecords(std::string tableName, const std::vector<std::pair<std::string, std::string>>& WhereClauses);
+    void UpdateRecord(std::string tableName, const std::vector<std::pair<std::string, std::string>>& values, const std::vector<std::tuple<std::string, std::string, std::string>>& WhereClauses);
+	std::vector<std::vector<std::string>> SelectRecords(std::string tableName, const std::vector<std::string>& cols, const std::vector<std::tuple<std::string, std::string, std::string>>& WhereClauses);
+	unsigned long DeleteRecords(std::string tableName, const std::vector<std::tuple<std::string, std::string, std::string>>& WhereClauses);
 
     void Update(unsigned long nMaxMillis = 20);
 
@@ -61,9 +65,13 @@ protected:
 
     static std::string GenerateCreateStatement(std::string tableName, const std::vector<std::tuple<std::string, std::string, std::string>>& table);
     static std::string GenerateInsertStatement(std::string tabelName, const std::vector<std::string>& cols, const std::vector<std::string>& values);
-    static std::string GenerateUpdateStatement(std::string tableName, const std::vector<std::pair<std::string, std::string>>& values, const std::vector<std::pair<std::string, std::string>>& WhereClauses);
-    static std::string GenerateSelectStatement(std::string tableName, const std::vector<std::string>& cols, const std::vector<std::pair<std::string, std::string>>& WhereClauses);
-    static std::string GenerateDeleteStatement(std::string tableName, const std::vector<std::pair<std::string, std::string>>& WhereClauses);
+    static std::string GenerateUpdateStatement(std::string tableName, const std::vector<std::pair<std::string, std::string>>& values, const std::vector<std::tuple<std::string, std::string, std::string>>& WhereClauses);
+    static std::string GenerateSelectStatement(std::string tableName, const std::vector<std::string>& cols, const std::vector<std::tuple<std::string, std::string, std::string>>& WhereClauses);
+    static std::string GenerateDeleteStatement(std::string tableName, const std::vector<std::tuple<std::string, std::string, std::string>>& WhereClauses);
+
+    static std::string GenerateColumnCollection(const std::vector<std::string>& values);
+    static std::string GenerateKeyValCollection(const std::vector<std::pair<std::string, std::string>>& keyValPair);
+    static std::string GenerateWhereClause(const std::vector<std::tuple<std::string, std::string, std::string>>& keyValPair);
 
     bool CleanupConnection(void);
 

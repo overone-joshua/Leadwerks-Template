@@ -94,21 +94,21 @@ unsigned long DatabaseController::InsertRecord(std::string tableName, const std:
     return rowsAffected;
 }
 
-void DatabaseController::UpdateRecord(std::string tableName, const std::vector<std::pair<std::string, std::string>>& values, const std::vector<std::pair<std::string, std::string>>& WhereClauses)
+void DatabaseController::UpdateRecord(std::string tableName, const std::vector<std::pair<std::string, std::string>>& values, const std::vector<std::tuple<std::string, std::string, std::string>>& WhereClauses)
 {
     auto sql = GenerateUpdateStatement(tableName, values, WhereClauses);
 
     ExecuteCommand(sql);
 }
 
-std::vector<std::vector<std::string>> DatabaseController::SelectRecords(std::string tableName, const std::vector<std::string>& cols, const std::vector<std::pair<std::string, std::string>>& WhereClauses)
+std::vector<std::vector<std::string>> DatabaseController::SelectRecords(std::string tableName, const std::vector<std::string>& cols, const std::vector<std::tuple<std::string, std::string, std::string>>& WhereClauses)
 {
 	auto sql = GenerateSelectStatement(tableName, cols, WhereClauses);
 
 	return ExecuteCommand(sql);
 }
 
-unsigned long DatabaseController::DeleteRecords(std::string tableName, const std::vector<std::pair<std::string, std::string>>& WhereClauses)
+unsigned long DatabaseController::DeleteRecords(std::string tableName, const std::vector<std::tuple<std::string, std::string, std::string>>& WhereClauses)
 {
 	auto sql = GenerateDeleteStatement(tableName, WhereClauses);
 
@@ -149,152 +149,132 @@ std::string DatabaseController::GenerateInsertStatement(std::string tabelName, c
     std::string sqlStatement = "INSERT INTO " + tabelName + " (";
     auto endStatement = ");";
 
-    auto iter = cols.begin();
-    while (iter != cols.end())
-    {
-        sqlStatement.append((*iter));
-
-        ++iter;
-
-        if (iter != cols.end())
-        {
-            sqlStatement.append(", ");
-        }
-    }
+    sqlStatement.append(GenerateColumnCollection(cols));
 
     sqlStatement.append(") VALUES (");
 
-    auto iter2 = values.begin();
-    while (iter2 != values.end())
-    {
-        auto val = (*iter2);
-        sqlStatement.append(val);
-
-        ++iter2;
-
-        if (iter2 != values.end())
-        {
-            sqlStatement.append(", ");
-        }
-    }
+    sqlStatement.append(GenerateColumnCollection(values));
 
     sqlStatement.append(endStatement);
     return sqlStatement;
 }
 
-std::string DatabaseController::GenerateUpdateStatement(std::string tableName, const std::vector<std::pair<std::string, std::string>>& values, const std::vector<std::pair<std::string, std::string>>& WhereClauses)
+std::string DatabaseController::GenerateUpdateStatement(std::string tableName, const std::vector<std::pair<std::string, std::string>>& values, const std::vector<std::tuple<std::string, std::string, std::string>>& WhereClauses)
 {
     std::string sqlStatement = "UPDATE " + tableName + " SET ";
     auto endStatement = ";";
 
+    sqlStatement.append(GenerateKeyValCollection(values));
+
+    sqlStatement.append(GenerateWhereClause(WhereClauses));
+    sqlStatement.append(endStatement);
+
+    return sqlStatement;
+}
+
+std::string DatabaseController::GenerateSelectStatement(std::string tableName, const std::vector<std::string>& cols, const std::vector<std::tuple<std::string, std::string, std::string>>& WhereClauses)
+{
+	std::string sqlStatement = "SELECT ";
+    auto endStatement = ";";
+
+    sqlStatement.append(GenerateColumnCollection(cols));
+
+    // < Add where clauses.
+    sqlStatement.append(" FROM " + tableName);
+    sqlStatement.append(GenerateWhereClause(WhereClauses));
+
+    sqlStatement.append(endStatement);
+	return sqlStatement;
+}
+
+std::string DatabaseController::GenerateDeleteStatement(std::string tableName, const std::vector<std::tuple<std::string, std::string, std::string>>& WhereClauses)
+{
+	std::string sqlStatement = "DELETE FROM " + tableName;
+    auto endStatement = ";";
+
+    sqlStatement.append(GenerateWhereClause(WhereClauses));
+    sqlStatement.append(endStatement);
+
+	return sqlStatement;
+}
+
+std::string DatabaseController::GenerateColumnCollection(const std::vector<std::string>& values)
+{
+    std::string cols = " ";
+
+    // < Add columns.
     auto iter = values.begin();
     while (iter != values.end())
     {
-        auto key = (*iter).first;
-        auto val = (*iter).second;
+        auto& val = (*iter);
 
-        auto rowStatement = key + " = " + val;
-		sqlStatement.append(rowStatement);
+        cols.append(val);
 
         ++iter;
 
         if (iter != values.end())
         {
-            sqlStatement.append(", ");
+            cols.append(", ");
         }
-    }
-
-    // < Add where clauses.
-    sqlStatement.append(" WHERE ");
-
-    auto iter2 = WhereClauses.begin();
-    while (iter2 != WhereClauses.end())
-    {
-        auto key = std::get<0>((*iter2));
-        auto val = std::get<1>((*iter2));
-
-        auto rowStatement = key + " = " + val;
-        sqlStatement.append(rowStatement);
-
-        ++iter2;
-
-        if (iter2 != WhereClauses.end())
+        else
         {
-            sqlStatement.append(", ");
+            cols.append(" ");
         }
     }
 
-    sqlStatement.append(endStatement);
-    return sqlStatement;
+    return cols;
 }
 
-std::string DatabaseController::GenerateSelectStatement(std::string tableName, const std::vector<std::string>& cols, const std::vector<std::pair<std::string, std::string>>& WhereClauses)
+std::string DatabaseController::GenerateKeyValCollection(const std::vector<std::pair<std::string, std::string>>& keyValPair)
 {
-	std::string sqlStatement = "SELECT ";
-    auto endStatement = ";";
+    std::string keyVals = " ";
 
-    // < Add columns.
-    auto iter = cols.begin();
-    while (iter != cols.end())
+    auto iter = keyValPair.begin();
+    while (iter != keyValPair.end())
     {
-        auto& val = (*iter);
+        auto key = (*iter).first;
+        auto val = (*iter).second;
 
-        sqlStatement.append(val);
+        auto rowStatement = key + " = " + val;
+        keyVals.append(rowStatement);
 
         ++iter;
 
-        if (iter != cols.end())
+        if (iter != keyValPair.end())
         {
-            sqlStatement.append(", ");
+            keyVals.append(", ");
+        }
+        else
+        {
+            keyVals.append(" ");
         }
     }
 
-    // < Add where clauses.
-    sqlStatement.append(" FROM " + tableName + " WHERE ");
-
-    auto iter2 = WhereClauses.begin();
-    while (iter2 != WhereClauses.end())
-    {
-        auto key = std::get<0>((*iter2));
-        auto val = std::get<1>((*iter2));
-
-        auto rowStatement = key + " = " + val;
-        sqlStatement.append(rowStatement);
-
-        ++iter2;
-
-        if (iter2 != WhereClauses.end())
-        {
-            sqlStatement.append(", ");
-        }
-    }
-
-    sqlStatement.append(endStatement);
-	return sqlStatement;
+    return keyVals;
 }
 
-std::string DatabaseController::GenerateDeleteStatement(std::string tableName, const std::vector<std::pair<std::string, std::string>>& WhereClauses)
+std::string DatabaseController::GenerateWhereClause(const std::vector<std::tuple<std::string, std::string, std::string>>& keyValPair)
 {
-	std::string sqlStatement = "DELETE FROM " + tableName + " WHERE ";
-    auto endStatement = ";";
+    std::string whereStatement = " WHERE ";
 
-    auto iter = WhereClauses.begin();
-    while (iter != WhereClauses.end())
+    auto iter = keyValPair.begin();
+    while (iter != keyValPair.end())
     {
         auto key = std::get<0>((*iter));
-        auto val = std::get<1>((*iter));
+        auto sign = std::get<1>((*iter));
+        auto val = std::get<2>((*iter));
 
-        sqlStatement.append(key + " = " + val);
+        whereStatement.append(key + " " + sign + " " + val);
 
         ++iter;
 
-        if (iter != WhereClauses.end())
+        if (iter != keyValPair.end())
         {
-            sqlStatement.append(", ");
+            whereStatement.append(" ");
         }
     }
 
-	return sqlStatement;
+    return whereStatement;
 }
 
 void DatabaseController::Update(unsigned long nMaxMillis)
