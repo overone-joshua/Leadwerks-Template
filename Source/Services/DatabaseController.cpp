@@ -83,9 +83,16 @@ void DatabaseController::CreateTable(std::string tableName, const std::vector<st
     ExecuteCommand(sql);
 }
 
-void DatabaseController::Insert(std::string tableName, const std::vector<std::string>& row)
+void DatabaseController::InsertRecord(std::string tableName, const std::vector<std::string>& row)
 {
     auto sql = GenerateInsertStatement(tableName, row);
+
+    ExecuteCommand(sql);
+}
+
+void DatabaseController::UpdateRecord(std::string tableName, const std::pair<std::string, std::string>& MatchKey, const std::vector<std::pair<std::string, std::string>>& values)
+{
+    auto sql = GenerateUpdateStatement(tableName, MatchKey, values);
 
     ExecuteCommand(sql);
 }
@@ -132,6 +139,32 @@ std::string DatabaseController::GenerateInsertStatement(std::string tabelName, c
         ++iter;
 
         if (iter != row.end())
+        {
+            sqlStatement.append(", ");
+        }
+    }
+
+    sqlStatement.append(endStatement);
+    return sqlStatement;
+}
+
+std::string DatabaseController::GenerateUpdateStatement(std::string tableName, const std::pair<std::string, std::string>& MatchKey, const std::vector<std::pair<std::string, std::string>>& values)
+{
+    auto sqlStatement = "UPDATE " + tableName + " SET ";
+    auto endStatement = " WHERE " + MatchKey.first + " = " + MatchKey.second;
+
+    auto iter = values.begin();
+    while (iter != values.end())
+    {
+        auto key = (*iter).first;
+        auto val = (*iter).second;
+
+        auto rowStatement = key + " = " + val;
+		sqlStatement.append(rowStatement);
+
+        ++iter;
+
+        if (iter != values.end())
         {
             sqlStatement.append(", ");
         }

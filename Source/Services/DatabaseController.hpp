@@ -25,7 +25,8 @@ class IDatabaseController : virtual IDisposable
 public:
 
     virtual void CreateTable(std::string tableName, const std::vector<std::tuple<std::string, std::string, std::string>>& table) = 0;
-    virtual void Insert(std::string tableName, const std::vector<std::string>& row) = 0;
+    virtual void InsertRecord(std::string tableName, const std::vector<std::string>& row) = 0;
+    virtual void UpdateRecord(std::string tabelName, const std::pair<std::string, std::string>& MatchKey, const std::vector<std::pair<std::string, std::string>>& values) = 0;
 
     virtual void Update(unsigned long nMaxMillis = 20) = 0;
 
@@ -43,7 +44,8 @@ public :
     ~DatabaseController(void);
 
     void CreateTable(std::string tableName, const std::vector<std::tuple<std::string, std::string, std::string>>& table);
-    void Insert(std::string tableName, const std::vector<std::string>& row);
+    void InsertRecord(std::string tableName, const std::vector<std::string>& row);
+    void UpdateRecord(std::string tabelName, const std::pair<std::string, std::string>& MatchKey, const std::vector<std::pair<std::string, std::string>>& values);
 
     void Update(unsigned long nMaxMillis = 20);
 
@@ -54,7 +56,8 @@ protected:
     std::vector<std::vector<std::string>> ExecuteCommand(const std::string& query, bool bCloseConnection = false);
 
     static std::string GenerateCreateStatement(std::string tableName, const std::vector<std::tuple<std::string, std::string, std::string>>& table);
-    static std::string GenerateInsertStatement(std::string tabelName, const std::vector<std::string>&);
+    static std::string GenerateInsertStatement(std::string tabelName, const std::vector<std::string>& row);
+    std::string GenerateUpdateStatement(std::string tableName, const std::pair<std::string, std::string>& MatchKey, const std::vector<std::pair<std::string, std::string>>& values);
 
     bool CleanupConnection(void);
 
