@@ -25,9 +25,10 @@ class IDatabaseController : virtual IDisposable
 public:
 
     virtual void CreateTable(std::string tableName, const std::vector<std::tuple<std::string, std::string, std::string>>& table) = 0;
-    virtual void InsertRecord(std::string tableName, const std::vector<std::string>& row) = 0;
+    virtual unsigned long InsertRecord(std::string tableName, const std::vector<std::string>& cols, const std::vector<std::string>& values) = 0;
     virtual void UpdateRecord(std::string tableName, const std::vector<std::pair<std::string, std::string>>& values, const std::vector<std::pair<std::string, std::string>>& WhereClauses) = 0;
     virtual std::vector<std::vector<std::string>> SelectRecords(std::string tableName, const std::vector<std::string>& cols, const std::vector<std::pair<std::string, std::string>>& WhereClauses) = 0;
+    virtual unsigned long DeleteRecords(std::string tableName, const std::vector<std::pair<std::string, std::string>>& WhereClauses) = 0;
 
     virtual void Update(unsigned long nMaxMillis = 20) = 0;
 
@@ -45,7 +46,7 @@ public :
     ~DatabaseController(void);
 
     void CreateTable(std::string tableName, const std::vector<std::tuple<std::string, std::string, std::string>>& table);
-    void InsertRecord(std::string tableName, const std::vector<std::string>& row);
+    unsigned long InsertRecord(std::string tableName, const std::vector<std::string>& cols, const std::vector<std::string>& values);
     void UpdateRecord(std::string tableName, const std::vector<std::pair<std::string, std::string>>& values, const std::vector<std::pair<std::string, std::string>>& WhereClauses);
 	std::vector<std::vector<std::string>> SelectRecords(std::string tableName, const std::vector<std::string>& cols, const std::vector<std::pair<std::string, std::string>>& WhereClauses);
 	unsigned long DeleteRecords(std::string tableName, const std::vector<std::pair<std::string, std::string>>& WhereClauses);
@@ -59,7 +60,7 @@ protected:
     std::vector<std::vector<std::string>> ExecuteCommand(const std::string& query, bool bCloseConnection = false);
 
     static std::string GenerateCreateStatement(std::string tableName, const std::vector<std::tuple<std::string, std::string, std::string>>& table);
-    static std::string GenerateInsertStatement(std::string tabelName, const std::vector<std::string>& row);
+    static std::string GenerateInsertStatement(std::string tabelName, const std::vector<std::string>& cols, const std::vector<std::string>& values);
     static std::string GenerateUpdateStatement(std::string tableName, const std::vector<std::pair<std::string, std::string>>& values, const std::vector<std::pair<std::string, std::string>>& WhereClauses);
     static std::string GenerateSelectStatement(std::string tableName, const std::vector<std::string>& cols, const std::vector<std::pair<std::string, std::string>>& WhereClauses);
     static std::string GenerateDeleteStatement(std::string tableName, const std::vector<std::pair<std::string, std::string>>& WhereClauses);
