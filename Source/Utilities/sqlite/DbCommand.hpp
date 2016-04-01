@@ -57,7 +57,7 @@ public:
             if (result == SQLITE_ROW)
             {
                 std::vector<std::string> values;
-                auto index = cols;
+                auto index = 0;
                 while (index < cols)
                 {
                     std::string val; // < Initialized to empty string.
