@@ -18,6 +18,12 @@
 #include <queue>
 #include <tuple>
 
+typedef std::vector<std::tuple<std::string, std::string, std::string>> DataTable;
+typedef std::tuple<std::string, std::string, std::string> WhereClause;
+typedef std::vector<std::string> ColumnCollection;
+typedef std::vector<std::string> ValueCollection;
+typedef std::vector<std::pair<std::string, std::string>> KeyValCollection;
+
 class IDatabaseController : virtual IDisposable
 {
     CLASS_TYPE(IDatabaseController);
@@ -25,10 +31,10 @@ class IDatabaseController : virtual IDisposable
 public:
 
     virtual void CreateTable(std::string tableName, const std::vector<std::tuple<std::string, std::string, std::string>>& table) = 0;
-    virtual unsigned long InsertRecord(std::string tableName, const std::vector<std::string>& cols, const std::vector<std::string>& values) = 0;
-    virtual void UpdateRecord(std::string tableName, const std::vector<std::pair<std::string, std::string>>& values, const std::vector<std::tuple<std::string, std::string, std::string>>& WhereClauses) = 0;
-    virtual std::vector<std::vector<std::string>> SelectRecords(std::string tableName, const std::vector<std::string>& cols, const std::vector<std::tuple<std::string, std::string, std::string>>& WhereClauses) = 0;
-    virtual unsigned long DeleteRecords(std::string tableName, const std::vector<std::tuple<std::string, std::string, std::string>>& WhereClauses) = 0;
+    virtual unsigned long InsertRecord(std::string tableName, const ColumnCollection& cols, const ValueCollection& values) = 0;
+    virtual void UpdateRecord(std::string tableName, const KeyValCollection& values, const std::vector<WhereClause>& WhereClauses) = 0;
+    virtual std::vector<std::vector<std::string>> SelectRecords(std::string tableName, const ColumnCollection& cols, const std::vector<WhereClause>& WhereClauses) = 0;
+    virtual unsigned long DeleteRecords(std::string tableName, const std::vector<WhereClause>& WhereClauses) = 0;
 
     virtual void Update(unsigned long nMaxMillis = 20) = 0;
 
@@ -42,18 +48,14 @@ class DatabaseController : public IDatabaseController, public Disposable
 
 public :
 
-    typedef std::vector<std::tuple<std::string, std::string, std::string>> WhereClause;
-    typedef std::vector<std::string> ColumnCollection;
-    typedef std::vector<std::pair<std::string, std::string>> KeyValCollection;
-
     DatabaseController(IDbConnectionFactory* const dbConnectionFactory);
     ~DatabaseController(void);
 
-    void CreateTable(std::string tableName, const std::vector<std::tuple<std::string, std::string, std::string>>& table);
-    unsigned long InsertRecord(std::string tableName, const std::vector<std::string>& cols, const std::vector<std::string>& values);
-    void UpdateRecord(std::string tableName, const std::vector<std::pair<std::string, std::string>>& values, const std::vector<std::tuple<std::string, std::string, std::string>>& WhereClauses);
-	std::vector<std::vector<std::string>> SelectRecords(std::string tableName, const std::vector<std::string>& cols, const std::vector<std::tuple<std::string, std::string, std::string>>& WhereClauses);
-	unsigned long DeleteRecords(std::string tableName, const std::vector<std::tuple<std::string, std::string, std::string>>& WhereClauses);
+    void CreateTable(std::string tableName, const DataTable& table);
+    unsigned long InsertRecord(std::string tableName, const ColumnCollection& cols, const ValueCollection& values);
+    void UpdateRecord(std::string tableName, const KeyValCollection& values, const std::vector<WhereClause>& WhereClauses);
+	std::vector<std::vector<std::string>> SelectRecords(std::string tableName, const ColumnCollection& cols, const std::vector<WhereClause>& WhereClauses);
+	unsigned long DeleteRecords(std::string tableName, const std::vector<WhereClause>& WhereClauses);
 
     void Update(unsigned long nMaxMillis = 20);
 
@@ -63,15 +65,15 @@ protected:
 
     std::vector<std::vector<std::string>> ExecuteCommand(const std::string& query, bool bCloseConnection = false);
 
-    static std::string GenerateCreateStatement(std::string tableName, const std::vector<std::tuple<std::string, std::string, std::string>>& table);
-    static std::string GenerateInsertStatement(std::string tabelName, const std::vector<std::string>& cols, const std::vector<std::string>& values);
-    static std::string GenerateUpdateStatement(std::string tableName, const std::vector<std::pair<std::string, std::string>>& values, const std::vector<std::tuple<std::string, std::string, std::string>>& WhereClauses);
-    static std::string GenerateSelectStatement(std::string tableName, const std::vector<std::string>& cols, const std::vector<std::tuple<std::string, std::string, std::string>>& WhereClauses);
-    static std::string GenerateDeleteStatement(std::string tableName, const std::vector<std::tuple<std::string, std::string, std::string>>& WhereClauses);
+    static std::string GenerateCreateTableStatement(std::string tableName, const std::vector<std::tuple<std::string, std::string, std::string>>& table);
+    static std::string GenerateInsertStatement(std::string tabelName, const ColumnCollection& cols, const ValueCollection& values);
+    static std::string GenerateUpdateStatement(std::string tableName, const KeyValCollection& values, const std::vector<WhereClause>& WhereClauses);
+    static std::string GenerateSelectStatement(std::string tableName, const ColumnCollection& cols, const std::vector<WhereClause>& WhereClauses);
+    static std::string GenerateDeleteStatement(std::string tableName, const std::vector<WhereClause>& WhereClauses);
 
-    static std::string GenerateColumnCollection(const std::vector<std::string>& values);
-    static std::string GenerateKeyValCollection(const std::vector<std::pair<std::string, std::string>>& keyValPair);
-    static std::string GenerateWhereClause(const std::vector<std::tuple<std::string, std::string, std::string>>& keyValPair);
+    static std::string GenerateColumnCollection(const ColumnCollection& values);
+    static std::string GenerateKeyValCollection(const KeyValCollection& keyValPair);
+    static std::string GenerateWhereClause(const std::vector<WhereClause>& keyValPair);
 
     bool CleanupConnection(void);
 

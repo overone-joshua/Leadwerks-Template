@@ -76,14 +76,14 @@ std::vector<std::vector<std::string>> DatabaseController::ExecuteCommand(const s
     return results;
 }
 
-void DatabaseController::CreateTable(std::string tableName, const std::vector<std::tuple<std::string, std::string, std::string>>& table)
+void DatabaseController::CreateTable(std::string tableName, const DataTable& table)
 {
-    auto sql = GenerateCreateStatement(tableName, table);
+    auto sql = GenerateCreateTableStatement(tableName, table);
 
     ExecuteCommand(sql);
 }
 
-unsigned long DatabaseController::InsertRecord(std::string tableName, const std::vector<std::string>& cols, const std::vector<std::string>& values)
+unsigned long DatabaseController::InsertRecord(std::string tableName, const ColumnCollection& cols, const ValueCollection& values)
 {
     auto sql = GenerateInsertStatement(tableName, cols, values);
 
@@ -94,21 +94,21 @@ unsigned long DatabaseController::InsertRecord(std::string tableName, const std:
     return rowsAffected;
 }
 
-void DatabaseController::UpdateRecord(std::string tableName, const std::vector<std::pair<std::string, std::string>>& values, const std::vector<std::tuple<std::string, std::string, std::string>>& WhereClauses)
+void DatabaseController::UpdateRecord(std::string tableName, const KeyValCollection& values, const std::vector<WhereClause>& WhereClauses)
 {
     auto sql = GenerateUpdateStatement(tableName, values, WhereClauses);
 
     ExecuteCommand(sql);
 }
 
-std::vector<std::vector<std::string>> DatabaseController::SelectRecords(std::string tableName, const std::vector<std::string>& cols, const std::vector<std::tuple<std::string, std::string, std::string>>& WhereClauses)
+std::vector<std::vector<std::string>> DatabaseController::SelectRecords(std::string tableName, const ColumnCollection& cols, const std::vector<WhereClause>& WhereClauses)
 {
 	auto sql = GenerateSelectStatement(tableName, cols, WhereClauses);
 
 	return ExecuteCommand(sql);
 }
 
-unsigned long DatabaseController::DeleteRecords(std::string tableName, const std::vector<std::tuple<std::string, std::string, std::string>>& WhereClauses)
+unsigned long DatabaseController::DeleteRecords(std::string tableName, const std::vector<WhereClause>& WhereClauses)
 {
 	auto sql = GenerateDeleteStatement(tableName, WhereClauses);
 
@@ -116,7 +116,7 @@ unsigned long DatabaseController::DeleteRecords(std::string tableName, const std
 	return rowsAffected;
 }
 
-std::string DatabaseController::GenerateCreateStatement(std::string tableName, const std::vector<std::tuple<std::string, std::string, std::string>>& table)
+std::string DatabaseController::GenerateCreateTableStatement(std::string tableName, const std::vector<std::tuple<std::string, std::string, std::string>>& table)
 {
     std::string sqlStatement = "CREATE TABLE " + tableName + " (";
     auto endStatement = ");";
@@ -144,9 +144,9 @@ std::string DatabaseController::GenerateCreateStatement(std::string tableName, c
     return sqlStatement;
 }
 
-std::string DatabaseController::GenerateInsertStatement(std::string tabelName, const std::vector<std::string>& cols, const std::vector<std::string>& values)
+std::string DatabaseController::GenerateInsertStatement(std::string tableName, const ColumnCollection& cols, const ValueCollection& values)
 {
-    std::string sqlStatement = "INSERT INTO " + tabelName + " (";
+    std::string sqlStatement = "INSERT INTO " + tableName + " (";
     auto endStatement = ");";
 
     sqlStatement.append(GenerateColumnCollection(cols));
@@ -159,7 +159,7 @@ std::string DatabaseController::GenerateInsertStatement(std::string tabelName, c
     return sqlStatement;
 }
 
-std::string DatabaseController::GenerateUpdateStatement(std::string tableName, const std::vector<std::pair<std::string, std::string>>& values, const std::vector<std::tuple<std::string, std::string, std::string>>& WhereClauses)
+std::string DatabaseController::GenerateUpdateStatement(std::string tableName, const KeyValCollection& values, const std::vector<WhereClause>& WhereClauses)
 {
     std::string sqlStatement = "UPDATE " + tableName + " SET ";
     auto endStatement = ";";
@@ -172,7 +172,7 @@ std::string DatabaseController::GenerateUpdateStatement(std::string tableName, c
     return sqlStatement;
 }
 
-std::string DatabaseController::GenerateSelectStatement(std::string tableName, const std::vector<std::string>& cols, const std::vector<std::tuple<std::string, std::string, std::string>>& WhereClauses)
+std::string DatabaseController::GenerateSelectStatement(std::string tableName, const ColumnCollection& cols, const std::vector<WhereClause>& WhereClauses)
 {
 	std::string sqlStatement = "SELECT ";
     auto endStatement = ";";
@@ -187,7 +187,7 @@ std::string DatabaseController::GenerateSelectStatement(std::string tableName, c
 	return sqlStatement;
 }
 
-std::string DatabaseController::GenerateDeleteStatement(std::string tableName, const std::vector<std::tuple<std::string, std::string, std::string>>& WhereClauses)
+std::string DatabaseController::GenerateDeleteStatement(std::string tableName, const std::vector<WhereClause>& WhereClauses)
 {
 	std::string sqlStatement = "DELETE FROM " + tableName;
     auto endStatement = ";";
@@ -198,7 +198,7 @@ std::string DatabaseController::GenerateDeleteStatement(std::string tableName, c
 	return sqlStatement;
 }
 
-std::string DatabaseController::GenerateColumnCollection(const std::vector<std::string>& values)
+std::string DatabaseController::GenerateColumnCollection(const ColumnCollection& values)
 {
     std::string cols = " ";
 
@@ -225,7 +225,7 @@ std::string DatabaseController::GenerateColumnCollection(const std::vector<std::
     return cols;
 }
 
-std::string DatabaseController::GenerateKeyValCollection(const std::vector<std::pair<std::string, std::string>>& keyValPair)
+std::string DatabaseController::GenerateKeyValCollection(const KeyValCollection& keyValPair)
 {
     std::string keyVals = " ";
 
@@ -253,7 +253,7 @@ std::string DatabaseController::GenerateKeyValCollection(const std::vector<std::
     return keyVals;
 }
 
-std::string DatabaseController::GenerateWhereClause(const std::vector<std::tuple<std::string, std::string, std::string>>& keyValPair)
+std::string DatabaseController::GenerateWhereClause(const std::vector<WhereClause>& keyValPair)
 {
     std::string whereStatement = " WHERE ";
 
