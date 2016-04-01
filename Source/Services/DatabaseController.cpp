@@ -78,6 +78,9 @@ std::vector<std::vector<std::string>> DatabaseController::ExecuteCommand(const s
 
 void DatabaseController::CreateTable(std::string tableName, const DataTable& table)
 {
+    assert(!tableName.empty());
+    assert(!table.empty());
+
     auto sql = GenerateCreateTableStatement(tableName, table);
 
     ExecuteCommand(sql);
@@ -85,6 +88,10 @@ void DatabaseController::CreateTable(std::string tableName, const DataTable& tab
 
 unsigned long DatabaseController::InsertRecord(std::string tableName, const ColumnCollection& cols, const ValueCollection& values)
 {
+    assert(!tableName.empty());
+    assert(!cols.empty());
+    assert(!values.empty());
+
     auto sql = GenerateInsertStatement(tableName, cols, values);
 
     // < A sqlite Delete will not return the deleted rows so
@@ -96,6 +103,10 @@ unsigned long DatabaseController::InsertRecord(std::string tableName, const Colu
 
 void DatabaseController::UpdateRecord(std::string tableName, const KeyValCollection& values, const std::vector<WhereClause>& WhereClauses)
 {
+    assert(!tableName.empty());
+    assert(!values.empty());
+    assert(!WhereClauses.empty());
+
     auto sql = GenerateUpdateStatement(tableName, values, WhereClauses);
 
     ExecuteCommand(sql);
@@ -103,6 +114,9 @@ void DatabaseController::UpdateRecord(std::string tableName, const KeyValCollect
 
 std::vector<std::vector<std::string>> DatabaseController::SelectRecords(std::string tableName, const ColumnCollection& cols, const std::vector<WhereClause>& WhereClauses)
 {
+    assert(!tableName.empty());
+    assert(!cols.empty());
+
 	auto sql = GenerateSelectStatement(tableName, cols, WhereClauses);
 
 	return ExecuteCommand(sql);
@@ -110,6 +124,9 @@ std::vector<std::vector<std::string>> DatabaseController::SelectRecords(std::str
 
 unsigned long DatabaseController::DeleteRecords(std::string tableName, const std::vector<WhereClause>& WhereClauses)
 {
+    assert(!tableName.empty());
+    assert(!WhereClauses.empty());
+
 	auto sql = GenerateDeleteStatement(tableName, WhereClauses);
 
     auto rowsAffected = std::stoi(ExecuteCommand(sql).front().front());
@@ -255,6 +272,8 @@ std::string DatabaseController::GenerateKeyValCollection(const KeyValCollection&
 
 std::string DatabaseController::GenerateWhereClause(const std::vector<WhereClause>& keyValPair)
 {
+    if (keyValPair.empty()) { return ""; }
+
     std::string whereStatement = " WHERE ";
 
     auto iter = keyValPair.begin();
