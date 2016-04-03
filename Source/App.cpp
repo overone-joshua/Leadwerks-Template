@@ -21,6 +21,8 @@
 #include "Components/Components.hpp"
 #include "States/DefaultState.hpp"
 
+#include "Database/Scripts/PostDeploy/MainPostDeployment.hpp"
+
 App::App(void) : m_pEventManager(nullptr), m_pInputManager(nullptr), m_pStateManager(nullptr) { }
 
 App::~App(void) { }
@@ -34,6 +36,9 @@ void App::Configure(Container* pContainer) {
     /* Database Controller */
     m_pDatabaseCtrl = pContainer->Register<IDatabaseController, DatabaseController>(new DatabaseController(
         pContainer->Resolve<IDbConnectionFactory>()));
+
+	/* Database Deployment and Setup */
+	Database::Deploy(pContainer->Resolve<IDatabaseController>());
 
 	/* EventManager */
 	m_pEventManager = pContainer->Register<EventManager, EventManager>( new EventManager());
