@@ -133,7 +133,7 @@ unsigned long DatabaseController::DeleteRecords(std::string tableName, const std
 	return rowsAffected;
 }
 
-std::string DatabaseController::GenerateCreateTableStatement(std::string tableName, const std::vector<std::tuple<std::string, std::string, std::string>>& table)
+std::string DatabaseController::GenerateCreateTableStatement(std::string tableName, const DataTable& table)
 {
     std::string sqlStatement = "CREATE TABLE " + tableName + " (";
     auto endStatement = ");";

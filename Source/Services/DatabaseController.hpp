@@ -30,7 +30,7 @@ class IDatabaseController : virtual IDisposable
 
 public:
 
-    virtual void CreateTable(std::string tableName, const std::vector<std::tuple<std::string, std::string, std::string>>& table) = 0;
+    virtual void CreateTable(std::string tableName, const DataTable& table) = 0;
     virtual unsigned long InsertRecord(std::string tableName, const ColumnCollection& cols, const ValueCollection& values) = 0;
     virtual void UpdateRecord(std::string tableName, const KeyValCollection& values, const std::vector<WhereClause>& WhereClauses) = 0;
     virtual std::vector<std::vector<std::string>> SelectRecords(std::string tableName, const ColumnCollection& cols, const std::vector<WhereClause>& WhereClauses) = 0;
@@ -65,7 +65,7 @@ protected:
 
     std::vector<std::vector<std::string>> ExecuteCommand(const std::string& query, bool bCloseConnection = false);
 
-    static std::string GenerateCreateTableStatement(std::string tableName, const std::vector<std::tuple<std::string, std::string, std::string>>& table);
+    static std::string GenerateCreateTableStatement(std::string tableName, const DataTable& table);
     static std::string GenerateInsertStatement(std::string tabelName, const ColumnCollection& cols, const ValueCollection& values);
     static std::string GenerateUpdateStatement(std::string tableName, const KeyValCollection& values, const std::vector<WhereClause>& WhereClauses);
     static std::string GenerateSelectStatement(std::string tableName, const ColumnCollection& cols, const std::vector<WhereClause>& WhereClauses);
