@@ -23,6 +23,13 @@ namespace Database
 			_outTable.push_back(rowDef);
 		}
 
+        static inline void AddAuditDefinitions(DataTable& const _outTable)
+        {
+            // < Audit Data.
+            Table::AddDefinition("CreatedDate", "DATETIME", " NOT NULL", _outTable);
+            Table::AddDefinition("ModifiedDate", "DATETIME", "NULL", _outTable);
+        }
+
 	protected:
 
 		Table(IDatabaseController* _db) : db(_db) { }
