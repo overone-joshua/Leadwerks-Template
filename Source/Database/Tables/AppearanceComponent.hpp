@@ -23,6 +23,12 @@ namespace Database
 		// < Model path location.
 		Table::AddDefinition("ModelPath", "CHAR(100)", "NULL", tableDef);
 
+        // < Model information.
+        Table::AddDefinition("Model", "BLOB", "NULL", tableDef);
+
+        // < Audit Data.
+        Table::AddAuditDefinitions(tableDef);
+
 		db->CreateTable("AppearanceComponent", tableDef);
 	}
 } // < end namespace.
