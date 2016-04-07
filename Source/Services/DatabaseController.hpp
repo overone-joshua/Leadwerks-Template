@@ -36,6 +36,9 @@ public:
     virtual std::vector<std::vector<std::string>> SelectRecords(std::string tableName, const ColumnCollection& cols, const std::vector<WhereClause>& WhereClauses) = 0;
     virtual unsigned long DeleteRecords(std::string tableName, const std::vector<WhereClause>& WhereClauses) = 0;
 
+    virtual std::vector<std::vector<std::string>> ExecuteQuery(std::string query) = 0;
+    virtual unsigned long ExecuteNoQuery(std::string query) = 0;
+
     virtual void Update(unsigned long nMaxMillis = 20) = 0;
 
 }; // < end class interface.
@@ -56,6 +59,9 @@ public :
     void UpdateRecord(std::string tableName, const KeyValCollection& values, const std::vector<WhereClause>& WhereClauses);
 	std::vector<std::vector<std::string>> SelectRecords(std::string tableName, const ColumnCollection& cols, const std::vector<WhereClause>& WhereClauses);
 	unsigned long DeleteRecords(std::string tableName, const std::vector<WhereClause>& WhereClauses);
+
+    std::vector<std::vector<std::string>> ExecuteQuery(std::string query);
+    unsigned long ExecuteNoQuery(std::string query);
 
     void Update(unsigned long nMaxMillis = 20);
 

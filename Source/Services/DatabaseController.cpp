@@ -133,6 +133,21 @@ unsigned long DatabaseController::DeleteRecords(std::string tableName, const std
 	return rowsAffected;
 }
 
+std::vector<std::vector<std::string>> DatabaseController::ExecuteQuery(std::string query)
+{
+    assert(!query.empty());
+
+    return ExecuteCommand(query);
+}
+
+unsigned long DatabaseController::ExecuteNoQuery(std::string query)
+{
+    assert(!query.empty());
+
+    auto rowsAffected = std::stoi(ExecuteCommand(query).front().front());
+    return rowsAffected;
+}
+
 std::string DatabaseController::GenerateCreateTableStatement(std::string tableName, const DataTable& table)
 {
     std::string sqlStatement = "CREATE TABLE " + tableName + " (";
