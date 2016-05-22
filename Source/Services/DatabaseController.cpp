@@ -133,6 +133,17 @@ unsigned long DatabaseController::DeleteRecords(std::string tableName, const std
 	return rowsAffected;
 }
 
+void DatabaseController::CreateFKConstraint(const std::string& colName, const std::string& fkTableName, const std::string& fkColumn)
+{
+	assert(!colName.empty());
+	assert(!fkTableName.empty());
+	assert(!fkColumn.empty());
+
+	auto sql = GenerateFKConstraint(colName, fkTableName, fkColumn);
+
+	ExecuteCommand(sql);
+}
+
 std::vector<std::vector<std::string>> DatabaseController::ExecuteQuery(std::string query)
 {
     assert(!query.empty());
@@ -226,6 +237,13 @@ std::string DatabaseController::GenerateDeleteStatement(std::string tableName, c
 
     sqlStatement.append(GenerateWhereClause(WhereClauses));
     sqlStatement.append(endStatement);
+
+	return sqlStatement;
+}
+
+std::string DatabaseController::GenerateFKConstraint(const std::string& colName, const std::string& fkTableName, const std::string& fkColumn)
+{
+	std::string sqlStatement = "FOREIGN KEY (" + colName + ") REFERENCES " + fkTableName + "(" + fkColumn + ")";
 
 	return sqlStatement;
 }

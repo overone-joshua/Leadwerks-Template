@@ -35,6 +35,7 @@ public:
     virtual void UpdateRecord(std::string tableName, const KeyValCollection& values, const std::vector<WhereClause>& WhereClauses) = 0;
     virtual std::vector<std::vector<std::string>> SelectRecords(std::string tableName, const ColumnCollection& cols, const std::vector<WhereClause>& WhereClauses) = 0;
     virtual unsigned long DeleteRecords(std::string tableName, const std::vector<WhereClause>& WhereClauses) = 0;
+	virtual void CreateFKConstraint(const std::string& colName, const std::string& fkTableName, const std::string& fkColumn) = 0;
 
     virtual std::vector<std::vector<std::string>> ExecuteQuery(std::string query) = 0;
     virtual unsigned long ExecuteNoQuery(std::string query) = 0;
@@ -59,6 +60,7 @@ public :
     void UpdateRecord(std::string tableName, const KeyValCollection& values, const std::vector<WhereClause>& WhereClauses);
 	std::vector<std::vector<std::string>> SelectRecords(std::string tableName, const ColumnCollection& cols, const std::vector<WhereClause>& WhereClauses);
 	unsigned long DeleteRecords(std::string tableName, const std::vector<WhereClause>& WhereClauses);
+	void CreateFKConstraint(const std::string& colName, const std::string& fkTableName, const std::string& fkColumn);
 
     std::vector<std::vector<std::string>> ExecuteQuery(std::string query);
     unsigned long ExecuteNoQuery(std::string query);
@@ -76,6 +78,7 @@ protected:
     static std::string GenerateUpdateStatement(std::string tableName, const KeyValCollection& values, const std::vector<WhereClause>& WhereClauses);
     static std::string GenerateSelectStatement(std::string tableName, const ColumnCollection& cols, const std::vector<WhereClause>& WhereClauses);
     static std::string GenerateDeleteStatement(std::string tableName, const std::vector<WhereClause>& WhereClauses);
+	static std::string GenerateFKConstraint(const std::string& colName, const std::string& fkTableName, const std::string& fkColumn);
 
     static std::string GenerateColumnCollection(const ColumnCollection& values);
     static std::string GenerateKeyValCollection(const KeyValCollection& keyValPair);
