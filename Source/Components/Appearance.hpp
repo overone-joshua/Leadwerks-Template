@@ -1,48 +1,45 @@
 /*-------------------------------------------------------
                     <copyright>
-    
+
     File: Appearance.hpp
     Language: C++
-    
+
     (C) Copyright Eden Softworks
-    
+
     Author: Joshua Allen
     E-Mail: Joshua(AT)EdenSoftworks(DOT)net
-    
+
     Description: Header file for Appearance component.
 
 ---------------------------------------------------------*/
 
-#ifndef _APPEARANCE_HPP_
-	#define _APPEARANCE_HPP_
+#ifndef _APPEARANCE_COMPONENT_HPP
+    #define _APPEARANCE_COMPONENT_HPP
 
 #pragma once
 #include "Leadwerks.h"
 #include "../Utilities/Macros.hpp"
-#include "../Utilities/ModelHandle.hpp"
-
 #include "Component.hpp"
 
 #include <string>
 
-namespace Components 
+namespace Components
 {
 	/** An Appearance component.
 	 *  The Appearance component provides access to a Leadwerks::Model object.
 	 */
-	typedef struct Appearance : public Component
+	typedef struct Component_Appearance : public Component
 	{
 		CLASS_TYPE(Appearance);
-		
-        std::string                     cModelPath;    /* The relative filepath to this components model. */
-        Leadwerks::Model*               pModel;
 
-        /** The Appearance component constructor. */
-        Appearance(std::string modelPath = "", std::string cName = "") 
-			: pModel(nullptr), cModelPath(modelPath), Component(cName) { }     
+		std::string cModelPath;
+		Leadwerks::Model* pModel;
 
-	} Appearance; // < end struct.
+		explicit Component_Appearance(const std::string& modelPath, const std::string& cName = "")
+			: cModelPath(modelPath), pModel(nullptr), Component(cName) { }
+
+	} Appearance;
 
 } // < end namespace.
 
-#endif _APPEARANCE_HPP_
+#endif _APPEARANCE_COMPONENT_HPP
