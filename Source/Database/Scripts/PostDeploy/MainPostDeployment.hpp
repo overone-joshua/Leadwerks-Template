@@ -5,7 +5,7 @@
 #include "../../../Services/DatabaseController.hpp"
 
 #include "../../Tables/Table.hpp"
-
+#include "../../Tables/Component.hpp"
 #include "../../Tables/AppearanceComponent.hpp"
 
 namespace Database
@@ -13,6 +13,7 @@ namespace Database
 	static inline bool Deploy(IDatabaseController* const db)
 	{
 
+		Table<Components::Component>::CreateTable(db);
 		Table<Components::Appearance>::CreateTable(db);
 
 		return true;
