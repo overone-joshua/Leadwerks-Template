@@ -30,11 +30,18 @@ namespace Database
             Table::AddDefinition("ModifiedDate", "DATETIME", "NULL", _outTable);
         }
 
+		static inline void AddFKConstraint(const std::string& _col, const std::string& _fkTbl, const std::string& _fkCol, DataTable& const _outTable)
+		{
+			m_pDb->CreateFKConstraint(_col, _fkTbl, _fkCol);
+		}
+
 	protected:
 
-		Table(IDatabaseController* _db) : db(_db) { }
+		Table(IDatabaseController* _db) : m_pDb(_db), db(_db) { }
 
 	private:
+
+		IDatabaseController* m_pDb;
 
 	}; // < end class.
 
