@@ -243,7 +243,7 @@ std::string DatabaseController::GenerateDeleteStatement(std::string tableName, c
 
 std::string DatabaseController::GenerateFKConstraint(const std::string& colName, const std::string& fkTableName, const std::string& fkColumn)
 {
-	std::string sqlStatement = "FOREIGN KEY (" + colName + ") REFERENCES " + fkTableName + "(" + fkColumn + ")";
+	std::string sqlStatement = "FOREIGN KEY (" + colName + ") REFERENCES " + fkTableName + "(" + fkColumn + ");";
 
 	return sqlStatement;
 }
