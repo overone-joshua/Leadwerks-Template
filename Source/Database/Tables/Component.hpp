@@ -18,7 +18,7 @@ namespace Database
 		Table::AddDefinition("Id", "INTEGER PRIMARY KEY", "NOT NULL", tableDef);
 
 		// < Name.
-		Table::AddDefinition("Name", "CHAR(100)", "NUL", tableDef);
+		Table::AddDefinition("Name", "CHAR(100)", "NULL", tableDef);
 
 		// < Audit data.
 		Table::AddAuditDefinitions(tableDef);
