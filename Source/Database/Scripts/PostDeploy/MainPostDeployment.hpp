@@ -6,7 +6,7 @@
 
 #include "../../Tables/Table.hpp"
 #include "../../Tables/Component.hpp"
-#include "../../Tables/AppearanceComponent.hpp"
+#include "../../Tables/Appearance.hpp"
 
 namespace Database
 {
