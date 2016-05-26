@@ -17,6 +17,7 @@
 	#define _COMPONENT_HPP_
 
 #pragma once
+#include "../Utilities/Macros.hpp"
 #include "HasId.hpp"
 #include "HasName.hpp"
 
@@ -29,6 +30,8 @@ namespace Components
 	*/
 	typedef struct Component : public HasId, public HasName
 	{
+		CLASS_TYPE(Component);
+
 		/** The Components constructor. */
 		explicit Component(std::string cName = "") : HasName(cName) { }
 
