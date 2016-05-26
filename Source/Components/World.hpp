@@ -19,6 +19,7 @@
 #pragma once
 #include "Leadwerks.h"
 #include "../Utilities/Macros.hpp"
+#include "../Services/DatabaseController.hpp"
 
 #include "Component.hpp"
 
@@ -37,147 +38,44 @@ namespace Components
 	{
 		CLASS_TYPE(World);
 
-		typedef void*                                     InstPtr;			  /*!< A defined type aliasing a void. */
-		typedef std::pair<uint64_t, std::string>          CompKey;	          /*!< A defined type aliasing a std::pair used as the key for the ComponentMap. */
-		typedef std::map <CompKey, InstPtr>               ComponentMap;	      /*!< A defined type aliasing a std::map used to store components by entity relation and their containing collection. */
-
 	public:
 
-                                                          explicit World(std::string cName = "");                                          /** The World component constructor. */
-                                                          ~World(void);                                                           /** The World component destructor. */
+		explicit World(IDatabaseController* databaseController, std::string cName = "");
+		~World(void);
 
-		uint64_t                                          CreateEntity(World* pWorld);                                            /** Creates a new entity contained within the given World. */
+		uint64_t CreateEntity(const std::string& name);
 
-		void                                              DestroyEntity(World* pWorld, uint64_t entity);                          /** Destroys the given entity from the given World. */
+		unsigned long DeleteEntity(uint64_t entity);
 
-		template <typename T> void                        AddComponent(World* pWorld, uint64_t entity, T val);                    /** Adds the given Component of type T to the given World and associates the component with the given entity. */
+		template <typename T>
+		T AddComponent(uint64_t entity, const T& component);
 
-		template <typename T> uint64_t                    RemoveComponent(World* pWorld, uint64_t entity, std::string cName);     /** Attempts to remove the given Component of type T from the given World that is associated with the given entity of the given name. */
-        void                                              RemoveComponents(World* pWorld, uint64_t entity);
+		template <typename T>
+		void DeleteComponent(uint64_t entity, const std::vector<WhereClause>& expression);
 
-		uint64_t&                                         GetEntityMask(uint64_t entity);                                                   /** Returns a reference to the given entities Component bitmask. */
+		template <typename T>
+		T UpdateComponent(uint64_t entity, const T& component);
 
-		std::vector<uint64_t>                             GetEntities(World* pWorld, uint64_t entityMask);                        /** Returns a collection of entity ids that explicitely match the given entityMask. */
-
-		template <typename T> std::vector<T>*             GetComponents(World* pWorld, uint64_t entity);                          /** Returns a Component collection of type T assocated with the given entity. */
-
-        template <typename T> std::vector<T>*                 Fetch(World* pWorld, uint64_t entity);                              /** Attempts to fetch all components of type T associated with the given entity. */
-
-        template <typename T> static void Add(World& world, uint64_t entity, T& source);
-        template <typename Out> static Out Get(World& world, uint64_t entity);
-        template <typename Out> static std::vector<Out> GetAll(World& world);
-
-		uint64_t& operator [] (int index)
-		{
-			return m_entityMasks[index];
-		}
+		template <typename T>
+		std::vector<T> FetchComponents(uint64_t entity, const std::vector<WhereClause>& expression, bool bSingle = false);
 
 	protected:
 
-		template <typename T> CompKey                         MakeComponentKey(uint64_t entity);                      /** Returns a component key from the given Component type T and the given entity. */
+        template <typename T>
+        T Merge(const T& current, const T& original);
 
-		template <typename T> World::ComponentMap::iterator   FetchInternal(World* pWorld, uint64_t entity);          /** Attempts to return an iterator into the Worlds Component collection of type T associated with the given entity. */
-
-		void                                                  Dispose(void);                                          /** Cleans up all resources used by the World. */
+		void Dispose(void);
 
 	private:
 
-		std::vector<uint64_t>                                 m_entityMasks;		           /*!< A std::vector of uint64_t Component bitmasks. */
-		std::queue<uint64_t>                                  m_availableEntities;	           /*!< A std::vector of uint64_t entity indexes that are available. */
+		IDatabaseController*  m_pDatabaseCtrl;
 
-		uint64_t                                              m_nRunningIndex;	               /*!< A uint64_t which is incremented by one for every new entity. */
+        std::vector<uint64_t> m_entityMasks;
+        std::queue<uint64_t> m_availableEntities;
 
-		ComponentMap                                          m_components;	                   /*!< A std::map of Components keyed by the associated entity and the Component's ClassType. */
+        uint64_t m_nRunningIndex;
 
 	}; // < end struct.
-
-	template <typename T>
-	World::CompKey World::MakeComponentKey(uint64_t entity)
-	{
-		std::string type = T::ClassType();
-		auto key = std::make_pair(entity, type);
-
-		return key;
-	}
-
-	template <typename T>
-	void World::AddComponent(World* pWorld, uint64_t entity, T val)
-	{
-		std::string type = T::ClassType();
-		auto key = std::make_pair(entity, type);
-
-		val.nId = entity;
-
-		auto iter = pWorld->FetchInternal<T>(pWorld, entity);
-		if (iter == pWorld->m_components.end())
-		{
-			pWorld->m_components.insert( std::make_pair(key, (void*)(new std::vector<T>())) );
-		}
-
-		auto it = pWorld->Fetch<T>(pWorld, entity);
-		it->push_back(val);
-	}
-
-	template <typename T>
-	uint64_t World::RemoveComponent(World* pWorld, uint64_t entity, std::string cName)
-	{
-		uint64_t numRemoved = 0;
-
-		auto iter = FetchInternal<T>(pWorld);
-		if (iter == pWorld->m_components.end()) { return; }
-
-		auto components = static_cast<std::vector<T>*>(iter->second);
-		auto it = components.begin();
-		while (it != components.end())
-		{
-			if (it.nId == entity)
-			{
-				if (cName.compare(it.cName) == 0)
-				{
-					it = components.erase(it);
-					numRemoved += 1;
-				}
-			}
-
-			it++;
-		}
-
-		return numRemoved;
-
-	}
-
-	template <typename T>
-	std::vector<T>* World::Fetch(World* pWorld, uint64_t entity)
-	{
-		std::string type = T::ClassType();
-		auto key = std::make_pair(entity, type);
-
-		auto it = pWorld->m_components.find(key);
-		if (it != pWorld->m_components.end()) { return static_cast<std::vector<T>*>(it->second); }
-
-		return nullptr;
-
-	}
-
-	template <typename T>
-	World::ComponentMap::iterator World::FetchInternal(World* pWorld, uint64_t entity)
-	{
-		std::string type = T::ClassType();
-		auto key = std::make_pair(entity, type);
-
-		return pWorld->m_components.find(key);
-
-	}
-
-	template <typename T>
-	std::vector<T>* World::GetComponents(World* pWorld, uint64_t entity)
-	{
-		std::string type = T::ClassType();
-		auto key = std::make_pair(entity, type);
-
-		return static_cast<std::vector<T>*>( pWorld->m_components.at(key) );
-
-	}
 
 } // < end namespace.
 
