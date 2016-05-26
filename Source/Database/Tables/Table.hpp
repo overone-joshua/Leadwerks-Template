@@ -26,7 +26,7 @@ namespace Database
         static inline void AddAuditDefinitions(DataTable& const _outTable)
         {
             // < Audit Data.
-            Table::AddDefinition("CreatedDate", "DATETIME", " NOT NULL", _outTable);
+            Table::AddDefinition("CreatedDate", "DATETIME", " NOT NULL DEFAULT (DATETIME('now', 'localtime'))", _outTable);
             Table::AddDefinition("ModifiedDate", "DATETIME", "NULL", _outTable);
         }
 
