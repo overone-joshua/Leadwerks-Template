@@ -35,6 +35,10 @@ namespace Database
 			db->CreateFKConstraint(_col, _fkTbl, _fkCol);
 		}
 
+        static std::vector<std::string> Serialize(const C& component);
+
+        static C Deserialize(const std::vector<std::string>& component);
+
 	protected:
 
 		Table(IDatabaseController* _db) : m_pDb(_db), db(_db) { }
