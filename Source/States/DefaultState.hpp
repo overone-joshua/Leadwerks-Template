@@ -24,6 +24,7 @@
 #pragma once
 #include "State.hpp"
 #include "../Managers/InputManager.hpp"
+#include "../Services/DatabaseController.hpp"
 
 #include "../Utilities/CameraHandle.hpp"
 #include "../Utilities/WorldHandle.hpp"
@@ -32,16 +33,6 @@
 #include "../Utilities/Event.hpp"
 
 #include "../Components/World.hpp"
-
-#include "../Entities/Entity.hpp"
-#include "../Entities/Actor.hpp"
-#include "../Entities/Camera.hpp"
-#include "../Entities/Input.hpp"
-
-#include "../Entities/Custom/Bullet.hpp"
-#include "../Entities/Custom/Player.hpp"
-#include "../Entities/Custom/SpectatorCamera.hpp"
-#include "../Entities/Custom/ThirdPersonCamera.hpp"
 
 class DefaultState : public State {
 
@@ -64,6 +55,7 @@ public:
 
 private:
 
+	IDatabaseController*		m_pDatabaseController;
     InputManager*          m_pInputMgr;
     CameraHandle*          m_pCameraHndl;
     WorldHandle*           m_pWorldHndl;

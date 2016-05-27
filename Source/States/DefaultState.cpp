@@ -11,6 +11,7 @@ void DefaultState::Configure(Container* pContainer)
     m_pCameraHndl = pContainer->Resolve<CameraHandle>();
     m_pInputMgr = pContainer->Resolve<InputManager>();
     m_pWorldHndl = pContainer->Resolve<WorldHandle>();
+	m_pDatabaseController = pContainer->Resolve<IDatabaseController>();
 }
 
 void DefaultState::Load(void)
@@ -24,25 +25,26 @@ void DefaultState::Load(void)
     m_pSceneLight->SetRotation(35.0f, -35.0f, 0.0f);
 
     // < Create our component world.
-    m_pWorld = new Components::World();
+    m_pWorld = new Components::World(m_pDatabaseController);
 
-    // < Create our components.
-    m_player = Entities::Player::Create(*m_pWorld, "./Scripts/Player.lua");
-    m_camera = Entities::ThirdPersonCamera::Create(*m_pWorld, "./Scripts/DefaultThirdPersonCamera.lua");
+    // < Test sqlite component system.
+    m_player = m_pWorld->CreateEntity("player_one");
 
-    pModel = Leadwerks::Model::Box();
+    auto component = Components::Component("player_one_component");
 
-    // < Load all components.
-    Entities::Actor::Load(*m_pWorld, m_player);
-    Entities::ThirdPersonCamera::Load(*m_pWorld, m_camera, m_player, m_pCameraHndl);
+    component = m_pWorld->AddComponent<Components::Component>(m_player, component);
+
+    component.cName = "player_one_component_with_namechange";
+    m_pWorld->UpdateComponent(m_player, component);
+
+    auto where = std::vector<WhereClause>(1, std::make_tuple("Id", "=", std::to_string(component.nId)));
+    component = m_pWorld->FetchComponents<Components::Component>(m_player, where, true).front();
+
+    m_pWorld->DeleteComponent<Components::Component>(m_player, where);
 }
 
 void DefaultState::Close(void)
 {
-    // < Destroy all components loaded previously in load.
-    Entities::Camera::Close(*m_pWorld, m_camera);
-    Entities::Actor::Close(*m_pWorld, m_player);
-
     // < Clean up our scene.
     SAFE_RELEASE(m_pSceneLight);
     SAFE_DELETE(m_pSceneLight);
@@ -60,19 +62,12 @@ void DefaultState::Close(void)
 bool DefaultState::Update(float dt)
 {
     auto world = m_pWorldHndl->getInst();
-    // < Update our entities.
-    Entities::Player::Update(*m_pWorld, m_player, dt);
-    Entities::Bullet::UpdateAll(*m_pWorld, world, dt);
-    Entities::ThirdPersonCamera::Update(*m_pWorld, m_camera, dt);
 
     return true;
 }
 
 void DefaultState::OnKeyDown(Event_KeyDown* pEvent)
 {
-    // < Propogate our key-down event to our entities.
-    Entities::Actor::TriggerKeyDown(*m_pWorld, m_player, pEvent);
-    Entities::Camera::TriggerKeyDown(*m_pWorld, m_camera, pEvent);
 }
 
 void DefaultState::OnKeyUp(Event_KeyUp* pEvent)
@@ -86,14 +81,9 @@ void DefaultState::OnKeyUp(Event_KeyUp* pEvent)
     }
 #endif
 
-    // < propogate our key-up events to our entities.
-    Entities::Actor::TriggerKeyUp(*m_pWorld, m_player, pEvent);
-    Entities::Camera::TriggerKeyUp(*m_pWorld, m_camera, pEvent);
 }
 
 void DefaultState::OnMouseMove(Event_MouseMove* pEvent)
 {
-    // < Propogate our mouse-move event to our entities.
-    Entities::Actor::TriggerMouseMove(*m_pWorld, m_player, pEvent);
-    Entities::Camera::TriggerMouseMove(*m_pWorld, m_camera, pEvent);
+
 }
