@@ -40,6 +40,8 @@ public:
     virtual std::vector<std::vector<std::string>> ExecuteQuery(std::string query) = 0;
     virtual unsigned long ExecuteNoQuery(std::string query) = 0;
 
+    virtual unsigned long GetLastInsertId(void) = 0;
+
     virtual void Update(unsigned long nMaxMillis = 20) = 0;
 
 }; // < end class interface.
@@ -64,6 +66,8 @@ public :
 
     std::vector<std::vector<std::string>> ExecuteQuery(std::string query);
     unsigned long ExecuteNoQuery(std::string query);
+
+    unsigned long GetLastInsertId(void);
 
     void Update(unsigned long nMaxMillis = 20);
 

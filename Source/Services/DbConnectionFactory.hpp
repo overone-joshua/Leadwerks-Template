@@ -23,6 +23,9 @@ public:
     virtual IDbConnection* const OpenConnection(const std::string& key) = 0;
     virtual IDbConnection* const CreateConnection(const std::string& key) = 0;
 
+    virtual IDbConnection* const GetLastConnection(void) = 0;
+    virtual unsigned long LastInsertRowId(void) = 0;
+
 }; // < end class interface.
 
 class DbConnectionFactory : public IDbConnectionFactory, public Disposable
@@ -60,12 +63,15 @@ public:
             connection->Open();
         }
 
+        // < Set the last used connection.
+        m_pLastConnection = connection;
+
         return connection;
     }
 
     IDbConnection* const CreateConnection(const std::string& key)
     {
-        auto iter = m_connectionPool.insert(std::make_pair(key, new DbConnection(m_connectionString, m_connectionOptions)));
+        auto iter = m_connectionPool.insert(std::make_pair(key, new DbConnection(this, m_connectionString, m_connectionOptions)));
         if (!iter.second)
         {
             // < Already exists .
@@ -84,6 +90,16 @@ public:
         if (iter != m_connectionPool.end()) { return (*iter).second; }
 
         return nullptr;
+    }
+
+    IDbConnection* const GetLastConnection(void)
+    {
+        return m_pLastConnection;
+    }
+
+    unsigned long LastInsertRowId(void)
+    {
+        return m_nLastInsertRowId;
     }
 
     void Dispose(void)
@@ -131,9 +147,14 @@ protected:
 private:
 
     std::string m_connectionString;
+    unsigned long m_nLastInsertRowId;
 
     ConnectionPool m_connectionPool;
     DbConnectionOptions m_connectionOptions;
+
+    IDbConnection* m_pLastConnection;
+
+    friend DbConnection;
 
 }; // < end class.
 

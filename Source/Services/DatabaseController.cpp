@@ -86,6 +86,13 @@ void DatabaseController::CreateTable(std::string tableName, const DataTable& tab
     ExecuteCommand(sql);
 }
 
+unsigned long DatabaseController::GetLastInsertId(void)
+{
+    // < Will return ZERO should there be no successful inserts
+    // * into rowId tables.
+    return m_pDbConnectionFactory->LastInsertRowId();
+}
+
 unsigned long DatabaseController::InsertRecord(std::string tableName, const ColumnCollection& cols, const ValueCollection& values)
 {
     assert(!tableName.empty());
@@ -94,11 +101,8 @@ unsigned long DatabaseController::InsertRecord(std::string tableName, const Colu
 
     auto sql = GenerateInsertStatement(tableName, cols, values);
 
-    // < A sqlite Delete will not return the deleted rows so
-    // * the DbCommand is written to return one record
-    // * containing the number of affected rows.
     auto rowsAffected = std::stoi(ExecuteCommand(sql).front().front());
-    return rowsAffected;
+    return GetLastInsertId();
 }
 
 void DatabaseController::UpdateRecord(std::string tableName, const KeyValCollection& values, const std::vector<WhereClause>& WhereClauses)
@@ -129,6 +133,9 @@ unsigned long DatabaseController::DeleteRecords(std::string tableName, const std
 
 	auto sql = GenerateDeleteStatement(tableName, WhereClauses);
 
+    // < A sqlite Delete will not return the deleted rows so
+    // * the DbCommand is written to return one record
+    // * containing the number of affected rows.
     auto rowsAffected = std::stoi(ExecuteCommand(sql).front().front());
 	return rowsAffected;
 }

@@ -15,6 +15,7 @@
 
 class IDbCommand;
 class DbCommand;
+class DbConnectionFactory;
 
 class IDbConnection : virtual IDisposable
 {
@@ -28,6 +29,9 @@ public:
 
     virtual void Update(void) = 0;
 
+    virtual sqlite3* DB(void) = 0;
+    virtual unsigned long LastInsertRowId(void) = 0;
+
 }; // < end class interface.
 
 class DbConnection : public IDbConnection, public Disposable
@@ -36,7 +40,7 @@ protected:
 
 public:
 
-    DbConnection(const std::string& connectionString, const DbConnectionOptions options);
+    DbConnection(DbConnectionFactory* dbConnectionFactory, const std::string& connectionString, const DbConnectionOptions options);
 
     ~DbConnection(void);
 
@@ -49,6 +53,10 @@ public:
 
     static inline bool HasConnectionState(const DbConnection* connection, unsigned connectionStateMask);
     static inline bool HasAnyConnectionState(const DbConnection* connection, unsigned connectionStateMask);
+
+    sqlite3* DB(void);
+
+    unsigned long LastInsertRowId(void);
 
     void Update(void);
 
@@ -69,6 +77,7 @@ private:
 
     sqlite3* m_pDatabase;
 
+    DbConnectionFactory* m_pDbConnectionFactory;
     DbConnectionOptions m_connectionOptions;
     std::string m_connectionString;
 

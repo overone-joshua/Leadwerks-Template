@@ -2,13 +2,14 @@
 #include "DbConnection.hpp"
 #include "Leadwerks.h"
 
-#include "../Macros.hpp"
+#include "../Macros.hpp"
 #include "ConnectionState.hpp"
 #include "DbCommand.hpp"
+#include "../../Services/DbConnectionFactory.hpp"
 
-DbConnection::DbConnection(const std::string& connectionString, const DbConnectionOptions options)
+DbConnection::DbConnection(DbConnectionFactory* connectionFactory, const std::string& connectionString, const DbConnectionOptions options)
     : m_pDatabase(nullptr), m_connectionString(connectionString), m_connectionState(CONNECTION_CLOSED)
-    , m_connectionOptions(options)
+    , m_connectionOptions(options), m_pDbConnectionFactory(connectionFactory)
 {
     m_nBeganExecution = Leadwerks::Time::GetCurrent();
 }
@@ -26,6 +27,10 @@ void DbConnection::Dispose(void)
 unsigned DbConnection::GetConnectionState(void) { return m_connectionState; }
 
 void DbConnection::SetConnectionState(unsigned connectionStateMask) { this->m_connectionState = connectionStateMask; }
+
+sqlite3* DbConnection::DB(void) { return m_pDatabase; }
+
+unsigned long DbConnection::LastInsertRowId(void) { return sqlite3_last_insert_rowid(this->m_pDatabase); }
 
 const void DbConnection::Open(void)
 {
@@ -93,6 +98,7 @@ std::vector<std::vector<std::string>> DbConnection::ExecuteCommand(IDbCommand* c
 
     AddConnectionState(this, CONNECTION_EXECUTING);
     auto result = command->Query(query);
+    m_pDbConnectionFactory->m_nLastInsertRowId = LastInsertRowId();
 
     DestroyCommand(command);
 
