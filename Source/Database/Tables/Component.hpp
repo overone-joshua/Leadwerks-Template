@@ -98,7 +98,7 @@ namespace Components
     }
 
 	template <>
-	Component World::AddComponent<Components::Component>(uint64_t entity, const Component& component)
+	Components::Component World::AddComponent<Components::Component>(uint64_t entity, const Component& component)
 	{
 		std::string tableName = Components::Component::ClassType();
 
