@@ -30,17 +30,25 @@ void DefaultState::Load(void)
     // < Test sqlite component system.
     m_player = m_pWorld->CreateEntity("player_one");
 
-    auto component = Components::Component("player_one_component");
+    //auto component = Components::Component("player_one_component");
+    auto component = Components::Appearance("./Models/model.mdl", "player_one_appearance");
 
-    component = m_pWorld->AddComponent<Components::Component>(m_player, component);
+    //component = m_pWorld->AddComponent<Components::Component>(m_player, component);
+    component = m_pWorld->AddComponent<Components::Appearance>(m_player, component);
 
-    component.cName = "player_one_component_with_namechange";
+    //component.cName = "player_one_component_with_namechange";
+    //m_pWorld->UpdateComponent(m_player, component);
+    component.cName = "player_one_component_with_namechange.";
+    component.cModelPath = "./Models/new_model.mdl";
     m_pWorld->UpdateComponent(m_player, component);
 
     auto where = std::vector<WhereClause>(1, std::make_tuple("Id", "=", std::to_string(component.nId)));
-    component = m_pWorld->FetchComponents<Components::Component>(m_player, where, true).front();
+    //component = m_pWorld->FetchComponents<Components::Component>(m_player, where, true).front();
+    component = m_pWorld->FetchComponents<Components::Appearance>(m_player, where, true).front();
 
-    m_pWorld->DeleteComponent<Components::Component>(m_player, where);
+    //m_pWorld->DeleteComponent<Components::Component>(m_player, where);
+    //m_pWorld->DeleteComponent<Components::Component>(m_player, where);
+    m_pWorld->DeleteEntity(m_player);
 }
 
 void DefaultState::Close(void)

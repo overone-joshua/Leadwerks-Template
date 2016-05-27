@@ -18,7 +18,6 @@
 #include "Managers/InputManager.hpp"
 #include "Managers/StateManager.hpp"
 
-#include "Components/Components.hpp"
 #include "States/DefaultState.hpp"
 
 #include "Database/Scripts/PostDeploy/MainPostDeployment.hpp"

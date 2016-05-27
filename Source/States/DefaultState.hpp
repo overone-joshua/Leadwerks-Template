@@ -33,6 +33,7 @@
 #include "../Utilities/Event.hpp"
 
 #include "../Components/World.hpp"
+#include "../Components/Appearance.hpp"
 
 class DefaultState : public State {
 
