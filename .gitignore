@@ -228,3 +228,4 @@ WarCrest
 
 # CLion
 *.idea
+*.db
