@@ -7,6 +7,7 @@
 #include "../../Tables/Table.hpp"
 #include "../../Tables/Component.hpp"
 #include "../../Tables/Appearance.hpp"
+#include "../../Tables/Placement.hpp"
 
 namespace Database
 {
@@ -15,6 +16,7 @@ namespace Database
 
 		Table<Components::Component>::CreateTable(db);
 		Table<Components::Appearance>::CreateTable(db);
+		Table<Components::Placement>::CreateTable(db);
 
 		return true;
 	}
