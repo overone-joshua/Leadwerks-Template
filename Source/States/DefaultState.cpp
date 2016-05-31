@@ -1,9 +1,13 @@
 #pragma once
 #include "DefaultState.hpp"
 
+#include "../Components/Placement.hpp"
+#include "../Systems/PlacementSystem.hpp"
+
 DefaultState::DefaultState(void) { }
 
 Leadwerks::Model* pModel;
+Components::Placement component;
 
 void DefaultState::Configure(Container* pContainer)
 {
@@ -20,6 +24,9 @@ void DefaultState::Load(void)
     // * screen every frame.
     //m_pInputMgr->ToggleMouseCenter();
 
+	// < Move the camera back a little bit.
+	m_pCameraHndl->getInst()->Move(0.0f, 3.0f, -10.0f, true);
+
     // < Add a light to our sample scene.
     m_pSceneLight = Leadwerks::DirectionalLight::Create();
     m_pSceneLight->SetRotation(35.0f, -35.0f, 0.0f);
@@ -30,25 +37,21 @@ void DefaultState::Load(void)
     // < Test sqlite component system.
     m_player = m_pWorld->CreateEntity("player_one");
 
-    //auto component = Components::Component("player_one_component");
-    auto component = Components::Appearance("./Models/model.mdl", "player_one_appearance");
+	component = Components::Placement("player_one_placement");
+	component = m_pWorld->AddComponent<Components::Placement>(m_player, component);
 
-    //component = m_pWorld->AddComponent<Components::Component>(m_player, component);
-    component = m_pWorld->AddComponent<Components::Appearance>(m_player, component);
 
     //component.cName = "player_one_component_with_namechange";
     //m_pWorld->UpdateComponent(m_player, component);
     component.cName = "player_one_component_with_namechange.";
-    component.cModelPath = "./Models/new_model.mdl";
+	component.vTranslation = Leadwerks::Vec3(0.0f, 5.0f, 0.0f);
     m_pWorld->UpdateComponent(m_player, component);
 
     auto where = std::vector<WhereClause>(1, std::make_tuple("Id", "=", std::to_string(component.nId)));
-    //component = m_pWorld->FetchComponents<Components::Component>(m_player, where, true).front();
-    component = m_pWorld->FetchComponents<Components::Appearance>(m_player, where, true).front();
+    component = m_pWorld->FetchComponents<Components::Placement>(m_player, where, true).front();
 
-    //m_pWorld->DeleteComponent<Components::Component>(m_player, where);
-    //m_pWorld->DeleteComponent<Components::Component>(m_player, where);
-    m_pWorld->DeleteEntity(m_player);
+	pModel = Leadwerks::Model::Box();
+	pModel->SetPosition(component.vTranslation, true);
 }
 
 void DefaultState::Close(void)
@@ -57,6 +60,7 @@ void DefaultState::Close(void)
     SAFE_RELEASE(m_pSceneLight);
     SAFE_DELETE(m_pSceneLight);
 
+	m_pWorld->DeleteEntity(m_player);
     SAFE_DELETE(m_pWorld);
 
     SAFE_RELEASE(pModel);
@@ -70,6 +74,14 @@ void DefaultState::Close(void)
 bool DefaultState::Update(float dt)
 {
     auto world = m_pWorldHndl->getInst();
+
+	Systems::PlacementSystem::AddSpin(m_pWorld, m_player, Leadwerks::Vec3(0.0f, 0.2f, 0.0f));
+	Systems::PlacementSystem::Update(m_pWorld, m_player, dt, false);
+
+	auto where = std::vector<WhereClause>(1, std::make_tuple("EntityId", "=", std::to_string(m_player)));
+	component = m_pWorld->FetchComponents<Components::Placement>(m_player, where, true).front();
+
+	pModel->SetRotation(component.vRotation);
 
     return true;
 }
