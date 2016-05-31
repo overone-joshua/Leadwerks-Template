@@ -81,7 +81,13 @@ void DatabaseController::CreateTable(std::string tableName, const DataTable& tab
     assert(!tableName.empty());
     assert(!table.empty());
 
-    auto sql = GenerateCreateTableStatement(tableName, table);
+	// < Does the table already exist?
+	auto sql = "SELECT COUNT(type) FROM sqlite_master WHERE type='table' AND name='" + tableName + "';";
+	bool bExists = std::stoi(ExecuteCommand(sql)[0][0]);
+
+	if (bExists) { return; }
+
+    sql = GenerateCreateTableStatement(tableName, table);
 
     ExecuteCommand(sql);
 }
