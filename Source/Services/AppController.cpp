@@ -84,7 +84,7 @@ const bool AppController::CreateCamera() {
 }
 
 void AppController::ReleaseApplication(void) {
-	m_pApp->Shutdown();	
+	m_pApp->Shutdown();
 
 	std::cout << "Application shutdown completed successfully. \n";
 }
@@ -110,7 +110,7 @@ AppController::~AppController(void) { Shutdown(); }
 
 const bool AppController::Initialize(const std::string& appName, unsigned int ulX, unsigned int ulY, unsigned int nWidth, unsigned int nHeight, int windowFlags, int contextFlags) {
 
-	m_appName = appName;	
+	m_appName = appName;
 
     if (!CreateWindowAndContext(appName, ulX, ulY, nWidth, nHeight, windowFlags, contextFlags)) { return false; }
 
@@ -139,12 +139,12 @@ void AppController::Shutdown() {
 
 	SAFE_DELETE(m_pContainer);
 
-    std::cout << "Application controller shutdown completed successfully. \n";    
+    std::cout << "Application controller shutdown completed successfully. \n";
 }
 
 void AppController::preUpdate() {
     if (m_pWindow->getInst()->Closed()) { m_bExitAppThisFrame = true; }
-	
+
     m_pApp->preUpdate();
 }
 
@@ -166,7 +166,7 @@ bool AppController::Update(float dt) {
 	return true;
 }
 
-void AppController::preRender() {	
+void AppController::preRender() {
 	m_pContext->getInst()->SetColor(0.45f, 0.110f, 0.105f, 1.0f);
     m_pContext->getInst()->Clear();
 

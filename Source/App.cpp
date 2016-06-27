@@ -11,6 +11,14 @@
 #include "Utilities/WorldHandle.hpp"
 #include "Utilities/CameraHandle.hpp"
 
+#include "Components/Appearance.hpp"
+#include "Components/Component.hpp"
+#include "Components/Placement.hpp"
+
+#include "Repositories/DbRepository.hpp"
+#include "Repositories/AppearanceRepository.hpp"
+#include "Repositories/ComponentRepository.hpp"
+
 #include "Managers/EventManager.hpp"
 #include "Managers/InputManager.hpp"
 #include "Managers/StateManager.hpp"
@@ -36,6 +44,16 @@ void App::Configure(Container* pContainer) {
 
     /* Appearance Repository */
     pContainer->Register<AppearanceRepository, AppearanceRepository>(new AppearanceRepository(
+        pContainer->Resolve<IDbConnection>()
+    ));
+
+    /* Component Repository */
+    pContainer->Register<ComponentRepository, ComponentRepository>(new ComponentRepository(
+        pContainer->Resolve<IDbConnection>()
+    ));
+
+    /* Placement Repository */
+    pContainer->Register<PlacementRepository, PlacementRepository>(new PlacementRepository(
         pContainer->Resolve<IDbConnection>()
     ));
 
