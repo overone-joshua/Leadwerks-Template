@@ -19,9 +19,12 @@
 #pragma once
 #include "Leadwerks.h"
 #include "../Utilities/Macros.hpp"
-#include "../Services/DatabaseController.hpp"
 
 #include "Component.hpp"
+#include "../Repositories/DbRepository.hpp"
+#include "../Repositories/ComponentRepository.hpp"
+
+#include <sqlite-persistence/DbConnection.hpp>
 
 #include <map>
 #include <string>
@@ -40,35 +43,20 @@ namespace Components
 
 	public:
 
-		explicit World(IDatabaseController* databaseController, std::string cName = "");
+		explicit World(IDbConnection* _pConnection, uint64_t _nEntityId, std::string cName = "");
 		~World(void);
 
 		uint64_t CreateEntity(const std::string& name);
 
-		unsigned long DeleteEntity(uint64_t entity);
-
-		template <typename T>
-		T AddComponent(uint64_t entity, const T& component);
-
-		template <typename T>
-		void DeleteComponent(uint64_t entity, const std::vector<WhereClause>& expression);
-
-		template <typename T>
-		T UpdateComponent(uint64_t entity, const T& component);
-
-		template <typename T>
-		std::vector<T> FetchComponents(uint64_t entity, const std::vector<WhereClause>& expression, bool bSingle = false);
+		void DeleteEntity(uint64_t entity);
 
 	protected:
-
-        template <typename T>
-        T Merge(const T& current, const T& original);
 
 		void Dispose(void);
 
 	private:
 
-		IDatabaseController*  m_pDatabaseCtrl;
+		IDbConnection*  m_pConnection;
 
         std::vector<uint64_t> m_entityMasks;
         std::queue<uint64_t> m_availableEntities;

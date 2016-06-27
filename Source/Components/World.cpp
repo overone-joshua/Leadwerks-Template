@@ -1,18 +1,21 @@
 #pragma once
 #include "World.hpp"
 #include "../Common.hpp"
-#include "../Services/DatabaseController.hpp"
 
 #include "Component.hpp"
 #include "ComponentDictionary.hpp"
+#include "../Utilities/StringExtensions.hpp"
+
+#include <sqlite-persistence/DbCommand.hpp>
+#include <sqlite-persistence/DbConnection.hpp>
+#include <sqlite-persistence/DbQuery.hpp>
+
+#include <memory>
 
 namespace Components
 {
-	World::World(IDatabaseController* databaseController, std::string cName)
-		: Component(cName), m_nRunningIndex(0)
-	{
-		m_pDatabaseCtrl = databaseController;
-	}
+	World::World(IDbConnection* _pConnection, uint64_t _nEntityId, std::string cName)
+		: Component(_nEntityId, cName), m_nRunningIndex(0), m_pConnection(_pConnection) { }
 
 	World::~World(void) { Dispose(); }
 
@@ -34,23 +37,37 @@ namespace Components
         return index;
 	}
 
-	unsigned long World::DeleteEntity(uint64_t entity)
+	void World::DeleteEntity(uint64_t entity)
 	{
         if (entity < this->m_entityMasks.size())
         {
             this->m_entityMasks[entity] = COMPONENT_NONE;
             this->m_availableEntities.push(entity);
 
-            auto where = std::vector<WhereClause>(1, std::make_tuple("EntityId", "=", std::to_string(entity)));
-            return m_pDatabaseCtrl->DeleteRecords("Component", where);
+            auto query = std::string(
+                "DELETE FROM [Components]"
+                " WHERE [EntityId] = {Id};"
+            );
+
+            Replace("{Id}", std::to_string(entity), query);
+
+            std::unique_ptr<DbCommand> pCommand(std::move(
+                    m_pConnection->CreateCommand(new DbQuery(query))));
+
+            pCommand->ExecuteNonQuery();
         }
 	}
 
 	void World::Dispose(void)
 	{
-		// < Delete all entities.
-		m_pDatabaseCtrl->ExecuteNoQuery("DELETE FROM Entity;");
-		m_pDatabaseCtrl = nullptr;
+        auto emptyQueue = std::queue<uint64_t>();
+        std::swap(m_availableEntities, emptyQueue);
+
+        auto emptyVector = std::vector<uint64_t>();
+        std::swap(m_entityMasks, emptyVector);
+
+        this->m_pConnection = nullptr;
+        this->m_nRunningIndex = 0;
 	}
 
 } // < end namespace.

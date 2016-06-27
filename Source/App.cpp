@@ -3,10 +3,7 @@
 #include "App.h"
 
 #include "Common.hpp"
-#include "Services/DbConnectionFactory.hpp"
-#include "Services/DatabaseController.hpp"
 #include "Utilities/Macros.hpp"
-
 #include "Utilities/Container.hpp"
 
 #include "Utilities/WindowHandle.hpp"
@@ -19,8 +16,11 @@
 #include "Managers/StateManager.hpp"
 
 #include "States/DefaultState.hpp"
-
 #include "Database/Scripts/PostDeploy/MainPostDeployment.hpp"
+
+#include <sqlite-persistence/DbConnectionOptions.hpp>
+#include <sqlite-persistence/DbConnectionString.hpp>
+#include <sqlite-persistence/DbConnection.hpp>
 
 App::App(void) : m_pEventManager(nullptr), m_pInputManager(nullptr), m_pStateManager(nullptr) { }
 
@@ -28,18 +28,18 @@ App::~App(void) { }
 
 void App::Configure(Container* pContainer) {
 
-    /* Sqlite DbConnection Factory */
-    auto connectionString = "ldwrksTmp.db";
-    pContainer->Register<IDbConnectionFactory, DbConnectionFactory>(new DbConnectionFactory(connectionString));
-
-    /* Database Controller */
-    m_pDatabaseCtrl = pContainer->Register<IDatabaseController, DatabaseController>(new DatabaseController(
-        pContainer->Resolve<IDbConnectionFactory>()));
+    auto connectionString = DbConnectionString("./", "ldwrksTmp.db");
+    pContainer->Register<IDbConnection, DbConnection>(new DbConnection(connectionString, DbConnectionOptions()));
 
 	/* Database Deployment and Setup */
-	Database::Deploy(pContainer->Resolve<IDatabaseController>());
+	Database::Deploy(pContainer->Resolve<IDbConnection>());
 
-	/* EventManager */
+    /* Appearance Repository */
+    pContainer->Register<AppearanceRepository, AppearanceRepository>(new AppearanceRepository(
+        pContainer->Resolve<IDbConnection>()
+    ));
+
+	/* Event Manager */
 	m_pEventManager = pContainer->Register<EventManager, EventManager>( new EventManager());
 
 	/* StateManager */
@@ -84,7 +84,7 @@ void App::Dispose(void)
 	m_pStateManager = nullptr;
 
 	// < Unregister any states that were registered during this
-	// * applications configure method. Order doesnt really
+	// * applications configure method. Order does not really
 	// * matter here.
 	gStateFactory.Unregister(DefaultState::ClassType());
 
@@ -104,10 +104,6 @@ bool App::Update(float dt)
 
 	// < Call the StateManager's Update.
 	if (m_pStateManager != nullptr) { m_pStateManager->Update(dt); }
-
-    // < Call DatabaseContoller's update. We allow it to process
-    // * events for 200 ms.
-    if (m_pDatabaseCtrl != nullptr) { m_pDatabaseCtrl->Update(200); }
 
     // < Call EventManager's update. We allow it to process events
     // * for 200ms a frame.

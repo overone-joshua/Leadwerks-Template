@@ -24,7 +24,6 @@
 #pragma once
 #include "State.hpp"
 #include "../Managers/InputManager.hpp"
-#include "../Services/DatabaseController.hpp"
 
 #include "../Utilities/CameraHandle.hpp"
 #include "../Utilities/WorldHandle.hpp"
@@ -34,6 +33,8 @@
 
 #include "../Components/World.hpp"
 #include "../Components/Appearance.hpp"
+
+#include <sqlite-persistence/DbConnection.hpp>
 
 class DefaultState : public State {
 
@@ -56,7 +57,7 @@ public:
 
 private:
 
-	IDatabaseController*		m_pDatabaseController;
+    IDbConnection*         m_pConnection;
     InputManager*          m_pInputMgr;
     CameraHandle*          m_pCameraHndl;
     WorldHandle*           m_pWorldHndl;

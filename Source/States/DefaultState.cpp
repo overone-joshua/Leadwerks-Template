@@ -4,6 +4,7 @@
 #include "../Components/Placement.hpp"
 #include "../Systems/PlacementSystem.hpp"
 
+#include <sqlite-persistence/DbConnection.hpp>
 DefaultState::DefaultState(void) { }
 
 Leadwerks::Model* pModel;
@@ -15,7 +16,7 @@ void DefaultState::Configure(Container* pContainer)
     m_pCameraHndl = pContainer->Resolve<CameraHandle>();
     m_pInputMgr = pContainer->Resolve<InputManager>();
     m_pWorldHndl = pContainer->Resolve<WorldHandle>();
-	m_pDatabaseController = pContainer->Resolve<IDatabaseController>();
+	m_pConnection = pContainer->Resolve<IDbConnection>();
 }
 
 void DefaultState::Load(void)
