@@ -32,7 +32,11 @@
 #include "../Utilities/Event.hpp"
 
 #include "../Components/World.hpp"
-#include "../Components/Appearance.hpp"
+#include "../Components/Component.hpp"
+
+#include "../Repositories/AppearanceRepository.hpp"
+#include "../Repositories/ComponentRepository.hpp"
+#include "../Repositories/PlacementRepository.hpp"
 
 #include <sqlite-persistence/DbConnection.hpp>
 
@@ -61,6 +65,10 @@ private:
     InputManager*          m_pInputMgr;
     CameraHandle*          m_pCameraHndl;
     WorldHandle*           m_pWorldHndl;
+
+    IDbRepository<Components::Appearance>* m_pAppearanceRepository;
+    IDbRepository<Components::Component>* m_pComponentRepository;
+    IDbRepository<Components::Placement>* m_pPlacementRepository;
 
 	Leadwerks::Light*	  m_pSceneLight;
 

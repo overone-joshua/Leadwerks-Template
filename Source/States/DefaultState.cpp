@@ -1,14 +1,20 @@
 #pragma once
 #include "DefaultState.hpp"
 
-#include "../Components/Placement.hpp"
+#include "../Components/Component.hpp"
+#include "../Repositories/AppearanceRepository.hpp"
+#include "../Repositories/ComponentRepository.hpp"
+#include "../Repositories/PlacementRepository.hpp"
 #include "../Systems/PlacementSystem.hpp"
 
 #include <sqlite-persistence/DbConnection.hpp>
+
+#include <memory>
+
 DefaultState::DefaultState(void) { }
 
 Leadwerks::Model* pModel;
-Components::Placement component;
+Components::Placement placement;
 
 void DefaultState::Configure(Container* pContainer)
 {
@@ -17,6 +23,9 @@ void DefaultState::Configure(Container* pContainer)
     m_pInputMgr = pContainer->Resolve<InputManager>();
     m_pWorldHndl = pContainer->Resolve<WorldHandle>();
 	m_pConnection = pContainer->Resolve<IDbConnection>();
+    m_pAppearanceRepository = pContainer->Resolve<AppearanceRepository>();
+    m_pComponentRepository = pContainer->Resolve<ComponentRepository>();
+    m_pPlacementRepository = pContainer->Resolve<PlacementRepository>();
 }
 
 void DefaultState::Load(void)
@@ -33,26 +42,20 @@ void DefaultState::Load(void)
     m_pSceneLight->SetRotation(35.0f, -35.0f, 0.0f);
 
     // < Create our component world.
-    m_pWorld = new Components::World(m_pDatabaseController);
+    m_pWorld = new Components::World(m_pConnection, 0, "Primary");
 
     // < Test sqlite component system.
     m_player = m_pWorld->CreateEntity("player_one");
 
-	component = Components::Placement("player_one_placement");
-	component = m_pWorld->AddComponent<Components::Placement>(m_player, component);
+    // < Lets test CRUD operations on the base component.
+    placement = Components::Placement(m_player, "Player Placement Component");
+    placement = m_pPlacementRepository->Save(placement);
 
+    placement.cName = "Player Placement component with updated name";
+    placement = m_pPlacementRepository->Save(placement);
 
-    //component.cName = "player_one_component_with_namechange";
-    //m_pWorld->UpdateComponent(m_player, component);
-    component.cName = "player_one_component_with_namechange.";
-	component.vTranslation = Leadwerks::Vec3(0.0f, 5.0f, 0.0f);
-    m_pWorld->UpdateComponent(m_player, component);
-
-    auto where = std::vector<WhereClause>(1, std::make_tuple("Id", "=", std::to_string(component.nId)));
-    component = m_pWorld->FetchComponents<Components::Placement>(m_player, where, true).front();
-
-	pModel = Leadwerks::Model::Box();
-	pModel->SetPosition(component.vTranslation, true);
+    pModel = Leadwerks::Model::Box();
+	pModel->SetPosition(placement.vTranslation, true);
 }
 
 void DefaultState::Close(void)
@@ -76,13 +79,12 @@ bool DefaultState::Update(float dt)
 {
     auto world = m_pWorldHndl->getInst();
 
-	Systems::PlacementSystem::AddSpin(m_pWorld, m_player, Leadwerks::Vec3(0.0f, 0.2f, 0.0f));
-	Systems::PlacementSystem::Update(m_pWorld, m_player, dt, false);
+	Systems::PlacementSystem::AddSpin(this->m_pPlacementRepository, m_player, Leadwerks::Vec3(0.2f, 0.0f, 0.0f));
+	Systems::PlacementSystem::Update(this->m_pPlacementRepository, m_player, dt, false);
 
-	auto where = std::vector<WhereClause>(1, std::make_tuple("EntityId", "=", std::to_string(m_player)));
-	component = m_pWorld->FetchComponents<Components::Placement>(m_player, where, true).front();
+    placement = this->m_pPlacementRepository->FindById(placement.nId);
 
-	pModel->SetRotation(component.vRotation);
+	pModel->SetRotation(placement.vRotation);
 
     return true;
 }
