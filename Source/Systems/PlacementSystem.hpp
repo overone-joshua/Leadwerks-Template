@@ -6,6 +6,7 @@
 #include "../Utilities/Math/Math.hpp"
 #include "../Components/Placement.hpp"
 #include "../Components/World.hpp"
+#include "../Repositories/PlacementRepository.hpp"
 
 namespace Systems
 {
@@ -13,12 +14,11 @@ namespace Systems
 	{
 	public:
 
-		static void Update(Components::World* pWorld, uint64_t entity, float dt, bool bAddVelocity)
+		static void Update(IDbRepository<Placement>* _pRepository, uint64_t entity, float dt, bool bAddVelocity)
 		{
 			using namespace Components;
 
-			auto where = std::vector<WhereClause>(1, std::make_tuple("EntityId", "=", std::to_string(entity)));
-			auto components = pWorld->FetchComponents<Placement>(entity, where, true);
+            auto components = _pRepository->FindByEntityId(entity);
 
 			if (!components.empty())
 			{
@@ -63,16 +63,15 @@ namespace Systems
 					, -Leadwerks::Math::Sin(comp.vRotation.y))
 					.Normalize();
 
-				comp = pWorld->UpdateComponent<Placement>(entity, comp);
+                comp = _pRepository->Save(comp);
 			}
 		}
 
-		static void Drive(Components::World* pWorld, uint64_t entity, float nForce, bool bLockYAxis)
+		static void Drive(IDbRepository<Placement>* _pRepository, uint64_t entity, float nForce, bool bLockYAxis)
 		{
 			using namespace Components;
 
-			auto where = std::vector<WhereClause>(1, std::make_tuple("EntityId", "=", std::to_string(entity)));
-			auto components = pWorld->FetchComponents<Placement>(entity, where, true);
+            auto components = _pRepository->FindByEntityId(entity);
 
 			if (!components.empty())
 			{
@@ -84,16 +83,15 @@ namespace Systems
 
 				if (!bLockYAxis) { comp.vVelocity.y += force.y; }
 
-				comp = pWorld->UpdateComponent<Placement>(entity, comp);
+                comp = _pRepository->Save(comp);
 			}
 		}
 
-		static void Strafe(Components::World* pWorld, uint64_t entity, float nForce, bool bLockYAxis)
+		static void Strafe(IDbRepository<Placement>* _pRepository, uint64_t entity, float nForce, bool bLockYAxis)
 		{
 			using namespace Components;
 
-			auto where = std::vector<WhereClause>(1, std::make_tuple("EntityId", "=", std::to_string(entity)));
-			auto components = pWorld->FetchComponents<Placement>(entity, where, true);
+            auto components = _pRepository->FindByEntityId(entity);
 
 			if (!components.empty())
 			{
@@ -106,16 +104,15 @@ namespace Systems
 
 				if (!bLockYAxis) { comp.vVelocity.y += force.y; }
 
-				comp = pWorld->UpdateComponent<Placement>(entity, comp);
+                comp = _pRepository->Save(comp);
 			}
 		}
 
-		static void Stop(Components::World* pWorld, uint64_t entity)
+		static void Stop(IDbRepository<Placement>* _pRepository, uint64_t entity)
 		{
 			using namespace Components;
 
-			auto where = std::vector<WhereClause>(1, std::make_tuple("EntityId", "=", std::to_string(entity)));
-			auto components = pWorld->FetchComponents<Placement>(entity, where, true);
+            auto components = _pRepository->FindByEntityId(entity);
 
 			if (!components.empty())
 			{
@@ -124,16 +121,15 @@ namespace Systems
 				comp.vVelocity = Leadwerks::Vec3(0.0f, 0.0f, 0.0f);
 				comp.vVelocity = Leadwerks::Vec3(0.0f, 0.0f, 0.0f);
 
-				comp = pWorld->UpdateComponent<Placement>(entity, comp);
+                comp = _pRepository->Save(comp);
 			}
 		}
 
-		static void SetTranslation(Components::World* pWorld, uint64_t entity, float x, float y, float z)
+		static void SetTranslation(IDbRepository<Placement>* _pRepository, uint64_t entity, float x, float y, float z)
 		{
 			using namespace Components;
 
-			auto where = std::vector<WhereClause>(1, std::make_tuple("EntityId", "=", std::to_string(entity)));
-			auto components = pWorld->FetchComponents<Placement>(entity, where, true);
+            auto components = _pRepository->FindByEntityId(entity);
 
 			if (!components.empty())
 			{
@@ -145,16 +141,15 @@ namespace Systems
 
 				comp.mTranslation = Leadwerks::Mat4(comp.vTranslation.x, comp.vTranslation.y, comp.vTranslation.z);
 
-				comp = pWorld->UpdateComponent<Placement>(entity, comp);
+                comp = _pRepository->Save(comp);
 			}
 		}
 
-		static void SetTranslation(Components::World* pWorld, uint64_t entity, Leadwerks::Vec3 vTranslation)
+		static void SetTranslation(IDbRepository<Placement>* _pRepository, uint64_t entity, Leadwerks::Vec3 vTranslation)
 		{
 			using namespace Components;
 
-			auto where = std::vector<WhereClause>(1, std::make_tuple("EntityId", "=", std::to_string(entity)));
-			auto components = pWorld->FetchComponents<Placement>(entity, where, true);
+            auto components = _pRepository->FindByEntityId(entity);
 
 			if (!components.empty())
 			{
@@ -164,16 +159,15 @@ namespace Systems
 
 				comp.mTranslation = Leadwerks::Mat4(comp.vTranslation.x, comp.vTranslation.y, comp.vTranslation.z);
 
-				comp = pWorld->UpdateComponent<Placement>(entity, comp);
+                comp = _pRepository->Save(comp);
 			}
 		}
 
-		static void AddTranslation(Components::World* pWorld, uint64_t entity, float x, float y, float z)
+		static void AddTranslation(IDbRepository<Placement>* _pRepository, uint64_t entity, float x, float y, float z)
 		{
 			using namespace Components;
 
-			auto where = std::vector<WhereClause>(1, std::make_tuple("EntityId", "=", std::to_string(entity)));
-			auto components = pWorld->FetchComponents<Placement>(entity, where, true);
+            auto components = _pRepository->FindByEntityId(entity);
 
 			if (!components.empty())
 			{
@@ -185,16 +179,15 @@ namespace Systems
 
 				comp.mTranslation = Leadwerks::Mat4(comp.vTranslation.x, comp.vTranslation.y, comp.vTranslation.z);
 
-				comp = pWorld->UpdateComponent<Placement>(entity, comp);
+                comp = _pRepository->Save(comp);
 			}
 		}
 
-		static void AddTranslation(Components::World* pWorld, uint64_t entity, Leadwerks::Vec3 vTranslation)
+		static void AddTranslation(IDbRepository<Placement>* _pRepository, uint64_t entity, Leadwerks::Vec3 vTranslation)
 		{
 			using namespace Components;
 
-			auto where = std::vector<WhereClause>(1, std::make_tuple("EntityId", "=", std::to_string(entity)));
-			auto components = pWorld->FetchComponents<Placement>(entity, where, true);
+            auto components = _pRepository->FindByEntityId(entity);
 
 			if (!components.empty())
 			{
@@ -206,16 +199,15 @@ namespace Systems
 
 				comp.mTranslation = Leadwerks::Mat4(comp.vTranslation.x, comp.vTranslation.y, comp.vTranslation.z);
 
-				comp = pWorld->UpdateComponent<Placement>(entity, comp);
+                comp = _pRepository->Save(comp);
 			}
 		}
 
-		static void SetRotation(Components::World* pWorld, uint64_t entity, float x, float y, float z)
+		static void SetRotation(IDbRepository<Placement>* _pRepository, uint64_t entity, float x, float y, float z)
 		{
 			using namespace Components;
 
-			auto where = std::vector<WhereClause>(1, std::make_tuple("EntityId", "=", std::to_string(entity)));
-			auto components = pWorld->FetchComponents<Placement>(entity, where, true);
+            auto components = _pRepository->FindByEntityId(entity);
 
 			if (!components.empty())
 			{
@@ -232,16 +224,15 @@ namespace Systems
 				comp.mRotation *= rotX;
 				comp.mRotation *= rotY;
 
-				comp = pWorld->UpdateComponent<Placement>(entity, comp);
+                comp = _pRepository->Save(comp);
 			}
 		}
 
-		static void SetRotation(Components::World* pWorld, uint64_t entity, Leadwerks::Vec3 vRotation)
+		static void SetRotation(IDbRepository<Placement>* _pRepository, uint64_t entity, Leadwerks::Vec3 vRotation)
 		{
 			using namespace Components;
 
-			auto where = std::vector<WhereClause>(1, std::make_tuple("EntityId", "=", std::to_string(entity)));
-			auto components = pWorld->FetchComponents<Placement>(entity, where, true);
+            auto components = _pRepository->FindByEntityId(entity);
 
 			if (!components.empty())
 			{
@@ -258,16 +249,15 @@ namespace Systems
 				comp.mRotation *= rotX;
 				comp.mRotation *= rotY;
 
-				comp = pWorld->UpdateComponent<Placement>(entity, comp);
+                comp = _pRepository->Save(comp);
 			}
 		}
 
-		static void AddRotation(Components::World* pWorld, uint64_t entity, float x, float y, float z)
+		static void AddRotation(IDbRepository<Placement>* _pRepository, uint64_t entity, float x, float y, float z)
 		{
 			using namespace Components;
 
-			auto where = std::vector<WhereClause>(1, std::make_tuple("EntityId", "=", std::to_string(entity)));
-			auto components = pWorld->FetchComponents<Placement>(entity, where, true);
+            auto components = _pRepository->FindByEntityId(entity);
 
 			if (!components.empty())
 			{
@@ -284,16 +274,15 @@ namespace Systems
 				comp.mRotation *= rotX;
 				comp.mRotation *= rotY;
 
-				comp = pWorld->UpdateComponent<Placement>(entity, comp);
+                comp = _pRepository->Save(comp);
 			}
 		}
 
-		static void AddRotation(Components::World* pWorld, uint64_t entity, Leadwerks::Vec3 vRotation)
+		static void AddRotation(IDbRepository<Placement>* _pRepository, uint64_t entity, Leadwerks::Vec3 vRotation)
 		{
 			using namespace Components;
 
-			auto where = std::vector<WhereClause>(1, std::make_tuple("EntityId", "=", std::to_string(entity)));
-			auto components = pWorld->FetchComponents<Placement>(entity, where, true);
+            auto components = _pRepository->FindByEntityId(entity);
 
 			if (!components.empty())
 			{
@@ -310,16 +299,15 @@ namespace Systems
 				comp.mRotation *= rotX;
 				comp.mRotation *= rotY;
 
-				comp = pWorld->UpdateComponent<Placement>(entity, comp);
+                comp = _pRepository->Save(comp);
 			}
 		}
 
-		static void SetVelocity(Components::World* pWorld, uint64_t entity, float x, float y, float z)
+		static void SetVelocity(IDbRepository<Placement>* _pRepository, uint64_t entity, float x, float y, float z)
 		{
 			using namespace Components;
 
-			auto where = std::vector<WhereClause>(1, std::make_tuple("EntityId", "=", std::to_string(entity)));
-			auto components = pWorld->FetchComponents<Placement>(entity, where, true);
+            auto components = _pRepository->FindByEntityId(entity);
 
 			if (!components.empty())
 			{
@@ -329,16 +317,15 @@ namespace Systems
 				comp.vVelocity.y = y;
 				comp.vVelocity.z = z;
 
-				comp = pWorld->UpdateComponent<Placement>(entity, comp);
+                comp = _pRepository->Save(comp);
 			}
 		}
 
-		static void SetVelocity(Components::World* pWorld, uint64_t entity, Leadwerks::Vec3 vVelocity)
+		static void SetVelocity(IDbRepository<Placement>* _pRepository, uint64_t entity, Leadwerks::Vec3 vVelocity)
 		{
 			using namespace Components;
 
-			auto where = std::vector<WhereClause>(1, std::make_tuple("EntityId", "=", std::to_string(entity)));
-			auto components = pWorld->FetchComponents<Placement>(entity, where, true);
+            auto components = _pRepository->FindByEntityId(entity);
 
 			if (!components.empty())
 			{
@@ -346,17 +333,16 @@ namespace Systems
 
 				comp.vVelocity = vVelocity;
 
-				comp = pWorld->UpdateComponent<Placement>(entity, comp);
+                comp = _pRepository->Save(comp);
 			}
 		}
 
 
-		static void AddVelocity(Components::World* pWorld, uint64_t entity, float x, float y, float z)
+		static void AddVelocity(IDbRepository<Placement>* _pRepository, uint64_t entity, float x, float y, float z)
 		{
 			using namespace Components;
 
-			auto where = std::vector<WhereClause>(1, std::make_tuple("EntityId", "=", std::to_string(entity)));
-			auto components = pWorld->FetchComponents<Placement>(entity, where, true);
+            auto components = _pRepository->FindByEntityId(entity);
 
 			if (!components.empty())
 			{
@@ -366,16 +352,15 @@ namespace Systems
 				comp.vVelocity.y += y;
 				comp.vVelocity.z += z;
 
-				comp = pWorld->UpdateComponent<Placement>(entity, comp);
+                comp = _pRepository->Save(comp);
 			}
 		}
 
-		static void AddVelocity(Components::World* pWorld, uint64_t entity, Leadwerks::Vec3 vVelocity)
+		static void AddVelocity(IDbRepository<Placement>* _pRepository, uint64_t entity, Leadwerks::Vec3 vVelocity)
 		{
 			using namespace Components;
 
-			auto where = std::vector<WhereClause>(1, std::make_tuple("EntityId", "=", std::to_string(entity)));
-			auto components = pWorld->FetchComponents<Placement>(entity, where, true);
+            auto components = _pRepository->FindByEntityId(entity);
 
 			if (!components.empty())
 			{
@@ -385,16 +370,15 @@ namespace Systems
 				comp.vVelocity.y += vVelocity.y;
 				comp.vVelocity.z += vVelocity.z;
 
-				comp = pWorld->UpdateComponent<Placement>(entity, comp);
+                comp = _pRepository->Save(comp);
 			}
 		}
 
-		static void SetSpin(Components::World* pWorld, uint64_t entity, float x, float y, float z)
+		static void SetSpin(IDbRepository<Placement>* _pRepository, uint64_t entity, float x, float y, float z)
 		{
 			using namespace Components;
 
-			auto where = std::vector<WhereClause>(1, std::make_tuple("EntityId", "=", std::to_string(entity)));
-			auto components = pWorld->FetchComponents<Placement>(entity, where, true);
+            auto components = _pRepository->FindByEntityId(entity);
 
 			if (!components.empty())
 			{
@@ -404,16 +388,15 @@ namespace Systems
 				comp.vSpin.y = y;
 				comp.vSpin.z = z;
 
-				comp = pWorld->UpdateComponent<Placement>(entity, comp);
+                comp = _pRepository->Save(comp);
 			}
 		}
 
-		static void SetSpin(Components::World* pWorld, uint64_t entity, Leadwerks::Vec3 vSpin)
+		static void SetSpin(IDbRepository<Placement>* _pRepository, uint64_t entity, Leadwerks::Vec3 vSpin)
 		{
 			using namespace Components;
 
-			auto where = std::vector<WhereClause>(1, std::make_tuple("EntityId", "=", std::to_string(entity)));
-			auto components = pWorld->FetchComponents<Placement>(entity, where, true);
+            auto components = _pRepository->FindByEntityId(entity);
 
 			if (!components.empty())
 			{
@@ -421,17 +404,16 @@ namespace Systems
 
 				comp.vSpin = vSpin;
 
-				comp = pWorld->UpdateComponent<Placement>(entity, comp);
+                comp = _pRepository->Save(comp);
 			}
 		}
 
 
-		static void AddSpin(Components::World* pWorld, uint64_t entity, float x, float y, float z)
+		static void AddSpin(IDbRepository<Placement>* _pRepository, uint64_t entity, float x, float y, float z)
 		{
 			using namespace Components;
 
-			auto where = std::vector<WhereClause>(1, std::make_tuple("EntityId", "=", std::to_string(entity)));
-			auto components = pWorld->FetchComponents<Placement>(entity, where, true);
+            auto components = _pRepository->FindByEntityId(entity);
 
 			if (!components.empty())
 			{
@@ -441,16 +423,15 @@ namespace Systems
 				comp.vSpin.y += y;
 				comp.vSpin.z += z;
 
-				comp = pWorld->UpdateComponent<Placement>(entity, comp);
+                comp = _pRepository->Save(comp);
 			}
 		}
 
-		static void AddSpin(Components::World* pWorld, uint64_t entity, Leadwerks::Vec3 vSpin)
+		static void AddSpin(IDbRepository<Placement>* _pRepository, uint64_t entity, Leadwerks::Vec3 vSpin)
 		{
 			using namespace Components;
 
-			auto where = std::vector<WhereClause>(1, std::make_tuple("EntityId", "=", std::to_string(entity)));
-			auto components = pWorld->FetchComponents<Placement>(entity, where, true);
+            auto components = _pRepository->FindByEntityId(entity);
 
 			if (!components.empty())
 			{
@@ -460,7 +441,7 @@ namespace Systems
 				comp.vSpin.y += vSpin.y;
 				comp.vSpin.z += vSpin.z;
 
-				comp = pWorld->UpdateComponent<Placement>(entity, comp);
+                comp = _pRepository->Save(comp);
 			}
 		}
 
