@@ -17,6 +17,7 @@
 	#define _COMPONENT_HPP_
 
 #pragma once
+#include "../Common.hpp"
 #include "../Utilities/Macros.hpp"
 #include "HasId.hpp"
 #include "HasName.hpp"
@@ -32,13 +33,16 @@ namespace Components
 	{
 		CLASS_TYPE(Component);
 
-		/** The Components constructor. */
-		explicit Component(std::string cName = "") : HasName(cName) { }
+        uint64_t nEntityId;
 
-        Component& operator = (Component other)
+		/** The Components constructor. */
+		explicit Component(uint64_t _entityId, std::string _name = "")
+            : nEntityId(_entityId), HasName(_name) { }
+
+        Component& operator = (Component _other)
         {
-            this->nId = other.nId;
-            this->cName = other.cName;
+            this->nId = _other.nId;
+            this->cName = _other.cName;
             return *this;
         }
 

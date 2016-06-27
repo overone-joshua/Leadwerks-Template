@@ -6,11 +6,10 @@
     #define _COMMON_HPP_H
 
 #pragma once
-#include <cstdint>
-
 #include "App.h"
 #include "Services/AppController.hpp"
 
+#include <cstdint>
 
 extern App*             gApp;
 extern AppController*   gAppCtrl;

@@ -1,25 +1,25 @@
 /*-------------------------------------------------------
                     <copyright>
-    
+
     File: Macros.hpp
     Language: C++
-    
+
     (C) Copyright Eden Softworks
-    
+
     Author: Joshua Allen
     E-Mail: Joshua(AT)EdenSoftworks(DOT)net
-    
+
     Description: Header file for Project Macros.
                  This file provides a singular location
                  for storing generic macros that a
-                 regularly used accross a project.                 
-    
+                 regularly used accross a project.
+
     Functions: 1. SAFE_DELETE(p);
-               
+
                2. SAFE_DELETE_ARRAY(p);
-               
+
                3. SAFE_RELEASE(p);
-               
+
                4. CLASS_TYPE(className);
 
 ---------------------------------------------------------*/

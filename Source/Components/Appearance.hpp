@@ -35,8 +35,8 @@ namespace Components
 		std::string cModelPath;
 		Leadwerks::Model* pModel;
 
-		explicit Component_Appearance(const std::string& modelPath, const std::string& cName = "")
-			: cModelPath(modelPath), pModel(nullptr), Component(cName) { }
+		explicit Component_Appearance(const std::string& modelPath, uint64_t _nEntityId, const std::string& cName = "")
+			: cModelPath(modelPath), pModel(nullptr), Component(_nEntityId, cName) { }
 
 	} Appearance;
 

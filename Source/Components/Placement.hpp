@@ -1,5 +1,5 @@
 #ifndef _PLACEMENT_COMPONENT_HPP_
-#define _PLACEMENT_COMPONENT_HPP_
+    #define _PLACEMENT_COMPONENT_HPP_
 
 #pragma once
 #include "Leadwerks.h"
@@ -36,8 +36,8 @@ namespace Components
 		bool bIgnoreCollision;
 		bool bTouchingGround;
 
-		explicit Component_Placement(const std::string& name = "")
-			: Component(name)
+		explicit Component_Placement(uint64_t _nEntityId = 0, const std::string& name = "")
+			: Component(_nEntityId, name)
 		{
 			vTranslation = Leadwerks::Vec3(0.0f, 0.0f, 0.0f);
 			vRotation = Leadwerks::Vec3(0.0f, 0.0f, 0.0f);

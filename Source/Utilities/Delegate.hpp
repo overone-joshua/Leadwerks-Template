@@ -1,26 +1,26 @@
 /*-------------------------------------------------------
                     <copyright>
-    
+
     File: Delegate.hpp
     Language: C++
-    
+
     (C) Copyright Eden Softworks
-    
+
     Author: Joshua Allen
     E-Mail: Joshua(AT)EdenSoftworks(DOT)net
-    
+
     Description: Header file for Delegate utility.
-                 The Delegate class provieds an easy an
-                 lighteright implementation for the
-                 registration of functions and member 
+                 The Delegate class provides an easy an
+                 lightweight implementation for the
+                 registration of functions and member
                  function for callback.
-    
+
     Functions: 1. template <void(*function)(*)>
                   void Bind(void);
-                  
+
                2. template <class C, void(C::*Function)(T)>
                   void Bind(void);
-                  
+
                3. void Invoke(T ARG0);
 
 ---------------------------------------------------------*/
