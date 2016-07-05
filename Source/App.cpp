@@ -36,7 +36,7 @@ App::~App(void) { }
 
 void App::Configure(Container* pContainer) {
 
-    auto connectionString = DbConnectionString("./", "ldwrksTmp.db");
+    auto connectionString = DbConnectionString("./", ".~ldwrksTmp.db");
     pContainer->Register<IDbConnection, DbConnection>(new DbConnection(connectionString, DbConnectionOptions()));
 
 	/* Database Deployment and Setup */
@@ -49,11 +49,6 @@ void App::Configure(Container* pContainer) {
 
     /* Component Repository */
     pContainer->Register<ComponentRepository, ComponentRepository>(new ComponentRepository(
-        pContainer->Resolve<IDbConnection>()
-    ));
-
-    /* Placement Repository */
-    pContainer->Register<PlacementRepository, PlacementRepository>(new PlacementRepository(
         pContainer->Resolve<IDbConnection>()
     ));
 
