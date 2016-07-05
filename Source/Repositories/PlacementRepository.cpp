@@ -7,6 +7,8 @@
 #include "../Components/Persistence/Placement.hpp"
 #include "../Mapping/Inbound/PlacementToPlacementConverter.hpp"
 #include "../Mapping/Outbound/PlacementToPlacementConverter.hpp"
+#include "../Utilities/CacheCollection.hpp"
+#include "../Utilities/CacheObject.hpp"
 #include "../Utilities/StringExtensions.hpp"
 
 #include <sqlite-persistence/DbCommand.hpp>
@@ -15,7 +17,12 @@
 #include <sqlite-persistence/DbReader.hpp>
 #include <sqlite-persistence/sqlite/sqlite3.h>
 
+#include <deque>
+#include <functional>
+#include <future>
+#include <memory>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 using namespace Components;
@@ -145,9 +152,15 @@ const std::string PlacementRepository::Query_UpdatePlacement = std::string
 );
 
 PlacementRepository::PlacementRepository(IDbConnection* _pConnection)
-    : DbRepository<Placement>(_pConnection) { }
+    : DbRepository<Placement>(_pConnection), m_savingQueue(std::deque<uint64_t>()) { }
 
-PlacementRepository::~PlacementRepository(void) { }
+PlacementRepository::~PlacementRepository(void)
+{
+    auto empty = std::deque<uint64_t>();
+    std::swap(this->m_savingQueue, empty);
+
+    this->m_cache.Clear();
+}
 
 void PlacementRepository::DeleteById(uint64_t _id)
 {
@@ -163,6 +176,9 @@ void PlacementRepository::DeleteById(uint64_t _id)
 
     this->m_pCurrentCommand->setQueryText(deleteQuery);
     this->m_pCurrentCommand->ExecuteNonQuery();
+
+    // < Remove the object from cache if it exists.
+    this->m_cache.Remove(_id);
 }
 
 DbReader<Persistence::Placement>* PlacementRepository::ExecuteReader(const std::string& _query)
@@ -179,17 +195,50 @@ std::vector<Placement> PlacementRepository::FindByEntityId(uint64_t _entityId)
     Replace("{EntityId}", std::to_string(_entityId), findQuery);
 
     auto res = this->Find(findQuery, false);
-    return TypeConverter::ConvertAll<Persistence::Placement, Placement>(res);
+
+    auto ret = TypeConverter::ConvertAll<Persistence::Placement, Placement>(res);
+
+    auto iter = ret.begin();
+    while (iter != ret.end())
+    {
+        Placement current = (*iter);
+
+        // < Does the object exist in cache?
+        if (!this->m_cache.Exists(current.nId))
+        {
+            this->m_cache.Add(current.nId, Placement(current));
+        }
+        else
+        {
+            // < Yes, so return cached version.
+            *iter = this->m_cache.Get((*iter).nId);
+        }
+
+        ++iter;
+    }
+
+    return ret;
 }
 
 Placement PlacementRepository::FindById(uint64_t _id)
 {
+    // < Object existed in cache, return it.
+    if (this->m_cache.Exists(_id))
+    {
+        return this->m_cache.Get(_id);
+    }
+
     auto findQuery = Query_FindById;
 
     Replace("{Id}", std::to_string(_id), findQuery);
 
     auto res = this->Find(findQuery, true).front();
-    return TypeConverter::Convert<Persistence::Placement, Placement>(res);
+    auto ret = TypeConverter::Convert<Persistence::Placement, Placement>(res);
+
+    // < Attempt to add object to cache.
+    this->m_cache.Add(ret.nId, Placement(ret));
+
+    return ret;
 }
 
 std::vector<Placement> PlacementRepository::FindByName(const std::string& _name)
@@ -199,7 +248,18 @@ std::vector<Placement> PlacementRepository::FindByName(const std::string& _name)
     ReplaceWithLiteral("{Name}", _name, findQuery);
 
     auto res = this->Find(findQuery, false);
-    return TypeConverter::ConvertAll<Persistence::Placement, Placement>(res);
+    auto ret = TypeConverter::ConvertAll<Persistence::Placement, Placement>(res);
+
+    auto iter = ret.begin();
+    while (iter != ret.end())
+    {
+        Placement current = (*iter);
+
+        this->m_cache.Add(current.nId, current);
+        ++iter;
+    }
+
+    return ret;
 }
 
 std::vector<Persistence::Placement> PlacementRepository::Find(const std::string& _query, bool _single)
@@ -343,5 +403,69 @@ Placement PlacementRepository::Save(const Placement& _comp)
         current = this->Update(current);
     }
 
-    return TypeConverter::Convert<Persistence::Placement, Placement>(current);
+    auto ret = TypeConverter::Convert<Persistence::Placement, Placement>(current);
+
+    // < Attempt to add object to cache, or update
+    // * existing object.
+    this->m_cache.Add(ret.nId, ret);
+
+    return ret;
+}
+
+Placement PlacementRepository::SaveDeferred(const Placement& _comp)
+{
+    Persistence::Placement current;
+    Persistence::Placement original;
+    uint64_t compId = _comp.nId;
+
+    current = TypeConverter::Convert<Placement, Persistence::Placement>(_comp);
+
+    if (compId <= 0)
+    {
+        // < New component, must be inserted to get
+        // * an id.
+        current = this->Insert(current);
+    }
+    else
+    {
+        // < Updating an existing component. We will
+        // * save this component later from the cache
+        // * so queue the component id to be saved
+        //* later.
+        if (std::find(this->m_savingQueue.begin(), this->m_savingQueue.end(), current.nId) == this->m_savingQueue.end())
+        {
+            this->m_savingQueue.push_back(current.nId);
+        }
+    }
+
+    auto ret = TypeConverter::Convert<Persistence::Placement, Placement>(current);
+
+    // < Attempt to add object to cache, or update
+    // * existing object.
+    this->m_cache.Add(ret.nId, Placement(ret));
+
+    return ret;
+}
+
+void PlacementRepository::Update(void)
+{
+    std::future<void> asyncSave = std::async(std::launch::async, &PlacementRepository::SaveDeferredAsync, this);
+    asyncSave.get();
+}
+
+void PlacementRepository::SaveDeferredAsync(void)
+{
+    this->m_cache.Update();
+
+    int index = 0;
+    while (!this->m_savingQueue.empty() && index < 8)
+    {
+        uint64_t id = this->m_savingQueue.front();
+        auto current = this->m_cache.Get(id);
+
+        this->Save(current);
+
+        this->m_savingQueue.pop_front();
+        ++index;
+    }
 }

@@ -13,11 +13,16 @@
 #include <sqlite-persistence/DbReader.hpp>
 #include <sqlite-persistence/sqlite/sqlite3.h>
 
+#include <deque>
 #include <string>
 #include <vector>
 
 using namespace Components;
 
+// < TODO: Add CacheCollection support.
+// * [X] Inserting a new component should add the component to the cache.
+// * [X] Accessing a new component should add the component to the cache.
+// * [ ] Components should be saved to the database in a deferred way.
 class PlacementRepository : public DbRepository<Placement>
 {
 
@@ -37,7 +42,11 @@ public:
 
     std::vector<Placement> FindByName(const std::string& _name);
 
-   Placement Save(const Placement& _comp);
+    Placement Save(const Placement& _comp);
+
+    Placement SaveDeferred(const Placement& _comp);
+
+    void Update(void);
 
 protected:
 
@@ -49,9 +58,13 @@ protected:
 
     static inline bool Map(DbReader<Persistence::Placement>* _pReader, sqlite3_stmt* _pStmt, Persistence::Placement& _result);
 
+    void SaveDeferredAsync(void);
+
     Persistence::Placement Update(const Persistence::Placement& _comp);
 
 private:
+
+    std::deque<uint64_t> m_savingQueue;
 
     static const std::string Query_DeleteComponentById;
 
@@ -98,10 +111,10 @@ bool PlacementRepository::Map(DbReader<Persistence::Placement>* _pReader, sqlite
     auto spinY = ((float)sqlite3_column_double(_pStmt, 19));
     auto spinZ = ((float)sqlite3_column_double(_pStmt, 20));
     auto friction = ((float)sqlite3_column_double(_pStmt, 21));
-    auto visible = ((bool)sqlite3_column_int(_pStmt, 22));
-    auto ghost = ((bool)sqlite3_column_int(_pStmt, 23));
-    auto ignoreCollision = ((bool)sqlite3_column_int(_pStmt, 24));
-    auto touchingGround = ((bool)sqlite3_column_int(_pStmt, 25));
+    auto visible = (sqlite3_column_int(_pStmt, 22) == 1);
+    auto ghost = (sqlite3_column_int(_pStmt, 23) == 1);
+    auto ignoreCollision = (sqlite3_column_int(_pStmt, 24) == 1);
+    auto touchingGround = (sqlite3_column_int(_pStmt, 25) == 1);
 
     _result = Persistence::Placement();
     _result.nId = _result.nComponentId = id;
