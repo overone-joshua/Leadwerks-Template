@@ -4,8 +4,10 @@
 #include "../Components/Component.hpp"
 #include "../Repositories/AppearanceRepository.hpp"
 #include "../Repositories/ComponentRepository.hpp"
+#include "../Repositories/MemoryRepository.hpp"
 #include "../Repositories/PlacementRepository.hpp"
 #include "../Systems/PlacementSystem.hpp"
+#include "../Utilities/StringExtensions.hpp"
 
 #include <sqlite-persistence/DbConnection.hpp>
 
@@ -20,12 +22,13 @@ void DefaultState::Configure(Container* pContainer)
 {
     // < Here, we resolve some dependencies from the application container.
     m_pCameraHndl = pContainer->Resolve<CameraHandle>();
+    m_pContextHndl = pContainer->Resolve<ContextHandle>();
     m_pInputMgr = pContainer->Resolve<InputManager>();
     m_pWorldHndl = pContainer->Resolve<WorldHandle>();
 	m_pConnection = pContainer->Resolve<IDbConnection>();
     m_pAppearanceRepository = pContainer->Resolve<AppearanceRepository>();
     m_pComponentRepository = pContainer->Resolve<ComponentRepository>();
-    m_pPlacementRepository = pContainer->Resolve<PlacementRepository>();
+    m_pPlacementRepository = MemoryRepository<Components::Placement>(-1);
 }
 
 void DefaultState::Load(void)
@@ -49,10 +52,12 @@ void DefaultState::Load(void)
 
     // < Lets test CRUD operations on the base component.
     placement = Components::Placement(m_player, "Player Placement Component");
-    placement = m_pPlacementRepository->Save(placement);
+    placement = m_pPlacementRepository.Add(placement);
 
-    placement.cName = "Player Placement component with updated name";
-    placement = m_pPlacementRepository->Save(placement);
+    placement = Systems::PlacementSystem::AddSpin(&this->m_pPlacementRepository, m_player, Leadwerks::Vec3(0.0f, 0.0f, 0.25f));
+
+    //placement.cName = "Player Placement component with updated name";
+    //placement = m_pPlacementRepository.Set(placement.nId, placement);
 
     pModel = Leadwerks::Model::Box();
 	pModel->SetPosition(placement.vTranslation, true);
@@ -79,14 +84,21 @@ bool DefaultState::Update(float dt)
 {
     auto world = m_pWorldHndl->getInst();
 
-	Systems::PlacementSystem::AddSpin(this->m_pPlacementRepository, m_player, Leadwerks::Vec3(0.2f, 0.0f, 0.0f));
-	Systems::PlacementSystem::Update(this->m_pPlacementRepository, m_player, dt, false);
-
-    placement = this->m_pPlacementRepository->FindById(placement.nId);
+	placement = Systems::PlacementSystem::Update(&this->m_pPlacementRepository, m_player, dt, false);
 
 	pModel->SetRotation(placement.vRotation);
 
     return true;
+}
+
+void DefaultState::Draw(void)
+{
+    auto ctx = this->m_pContextHndl->getInst();
+
+    auto fps = std::string("FPS: {fps}");
+    Replace("{fps}", std::to_string(Leadwerks::Time::GetSpeed()), fps);
+
+    ctx->DrawText(fps, 10.0f, 10.0f);
 }
 
 void DefaultState::OnKeyDown(Event_KeyDown* pEvent)

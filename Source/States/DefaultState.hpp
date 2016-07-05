@@ -26,6 +26,7 @@
 #include "../Managers/InputManager.hpp"
 
 #include "../Utilities/CameraHandle.hpp"
+#include "../Utilities/ContextHandle.hpp"
 #include "../Utilities/WorldHandle.hpp"
 #include "../Utilities/Container.hpp"
 #include "../Utilities/Delegate.hpp"
@@ -36,6 +37,7 @@
 
 #include "../Repositories/AppearanceRepository.hpp"
 #include "../Repositories/ComponentRepository.hpp"
+#include "../Repositories/MemoryRepository.hpp"
 #include "../Repositories/PlacementRepository.hpp"
 
 #include <sqlite-persistence/DbConnection.hpp>
@@ -52,6 +54,8 @@ public:
 	void                   Load(void);
 	void                   Close(void);
 
+    void                   Draw(void);
+
 	bool                   Update(float deltaTime);
 
     void                   OnMouseMove(Event_MouseMove* pEvent);
@@ -64,11 +68,12 @@ private:
     IDbConnection*         m_pConnection;
     InputManager*          m_pInputMgr;
     CameraHandle*          m_pCameraHndl;
+    ContextHandle*         m_pContextHndl;
     WorldHandle*           m_pWorldHndl;
 
     IDbRepository<Components::Appearance>* m_pAppearanceRepository;
     IDbRepository<Components::Component>* m_pComponentRepository;
-    IDbRepository<Components::Placement>* m_pPlacementRepository;
+    MemoryRepository<Components::Placement> m_pPlacementRepository;
 
 	Leadwerks::Light*	  m_pSceneLight;
 
