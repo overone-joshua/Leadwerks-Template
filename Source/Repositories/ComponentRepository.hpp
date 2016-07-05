@@ -38,6 +38,10 @@ public:
 
     Component Save(const Component& _comp);
 
+    Component SaveDeferred(const Component& _comp);
+
+    void Update(void);
+
 protected:
 
     DbReader<Persistence::Component>* ExecuteReader(const std::string& _query);

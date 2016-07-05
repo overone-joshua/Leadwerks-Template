@@ -38,6 +38,10 @@ public:
 
     Appearance Save(const Appearance& _comp);
 
+    Appearance SaveDeferred(const Appearance& _comp);
+
+    void Update(void);
+
 protected:
 
     DbReader<Persistence::Appearance>* ExecuteReader(const std::string& _query);

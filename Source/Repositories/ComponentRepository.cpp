@@ -194,3 +194,10 @@ Component ComponentRepository::Save(const Component& _comp)
 
     return TypeConverter::Convert<Persistence::Component, Component>(current);
 }
+
+Component ComponentRepository::SaveDeferred(const Component& _comp)
+{
+    return this->Save(_comp);
+}
+
+void ComponentRepository::Update(void) { }

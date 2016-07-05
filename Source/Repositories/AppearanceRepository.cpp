@@ -244,3 +244,10 @@ Appearance AppearanceRepository::Save(const Appearance& _comp)
 
     return TypeConverter::Convert<Persistence::Appearance, Appearance>(current);
 }
+
+Appearance AppearanceRepository::SaveDeferred(const Appearance& _comp)
+{
+    return this->Save(_comp);
+}
+
+void AppearanceRepository::Update(void) { }

@@ -29,6 +29,10 @@ public:
 
     virtual T Save(const T& _comp) = 0;
 
+    virtual T SaveDeferred(const T& _comp) = 0;
+
+    virtual void Update(void) = 0;
+
 }; // < end class.
 
 #endif _IDBREPOSITORY_HPP

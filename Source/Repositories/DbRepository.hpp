@@ -5,6 +5,7 @@
 #include "IDbRepository.hpp"
 
 #include "../Common.hpp"
+#include "../Utilities/CacheCollection.hpp"
 #include "../Utilities/Disposable.hpp"
 #include "../Utilities/Macros.hpp"
 
@@ -14,6 +15,7 @@
 #include <string>
 #include <vector>
 
+// < TODO: Repositories should be able to save a collection of components.
 template <typename T>
 class DbRepository : public IDbRepository<T>, public Disposable
 {
@@ -37,6 +39,8 @@ public:
 
     virtual T Save(const T& _comp) = 0;
 
+    virtual void Update(void) = 0;
+
 protected:
 
     void ExecuteNonQuery(const std::string& _query);
@@ -45,6 +49,8 @@ protected:
 
     DbCommand* m_pCurrentCommand;
 
+    CacheCollection<T> m_cache;
+
 private:
 
 }; // < end class.
@@ -52,13 +58,11 @@ private:
 
 template <typename T>
 DbRepository<T>::DbRepository(IDbConnection* _pConnection)
-    : m_pConnection(_pConnection), m_pCurrentCommand(nullptr) { }
+    : m_pConnection(_pConnection), m_pCurrentCommand(nullptr)
+    , m_cache(CacheCollection<T>(10)) { }
 
 template <typename T>
-DbRepository<T>::~DbRepository(void)
-{
-
-}
+DbRepository<T>::~DbRepository(void) { }
 
 template <typename T>
 void DbRepository<T>::Dispose(void)
