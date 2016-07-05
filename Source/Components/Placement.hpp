@@ -55,8 +55,30 @@ namespace Components
 			bIgnoreCollision = false;
 
 			bTouchingGround = false;
-
 		}
+
+        Component_Placement(const Component_Placement& _other)
+            : Component(_other.nEntityId, _other.cName)
+        {
+            nId = _other.nId;
+
+            vTranslation = _other.vTranslation;
+            vRotation = _other.vRotation;
+
+            vVelocity = _other.vVelocity;
+            vSpin = _other.vSpin;
+
+            vForward = _other.vForward;
+            vRight = _other.vRight;
+
+            nFriction = _other.nFriction;
+
+            bVisible = _other.bVisible;
+            bGhost = _other.bGhost;
+            bIgnoreCollision = _other.bIgnoreCollision;
+
+            bTouchingGround = _other.bTouchingGround;
+        }
 
 	} Placement; // < end struct
 } // < end namespace.
