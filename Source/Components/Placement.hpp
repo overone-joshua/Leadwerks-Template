@@ -36,6 +36,8 @@ namespace Components
 		bool bIgnoreCollision;
 		bool bTouchingGround;
 
+        Leadwerks::PickInfo stepResult;
+
 		explicit Component_Placement(uint64_t _nEntityId = 0, const std::string& name = "")
 			: Component(_nEntityId, name)
 		{
@@ -48,7 +50,7 @@ namespace Components
 			vForward = Leadwerks::Vec3(0.0f, 0.0f, 1.0f);
 			vRight = Leadwerks::Vec3(1.0f, 0.0f, 0.0f);
 
-			nFriction = 0.0f;
+			nFriction = 8.0f;
 
 			bVisible = true;
 			bGhost = false;
