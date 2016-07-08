@@ -2,21 +2,18 @@
 #include "DefaultState.hpp"
 
 #include "../Components/Component.hpp"
-#include "../Repositories/AppearanceRepository.hpp"
-#include "../Repositories/ComponentRepository.hpp"
-#include "../Repositories/MemoryRepository.hpp"
-#include "../Repositories/PlacementRepository.hpp"
 #include "../Systems/PlacementSystem.hpp"
+#include "../Systems/PlayerSystem.hpp"
 #include "../Utilities/StringExtensions.hpp"
 
 #include <sqlite-persistence/DbConnection.hpp>
 
 #include <memory>
 
-DefaultState::DefaultState(void) { }
+using namespace Systems;
 
-Leadwerks::Model* pModel;
-Components::Placement placement;
+DefaultState::DefaultState(void) 
+    : pModel(nullptr), placement(0, "-1-1-1") { }
 
 void DefaultState::Configure(Container* pContainer)
 {
@@ -26,9 +23,6 @@ void DefaultState::Configure(Container* pContainer)
     m_pInputMgr = pContainer->Resolve<InputManager>();
     m_pWorldHndl = pContainer->Resolve<WorldHandle>();
 	m_pConnection = pContainer->Resolve<IDbConnection>();
-    m_pAppearanceRepository = pContainer->Resolve<AppearanceRepository>();
-    m_pComponentRepository = pContainer->Resolve<ComponentRepository>();
-    m_pPlacementRepository = MemoryRepository<Components::Placement>(-1);
 }
 
 void DefaultState::Load(void)
@@ -47,17 +41,21 @@ void DefaultState::Load(void)
     // < Create our component world.
     m_pWorld = new Components::World(m_pConnection, 0, "Primary");
 
+    // < Initlaize the gameplay systems we will need for this state.
+    if (PlacementSystem::Init() + PlayerSystem::Init() != 0)
+    {
+        std::cerr << "System initialization failed!";
+        this->Close();
+    }
+
     // < Test sqlite component system.
     m_player = m_pWorld->CreateEntity("player_one");
 
     // < Lets test CRUD operations on the base component.
     placement = Components::Placement(m_player, "Player Placement Component");
-    placement = m_pPlacementRepository.Add(placement);
+    placement = PlacementSystem::Save(m_player, placement);
 
-    placement = Systems::PlacementSystem::AddSpin(&this->m_pPlacementRepository, m_player, Leadwerks::Vec3(0.0f, 0.0f, 0.25f));
-
-    //placement.cName = "Player Placement component with updated name";
-    //placement = m_pPlacementRepository.Set(placement.nId, placement);
+    placement = PlacementSystem::AddSpin(m_player, Leadwerks::Vec3(0.0f, 0.0f, 0.25f));
 
     pModel = Leadwerks::Model::Box();
 	pModel->SetPosition(placement.vTranslation, true);
@@ -68,6 +66,10 @@ void DefaultState::Close(void)
     // < Clean up our scene.
     SAFE_RELEASE(m_pSceneLight);
     SAFE_DELETE(m_pSceneLight);
+
+    // < Shutdown the systems we initialized in Load.
+    PlayerSystem::Shutdown();
+    PlacementSystem::Shutdown();
 
 	m_pWorld->DeleteEntity(m_player);
     SAFE_DELETE(m_pWorld);
@@ -84,7 +86,7 @@ bool DefaultState::Update(float dt)
 {
     auto world = m_pWorldHndl->getInst();
 
-	placement = Systems::PlacementSystem::Update(&this->m_pPlacementRepository, m_player, dt, false);
+	placement = PlacementSystem::Update(m_player, dt, false);
 
 	pModel->SetRotation(placement.vRotation);
 

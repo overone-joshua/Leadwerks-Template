@@ -35,10 +35,8 @@
 #include "../Components/World.hpp"
 #include "../Components/Component.hpp"
 
-#include "../Repositories/AppearanceRepository.hpp"
-#include "../Repositories/ComponentRepository.hpp"
-#include "../Repositories/MemoryRepository.hpp"
-#include "../Repositories/PlacementRepository.hpp"
+#include "../Systems/PlacementSystem.hpp"
+#include "../Systems/PlayerSystem.hpp"
 
 #include <sqlite-persistence/DbConnection.hpp>
 
@@ -63,6 +61,12 @@ public:
 	void                   OnKeyDown(Event_KeyDown* pEvent);
 	void                   OnKeyUp(Event_KeyUp* pEvent);
 
+protected:
+
+    // < Test objects.
+    Leadwerks::Model* pModel;
+    Components::Placement placement;
+
 private:
 
     IDbConnection*         m_pConnection;
@@ -70,10 +74,6 @@ private:
     CameraHandle*          m_pCameraHndl;
     ContextHandle*         m_pContextHndl;
     WorldHandle*           m_pWorldHndl;
-
-    IDbRepository<Components::Appearance>* m_pAppearanceRepository;
-    IDbRepository<Components::Component>* m_pComponentRepository;
-    MemoryRepository<Components::Placement> m_pPlacementRepository;
 
 	Leadwerks::Light*	  m_pSceneLight;
 
