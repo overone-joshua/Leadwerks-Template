@@ -20,6 +20,8 @@ namespace Components
         Leadwerks::Vec3 vViewPoint;
         float nViewTilt;
 
+        Leadwerks::Vec3 vForward;
+
         float nViewSmoothing;
         float nViewSensitivity;
 
