@@ -97,12 +97,12 @@ namespace Systems
 			 // < Drive and strafe the player.
 			if (playerComp.nDrive != 0.0f)
 			{
-				placementComp = PlacementSystem::Drive(_entity, playerComp.nDrive * 8000.0f * dt);
+				placementComp = PlacementSystem::Drive(placementComp, playerComp.nDrive * 8000.0f * dt);
 			}
 
 			if (playerComp.nStrafe != 0.0f)
 			{
-				placementComp = PlacementSystem::Strafe(_entity, playerComp.nStrafe * 8000.0f * dt);
+				placementComp = PlacementSystem::Strafe(placementComp, playerComp.nStrafe * 8000.0f * dt);
 			}
         }
 
@@ -122,7 +122,7 @@ namespace Systems
             // < Check if the player's view needs to be reset.
             if (_bReset)
             {
-                placementComp = PlacementSystem::SetRotation(_entity, 0.0f, 0.0f, 0.0f);
+                placementComp = PlacementSystem::SetRotation(placementComp, 0.0f, 0.0f, 0.0f);
 
                 lastX = lastY = 0.0f;
                 playerComp.nViewTilt = 0.0f;

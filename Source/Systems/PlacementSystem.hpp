@@ -4,6 +4,7 @@
 #pragma once
 #include "Leadwerks.h"
 #include "../Utilities/Math/Math.hpp"
+#include "../Components/InputDictionary.hpp"
 #include "../Components/Placement.hpp"
 #include "../Components/World.hpp"
 #include "../Repositories/MemoryRepository.hpp"
@@ -51,69 +52,88 @@ namespace Systems
 			bInitialized = false;
 		}
 
-		static Placement Update(uint64_t entity, float dt, bool bAddVelocity)
+		static Placement& Update(Placement& comp, float dt, bool bAddVelocity)
 		{
-            auto comp = _pPlacementRepository->GetWhere([entity](Placement& comp) { return comp.nEntityId == entity; }).front();
+            float nFriction = 1.0f - comp.nFriction * dt;
 
-			float nFriction = 1.0f - comp.nFriction * dt;
+            // < Spin the object.
+            auto vSpin = comp.vSpin.Multiply(nFriction).Multiply(dt);
+            comp = AddRotation(comp, vSpin);
 
-			// < Move the object.
-			comp.vVelocity *= nFriction;
-			if (bAddVelocity)
-			{
-				auto vVelocity = comp.vVelocity * dt;
-				comp.vTranslation += vVelocity;
+            if (comp.vRotation.z <= -360.0f)
+            {
+                comp.vRotation.z = 360.0f;
+            }
 
-				// < Set translation matrix.
-				comp.mTranslation = Leadwerks::Mat4(comp.vTranslation.x, comp.vTranslation.y, comp.vTranslation.z);
-			}
+            if (bAddVelocity)
+            {
+                // < Check input mask to propagate movement.
+                float localMove, localStrafe;
+                localMove = localStrafe = 0.0f;
 
-			// < Spin the object.
-			comp.vSpin *= nFriction;
-			auto vSpin = comp.vSpin * dt;
-			comp.vRotation += vSpin;
-			comp.mRotation = Leadwerks::Mat4(comp.vRotation.x, comp.vRotation.y, comp.vRotation.z);
+                localMove = (comp.nInputMask.HasStatus(INPUT_MOVE_BACKWARD) - comp.nInputMask.HasStatus(INPUT_MOVE_FORWARD)) * 0.025;
+                localStrafe = (comp.nInputMask.HasStatus(INPUT_MOVE_LEFT) - comp.nInputMask.HasStatus(INPUT_MOVE_RIGHT)) * 0.025;
 
-			// < Update the world matrix.
-			comp.mWorld = comp.mRotation * comp.mTranslation;
+                if (localMove != 0.0f)
+                {
+                    comp = SetDrive(comp, localMove);
 
-			// < Create the view matrix.
-			comp.mView = comp.mWorld.Inverse();
+                    auto vVelocity = comp.vVelocity.Multiply(nFriction).Multiply(dt);
+                    comp = AddTranslation(comp, vVelocity);
+                }
 
-			// < Update the forward vector.
-			comp.vForward = Leadwerks::Vec3(
-				Leadwerks::Math::Sin(comp.vRotation.y)
-				, -Leadwerks::Math::Tan(comp.vRotation.x)
-				, Leadwerks::Math::Cos(comp.vRotation.y))
-				.Normalize();
+                if (localStrafe != 0.0f)
+                {
+                    comp = SetStrafe(comp, localStrafe);
 
-			// < Update the right vector.
-			comp.vRight = Leadwerks::Vec3(
-				Leadwerks::Math::Cos(comp.vRotation.y)
-				, Leadwerks::Math::Tan(comp.vRotation.z)
-				, -Leadwerks::Math::Sin(comp.vRotation.y))
-				.Normalize();
+                    auto vVelocity = comp.vVelocity.Multiply(nFriction).Multiply(dt);
+                    comp = AddTranslation(comp, vVelocity);
+                }
+            }
 
-			return _pPlacementRepository->Set(comp.nId, comp);
+            // < Update the forward vector.
+            comp.vForward = Leadwerks::Vec3(
+                Leadwerks::Math::Sin(comp.vRotation.y)
+                , -Leadwerks::Math::Tan(comp.vRotation.x)
+                , Leadwerks::Math::Cos(comp.vRotation.y))
+                .Normalize();
+
+            // < Update the right vector.
+            comp.vRight = Leadwerks::Vec3(
+                Leadwerks::Math::Cos(comp.vRotation.y)
+                , Leadwerks::Math::Tan(comp.vRotation.z)
+                , -Leadwerks::Math::Sin(comp.vRotation.y))
+                .Normalize();
+
+            // < Update the world matrix.
+            comp.mWorld = comp.mRotation.Multiply(comp.mTranslation);
+
+            // < Create the view matrix.
+            comp.mView = comp.mWorld.Inverse();
+
+            return comp;
 		}
 
-		static Placement Drive(uint64_t entity, float nForce, bool bLockYAxis = true)
+		static Placement& Drive(Placement& comp, float nForce, bool bLockYAxis = true)
 		{
-            auto comp = _pPlacementRepository->GetWhere([entity](Placement& comp) { return comp.nEntityId == entity; }).front();
-
 			auto force = comp.vForward * nForce;
 			comp.vVelocity.x += force.x;
 			comp.vVelocity.z += force.z;
 
 			if (!bLockYAxis) { comp.vVelocity.y += force.y; }
 
-			return _pPlacementRepository->Set(comp.nId, comp);
+            return comp;
 		}
 
-		static Placement Strafe(uint64_t entity, float nForce, bool bLockYAxis = true)
-		{
-            auto comp = _pPlacementRepository->GetWhere([entity](Placement& comp) { return comp.nEntityId == entity; }).front();
+        static Placement& SetDrive(Placement& comp, float nForce)
+        {
+            comp.vVelocity = comp.vForward.Multiply(nForce);
 
+            return comp;
+        }
+
+		static Placement& Strafe(Placement& comp, float nForce, bool bLockYAxis = true)
+		{
 			auto force = comp.vRight * nForce;
 
             comp.vVelocity += force.x;
@@ -121,73 +141,68 @@ namespace Systems
 
             if (!bLockYAxis) { comp.vVelocity.y += force.y; }
 
-            return _pPlacementRepository->Set(comp.nId, comp);
+            return comp;
 		}
 
-		static Placement Stop(uint64_t entity)
-		{
-            auto comp = _pPlacementRepository->GetWhere([entity](Placement& comp) { return comp.nEntityId == entity; }).front();
+        static Placement& SetStrafe(Placement& comp, float nForce)
+        {
+            comp.vVelocity = comp.vRight.Multiply(nForce);
 
+            return comp;
+        }
+
+		static Placement& Stop(Placement& comp)
+		{
             comp.vVelocity = Leadwerks::Vec3(0.0f, 0.0f, 0.0f);
             comp.vVelocity = Leadwerks::Vec3(0.0f, 0.0f, 0.0f);
 
-            return _pPlacementRepository->Set(comp.nId, comp);
+            return comp;
 		}
 
-		static Placement SetTranslation(uint64_t entity, float x, float y, float z)
+		static Placement& SetTranslation(Placement& comp, float x, float y, float z)
 		{
-            auto comp = _pPlacementRepository->GetWhere([entity](Placement& comp) { return comp.nEntityId == entity; }).front();
-
 			comp.vTranslation.x = x;
 			comp.vTranslation.y = y;
 			comp.vTranslation.z = z;
 
 			comp.mTranslation = Leadwerks::Mat4(comp.vTranslation.x, comp.vTranslation.y, comp.vTranslation.z);
 			
-            return _pPlacementRepository->Set(comp.nId, comp);
+            return comp;
 		}
 
-		static Placement SetTranslation(uint64_t entity, Leadwerks::Vec3 vTranslation)
+		static Placement& SetTranslation(Placement& comp, Leadwerks::Vec3 vTranslation)
 		{
-            auto comp = _pPlacementRepository->GetWhere([entity](Placement& comp) { return comp.nEntityId == entity; }).front();
-
             comp.vTranslation = vTranslation;
 
-            comp.mTranslation = Leadwerks::Mat4(comp.vTranslation.x, comp.vTranslation.y, comp.vTranslation.z);
+            Math::MatrixTranslation(&comp.mTranslation, comp.vTranslation.x, comp.vTranslation.y, comp.vTranslation.z);
 
-            return _pPlacementRepository->Set(comp.nId, comp);
+            return comp;
 		}
 
-		static Placement AddTranslation(uint64_t entity, float x, float y, float z)
+		static Placement& AddTranslation(Placement& comp, float x, float y, float z)
 		{
-            auto comp = _pPlacementRepository->GetWhere([entity](Placement& comp) { return comp.nEntityId == entity; }).front();
-
             comp.vTranslation.x += x;
             comp.vTranslation.y += y;
             comp.vTranslation.z += z;
 
-            comp.mTranslation = Leadwerks::Mat4(comp.vTranslation.x, comp.vTranslation.y, comp.vTranslation.z);
+            comp.mTranslation = Leadwerks::Mat4(comp.vTranslation.x, comp.vTranslation.y, comp.vTranslation.z, 1.0f);
 
-            return _pPlacementRepository->Set(comp.nId, comp);
+            return comp;
 		}
 
-		static Placement AddTranslation(uint64_t entity, Leadwerks::Vec3 vTranslation)
+		static Placement& AddTranslation(Placement& comp, Leadwerks::Vec3 vTranslation)
 		{
-            auto comp = _pPlacementRepository->GetWhere([entity](Placement& comp) { return comp.nEntityId == entity; }).front();
-
             comp.vTranslation.x += vTranslation.x;
             comp.vTranslation.y += vTranslation.y;
             comp.vTranslation.z += vTranslation.z;
 
-            comp.mTranslation = Leadwerks::Mat4(comp.vTranslation.x, comp.vTranslation.y, comp.vTranslation.z);
+            Math::MatrixTranslation(&comp.mTranslation, comp.vTranslation.x, comp.vTranslation.y, comp.vTranslation.z);
 
-            return _pPlacementRepository->Set(comp.nId, comp);
+            return comp;
 		}
 
-		static Placement SetRotation(uint64_t entity, float x, float y, float z)
+		static Placement& SetRotation(Placement& comp, float x, float y, float z)
 		{
-            auto comp = _pPlacementRepository->GetWhere([entity](Placement& comp) { return comp.nEntityId == entity; }).front();
-
             comp.vRotation.x = x;
             comp.vRotation.y = y;
             comp.vRotation.z = z;
@@ -199,13 +214,11 @@ namespace Systems
             comp.mRotation *= rotX;
             comp.mRotation *= rotY;
 
-            return _pPlacementRepository->Set(comp.nId, comp);
+            return comp;
 		}
 
-		static Placement SetRotation(uint64_t entity, Leadwerks::Vec3 vRotation)
+		static Placement& SetRotation(Placement& comp, Leadwerks::Vec3 vRotation)
 		{
-            auto comp = _pPlacementRepository->GetWhere([entity](Placement& comp) { return comp.nEntityId == entity; }).front();
-
 			comp.vRotation.x = vRotation.x;
 			comp.vRotation.y = vRotation.y;
 			comp.vRotation.z = vRotation.z;
@@ -217,13 +230,11 @@ namespace Systems
 			comp.mRotation *= rotX;
 			comp.mRotation *= rotY;
 
-            return _pPlacementRepository->Set(comp.nId, comp);
+            return comp;
 		}
 
-		static Placement AddRotation(uint64_t entity, float x, float y, float z)
+		static Placement& AddRotation(Placement& comp, float x, float y, float z)
 		{
-            auto comp = _pPlacementRepository->GetWhere([entity](Placement& comp) { return comp.nEntityId == entity; }).front();
-
 			comp.vRotation.x += x;
 			comp.vRotation.y += y;
 			comp.vRotation.z += z;
@@ -235,13 +246,11 @@ namespace Systems
 			comp.mRotation *= rotX;
 			comp.mRotation *= rotY;
 
-            return _pPlacementRepository->Set(comp.nId, comp);
+            return comp;
 		}
 
-		static Placement AddRotation(uint64_t entity, Leadwerks::Vec3 vRotation)
+		static Placement& AddRotation(Placement& comp, Leadwerks::Vec3 vRotation)
 		{
-            auto comp = _pPlacementRepository->GetWhere([entity](Placement& comp) { return comp.nEntityId == entity; }).front();
-
 			comp.vRotation.x += vRotation.x;
 			comp.vRotation.y += vRotation.y;
 			comp.vRotation.z += vRotation.z;
@@ -253,96 +262,80 @@ namespace Systems
 			comp.mRotation *= rotX;
 			comp.mRotation *= rotY;
 
-            return _pPlacementRepository->Set(comp.nId, comp);
+            return comp;
 		}
 
-		static Placement SetVelocity(uint64_t entity, float x, float y, float z)
+		static Placement& SetVelocity(Placement& comp, float x, float y, float z)
 		{
-            auto comp = _pPlacementRepository->GetWhere([entity](Placement& comp) { return comp.nEntityId == entity; }).front();
-
 			comp.vVelocity.x = x;
 			comp.vVelocity.y = y;
 			comp.vVelocity.z = z;
 
-            return _pPlacementRepository->Set(comp.nId, comp);
+            return comp;
 		}
 
-		static Placement SetVelocity(uint64_t entity, Leadwerks::Vec3 vVelocity)
+		static Placement& SetVelocity(Placement& comp, Leadwerks::Vec3 vVelocity)
 		{
-            auto comp = _pPlacementRepository->GetWhere([entity](Placement& comp) { return comp.nEntityId == entity; }).front();
-
 			comp.vVelocity = vVelocity;
 
-            return _pPlacementRepository->Set(comp.nId, comp);
+            return comp;
 		}
 
 
-		static Placement AddVelocity(uint64_t entity, float x, float y, float z)
+		static Placement& AddVelocity(Placement& comp, float x, float y, float z)
 		{
-            auto comp = _pPlacementRepository->GetWhere([entity](Placement& comp) { return comp.nEntityId == entity; }).front();
-
 			comp.vVelocity.x += x;
 			comp.vVelocity.y += y;
 			comp.vVelocity.z += z;
 
-            return _pPlacementRepository->Set(comp.nId, comp);
+            return comp;
 		}
 
-		static Placement AddVelocity(uint64_t entity, Leadwerks::Vec3 vVelocity)
+		static Placement& AddVelocity(Placement& comp, Leadwerks::Vec3 vVelocity)
 		{
-            auto comp = _pPlacementRepository->GetWhere([entity](Placement& comp) { return comp.nEntityId == entity; }).front();
-
 			comp.vVelocity.x += vVelocity.x;
 			comp.vVelocity.y += vVelocity.y;
 			comp.vVelocity.z += vVelocity.z;
 
-            return _pPlacementRepository->Set(comp.nId, comp);
+            return comp;
 		}
 
-		static Placement SetSpin(uint64_t entity, float x, float y, float z)
+		static Placement& SetSpin(Placement& comp, float x, float y, float z)
 		{
-            auto comp = _pPlacementRepository->GetWhere([entity](Placement& comp) { return comp.nEntityId == entity; }).front();
-
 			comp.vSpin.x = x;
 			comp.vSpin.y = y;
 			comp.vSpin.z = z;
 
-            return _pPlacementRepository->Set(comp.nId, comp);
+            return comp;
 		}
 
-		static Placement SetSpin(uint64_t entity, Leadwerks::Vec3 vSpin)
+		static Placement& SetSpin(Placement& comp, Leadwerks::Vec3 vSpin)
 		{
-            auto comp = _pPlacementRepository->GetWhere([entity](Placement& comp) { return comp.nEntityId == entity; }).front();
-
 			comp.vSpin = vSpin;
 
-            return _pPlacementRepository->Set(comp.nId, comp);
+            return comp;
 		}
 
 
-		static Placement AddSpin(uint64_t entity, float x, float y, float z)
+		static Placement& AddSpin(Placement& comp, float x, float y, float z)
 		{
-            auto comp = _pPlacementRepository->GetWhere([entity](Placement& comp) { return comp.nEntityId == entity; }).front();
-
 			comp.vSpin.x += x;
 			comp.vSpin.y += y;
 			comp.vSpin.z += z;
 
-            return _pPlacementRepository->Set(comp.nId, comp);
+            return comp;
 		}
 
-		static Placement AddSpin(uint64_t entity, Leadwerks::Vec3 vSpin)
+		static Placement& AddSpin(Placement& comp, Leadwerks::Vec3 vSpin)
 		{
-            auto comp = _pPlacementRepository->GetWhere([entity](Placement& comp) { return comp.nEntityId == entity; }).front();
-
 			comp.vSpin.x += vSpin.x;
 			comp.vSpin.y += vSpin.y;
 			comp.vSpin.z += vSpin.z;
 
-            return _pPlacementRepository->Set(comp.nId, comp);
+            return comp;
 		}
 
-        static Placement Save(uint64_t entity, Placement& _comp)
+        static Placement& Save(uint64_t entity, Placement& _comp)
         {
             auto components = _pPlacementRepository->GetWhere([entity](Placement& comp) { return comp.nEntityId == entity; });
 
