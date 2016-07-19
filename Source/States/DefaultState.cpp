@@ -2,6 +2,7 @@
 #include "DefaultState.hpp"
 
 #include "../Components/Component.hpp"
+#include "../Components/InputDictionary.hpp"
 #include "../Systems/PlacementSystem.hpp"
 #include "../Systems/PlayerSystem.hpp"
 #include "../Utilities/StringExtensions.hpp"
@@ -55,7 +56,7 @@ void DefaultState::Load(void)
     placement = Components::Placement(m_player, "Player Placement Component");
     placement = PlacementSystem::Save(m_player, placement);
 
-    placement = PlacementSystem::AddSpin(m_player, Leadwerks::Vec3(0.0f, 0.0f, 0.25f));
+    placement = PlacementSystem::AddSpin(placement, Leadwerks::Vec3(0.0f, 0.0f, 0.25f));
 
     pModel = Leadwerks::Model::Box();
 	pModel->SetPosition(placement.vTranslation, true);
@@ -86,9 +87,11 @@ bool DefaultState::Update(float dt)
 {
     auto world = m_pWorldHndl->getInst();
 
-	placement = PlacementSystem::Update(m_player, dt, false);
+	placement = PlacementSystem::Update(placement, dt, true);
+    placement = PlacementSystem::Save(m_player, placement);
 
-	pModel->SetRotation(placement.vRotation);
+	pModel->SetRotation(placement.vRotation, false);
+    pModel->SetPosition(placement.vTranslation, true);
 
     return true;
 }
@@ -101,10 +104,26 @@ void DefaultState::Draw(void)
     Replace("{fps}", std::to_string(Leadwerks::Time::GetSpeed()), fps);
 
     ctx->DrawText(fps, 10.0f, 10.0f);
+
+    auto rot = std::string("Rotation: {rot}");
+    Replace("{rot}", placement.vRotation.ToString(), rot);
+
+    ctx->DrawText(rot, 10.0f, 30.0f);
+
+    auto right = std::string("Right: {right}");
+    Replace("{right}", placement.vRight.ToString(), right);
+
+    ctx->DrawText(right, 10.0f, 60.0f);
 }
 
 void DefaultState::OnKeyDown(Event_KeyDown* pEvent)
 {
+    if (pEvent->Key() == Leadwerks::Key::W) { placement.nInputMask.AddStatus(INPUT_MOVE_FORWARD); }
+    if (pEvent->Key() == Leadwerks::Key::A) { placement.nInputMask.AddStatus(INPUT_MOVE_LEFT); }
+    if (pEvent->Key() == Leadwerks::Key::S) { placement.nInputMask.AddStatus(INPUT_MOVE_BACKWARD); }
+    if (pEvent->Key() == Leadwerks::Key::D) { placement.nInputMask.AddStatus(INPUT_MOVE_RIGHT); }
+
+    placement = PlacementSystem::Save(m_player, placement);
 }
 
 void DefaultState::OnKeyUp(Event_KeyUp* pEvent)
@@ -118,9 +137,15 @@ void DefaultState::OnKeyUp(Event_KeyUp* pEvent)
     }
 #endif
 
+    if (pEvent->Key() == Leadwerks::Key::W) { placement.nInputMask.RemoveStatus(INPUT_MOVE_FORWARD); }
+    if (pEvent->Key() == Leadwerks::Key::A) { placement.nInputMask.RemoveStatus(INPUT_MOVE_LEFT); }
+    if (pEvent->Key() == Leadwerks::Key::S) { placement.nInputMask.RemoveStatus(INPUT_MOVE_BACKWARD); }
+    if (pEvent->Key() == Leadwerks::Key::D) { placement.nInputMask.RemoveStatus(INPUT_MOVE_RIGHT); }
+
+    placement = PlacementSystem::Save(m_player, placement);
 }
 
 void DefaultState::OnMouseMove(Event_MouseMove* pEvent)
 {
-
+    
 }
