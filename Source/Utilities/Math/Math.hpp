@@ -43,6 +43,17 @@ namespace Math
 		return pOut;
 	}
 
+    static Leadwerks::Mat4* MatrixTranslation(Leadwerks::Mat4* pOut, float x, float y, float z)
+    {
+        pOut->MakeIdentity();
+
+        pOut[3][0] = x;
+        pOut[3][1] = y;
+        pOut[3][2] = z;
+
+        return pOut;
+    }
+
 } // < end namespace.
 
 #endif _MATH_HPP_
