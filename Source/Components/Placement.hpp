@@ -53,6 +53,9 @@ namespace Components
 			vForward = Leadwerks::Vec3(0.0f, 0.0f, 1.0f);
 			vRight = Leadwerks::Vec3(1.0f, 0.0f, 0.0f);
 
+            mWorld.MakeIdentity();
+            mView = mWorld.Inverse();
+
 			nFriction = 8.0f;
 
 			bVisible = true;
