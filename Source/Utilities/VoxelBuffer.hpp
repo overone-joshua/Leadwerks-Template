@@ -12,7 +12,7 @@
     Description: Header file for VoxelBuffer utility.
                  The VoxelBuffer class provides a 
                  three-dimensional array in which to 
-                 easily get or set dentity values.
+                 easily get or set identity values.
                  
     
     Functions: 1. T Get(int i, int j, int k);
@@ -83,6 +83,14 @@ public:
 		std::copy(m_data.begin(), m_data.end(), std::ostream_iterator<T>(out, "\n"));
 
 	}
+
+    int size(void) { return this->m_data.size(); }
+
+    int width(void) { return this->m_nSizeX; }
+
+    int height(void) { return this->m_nSizeY; }
+
+    int depth(void) { return this->m_nSizeZ; }
 
 	operator T*()
     {
