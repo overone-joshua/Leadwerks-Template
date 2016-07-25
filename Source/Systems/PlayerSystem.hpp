@@ -59,19 +59,27 @@ namespace Systems
             bInitialized = false;
         }
 
-        static Player Update(uint64_t _entity, float dt, bool bAddVelocity = true)
+        static Player* Create(uint64_t _nEntityId, const std::string& _cName)
         {
-            auto placementComp = _pPlacementRepository->GetWhere([_entity](Placement& comp) { return comp.nEntityId == _entity; }).front();
-            auto playerComp = _pPlayerRepository->GetWhere([_entity](Player& comp) { return comp.nEntityId == _entity; }).front();
+            return new Player(_nEntityId, _cName);
+        }
 
+        static void Destroy(Player* _pPlayer)
+        {
+            if (_pPlayer != nullptr)
+            {
+                delete _pPlayer;
+                _pPlayer = nullptr;
+            }
+        }
+
+        static Player& Update(Player& playerComp, Placement& placementComp, float dt, bool bAddVelocity = true)
+        {
             // < Override the object's forward vector to take the view tilt into account.
             // * This will allow the forward vector to move up and down as well instead
             // * of just remaining horizontal. This is not important for movement since
             // * the player can not fly, but for things like shooting it is.
-            playerComp.vForward.x = Leadwerks::Math::Sin(placementComp.vRotation.x);
-            playerComp.vForward.y = -Leadwerks::Math::Tan(playerComp.nViewTilt);
-            playerComp.vForward.z = Leadwerks::Math::Cos(placementComp.vRotation.y);
-            placementComp.vForward = playerComp.vForward.Normalize();
+            playerComp.vForward = Math::CalculateForwardVector(playerComp.nViewTilt, placementComp.vRotation.x);
 
 			playerComp.vViewPoint.y += 0.75f; // < hard-coded for now.
 
@@ -86,7 +94,7 @@ namespace Systems
 				Leadwerks::Vec3 vFinalViewPointTrans;
 				vFinalViewPointTrans = placementComp.vTranslation.Add(playerComp.vViewPoint);
 
-				viewPointTransMat = Leadwerks::Mat4(vFinalViewPointTrans.x, vFinalViewPointTrans.y, vFinalViewPointTrans.z);
+				Math::MatrixTranslation(&viewPointTransMat, vFinalViewPointTrans.x, vFinalViewPointTrans.y, vFinalViewPointTrans.z);
 
 				placementComp.mView = rotY.Multiply(viewPointTransMat);
 				placementComp.mView = placementComp.mView.Inverse();
@@ -104,6 +112,8 @@ namespace Systems
 			{
 				placementComp = PlacementSystem::Strafe(placementComp, playerComp.nStrafe * 8000.0f * dt);
 			}
+
+            return playerComp;
         }
 
         static void Render(uint64_t _entity, Leadwerks::Mat4* _pWorldMtx = nullptr)
@@ -111,11 +121,8 @@ namespace Systems
 
         }
 
-        static Player MouseLook(uint64_t _entity, float _x, float _y, bool _bReset = false)
+        static Player& MouseLook(Player& playerComp, Placement& placementComp, float _x, float _y, bool _bReset = false)
         {
-            auto placementComp = _pPlacementRepository->GetWhere([_entity](Placement& comp) { return comp.nEntityId == _entity; }).front();
-            auto playerComp = _pPlayerRepository->GetWhere([_entity](Player& comp) { return comp.nEntityId == _entity; }).front();
-
             static float lastX = 0.0f;
             static float lastY = 0.0f;
 
@@ -126,9 +133,31 @@ namespace Systems
 
                 lastX = lastY = 0.0f;
                 playerComp.nViewTilt = 0.0f;
-
                 return playerComp;
             }
+
+            // Calculate the real x and y values by accounting for smoothing.
+            lastX = lastX * playerComp.nViewSmoothing + _x * (1.0f - playerComp.nViewSmoothing);
+            lastY = lastY * playerComp.nViewSmoothing + _y * (1.0f - playerComp.nViewSmoothing);
+
+            // Adjust the values for sensitivity.
+            lastX *= playerComp.nViewSensitivity;
+            lastY *= playerComp.nViewSensitivity;
+
+            // Rotate the scene object around the y axis only. This will prevent the
+            // player's mesh from rotating when the player looks up and down.
+            placementComp = PlacementSystem::AddRotation(placementComp, 0.0f, lastY, 0.0f);
+            placementComp = PlacementSystem::Save(placementComp.nEntityId, placementComp);
+
+            // Ensure the view will not rotate to far up or down.
+            if ((playerComp.nViewTilt > 0.8f && lastX > 0.0f) || (playerComp.nViewTilt < -0.8f && lastX < 0.0f))
+                lastX = 0.0f;
+
+            // Maintain a separate view rotation around the x axis to allow the player
+            // to look up and down.
+            playerComp.nViewTilt += lastX;
+
+            return playerComp;
         }
 
         static Player Hurt(uint64_t _entity, float _damage, uint64_t _attacker)
