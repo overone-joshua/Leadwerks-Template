@@ -52,6 +52,20 @@ namespace Systems
 			bInitialized = false;
 		}
 
+        static Placement* Create(uint64_t _nEntityId, const std::string& _cName)
+        {
+            return new Placement(_nEntityId, _cName);
+        }
+
+        static void Destroy(Placement* _pPlacement)
+        {
+            if (_pPlacement != nullptr)
+            {
+                delete _pPlacement;
+                _pPlacement = nullptr;
+            }
+        }
+
 		static Placement& Update(Placement& comp, float dt, bool bAddVelocity)
 		{
             float nFriction = 1.0f - comp.nFriction * dt;
@@ -74,6 +88,13 @@ namespace Systems
                 localMove = (comp.nInputMask.HasStatus(INPUT_MOVE_BACKWARD) - comp.nInputMask.HasStatus(INPUT_MOVE_FORWARD)) * 0.025;
                 localStrafe = (comp.nInputMask.HasStatus(INPUT_MOVE_LEFT) - comp.nInputMask.HasStatus(INPUT_MOVE_RIGHT)) * 0.025;
 
+                float localVertMove = (comp.nInputMask.HasStatus(INPUT_MOVE_DOWN) - comp.nInputMask.HasStatus(INPUT_MOVE_UP)) * 0.025;
+
+                if (localVertMove != 0.0f)
+                {
+                    comp = AddTranslation(comp, Leadwerks::Vec3(0.0f, localVertMove, 0.0f));
+                }
+
                 if (localMove != 0.0f)
                 {
                     comp = SetDrive(comp, localMove);
@@ -91,13 +112,16 @@ namespace Systems
                 }
             }
 
+            //comp.vForward = Math::CalculateForwardVector(comp.vRotation.x, comp.vRotation.y);
+            //comp.vRight = Math::CalculateRightVector(comp.vRotation.x, comp.vRotation.y);
+
             // < Update the forward vector.
             comp.vForward = Leadwerks::Vec3(
                 Leadwerks::Math::Sin(comp.vRotation.y)
                 , -Leadwerks::Math::Tan(comp.vRotation.x)
                 , Leadwerks::Math::Cos(comp.vRotation.y))
                 .Normalize();
-
+            
             // < Update the right vector.
             comp.vRight = Leadwerks::Vec3(
                 Leadwerks::Math::Cos(comp.vRotation.y)
