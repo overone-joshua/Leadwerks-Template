@@ -38,8 +38,17 @@ namespace Components
 		explicit Component_Appearance(const std::string& modelPath, uint64_t _nEntityId, const std::string& cName = "")
 			: cModelPath(modelPath), pModel(nullptr), Component(_nEntityId, cName) { }
 
-	} Appearance;
+        ~Component_Appearance(void)
+        {
+            if (pModel != nullptr)
+            {
+                pModel->Release();
+                delete pModel;
+                pModel = nullptr;
+            }
+        }
 
+	} Appearance;
 } // < end namespace.
 
 #endif _APPEARANCE_COMPONENT_HPP
