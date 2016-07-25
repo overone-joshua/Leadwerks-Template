@@ -32,11 +32,12 @@
 #include "../Utilities/Delegate.hpp"
 #include "../Utilities/Event.hpp"
 
-#include "../Components/World.hpp"
 #include "../Components/Component.hpp"
-
-#include "../Systems/PlacementSystem.hpp"
-#include "../Systems/PlayerSystem.hpp"
+#include "../Components/Level.hpp"
+#include "../Components/LevelEditor.hpp"
+#include "../Components/Placement.hpp"
+#include "../Components/Player.hpp"
+#include "../Components/World.hpp"
 
 #include <sqlite-persistence/DbConnection.hpp>
 
@@ -56,7 +57,9 @@ public:
 
 	bool                   Update(float deltaTime);
 
-    void                   OnMouseMove(Event_MouseMove* pEvent);
+    void                    OnMouseHit(Event_MouseHit* pEvent);
+    void                    OnMouseMove(Event_MouseMove* pEvent);
+    void                    OnMouseUp(Event_MouseUp* pEvent);
 
 	void                   OnKeyDown(Event_KeyDown* pEvent);
 	void                   OnKeyUp(Event_KeyUp* pEvent);
@@ -65,21 +68,25 @@ protected:
 
     // < Test objects.
     Leadwerks::Model* pModel;
-    Components::Placement placement;
 
 private:
 
-    IDbConnection*         m_pConnection;
-    InputManager*          m_pInputMgr;
-    CameraHandle*          m_pCameraHndl;
-    ContextHandle*         m_pContextHndl;
-    WorldHandle*           m_pWorldHndl;
+    IDbConnection*          m_pConnection;
+    InputManager*           m_pInputMgr;
+    CameraHandle*           m_pCameraHndl;
+    ContextHandle*          m_pContextHndl;
+    WorldHandle*            m_pWorldHndl;
 
-	Leadwerks::Light*	  m_pSceneLight;
+	Leadwerks::Light*	    m_pSceneLight;
 
-	Components::World*     m_pWorld;
+	Components::World*      m_pWorld;
+    Components::Level*      m_pLevel;
+    Components::LevelEditor* m_pLevelEditor;
+    Components::Placement*  m_pCamera;
+    Components::Player*     m_pPlayerEditor;
 
-    uint64_t                m_player;
+    uint64_t                m_level;
+    uint64_t                m_levelEditor;
     uint64_t                m_camera;
 
 }; // < end class.

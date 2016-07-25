@@ -2,9 +2,17 @@
 #include "DefaultState.hpp"
 
 #include "../Components/Component.hpp"
-#include "../Components/InputDictionary.hpp"
+#include "../Components/Level.hpp"
+#include "../Components/LevelEditor.hpp"
+#include "../Components/Placement.hpp"
+#include "../Components/Player.hpp"
+#include "../Components/World.hpp"
+
+#include "../Systems/LevelSystem.hpp"
+#include "../Systems/LevelEditorSystem.hpp"
 #include "../Systems/PlacementSystem.hpp"
 #include "../Systems/PlayerSystem.hpp"
+
 #include "../Utilities/StringExtensions.hpp"
 
 #include <sqlite-persistence/DbConnection.hpp>
@@ -14,7 +22,8 @@
 using namespace Systems;
 
 DefaultState::DefaultState(void) 
-    : pModel(nullptr), placement(0, "-1-1-1") { }
+    : pModel(nullptr), m_pLevel(nullptr), m_pCamera(nullptr)
+    , m_pPlayerEditor(nullptr) { }
 
 void DefaultState::Configure(Container* pContainer)
 {
@@ -26,40 +35,51 @@ void DefaultState::Configure(Container* pContainer)
 	m_pConnection = pContainer->Resolve<IDbConnection>();
 }
 
+/// <summary>
+/// Loads this instance.
+/// </summary>
 void DefaultState::Load(void)
 {
+    // < Initlaize the gameplay systems we will need for this state.
+    if (LevelSystem::Init() + LevelEditorSystem::Init() +
+        PlacementSystem::Init() + PlayerSystem::Init() != 0)
+    {
+        std::cerr << "System initialization failed!";
+        this->Close();
+        return;
+    }
+
     // < Set the input manager to reset the mouse-position to the center of the
     // * screen every frame.
-    //m_pInputMgr->ToggleMouseCenter();
+    m_pInputMgr->ToggleMouseCenter();
 
 	// < Move the camera back a little bit.
-	m_pCameraHndl->getInst()->Move(0.0f, 3.0f, -10.0f, true);
+	m_pCameraHndl->getInst()->Move(0.0f, 5.0f, -5.0f, true);
 
     // < Add a light to our sample scene.
     m_pSceneLight = Leadwerks::DirectionalLight::Create();
     m_pSceneLight->SetRotation(35.0f, -35.0f, 0.0f);
 
+    pModel = Leadwerks::Model::Box();
+    pModel->SetColor(1.0f, 0.0f, 0.0f, 1.0f);
+	pModel->SetPosition(-3.0f, 0.0f, 0.0f, true);    // < Spatial ref box.
+
     // < Create our component world.
     m_pWorld = new Components::World(m_pConnection, 0, "Primary");
+    m_level = m_pWorld->CreateEntity("Primary_Level");
+    m_levelEditor = m_pWorld->CreateEntity("Level_Editor");
+    m_camera = m_pWorld->CreateEntity("Editor_Camera");
 
-    // < Initlaize the gameplay systems we will need for this state.
-    if (PlacementSystem::Init() + PlayerSystem::Init() != 0)
-    {
-        std::cerr << "System initialization failed!";
-        this->Close();
-    }
+    // < Create our level.
+    m_pLevel = LevelSystem::Create(m_level, "Level_One", 2, 2, 2, 1.0f);
 
-    // < Test sqlite component system.
-    m_player = m_pWorld->CreateEntity("player_one");
+    auto config = EditorConfig(m_pInputMgr, m_pCameraHndl->getInst(), m_pWorldHndl->getInst(), m_pLevel, m_levelEditor, "Level_Editor");
+    m_pLevelEditor = LevelEditorSystem::Create(config, m_levelEditor, "Level_One_Editor");
 
-    // < Lets test CRUD operations on the base component.
-    placement = Components::Placement(m_player, "Player Placement Component");
-    placement = PlacementSystem::Save(m_player, placement);
+    m_pCamera = PlacementSystem::Create(m_camera, "Editor_Camera_Placement");
+    *m_pCamera = PlacementSystem::Save(m_camera, *m_pCamera);
 
-    placement = PlacementSystem::AddSpin(placement, Leadwerks::Vec3(0.0f, 0.0f, 0.25f));
-
-    pModel = Leadwerks::Model::Box();
-	pModel->SetPosition(placement.vTranslation, true);
+    m_pPlayerEditor = PlayerSystem::Create(m_camera, "Editor_Camera_Player");
 }
 
 void DefaultState::Close(void)
@@ -68,11 +88,14 @@ void DefaultState::Close(void)
     SAFE_RELEASE(m_pSceneLight);
     SAFE_DELETE(m_pSceneLight);
 
-    // < Shutdown the systems we initialized in Load.
-    PlayerSystem::Shutdown();
-    PlacementSystem::Shutdown();
+    PlayerSystem::Destroy(m_pPlayerEditor);
+    PlacementSystem::Destroy(m_pCamera);
+    LevelSystem::Destroy(m_pLevel);
+    LevelEditorSystem::Destroy(m_pLevelEditor);
 
-	m_pWorld->DeleteEntity(m_player);
+    m_pWorld->DeleteEntity(m_camera);
+    m_pWorld->DeleteEntity(m_levelEditor);
+    m_pWorld->DeleteEntity(m_level);
     SAFE_DELETE(m_pWorld);
 
     SAFE_RELEASE(pModel);
@@ -80,50 +103,53 @@ void DefaultState::Close(void)
 
     // < Set the input manager to allow the mouse pointer to freely
     // * move about the window.
-    //m_pInputMgr->ToggleMouseCenter();
+    m_pInputMgr->ToggleMouseCenter();
+
+    // < Shutdown the systems we initialized in Load.
+    PlayerSystem::Shutdown();
+    PlacementSystem::Shutdown();
+    LevelEditorSystem::Shutdown();
+    LevelSystem::Shutdown();
 }
 
 bool DefaultState::Update(float dt)
 {
+    auto camera = m_pCameraHndl->getInst();
     auto world = m_pWorldHndl->getInst();
 
-	placement = PlacementSystem::Update(placement, dt, true);
-    placement = PlacementSystem::Save(m_player, placement);
+    *m_pCamera = PlacementSystem::Update(*m_pCamera, dt, true);
+    //*m_pCamera = PlacementSystem::Save(m_camera, *m_pCamera);
 
-	pModel->SetRotation(placement.vRotation, false);
-    pModel->SetPosition(placement.vTranslation, true);
+    *m_pPlayerEditor = PlayerSystem::Update(*m_pPlayerEditor, *m_pCamera, dt, true);
+    *m_pPlayerEditor = PlayerSystem::MouseLook(*m_pPlayerEditor, *m_pCamera, m_pInputMgr->GetMousePosition().x, m_pInputMgr->GetMousePosition().y);
+
+    camera->SetRotation(m_pCamera->vRotation);
+    camera->SetPosition(m_pCamera->vTranslation, true);
+
+    LevelSystem::Update(m_pLevel, dt);
+    LevelEditorSystem::Update(m_pLevelEditor, dt);
 
     return true;
 }
 
 void DefaultState::Draw(void)
 {
-    auto ctx = this->m_pContextHndl->getInst();
+    std::string pos = "Position: {pos}";
+    Replace("{pos}", m_pCameraHndl->getInst()->GetPosition(true).ToString(), pos);
 
-    auto fps = std::string("FPS: {fps}");
-    Replace("{fps}", std::to_string(Leadwerks::Time::GetSpeed()), fps);
-
-    ctx->DrawText(fps, 10.0f, 10.0f);
-
-    auto rot = std::string("Rotation: {rot}");
-    Replace("{rot}", placement.vRotation.ToString(), rot);
-
-    ctx->DrawText(rot, 10.0f, 30.0f);
-
-    auto right = std::string("Right: {right}");
-    Replace("{right}", placement.vRight.ToString(), right);
-
-    ctx->DrawText(right, 10.0f, 60.0f);
+    m_pContextHndl->getInst()->DrawText(pos, 10, 10);
 }
 
 void DefaultState::OnKeyDown(Event_KeyDown* pEvent)
 {
-    if (pEvent->Key() == Leadwerks::Key::W) { placement.nInputMask.AddStatus(INPUT_MOVE_FORWARD); }
-    if (pEvent->Key() == Leadwerks::Key::A) { placement.nInputMask.AddStatus(INPUT_MOVE_LEFT); }
-    if (pEvent->Key() == Leadwerks::Key::S) { placement.nInputMask.AddStatus(INPUT_MOVE_BACKWARD); }
-    if (pEvent->Key() == Leadwerks::Key::D) { placement.nInputMask.AddStatus(INPUT_MOVE_RIGHT); }
-
-    placement = PlacementSystem::Save(m_player, placement);
+    if (pEvent->Key() == Leadwerks::Key::W) { m_pCamera->nInputMask.AddStatus(INPUT_MOVE_FORWARD); }
+    if (pEvent->Key() == Leadwerks::Key::A) { m_pCamera->nInputMask.AddStatus(INPUT_MOVE_LEFT); }
+    if (pEvent->Key() == Leadwerks::Key::S) { m_pCamera->nInputMask.AddStatus(INPUT_MOVE_BACKWARD); }
+    if (pEvent->Key() == Leadwerks::Key::D) { m_pCamera->nInputMask.AddStatus(INPUT_MOVE_RIGHT); }
+    if (pEvent->Key() == Leadwerks::Key::Q) { m_pCamera->nInputMask.AddStatus(INPUT_MOVE_DOWN); }
+    if (pEvent->Key() == Leadwerks::Key::E) { m_pCamera->nInputMask.AddStatus(INPUT_MOVE_UP); }
+    auto pCamera = m_pCameraHndl->getInst();
+    *m_pCamera = PlacementSystem::Save(m_camera, *m_pCamera);
 }
 
 void DefaultState::OnKeyUp(Event_KeyUp* pEvent)
@@ -137,12 +163,26 @@ void DefaultState::OnKeyUp(Event_KeyUp* pEvent)
     }
 #endif
 
-    if (pEvent->Key() == Leadwerks::Key::W) { placement.nInputMask.RemoveStatus(INPUT_MOVE_FORWARD); }
-    if (pEvent->Key() == Leadwerks::Key::A) { placement.nInputMask.RemoveStatus(INPUT_MOVE_LEFT); }
-    if (pEvent->Key() == Leadwerks::Key::S) { placement.nInputMask.RemoveStatus(INPUT_MOVE_BACKWARD); }
-    if (pEvent->Key() == Leadwerks::Key::D) { placement.nInputMask.RemoveStatus(INPUT_MOVE_RIGHT); }
+   if (pEvent->Key() == Leadwerks::Key::W) { m_pCamera->nInputMask.RemoveStatus(INPUT_MOVE_FORWARD); }
+    if (pEvent->Key() == Leadwerks::Key::A) { m_pCamera->nInputMask.RemoveStatus(INPUT_MOVE_LEFT); }
+    if (pEvent->Key() == Leadwerks::Key::S) { m_pCamera->nInputMask.RemoveStatus(INPUT_MOVE_BACKWARD); }
+    if (pEvent->Key() == Leadwerks::Key::D) { m_pCamera->nInputMask.RemoveStatus(INPUT_MOVE_RIGHT); }
+    if (pEvent->Key() == Leadwerks::Key::Q) { m_pCamera->nInputMask.RemoveStatus(INPUT_MOVE_DOWN); }
+    if (pEvent->Key() == Leadwerks::Key::E) { m_pCamera->nInputMask.RemoveStatus(INPUT_MOVE_UP); }
 
-    placement = PlacementSystem::Save(m_player, placement);
+    *m_pCamera = PlacementSystem::Save(m_camera, *m_pCamera);
+}
+
+void DefaultState::OnMouseHit(Event_MouseHit* pEvent)
+{
+    if (pEvent->MouseButton() == 1) { m_pLevelEditor->inputMask.AddStatus(EDITOR_ACTION_ADD_VOXEL); }
+    if (pEvent->MouseButton() == 2) { m_pLevelEditor->inputMask.AddStatus(EDITOR_ACTION_REMOVE_VOXEL); }
+}
+
+void DefaultState::OnMouseUp(Event_MouseUp* pEvent)
+{
+    if (pEvent->MouseButton() == 1) { m_pLevelEditor->inputMask.RemoveStatus(EDITOR_ACTION_ADD_VOXEL); }
+    if (pEvent->MouseButton() == 2) { m_pLevelEditor->inputMask.RemoveStatus(EDITOR_ACTION_REMOVE_VOXEL); }
 }
 
 void DefaultState::OnMouseMove(Event_MouseMove* pEvent)
