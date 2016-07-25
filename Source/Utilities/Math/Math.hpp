@@ -6,6 +6,29 @@
 
 namespace Math
 {
+    static Leadwerks::Vec3 CalculateForwardVector(float pitch, float yaw) {
+        // Calculate the forward vector.
+        float fx = Leadwerks::Math::Cos(pitch) * Leadwerks::Math::Sin(yaw);
+        float fy = -Leadwerks::Math::Sin(pitch);
+        float fz = Leadwerks::Math::Cos(pitch) * Leadwerks::Math::Cos(yaw);
+        return Leadwerks::Vec3(fx, fy, fz).Normalize();
+    }
+
+    static Leadwerks::Vec3 CalculateRightVector(float pitch, float yaw) {
+        // Calculate the right vector.
+        float fx = Leadwerks::Math::Cos(pitch) * Leadwerks::Math::Sin(yaw + 90);
+        float fy = 0;
+        float fz = Leadwerks::Math::Cos(pitch) * Leadwerks::Math::Cos(yaw + 90);
+        return Leadwerks::Vec3(fx, fy, fz).Normalize();
+    }
+
+    static Leadwerks::Vec3 CalculateUpVector(float pitch, float yaw) {
+        // Calculate the right vector.
+        float fx = Leadwerks::Math::Cos(pitch + 90) * Leadwerks::Math::Sin(yaw);
+        float fy = Leadwerks::Math::Sin(pitch + 90);
+        float fz = Leadwerks::Math::Cos(pitch + 90) * Leadwerks::Math::Cos(yaw);
+        return Leadwerks::Vec3(fx, fy, fz).Normalize();
+    }
 
 	static Leadwerks::Mat4* MatrixRotationX(Leadwerks::Mat4* pOut, float angle)
 	{
