@@ -53,6 +53,8 @@ namespace Components
 
             nFrags = 0;
             nDeaths = 0;
+
+            nDrive = nStrafe = 0.0f;
         }
 
     } Player; // < end struct.
