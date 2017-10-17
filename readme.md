@@ -27,7 +27,7 @@ v0.0.2 - Contains the added Game Object, Camera Manager, Input Manager and State
 
 v0.0.1 - Contains refactored App.h and App.cpp source files, providing a complete boilerplate application. This can be used if you want to build your own application from scratch.
 
-## Licence
+## License
 
 Copyright (c) 2013 2014 2015, 2016 Eden Softworks Joshua J Allen
 	
